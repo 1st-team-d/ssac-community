@@ -18,15 +18,23 @@
     ></script>
     <!-- Axios CDN -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- jQuery CDN -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+
     <!-- login.js -->
-    <script defer src="/static/js/login.js"></script>
+    <script defer src="/static/js/loginRegister.js"></script>
     <!-- login.css -->
-    <link rel="stylesheet" href="/static/css/login.css" />
+    <link rel="stylesheet" href="/static/css/loginRegister.css" />
   </head>
   <body>
     <!-- Login -->
     <!-- 로그인 버튼 -->
     <button
+      id="loginBtn"
       type="button"
       class="btn fw-bold"
       data-bs-toggle="modal"
@@ -68,7 +76,7 @@
                   id="loginEmail"
                   placeholder="name@example.com"
                 />
-                <label for="loginEmail">Email address</label>
+                <label for="loginEmail">이메일</label>
               </div>
               <div class="form-floating">
                 <input
@@ -77,19 +85,30 @@
                   id="loginPw"
                   placeholder="Password"
                 />
-                <label for="loginPw">Password</label>
+                <label for="loginPw">비밀번호</label>
               </div>
             </form>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer d-flex justify-content-between">
+            <div>
+              <a
+                href=""
+                class="text-decoration-none"
+                data-bs-toggle="modal"
+                data-bs-target="#registerModal"
+                ><span class="fs-6 text-secondary"
+                  >아이디가 없으신가요? 회원가입하러 가기!</span
+                ></a
+              >
+            </div>
             <div class="form-check text-start my-3">
               <input
                 class="form-check-input"
                 type="checkbox"
                 value="remember-me"
-                id="flexCheckDefault"
+                id="loginRemainCheckBox"
               />
-              <label class="form-check-label" for="flexCheckDefault">
+              <label class="form-check-label" for="loginRemainCheckBox">
                 로그인 정보 기억하기
               </label>
             </div>
@@ -100,6 +119,86 @@
               onclick="postLogin()"
             >
               로그인
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 회원가입 모달창 -->
+    <div
+      class="modal fade"
+      id="registerModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modalBackground modal-content">
+          <div class="modal-header">
+            <h1
+              class="modal-title w-100 fs-5 text-center"
+              id="exampleModalLabel"
+            >
+              🔖 회원가입
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form name="register">
+              <div class="form-floating mb-2">
+                <input
+                  type="text"
+                  class="form-control modalInputBackground"
+                  id="registerName"
+                  placeholder="김땡땡"
+                />
+                <label for="registerName">이름</label>
+              </div>
+              <div class="form-floating mb-2">
+                <input
+                  type="email"
+                  class="form-control modalInputBackground"
+                  id="registerEmail"
+                  placeholder="name@example.com"
+                />
+                <label for="registerEmail">이메일</label>
+              </div>
+              <div class="form-floating">
+                <input
+                  type="password"
+                  class="form-control modalInputBackground"
+                  id="registerPw"
+                  placeholder="Password"
+                />
+                <label for="registerPw">비밀번호</label>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer d-flex justify-content-between">
+            <div>
+              <a
+                href=""
+                class="text-decoration-none"
+                data-bs-toggle="modal"
+                data-bs-target="#loginModal"
+                ><span class="fs-6 text-secondary"
+                  >앗, 아이디가 있으시다구요? 로그인하기!</span
+                ></a
+              >
+            </div>
+            <button
+              class="btn w-100 py-2"
+              id="postRegister"
+              type="button"
+              onclick="postRegister()"
+            >
+              회원가입
             </button>
           </div>
         </div>
