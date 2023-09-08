@@ -69,24 +69,27 @@
           </div>
           <div class="modal-body">
             <form name="login">
-              <div class="form-floating mb-2">
+              <div class="loginEmail form-floating mb-2">
                 <input
                   type="email"
                   class="form-control modalInputBackground"
                   id="loginEmail"
                   placeholder="name@example.com"
+                  required
                 />
                 <label for="loginEmail">이메일</label>
               </div>
-              <div class="form-floating">
+              <div class="loginPw form-floating">
                 <input
                   type="password"
                   class="form-control modalInputBackground"
                   id="loginPw"
                   placeholder="Password"
+                  required
                 />
                 <label for="loginPw">비밀번호</label>
               </div>
+              <div class="errorMsg mt-3 ms-2" id="loginMsg"></div>
             </form>
           </div>
           <div class="modal-footer d-flex justify-content-between">
@@ -157,6 +160,7 @@
                   class="form-control modalInputBackground"
                   id="registerName"
                   placeholder="김땡땡"
+                  required
                 />
                 <label for="registerName">이름</label>
               </div>
@@ -166,18 +170,30 @@
                   class="form-control modalInputBackground"
                   id="registerEmail"
                   placeholder="name@example.com"
+                  required
                 />
                 <label for="registerEmail">이메일</label>
+                <button
+                  type="button"
+                  class="checkBtn btn position-absolute top-50 end-0 translate-middle-y me-3"
+                  onclick="checkDuplicate(this)"
+                  id="checkBtn"
+                >
+                  중복체크
+                </button>
               </div>
+              <div class="checkEmailMsg mb-1 ms-2" id="checkEmailMsg"></div>
               <div class="form-floating">
                 <input
                   type="password"
                   class="form-control modalInputBackground"
                   id="registerPw"
                   placeholder="Password"
+                  required
                 />
                 <label for="registerPw">비밀번호</label>
               </div>
+              <div class="errorMsg mt-3 ms-2" id="registerMsg"></div>
             </form>
           </div>
           <div class="modal-footer d-flex justify-content-between">
