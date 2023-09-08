@@ -17,18 +17,43 @@ exports.postSignup = async (req, res) => {
     res.send({ isSignup: true });
   } catch (err) {
     console.error(err);
-    res.send({ isSignup: false });
+    res.send({ isSignup: false, msg: "회원가입 실패" });
   }
 };
 
 // 로그인 처리 - 진행 중
 exports.postSignin = async (req, res) => {
-  // 1. 아이디를 찾아서 사용자 존재 유무 확인
-  const { loginEmail, loginPw } = req.body;
+  // Todo: 필요한 세션 정보 확인
 
-  const user = await User.fineOne({
-    where: { id: loginEmail },
-  });
+  try {
+    // 1. 아이디를 찾아서 회원 존재 유무 확인
+    const { loginEmail, loginPw } = req.body;
 
-  // 2. 입력된 비밀번호 암호화하여 DB의 정보와 비교
+    // DB 접근
+    const user = await User.findOne({
+      where: { id: loginEmail },
+    });
+
+    // 2. 입력된 비밀번호 암호화하여 DB의 정보와 비교
+    if (user) {
+      // 회원 있음
+      // 입력된 비밀번호와 DB 정보와 비교 결과 - true / false
+      const compareResult = await comparePw(loginPw, user.pw);
+
+      if (compareResult) {
+        // 비밀번호 일치
+        req.session.userInfo = { name: user.name, id: user.id }; // 회원 정보 세션 생성
+        res.send({ isSignin: true, data: user });
+      } else {
+        // 비밀번호 불일치
+        res.send({ isSignin: false, msg: "비밀번호가 틀림" });
+      }
+    } else {
+      // 회원 없음
+      res.send({ isSignin: false, msg: "사용자가 존재하지 않음" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.send({ isSignin: false, msg: "로그인 실패" });
+  }
 };

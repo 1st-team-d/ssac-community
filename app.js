@@ -26,6 +26,18 @@ app.use("/static", express.static(__dirname + "/static"));
 // body-parser
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+// express-session
+app.use(
+  session({
+    secret: process.env.SESSION_KEY,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      httpOnly: true,
+      maxAge: 60 * 1000,
+    },
+  })
+);
 
 // '/' 요청
 const indexRouter = require("./routes/index");
