@@ -27,6 +27,8 @@ app.use(express.json());
 // '/' 요청
 const indexRouter = require('./routes/index');
 app.use('/', indexRouter);
+const boardRouter = require('./routes/board');
+app.use('/', boardRouter);
 
 // 에러 처리
 app.get('*', (req, res) => {
