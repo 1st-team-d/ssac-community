@@ -26,6 +26,7 @@ const Board = (Sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0,
+        comment: '조회수',
       },
     },
     {
