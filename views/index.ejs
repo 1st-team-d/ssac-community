@@ -3,9 +3,65 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>새싹 스터디 모집 커뮤니티!!</title>
+    <title>새싹커뮤니티</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="/static/css/index.css" />
   </head>
+
   <body>
-    <h1>메인 화면 입니다.</h1>
+    <header>
+      <div class="container">
+        <h1>
+          <!-- 로고 이미지 -->
+          <a href="#"><img src="/static/images/ssac-logo.png" alt="" /></a>
+        </h1>
+
+        <!-- 헤더 카테고리 -->
+        <nav class="mainNavigation">
+          <a href="#">PAGE1</a>
+          <a href="#">PAGE2</a>
+          <a href="#">PAGE3</a>
+          <a href="#">PAGE4</a>
+          <a class="btn" href="#">로그인</a>
+        </nav>
+
+        <!-- 더보기 버튼 -->
+        <button class="moreBtn">
+          <i class="icon"></i>
+        </button>
+      </div>
+    </header>
+
+    <main class="heroBg">
+      <!-- 영상 소스 -->
+      <div class="videoWrap dpn">
+        <img src="images/sample.png" alt="" />
+        <video
+          src="images/1041512128-preview.mp4"
+          muted
+          autoplay
+          loop
+          poster="images/sample.png"
+        ></video>
+      </div>
+      <!-- 메인 소개 글 -->
+      <div class="container">
+        <div class="textWrap">
+          <h2>새싹 가나다라<br />커뮤니티</h2>
+          <h3>프론트엔드 + 백엔드 + 가나다라</h3>
+          <p>
+            새싹 커뮤니티 전용 어쩌고<br />
+            저쩌고 가다나라마바사 커뮤니티입니다.
+          </p>
+          <div class="btnWrap">
+            <a class="btn" href="#">글쓰기</a>
+            <a class="btn ghostBtn" href="#">가입하기</a>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- jQuery 불러오기 -->
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/custom.js"></script>
   </body>
 </html>
