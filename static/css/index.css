@@ -1,4 +1,35 @@
 /* main css */
+/* 변수 설정 */
+:root {
+  --main-btn-background-color: #a2c579;
+  --main-btn-text-color: #363638;
+  --main-btn-hover-color: #83c13b;
+  --modal-background-color: #ffffdd;
+  --modal-input-background-color: #ffffea;
+  --input-border-color: rgba(151, 186, 39, 0.5);
+}
+
+/* Common */
+.form-control:focus {
+  border-color: var(--input-border-color);
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset,
+    0px 0px 8px rgba(134, 151, 59, 0.5);
+}
+
+.btn {
+  color: var(--main-btn-text-color);
+  background-color: var(--main-btn-background-color);
+}
+
+.btn:hover {
+  background-color: var(--main-btn-hover-color);
+}
+
+.ghostBtn {
+  background-color: transparent;
+  border: 1px solid var(--main-btn-background-color);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -54,20 +85,6 @@ a {
 .mainNavigation a.active {
   font-weight: bold;
   border-bottom: 2px solid #004fff;
-}
-
-.btn {
-  display: inline-block;
-  color: black;
-  font-weight: bold;
-  padding: 12px 20px;
-  border-radius: 8px;
-  background-color: greenyellow;
-}
-
-.ghostBtn {
-  background-color: transparent;
-  border: 1px solid greenyellow;
 }
 
 .textWrap {
@@ -131,6 +148,17 @@ a {
 
 .moreBtn {
   display: none;
+}
+
+/* Colors */
+/* 모달창 배경 색상 설정 */
+.modalBackground {
+  background-color: var(--modal-background-color);
+}
+
+/* 모달 input 색상 설정 */
+.modalInputBackground {
+  background-color: var(--modal-input-background-color);
 }
 
 @media screen and (max-width: 768px) {
