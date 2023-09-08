@@ -1,0 +1,14 @@
+@server = http://localhost:8080
+
+### 회원 가입 처리
+POST {{server}}/user/signup
+Content-Type: application/json; charset=UTF-8
+
+{
+    "registerName": "손흥민",
+    "registerEmail": "123@naver.com",
+    "registerPw": "1234"
+}
+
+### 로그인 처리
+POST {{server}}/user/signin
