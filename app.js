@@ -18,6 +18,7 @@ const session = require('express-session');
 // 뷰 설정
 app.set('view engine', 'ejs');
 app.set('/views', 'views');
+
 // static (css)
 app.use('/static', express.static(__dirname + '/static'));
 
