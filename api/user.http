@@ -10,6 +10,14 @@ Content-Type: application/json; charset=UTF-8
     "registerPw": "1234"
 }
 
+### 이메일(아이디) 중복 확인
+POST {{server}}/user/checkEmail
+Content-Type: application/json; charset=UTF-8
+
+{
+    "registerEmail": "123@naver.com"
+}
+
 ### 로그인 처리
 POST {{server}}/user/signin
 Content-Type: application/json; charset=UTF-8

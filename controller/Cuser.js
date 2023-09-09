@@ -5,7 +5,7 @@ const { hashedPw, comparePw } = require("../utils/encrypt");
 
 // 회원가입 처리 - 진행 중
 exports.postSignup = async (req, res) => {
-  // Todo: 유효성 검사(아이디 중복, 비밀번호 공백 확인), 관리자 추가
+  // Todo: 유효성 검사(이메일(아이디) 중복, 비밀번호 공백 확인), 관리자 추가
 
   try {
     // 회원가입 요청 시, 암호화된 비밀번호 DB 추가
@@ -21,12 +21,36 @@ exports.postSignup = async (req, res) => {
   }
 };
 
-// 로그인 처리 - 진행 중
+// 이메일(아이디) 중복 확인
+exports.postCheckEmail = async (req, res) => {
+  try {
+    // 이메일(아이디)를 찾아서 회원 존재 유무 확인
+    const { registerEmail } = req.body;
+
+    // DB 접근
+    const user = await User.findOne({
+      where: { id: registerEmail },
+    });
+
+    if (user) {
+      // 이메일(아이디)가 중복되는 경우
+      res.send({ isCheck: false, msg: "이메일이 중복입니다!" });
+    } else {
+      // 이메일(아이디)가 중복되지 않는 경우
+      res.send({ isCheck: true, msg: "이메일이 중복되지 않습니다!" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.send({ isCheck: false, msg: "중복 확인 실패" });
+  }
+};
+
+// 로그인 처리
 exports.postSignin = async (req, res) => {
   // Todo: 필요한 세션 정보 확인
 
   try {
-    // 1. 아이디를 찾아서 회원 존재 유무 확인
+    // 1. 이메일(아이디)를 찾아서 회원 존재 유무 확인
     const { loginEmail, loginPw } = req.body;
 
     // DB 접근
