@@ -7,7 +7,7 @@
     <!-- CDN -->
     <%- include('./cdn/cdn.ejs') %>
     <!-- Developer custom -->
-    <%- include('./developer/developer.ejs') %>
+    <%- include('./developer/main.ejs') %>
   </head>
 
   <body>
@@ -15,16 +15,18 @@
       <div class="container">
         <h1>
           <!-- 로고 이미지 -->
-          <a href="#"><img src="/static/images/ssac-logo.png" alt="" /></a>
+          <a href="/"><img src="/static/images/ssac-logo.png" alt="" /></a>
         </h1>
 
         <!-- 헤더 카테고리 -->
-        <nav class="mainNavigation">
-          <a href="#">PAGE1</a>
-          <a href="#">PAGE2</a>
-          <a href="#">PAGE3</a>
-          <a href="#">PAGE4</a>
-          <!-- Login -->
+        <nav class="mainNavigation navbar">
+          <a href="#" class="me-3">PAGE1</a>
+          <a href="#" class="me-3">PAGE2</a>
+          <a href="#" class="me-3">PAGE3</a>
+          <a href="/board/register" class="me-3">
+            <span class="">📝</span>
+            <span class="">게시글 조회</span>
+          </a>
           <!-- 로그인 버튼 -->
           <button
             id="loginBtn"
@@ -75,7 +77,6 @@
                   class="form-control modalInputBackground"
                   id="loginEmail"
                   placeholder="name@example.com"
-                  required
                 />
                 <label for="loginEmail">이메일</label>
               </div>
@@ -85,7 +86,7 @@
                   class="form-control modalInputBackground"
                   id="loginPw"
                   placeholder="Password"
-                  required
+                  pattern=".+@\."
                 />
                 <label for="loginPw">비밀번호</label>
               </div>
@@ -160,7 +161,6 @@
                   class="form-control modalInputBackground"
                   id="registerName"
                   placeholder="김땡땡"
-                  required
                 />
                 <label for="registerName">이름</label>
               </div>
@@ -170,7 +170,6 @@
                   class="form-control modalInputBackground"
                   id="registerEmail"
                   placeholder="name@example.com"
-                  required
                 />
                 <label for="registerEmail">이메일</label>
                 <button
@@ -189,9 +188,10 @@
                   class="form-control modalInputBackground"
                   id="registerPw"
                   placeholder="Password"
-                  required
                 />
-                <label for="registerPw">비밀번호</label>
+                <label for="registerPw"
+                  >비밀번호(대소문자, 특수문자, 숫자 포함 8자리 이상)</label
+                >
               </div>
               <div class="errorMsg mt-3 ms-2" id="registerMsg"></div>
             </form>
@@ -243,8 +243,14 @@
             저쩌고 가다나라마바사 커뮤니티입니다.
           </p>
           <div class="btnWrap">
-            <a class="btn" href="#">글쓰기</a>
-            <a class="btn ghostBtn" href="#">가입하기</a>
+            <a class="btn" href="/board/register">글쓰기</a>
+            <a
+              href=""
+              class="text-decoration-none"
+              data-bs-toggle="modal"
+              data-bs-target="#registerModal"
+              ><span class="btn ghostBtn">가입하기</span></a
+            >
           </div>
         </div>
       </div>
