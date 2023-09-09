@@ -26,7 +26,7 @@ textarea {
   width: 60px;
 }
 
-.file .upload-name {
+.file .fileName {
   display: inline-block;
   height: 40px;
   padding: 0 10px;
