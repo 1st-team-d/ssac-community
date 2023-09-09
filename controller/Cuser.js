@@ -5,7 +5,7 @@ const { hashedPw, comparePw } = require("../utils/encrypt");
 
 // 회원가입 처리 - 진행 중
 exports.postSignup = async (req, res) => {
-  // Todo: 유효성 검사(아이디 중복, 비밀번호 공백 확인)
+  // Todo: 유효성 검사(아이디 중복, 비밀번호 공백 확인), 관리자 추가
 
   try {
     // 회원가입 요청 시, 암호화된 비밀번호 DB 추가
