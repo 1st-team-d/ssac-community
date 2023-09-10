@@ -6,9 +6,9 @@ const { hashedPw, comparePw } = require("../utils/encrypt");
 
 // 이메일(아이디) 유효성 검사 함수
 const checkEmail = async (email) => {
-  const regexr = /[\w\-\.]+\@[\w\-\.]+/g; // aaa@bbb.com
+  const regexrEmail = /[\w\-\.]+\@[\w\-\.]+/g; // aaa@bbb.com
 
-  if (email.match(regexr)) {
+  if (email.match(regexrEmail)) {
     return true; // 형식 통과
   } else {
     return false; // 형식 실패
@@ -17,9 +17,9 @@ const checkEmail = async (email) => {
 
 // 비밀번호 유효성 검사 함수
 const checkPw = async (pw) => {
-  const regexr = /\s/g; // 공백, 탭
+  const regexrPw = /\s/g; // 공백, 탭
 
-  if (pw.match(regexr)) {
+  if (pw.match(regexrPw)) {
     return false; // gap 존재
   } else {
     return true; // gap 존재 X
