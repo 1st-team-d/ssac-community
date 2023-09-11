@@ -14,7 +14,7 @@ async function postBoard() {
     postContent: post.postContent.value,
     postFile: post.postFile.value,
   };
-  const res = await axios({
+  let res = await axios({
     url: '/board/register',
     method: 'post',
     data: data,
