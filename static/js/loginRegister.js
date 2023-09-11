@@ -28,11 +28,11 @@ async function postLogin() {
   } else {
     // *back*
     // 입력 데이터로 로그인 시도 -> response로 true, false 반환 부탁드립니다.
-    // const res = await axios({
-    //   url: '/user/signin',
-    //   method: 'post',
-    //   data: loginData,
-    // });
+    let res = await axios({
+      url: '/user/signin',
+      method: 'post',
+      data: loginData,
+    });
     // 임시로 설정해놓은 값입니다.
     res = { data: false };
     if (res.data) {
@@ -85,12 +85,11 @@ async function postRegister() {
         } else {
           // *back*
           // 회원가입 성공시 true, 실패시 false 응답 해주세요. 아마 다 true 뜰듯?
-          // const res = await axios({
-          //   url: '/user/signup',
-          //   method: 'post',
-          //   data: registerData,
-          // });
-          res = { data: true };
+          let res = await axios({
+            url: '/user/signup',
+            method: 'post',
+            data: registerData,
+          });
           if (res.data) {
             // true -> 회원가입 성공 -> 메인 화면으로 이동
             document.location.href = '/';
@@ -107,12 +106,11 @@ async function checkDuplicate(btn) {
   const email = form.registerEmail.value;
   // *back*
   // 입력한 이메일로 중복 체크 -> 중복 아니면 true, 중복이면 false 응답 부탁드려요
-  // const res = await axios({
-  //   url: '/checkEmail',
-  //   method: 'post',
-  //   data: email,
-  // });
-  res = { data: true };
+  let res = await axios({
+    url: '/checkEmail',
+    method: 'post',
+    data: email,
+  });
   if (res.data) {
     checkEmailMsg.innerHTML = '사용 가능한 이메일입니다.';
     checkEmailMsg.style.color = 'blue';
