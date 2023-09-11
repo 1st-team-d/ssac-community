@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>새싹 스터디 게시판</title>
+    <link rel="stylesheet" href="css/css.css" />
+  </head>
+  <body>
+    <div class="board_wrap">
+      <div class="board_title">
+        <strong>새싹 스터디 게시판🌱</strong>
+        <p>새싹 스터디 게시판입니다. 자유롭게 작성해주세요~~</p>
+      </div>
+      <div class="board_view_wrap">
+        <div class="board_view">
+          <div class="title">글 제목 안녕하세요~~</div>
+          <div class="info">
+            <dl>
+              <dt>번호</dt>
+              <dd>1</dd>
+            </dl>
+            <dl>
+              <dt>글쓴이</dt>
+              <dd>홍길동</dd>
+            </dl>
+            <dl>
+              <dt>작성일</dt>
+              <dd>2023.09.08</dd>
+            </dl>
+            <dl>
+              <dt>조회</dt>
+              <dd>33</dd>
+            </dl>
+          </div>
+          <div class="cont">
+            글 내용이 들어갑니다<br />
+            글 내용이 들어갑니다<br />
+            글 내용이 들어갑니다<br />
+            글 내용이 들어갑니다<br />
+            글 내용이 들어갑니다<br />
+            글 내용이 들어갑니다<br />
+            글 내용이 들어갑니다<br />
+            글 내용이 들어갑니다
+          </div>
+        </div>
+    <!-- JavaScript 코드와 스타일이 적용된 댓글 목록 -->
+    <div class="comment_section">
+      <h2>댓글 작성</h2>
+      <div class="comment_form">
+        <label for="comment_author">이름:</label>
+        <input type="text" id="comment_author" name="comment_author" />
+        <label for="comment_content">댓글 내용:</label>
+        <textarea id="comment_content" name="comment_content" rows="4"></textarea>
+        <button type="submit" id="submit_comment">댓글 작성</button>
+      </div>
+      <div class="comment_list"></div>
+    </div>
+
+      <div class="bt_wrap">
+        <a href="listBoard.ejs" class="on">목록</a>
+        <a href="postBoard.ejs">수정</a>
+      </div>
+    </div>
+
+
+    <!-- JavaScript 코드-->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const submitButton = document.getElementById("submit_comment");
+        const commentAuthorInput = document.getElementById("comment_author");
+        const commentContentInput = document.getElementById("comment_content");
+        const commentList = document.querySelector(".comment_list");
+        let commentIdCounter = 1;
+
+        // 수정 중인 댓글을 저장하는 변수
+        let editingComment = null;
+
+        submitButton.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          const author = commentAuthorInput.value;
+          const content = commentContentInput.value;
+
+          if (!author || !content) {
+            alert("댓글 작성자와 내용을 입력하세요.");
+            return;
+          }
+
+          if (editingComment) {
+            // 수정 중인 댓글을 업데이트
+            editingComment.querySelector(".comment_author").textContent = author;
+            editingComment.querySelector(".comment_content").textContent = content;
+            editingComment = null; // 수정 완료 후 초기화
+          } else {
+            // 새 댓글을 생성
+            const commentItem = document.createElement("div");
+            commentItem.classList.add("comment_item");
+            commentItem.innerHTML = `
+              <div class="comment_author">${author}</div>
+              <div class="comment_content">${content}</div>
+              <div class="comment_controls">
+                <button class="edit_comment">수정</button>
+                <button class="delete_comment">삭제</button>
+              </div>
+            `;
+
+            const commentId = `comment_${commentIdCounter}`;
+            commentItem.setAttribute("id", commentId);
+
+            // 새 댓글을 목록의 마지막에 추가
+            commentList.insertBefore(commentItem, null);
+
+            commentIdCounter++;
+          }
+
+          commentAuthorInput.value = "";
+          commentContentInput.value = "";
+
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        // 삭제 버튼 클릭 시 해당 댓글 삭제
+        commentList.addEventListener("click", function (e) {
+          if (e.target.classList.contains("delete_comment")) {
+            const commentItem = e.target.closest(".comment_item");
+            commentList.removeChild(commentItem);
+          }
+
+          if (e.target.classList.contains("edit_comment")) {
+            // 수정 버튼을 클릭한 경우
+            const commentItem = e.target.closest(".comment_item");
+            const author = commentItem.querySelector(".comment_author").textContent;
+            const content = commentItem.querySelector(".comment_content").textContent;
+
+            // 수정 중인 댓글의 내용을 입력란에 채우기
+            commentAuthorInput.value = author;
+            commentContentInput.value = content;
+
+            // 수정 중인 댓글을 저장
+            editingComment = commentItem;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
