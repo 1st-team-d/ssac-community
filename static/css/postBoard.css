@@ -1,0 +1,51 @@
+/* Common */
+@import 'index.css';
+
+input:focus {
+  outline: none;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+body {
+  background-color: #fff;
+}
+
+input {
+  padding: 7px 5px;
+}
+
+textarea {
+  resize: none;
+}
+
+.postWrap span {
+  display: inline-block;
+  width: 60px;
+}
+
+.file .fileName {
+  display: inline-block;
+  height: 40px;
+  padding: 0 10px;
+  vertical-align: middle;
+  border: 1px solid #dddddd;
+  width: 78%;
+  color: #999999;
+}
+
+.file #postFile {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
+
+.file .inputFileBtn {
+  cursor: pointer;
+  width: 50px;
+}

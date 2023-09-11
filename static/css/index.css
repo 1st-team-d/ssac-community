@@ -3,7 +3,7 @@
 :root {
   --main-btn-background-color: #a2c579;
   --main-btn-text-color: #363638;
-  --main-btn-hover-color: #83c13b;
+  --main-btn-hover-color: #8ddf2f;
   --modal-background-color: #ffffdd;
   --modal-input-background-color: #ffffea;
   --input-border-color: rgba(151, 186, 39, 0.5);
@@ -22,6 +22,10 @@
 }
 
 .btn:hover {
+  background-color: var(--main-btn-hover-color);
+}
+
+.btn:focus {
   background-color: var(--main-btn-hover-color);
 }
 
@@ -159,6 +163,15 @@ a {
 /* 모달 input 색상 설정 */
 .modalInputBackground {
   background-color: var(--modal-input-background-color);
+}
+
+/* 모달 창 에러 메세지 */
+.errorMsg {
+  color: red;
+}
+
+.checkedBtn:hover {
+  background-color: #8a9c54;
 }
 
 @media screen and (max-width: 768px) {
