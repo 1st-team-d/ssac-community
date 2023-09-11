@@ -1,5 +1,10 @@
 @server = http://localhost:8080
 
+### 게시글 조회 화면
+GET {{server}}/board
+
+### 특정 게시글 화면
+
 ### 게시물 삭제
 DELETE {{server}}/board/remove
 Content-Type: application/json; charset=UTF-8

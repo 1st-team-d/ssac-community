@@ -1,9 +1,10 @@
 const { Board } = require("../models");
 
-// 게시글 조회 화면 - 진행 중
+// 게시글 조회 화면
 exports.getBoard = async (req, res) => {
   // Todo: 게시글 조회 화면 파일명 확인
-  // res.render("board/postBoard"); // 임시로 postBoard로 등록 -> 페이지 완성시 페이지 교체 필요
+  res.render("board/listBoard");
+  // res.render("board/postBoard");
 };
 
 // 특정 게시글 화면 - 진행 중
@@ -19,7 +20,10 @@ exports.getBoardId = async (req, res) => {
       where: { boardSeq: seq },
     });
 
-    // res.render({})
+    res.render("임시값", {
+      isGetBoardId: true,
+      msg: "특정 게시물 화면 띄우기 성공",
+    });
   } catch (err) {
     console.error(err);
     res.send({ isGetBoardId: false, msg: "특정 게시물 화면 띄우기 실패" });
@@ -37,7 +41,11 @@ exports.deleteBoard = async (req, res) => {
       where: { boardSeq: seq },
     });
 
-    res.send({ isDelete: true, msg: "게시물 삭제 성공" });
+    if (board) {
+      res.send({ isDelete: true, msg: "게시물 삭제 성공" });
+    } else {
+      res.send({ isDelete: false, msg: "게시글 시퀀스 오류" });
+    }
   } catch (err) {
     console.error(err);
     res.send({ isDelete: false, msg: "게시물 삭제 실패" });
