@@ -33,8 +33,6 @@ async function postLogin() {
       method: 'post',
       data: loginData,
     });
-    // 임시로 설정해놓은 값입니다.
-    res = { data: false };
     if (res.data) {
       // true -> 로그인 성공 -> 메인 화면으로 이동
       document.location.href = '/';
