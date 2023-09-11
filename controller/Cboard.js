@@ -17,14 +17,20 @@ exports.getRegister = (req, res) => {
 exports.postRegister = (req, res) => {
   try {
     console.log('req.file ::::: ', req.file);
+    console.log('req.files ::::: ', req.files);
+    console.log('req.body ::::: ', req.body);
+
+    const jsonData = JSON.parse(req.body['data']);
+
+    console.log('jsonData ::::: ', jsonData);
     // req.file.preFilepath = '/uploadImage/'; // userUpload 설정
-    const { title, content, imagePath } = req.body;
+    const { title, content, imagePath } = jsonData;
 
     console.log('title ::::: ', title);
     console.log('content ::::: ', content);
     console.log('imagePath ::::: ', imagePath);
-    console.log('req.file ::::: ', req.file);
-    res.send({ file: req.file, data: req.body });
+    // res.send({ file: req.file, data: req.body });
+    res.send('hello')
   } catch (err) {
     console.log(err);
   }

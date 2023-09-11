@@ -11,11 +11,12 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0g
 Content-Disposition: form-data; name="data"
 
 {
-  "postTitle": "손흥민",
-  "postContent": "value2"
+  "title": "제목 Test",
+  "content": "내용 Test",
+  "imagePath": "이미지 경로 Test"
 }
 
-------WebKitFormBoundary7MA4YWxkTrZu0gW--
+------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="uploadImage"; filename="example.jpg"
 Content-Type: image/jpeg
 
