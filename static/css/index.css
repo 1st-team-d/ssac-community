@@ -1,41 +1,11 @@
+@import url(common.css);
 /* main css */
-/* 변수 설정 */
-:root {
-  --main-btn-background-color: #a2c579;
-  --main-btn-text-color: #363638;
-  --main-btn-hover-color: #8ddf2f;
-  --modal-background-color: #ffffdd;
-  --modal-input-background-color: #ffffea;
-  --input-border-color: rgba(151, 186, 39, 0.5);
-}
-
-/* Common */
-.form-control:focus {
-  border-color: var(--input-border-color);
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset,
-    0px 0px 8px rgba(134, 151, 59, 0.5);
-}
-
-.btn {
-  color: var(--main-btn-text-color);
-  background-color: var(--main-btn-background-color);
-}
-
-.btn:hover {
-  background-color: var(--main-btn-hover-color);
-}
-
-.btn:focus {
-  background-color: var(--main-btn-hover-color);
-}
-
-.ghostBtn {
-  background-color: transparent;
-  border: 1px solid var(--main-btn-background-color);
-}
-
 * {
   box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
 }
 
 body {
@@ -168,10 +138,6 @@ a {
 /* 모달 창 에러 메세지 */
 .errorMsg {
   color: red;
-}
-
-.checkedBtn:hover {
-  background-color: #8a9c54;
 }
 
 @media screen and (max-width: 768px) {
