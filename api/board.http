@@ -1,7 +1,7 @@
 @server = http://localhost:8080
 
 ### 게시물 삭제
-POST {{server}}/board/remove
+DELETE {{server}}/board/remove
 Content-Type: application/json; charset=UTF-8
 
 {
