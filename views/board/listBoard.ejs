@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>새싹 스터디 게시판</title>
-    <link rel="stylesheet" href="/static/css/css.css" />
+    <!-- cdn -->
+    <% include('../cdn/cdn.ejs') %>
+    <!-- 개발자 정의 boardCommon -->
+    <link rel="stylesheet" href="/static/css/boardCommon.css" />
   </head>
   <body>
     <div class="board_wrap">
@@ -21,14 +24,15 @@
             <div class="date">작성일</div>
             <div class="count">조회</div>
           </div>
-          <div>
-            <div class="num">5</div>
-            <div class="title">
-              <a href="viewBoard.ejs">글 제목</a>
+          <!-- 일단 내가 먼저 해보고 나중에 수정 -->
+          <div class="postBox">
+            <div class="num" id="postId">5</div>
+            <div class="title" id="postTitle">
+              <a href="/board/5" onclick="viewBoard(this)">글 제목</a>
             </div>
-            <div class="writer">작성자</div>
-            <div class="date">2023.09.08</div>
-            <div class="count">33</div>
+            <div class="writer" id="postWriter">작성자</div>
+            <div class="date" id="postDate">2023.09.08</div>
+            <div class="count" id="postCount">33</div>
           </div>
           <div>
             <div class="num">4</div>

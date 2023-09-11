@@ -1,0 +1,28 @@
+/* Common */
+textarea {
+  resize: none;
+  border: none !important;
+  background-color: transparent;
+  padding: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+/* 첨부파일 */
+#postFile a:hover {
+  text-decoration: underline;
+}
+
+/* 댓글 */
+em {
+  font-style: normal;
+}
+
+.comment_content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: #fff;
+}

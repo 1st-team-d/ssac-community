@@ -8,6 +8,7 @@
     <%- include('../cdn/cdn.ejs') %>
     <!-- 게시판 목록 조회, 특정 게시글 조회 -->
     <link rel="stylesheet" href="/static/css/boardCommon.css" />
+    <link rel="stylesheet" href="/static/css/viewBoard.css" />
     <script defer src="/static/js/viewBoard.js"></script>
   </head>
   <body>
@@ -18,52 +19,56 @@
       </div>
       <div class="board_view_wrap">
         <div class="board_view">
-          <div class="title">글 제목 안녕하세요~~</div>
+          <div class="title"><%= data.postTitle %></div>
           <div class="info">
             <dl>
               <dt>번호</dt>
-              <dd>1</dd>
+              <dd><%= data.postId %></dd>
             </dl>
             <dl>
               <dt>글쓴이</dt>
-              <dd>홍길동</dd>
+              <dd><%= data.userName %></dd>
             </dl>
             <dl>
               <dt>작성일</dt>
-              <dd>2023.09.08</dd>
+              <dd><%= data.postDate %></dd>
             </dl>
             <dl>
               <dt>조회</dt>
-              <dd>33</dd>
+              <dd><%= data.postCount %></dd>
             </dl>
           </div>
           <div class="cont">
-            글 내용이 들어갑니다<br />
-            글 내용이 들어갑니다<br />
-            글 내용이 들어갑니다<br />
-            글 내용이 들어갑니다<br />
-            글 내용이 들어갑니다<br />
-            글 내용이 들어갑니다<br />
-            글 내용이 들어갑니다<br />
-            글 내용이 들어갑니다
+            <!-- 게시물 내용을 출력할 때는 줄바꿈 이런걸 했을 수도 있어서 이스케이프 처리하지 않고 출력 -->
+            <%- data.postContent.replace(/\n/g, '<br />') %>
           </div>
+        </div>
+        <div id="postFile" class="container fs-3 my-3">
+          <span class="badge text-bg-success me-3">첨부파일</span>
+          <a href="<%= data.postFilePath %>" target="_blank"
+            ><%= data.postFileName %></a
+          >
         </div>
       </div>
       <!-- JavaScript 코드와 스타일이 적용된 댓글 목록 -->
       <div class="comment_section">
         <h2>댓글 작성</h2>
         <div class="comment_form">
-          <label for="comment_author">이름:</label>
-          <input type="text" id="comment_author" name="comment_author" />
-          <label for="comment_content">댓글 내용:</label>
-          <textarea
-            id="comment_content"
-            name="comment_content"
-            rows="4"
-          ></textarea>
-          <button class="btn" type="submit" id="submit_comment">
-            댓글 작성
-          </button>
+          <div class="comment_content mb-4">
+            <span id="commentWriter" class="fs-3 fw-bold p-3"
+              ><%= loginUserData.userName %></span
+            >
+            <textarea
+              class="px-3"
+              id="comment_content"
+              name="comment_content"
+            ></textarea>
+          </div>
+          <div id="btnArea" class="d-flex justify-content-end">
+            <button class="btn" type="submit" id="submit_comment">
+              댓글 작성
+            </button>
+          </div>
         </div>
         <div class="comment_list"></div>
       </div>
