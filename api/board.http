@@ -1,0 +1,24 @@
+@boardUrl=http://localhost:8080/board
+
+### 게시글 등록 화면
+GET {{boardUrl}}/register/
+
+### 게시글 등록
+POST {{boardUrl}}/register
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="data"
+
+{
+  "postTitle": "손흥민",
+  "postContent": "value2"
+}
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+Content-Disposition: form-data; name="uploadImage"; filename="example.jpg"
+Content-Type: image/jpeg
+
+@C:\SeSAC\polar_bear.jpg
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
