@@ -5,22 +5,50 @@ GET {{boardUrl}}/register/
 
 ### 게시글 등록
 POST {{boardUrl}}/register
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Type: multipart/form-data; boundary=postRegister
 
-------WebKitFormBoundary7MA4YWxkTrZu0gW
+--postRegister
 Content-Disposition: form-data; name="data"
 
 {
   "title": "제목 Test",
-  "content": "내용 Test",
-  "imagePath": "이미지 경로 Test"
+  "content": "내용 Test"
 }
 
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="uploadImage"; filename="example.jpg"
+--postRegister
+Content-Disposition: form-data; name="uploadImage"; filename="postRegister.jpg"
 Content-Type: image/jpeg
 
 # @C:\SeSAC\polar_bear.jpg
 < C:\SeSAC\polar_bear.jpg
 
-------WebKitFormBoundary7MA4YWxkTrZu0gW--
+--postRegister--
+
+### 게시글 수정 화면
+GET {{boardUrl}}/modify
+Content-Type: application/json; charset=UTF-8
+
+{
+  "boardSeq": "6"
+}
+
+### 게시글 수정
+PATCH {{boardUrl}}/modify
+Content-Type: multipart/form-data; boundary=patchRegister
+
+--patchRegister
+Content-Disposition: form-data; name="data"
+
+{
+  "title": "제목 ::: 수정 :::  Test",
+  "content": "내용 ::: 수정 ::: Test",
+  "boardSeq": "6"
+}
+
+--patchRegister
+Content-Disposition: form-data; name="uploadImage"; filename="patchRegister.jpg"
+Content-Type: image/jpeg
+
+< C:\SeSAC\laser4.jpg
+
+--patchRegister--
