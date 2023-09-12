@@ -30,7 +30,7 @@ exports.getBoardId = async (req, res) => {
   }
 };
 
-// 게시글 검색 -> 조회
+// 게시글 검색 -> 조회 - 진행 중
 exports.getSearch = async (req, res) => {
   try {
   } catch (err) {
