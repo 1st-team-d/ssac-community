@@ -66,6 +66,13 @@ app.get('/board/viewBoard', (req, res) => {
       postFileName: 'ssac-logo.png',
     },
     loginUserData: { userName: '김땡땡' },
+    cmts: [
+      { commentUser: '김바보', commentContent: '안녕하세요~' },
+      {
+        commentUser: '박모씨',
+        commentContent: '저도 참여하고 싶습니다!',
+      },
+    ],
   });
 });
 

@@ -6,11 +6,10 @@ const commentList = document.querySelector('.comment_list');
 
 function submitComment() {
   let registeredComment = document.createElement('div');
+  registeredComment.classList.add('commentBox', 'px-5', 'mb-3');
   registeredComment.innerHTML = `
-  <div class="commentBox px-5 mb-3">
     <div class="commentUser badge text-bg-secondary fw-bold fs-3">${commentAuthor.innerHTML}</div>
     <div class="commentContent mt-2 fs-4">${commentContentInput.value}</div>
-  </div>
   `;
   commentList.append(registeredComment);
   const commentContent = document.querySelector('.commentContent');

@@ -80,10 +80,14 @@
         <div class="comment_list">
           <!-- 댓글 배열 형태로 전달되면 각 요소에 대해 작성자, 댓글 내용 출력 -->
           <% cmts.forEach(cmt => { %>
-          <div class="commentUser badge text-bg-secondary fw-bold fs-3">
-            <%= cmt.commentUser %>
+          <div class="commentBox px-5 mb-3">
+            <div class="commentUser badge text-bg-secondary fw-bold fs-3">
+              <%= cmt.commentUser %>
+            </div>
+            <div class="commentContent mt-2 fs-4">
+              <%= cmt.commentContent %>
+            </div>
           </div>
-          <div class="commentContent mt-2 fs-4"><%= cmt.commentContent %></div>
           <% }); %>
         </div>
       </div>
