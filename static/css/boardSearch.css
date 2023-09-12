@@ -1,0 +1,35 @@
+@import url(common.css);
+/* 검색 창 스타일 */
+.search_box {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.search_box input[type='text'] {
+  width: 60%; /* 검색 창 너비 조정 */
+  padding: 10px;
+  font-size: 1.4rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.search_box button {
+  background-color: #a2c579;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.6rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.search_box button:hover {
+  background-color: #8ddf2f;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1000px) {
+  .search_box input[type='text'] {
+    width: 80%; /* 작은 화면에서 검색 창 너비 확대 */
+  }
+}

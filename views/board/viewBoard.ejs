@@ -12,7 +12,7 @@
     <script defer src="/static/js/viewBoard.js"></script>
   </head>
   <body>
-    <div class="board_wrap">
+    <div class="board_wrap container">
       <div class="board_title">
         <strong>새싹 스터디 게시판🌱</strong>
         <p>새싹 스터디 게시판입니다. 자유롭게 작성해주세요~~</p>
@@ -43,7 +43,7 @@
             <%- data.postContent.replace(/\n/g, '<br />') %>
           </div>
         </div>
-        <div id="postFile" class="container fs-3 my-3">
+        <div id="postFile" class="fs-3 my-3">
           <span class="badge text-bg-success me-3">첨부파일</span>
           <a href="<%= data.postFilePath %>" target="_blank"
             ><%= data.postFileName %></a
@@ -65,17 +65,22 @@
             ></textarea>
           </div>
           <div id="btnArea" class="d-flex justify-content-end">
-            <button class="btn" type="submit" id="submit_comment">
+            <button
+              class="btn fw-bold fs-4 p-3 text-light"
+              type="submit"
+              id="submit_comment"
+              onclick="submitComment()"
+            >
               댓글 작성
             </button>
           </div>
         </div>
-        <div class="comment_list"></div>
+        <div class="card-body comment_list"></div>
       </div>
 
-      <div class="bt_wrap">
-        <a href="listBoard.ejs" class="on">목록</a>
-        <a href="postBoard.ejs">수정</a>
+      <div class="bt_wrap container d-flex justify-content-center">
+        <button class="btn me-5 fs-2 px-4">목록</button>
+        <button class="btn fs-2 px-4">수정</button>
       </div>
     </div>
   </body>
