@@ -30,6 +30,15 @@ exports.getBoardId = async (req, res) => {
   }
 };
 
+// 게시글 검색 -> 조회
+exports.getSearch = async (req, res) => {
+  try {
+  } catch (err) {
+    console.error(err);
+    res.send({ isSearch: false });
+  }
+};
+
 // 게시글 삭제 처리
 exports.deleteBoard = async (req, res) => {
   try {

@@ -10,6 +10,7 @@ router.get("/", controller.getBoard);
 router.get("/:id", controller.getBoardId);
 
 // 게시글 검색 -> 조회
+router.get("?title=###", controller.getSearch);
 
 // 게시글 삭제 처리
 router.delete("/remove", controller.deleteBoard);
