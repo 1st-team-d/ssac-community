@@ -7,10 +7,21 @@ const commentList = document.querySelector('.comment_list');
 function submitComment() {
   let registeredComment = document.createElement('div');
   registeredComment.innerHTML = `
-  <div class="commentBox mb-3">
-    <div class="userName badge text-bg-secondary fw-bold fs-3">${commentAuthor.innerHTML}</div>
+  <div class="commentBox px-5 mb-3">
+    <div class="commentUser badge text-bg-secondary fw-bold fs-3">${commentAuthor.innerHTML}</div>
     <div class="commentContent mt-2 fs-4">${commentContentInput.value}</div>
   </div>
   `;
   commentList.append(registeredComment);
+  const commentContent = document.querySelector('.commentContent');
+  const commentUser = document.querySelector('.commentUser');
+  let cmtData = {
+    commentContent: commentContent.textContent,
+    commentUser: commentUser.textContent,
+  };
+  axios({
+    url: '/comment/register',
+    method: 'post',
+    data: cmtData,
+  }); // 등록되면 true
 }

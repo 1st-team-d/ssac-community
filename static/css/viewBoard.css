@@ -11,6 +11,8 @@ textarea:focus {
   outline: none;
 }
 
+/* 게시글 main */
+
 /* 첨부파일 */
 #postFile a:hover {
   text-decoration: underline;

@@ -10,12 +10,14 @@
     <link rel="stylesheet" href="/static/css/boardCommon.css" />
     <link rel="stylesheet" href="/static/css/viewBoard.css" />
     <script defer src="/static/js/viewBoard.js"></script>
+    <!-- header -->
+    <link rel="stylesheet" href="/static/css/header.css" />
   </head>
   <body>
+    <%- include('../includes/header.ejs') %>
     <div class="board_wrap container">
       <div class="board_title">
         <strong>새싹 스터디 게시판🌱</strong>
-        <p>새싹 스터디 게시판입니다. 자유롭게 작성해주세요~~</p>
       </div>
       <div class="board_view_wrap">
         <div class="board_view">
@@ -44,15 +46,15 @@
           </div>
         </div>
         <div id="postFile" class="fs-3 my-3">
-          <span class="badge text-bg-success me-3">첨부파일</span>
-          <a href="<%= data.postFilePath %>" target="_blank"
+          <span class="badge text-bg-success mx-3">첨부파일</span>
+          <a class="fs-4" href="<%= data.postFilePath %>" target="_blank"
             ><%= data.postFileName %></a
           >
         </div>
       </div>
       <!-- JavaScript 코드와 스타일이 적용된 댓글 목록 -->
       <div class="comment_section">
-        <h2>댓글 작성</h2>
+        <div><span>댓글</span></div>
         <div class="comment_form">
           <div class="comment_content mb-4">
             <span id="commentWriter" class="fs-3 fw-bold p-3"
@@ -75,7 +77,15 @@
             </button>
           </div>
         </div>
-        <div class="card-body comment_list"></div>
+        <div class="comment_list">
+          <!-- 댓글 배열 형태로 전달되면 각 요소에 대해 작성자, 댓글 내용 출력 -->
+          <% cmts.forEach(cmt => { %>
+          <div class="commentUser badge text-bg-secondary fw-bold fs-3">
+            <%= cmt.commentUser %>
+          </div>
+          <div class="commentContent mt-2 fs-4"><%= cmt.commentContent %></div>
+          <% }); %>
+        </div>
       </div>
 
       <div class="bt_wrap container d-flex justify-content-center">
