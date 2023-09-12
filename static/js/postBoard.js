@@ -4,22 +4,47 @@ $('#postFile').on('change', function () {
   $('.upload-name').val(fileName.split('\\')[2]);
 });
 
+// 폼 제출 시 이 데이터를 DB에 추가하고, 백에서 게시글 목록 페이지를 렌더링
+// 게시글 목록 get 할 때 data로 게시글 데이터들 뿌려주면 될듯.
+
+// --> submit 버튼으로 설정해서 폼 자체에서 요청 보내도록 함 혹시 몰라서 남겨놓기
 // 글 작성 버튼 클릭 시 등록 후 게시글 목록 페이지로 이동
-async function postBoard() {
-  const post = document.forms['post'];
-  const data = {
-    postTitle: post.postTitle.value,
-    postWriter: post.postWriter.value,
-    postPw: post.postPw.value,
-    postContent: post.postContent.value,
-    postFile: post.postFile.value,
-  };
-  let res = await axios({
-    url: '/board/register',
-    method: 'post',
-    data: data,
-  });
-  if (res.data) {
-    document.location.href = '/board';
-  }
-}
+// $('.postBtn').on('click', async (e) => {
+//   e.preventDefault();
+//   const post = document.forms['post'];
+//   const data = {
+//     postTitle: post.postTitle.value,
+//     postWriter: post.postWriter.value,
+//     postPw: post.postPw.value,
+//     postContent: post.postContent.value,
+//     postFile: post.postFile.value,
+//   };
+//   let res = await axios({
+//     url: '/board/register',
+//     method: 'post',
+//     data: data,
+//   });
+//   if (res.data) {
+//     document.location.href = '/board';
+//   }
+// });
+
+// async function postBoard(e) {
+//   e.preventDe;
+//   const post = document.forms['post'];
+//   const data = {
+//     postTitle: post.postTitle.value,
+//     postWriter: post.postWriter.value,
+//     postPw: post.postPw.value,
+//     postContent: post.postContent.value,
+//     postFile: post.postFile.value,
+//   };
+//   let res = await axios({
+//     url: '/board/register',
+//     method: 'post',
+//     data: data,
+//   });
+//   if (res.data) {
+//     document.location.href = '/board';
+//   }
+// }

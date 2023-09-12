@@ -19,6 +19,13 @@ input {
 
 textarea {
   resize: none;
+  border-radius: 15px;
+}
+
+/* 게시글 작성 main */
+.postWrap {
+  margin-top: 100px;
+  padding: 20px;
 }
 
 .postWrap span {
