@@ -20,6 +20,7 @@ input {
 textarea {
   resize: none;
   border-radius: 15px;
+  padding: 15px;
 }
 
 /* 게시글 작성 main */

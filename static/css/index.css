@@ -13,10 +13,6 @@ body {
 }
 
 .container {
-  width: 100%;
-  max-width: 1480px;
-  padding: 0 20px;
-  margin: auto;
   position: relative;
 }
 
@@ -36,6 +32,7 @@ header h1 {
   float: left;
   z-index: 3;
 }
+
 header h1 img {
   display: block;
   position: relative;

@@ -202,9 +202,6 @@ a {
   font-size: 1.4rem;
 }
 
-.board_view .info dl dt {
-}
-
 .board_view .info dl dd {
   margin-left: 10px;
   color: #777;
@@ -320,20 +317,6 @@ a {
 
 .comment_form textarea {
   height: 100px;
-}
-
-.comment_form button {
-  background-color: #83c13b;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1.6rem;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.comment_form button:hover {
-  background-color: #333;
 }
 
 .scroll_to_list {

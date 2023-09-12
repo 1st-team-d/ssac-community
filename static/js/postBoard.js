@@ -1,8 +1,17 @@
 // 파일 input 업로드하면 text input에 파일명 표시
 $('#postFile').on('change', function () {
   let fileName = $('#postFile').val();
-  $('.upload-name').val(fileName.split('\\')[2]);
+  console.log(fileName);
+  $('.fileName').val(fileName.split('\\')[2]);
 });
+
+// $('.postBtn').on('click', (event) => {
+//   event.preventDefault();
+//   const form = document.forms['postData'];
+//   console.log(form.postTitle.value);
+//   console.log(form.postContent.value);
+
+// });
 
 // 폼 제출 시 이 데이터를 DB에 추가하고, 백에서 게시글 목록 페이지를 렌더링
 // 게시글 목록 get 할 때 data로 게시글 데이터들 뿌려주면 될듯.
