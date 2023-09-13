@@ -48,11 +48,11 @@ exports.getSearch = async (req, res) => {
 exports.deleteBoard = async (req, res) => {
   try {
     // 특정 게시글의 게시글 시퀀스
-    const { seq } = req.body;
+    const { boardSeq } = req.body;
 
     // DB 접근
     const board = await Board.destroy({
-      where: { boardSeq: seq },
+      where: { boardSeq: boardSeq },
     });
 
     if (board) {

@@ -8,7 +8,6 @@ router.get("/", controller.getBoard);
 
 // 특정 게시글 화면으로 이동 및 조회
 router.get("/:boardSeq", controller.getBoardId);
-// router.post("/post", controller.post);
 
 // 게시글 검색 -> 조회
 // router.get("?title=###", controller.getSearch);

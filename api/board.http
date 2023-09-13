@@ -11,5 +11,5 @@ DELETE {{server}}/board/remove
 Content-Type: application/json; charset=UTF-8
 
 {
-    "seq" : 1
+    "boardSeq" : 2
 }
