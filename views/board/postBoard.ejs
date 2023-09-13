@@ -17,7 +17,7 @@
   <body>
     <%- include('../includes/header.ejs') %>
     <form
-      name="postData"
+      name="data"
       action="/board/register"
       method="post"
       enctype="multipart/form-data"
@@ -30,14 +30,14 @@
             <input
               class="col-lg-6"
               type="text"
-              name="postTitle"
+              name="title"
               placeholder="제목 입력"
             />
           </div>
         </div>
         <div class="row">
           <textarea
-            name="postContent"
+            name="content"
             id="content"
             cols="100"
             rows="15"
@@ -59,7 +59,7 @@
             for="postFile"
             >업로드</label
           >
-          <input type="file" name="postFile" id="postFile" />
+          <input type="file" name="uploadImage" id="postFile" />
         </div>
         <div class="d-flex justify-content-end">
           <button type="submit" class="postBtn btn btn-secondary fw-bold mt-3">
