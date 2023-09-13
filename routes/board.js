@@ -50,7 +50,6 @@ const uploadConfig = multer({
 });
 
 router.get('/', controller.board); // 게시글 목록 화면
-
 router.get('/register', controller.getRegister); // 게시글 등록 화면
 router.post(
   '/register',

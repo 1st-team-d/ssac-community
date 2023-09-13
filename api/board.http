@@ -29,7 +29,7 @@ GET {{boardUrl}}/modify
 Content-Type: application/json; charset=UTF-8
 
 {
-  "boardSeq": "6"
+  "boardSeq": "7"
 }
 
 ### 게시글 수정
@@ -42,7 +42,7 @@ Content-Disposition: form-data; name="data"
 {
   "title": "제목 ::: 수정 :::  Test",
   "content": "내용 ::: 수정 ::: Test",
-  "boardSeq": "6"
+  "boardSeq": "7"
 }
 
 --patchRegister
