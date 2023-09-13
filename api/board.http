@@ -6,7 +6,7 @@
 GET {{boardUrl}}
 
 ### 게시글 화면 (쿼리 있음)
-GET {{boardUrl}}/?boardSeq=4
+GET {{boardUrl}}/?boardSeq=6
 
 ### 게시물 삭제
 DELETE {{boardUrl}}/remove
@@ -28,7 +28,8 @@ Content-Disposition: form-data; name="data"
 
 {
   "title": "제목 Test",
-  "content": "내용 Test"
+  "content": "내용 Test",
+  "userSeq": 1
 }
 
 --postRegister

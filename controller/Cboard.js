@@ -24,8 +24,8 @@ exports.getBoard = async (req, res) => {
         { where: { boardSeq: boardSeq } }
       );
 
-      // res.send(board);
-      res.render("board/viewBoard", { data: board });
+      res.send(board);
+      // res.render("board/viewBoard", { data: board });
     } else {
       // 전체 게시글 조회
 
@@ -103,6 +103,7 @@ exports.postRegister = async (req, res) => {
       title: title,
       content: content,
       imagePath: imagePath,
+      userSeq: req.session.userInfo.userSeq,
     });
 
     // console.log(insertOneBoard);
