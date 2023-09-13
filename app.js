@@ -21,6 +21,8 @@ app.set('/views', 'views');
 
 // static (css)
 app.use('/static', express.static(__dirname + '/static'));
+app.use('/uploadImage', express.static(__dirname + '/uploads'));
+
 
 // 미들웨어 등록
 // body-parser
@@ -47,34 +49,6 @@ app.use('/board', boardRouter);
 const userRouter = require('./routes/user');
 app.use('/user', userRouter);
 
-// app.get('/board', (req, res) => {
-//   res.render('board/listBoard');
-// });
-
-app.get('/board/viewBoard', (req, res) => {
-  res.render('board/viewBoard', {
-    // 임시 데이터
-    data: {
-      postTitle: '안녕하세요',
-      postId: '3',
-      userName: '홍길동',
-      postDate: '2023.09.08',
-      postCount: '33',
-      postContent:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci accumsan urna tempus maximus ac at mi. Vestibulum sed consequat tortor. Pellentesque in egestas leo, id pharetra ligula. Mauris egestas, dui id laoreet consectetur, mi magna iaculis nunc, sed congue mi magna sit amet urna. Cras iaculis sed lectus non elementum. Cras tempus lacus in tellus gravida ullamcorper. Mauris mollis, sem vitae euismod vehicula, quam neque porttitor tellus, nec fringilla tellus lectus et dui. Cras ut laoreet arcu, vitae consequat augue. Mauris nec metus lacus. Ut semper nulla ut suscipit mollis.\nCurabitur venenatis lacus sed urna ultrices fringilla. Sed laoreet blandit iaculis. Vestibulum commodo augue aliquet odio interdum facilisis. Duis porttitor iaculis enim, a venenatis tortor feugiat sed. Nullam tortor risus, tincidunt consequat metus ut, vehicula finibus orci. Proin cursus metus sit amet elit suscipit ultricies. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec eget risus felis.',
-      postFilePath: '/static/images/ssac-logo.png',
-      postFileName: 'ssac-logo.png',
-    },
-    loginUserData: { userName: '김땡땡' },
-    cmts: [
-      { commentUser: '김바보', commentContent: '안녕하세요~' },
-      {
-        commentUser: '박모씨',
-        commentContent: '저도 참여하고 싶습니다!',
-      },
-    ],
-  });
-});
 
 // 에러 처리
 app.get('*', (req, res) => {
