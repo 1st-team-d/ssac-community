@@ -1,8 +1,8 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 
 // .env 불러오기
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
 
 // 서버 설정
@@ -10,19 +10,18 @@ const LOCAL_IP = process.env.LOCAL_IP;
 const PORT = process.env.PORT;
 
 // 미리 설정한 sequelize 불러오기
-const db = require('./models/index');
+const db = require("./models/index");
 
 // 세션
-const session = require('express-session');
+const session = require("express-session");
 
 // 뷰 설정
-app.set('view engine', 'ejs');
-app.set('/views', 'views');
+app.set("view engine", "ejs");
+app.set("/views", "views");
 
 // static (css)
 app.use('/static', express.static(__dirname + '/static'));
-app.use('/uploadImage', express.static(__dirname + '/uploads'));
-
+app.use('/uploadFile', express.static(__dirname + '/uploads'));
 
 // 미들웨어 등록
 // body-parser
@@ -36,23 +35,22 @@ app.use(
     saveUninitialized: true,
     cookie: {
       httpOnly: true,
-      maxAge: 60 * 1000,
+      maxAge: 2 * 60 * 60 * 1000,
     },
   })
 );
 
 // '/' 요청
-const indexRouter = require('./routes/index');
-app.use('/', indexRouter);
-const boardRouter = require('./routes/board');
-app.use('/board', boardRouter);
-const userRouter = require('./routes/user');
-app.use('/user', userRouter);
-
+const indexRouter = require("./routes/index");
+app.use("/", indexRouter);
+const boardRouter = require("./routes/board");
+app.use("/board", boardRouter);
+const userRouter = require("./routes/user");
+app.use("/user", userRouter);
 
 // 에러 처리
-app.get('*', (req, res) => {
-  res.render('error');
+app.get("*", (req, res) => {
+  res.render("error");
 });
 
 db.sequelize.sync({ force: false }).then(() => {

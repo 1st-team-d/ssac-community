@@ -122,7 +122,11 @@ exports.postSignin = async (req, res) => {
 
         if (compareResult) {
           // 비밀번호 일치
-          req.session.userInfo = { name: user.name, id: user.id }; // 회원 정보 세션 생성
+          req.session.userInfo = {
+            name: user.name,
+            id: user.id,
+            userSeq: user.userSeq,
+          }; // 회원 정보 세션 생성
           res.send({ isCorrect, isNoGap, isSignin: true, data: user });
         } else {
           // 비밀번호 불일치
