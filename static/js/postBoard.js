@@ -14,10 +14,21 @@ $('#postFile').on('change', function () {
   }
 });
 
+// 게시물 등록 버튼 눌렀을 때 등록 잘 되면 백에서 true 받아서 요청 경로를 /board로 바꾸기
+$('.postBtn').on('click', () => {
+  const form = document.forms('data');
+  const data = {
+    userSeq: form.userSeq.value,
+    title: form.title.value,
+    content: form.content.value,
+    imagePath: form.uploadFile.value,
+  };
+});
+
 // 확장자 체크
 function checkExt(fileName) {
   let ext = fileName.split('.');
-  ext = ext[ext.length-1];
+  ext = ext[ext.length - 1];
   const extArr = ['png', 'jpg', 'pdf', 'ppt', 'doc', 'docx', 'xlsx', 'txt'];
 
   // console.log(ext);

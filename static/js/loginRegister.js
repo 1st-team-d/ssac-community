@@ -120,7 +120,7 @@ async function checkDuplicate(btn) {
     });
     if (res.data) {
       checkEmailMsg.innerHTML = '사용 가능한 이메일입니다.';
-      checkEmailMsg.classList.add('errorMsg');
+      checkEmailMsg.style.color = 'blue';
       isDuplicate = false;
     } else {
       checkEmailMsg.innerHTML =
