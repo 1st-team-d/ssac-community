@@ -1,6 +1,6 @@
 // '/board'로 오는 모든 요청은 여기서 처리
-const express = require('express');
-const controller = require('../controller/Cboard');
+const express = require("express");
+const controller = require("../controller/Cboard");
 const router = express.Router();
 
 const multer = require('multer');
@@ -49,6 +49,10 @@ const uploadConfig = multer({
   },
 });
 
+router.get("/", controller.getBoard); // 게시글 조회 화면으로 이동
+router.get("/:boardSeq", controller.getBoardId); // 특정 게시글 화면으로 이동 및 조회
+// router.get("?title=###", controller.getSearch); // 게시글 검색 -> 조회
+router.delete("/remove", controller.deleteBoard); // 게시글 삭제 처리
 router.get('/', controller.board); // 게시글 목록 화면
 router.get('/register', controller.getRegister); // 게시글 등록 화면
 router.post(

@@ -1,5 +1,21 @@
 @boardUrl=http://localhost:8080/board
 
+@server = http://localhost:8080
+
+### 게시글 조회 화면
+GET {{boardUrl}}/
+
+### 특정 게시글 화면
+GET {{boardUrl}}/1
+
+### 게시물 삭제
+DELETE {{boardUrl}}/remove
+Content-Type: application/json; charset=UTF-8
+
+{
+    "boardSeq" : 2
+}
+
 ### 게시글 등록 화면
 GET {{boardUrl}}/register/
 
