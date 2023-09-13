@@ -8,6 +8,9 @@ GET {{boardUrl}}
 ### 게시글 화면 (쿼리 있음)
 GET {{boardUrl}}/?boardSeq=6
 
+### 게시글 검색
+GET {{boardUrl}}/?search=제목
+
 ### 게시물 삭제
 DELETE {{boardUrl}}/remove
 Content-Type: application/json; charset=UTF-8

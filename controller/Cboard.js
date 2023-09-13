@@ -1,14 +1,13 @@
-const { Board, Comment, User } = require("../models");
+const { Board, Comment, User, sequelize } = require("../models");
+const Op = require("sequelize").Op;
 
 // 게시글 화면
 exports.getBoard = async (req, res) => {
   try {
-    // 특정 게시글의 게시글 시퀀스
-    const { boardSeq } = req.query;
-    console.log("params >> ", req.params);
+    // 특정 게시글의 게시글 시퀀스, 검색어
+    const { boardSeq, search } = req.query;
     console.log("query >> ", req.query);
 
-    // req.query에 받아오는 boardSeq의 값 유무
     if (boardSeq) {
       // 특정 게시글 조회
 
@@ -26,6 +25,22 @@ exports.getBoard = async (req, res) => {
 
       res.send(board);
       // res.render("board/viewBoard", { data: board });
+    } else if (search) {
+      // 게시글 조회
+      const board = await Board.findAll({
+        where: {
+          [Op.or]: [
+            {
+              title: { [Op.like]: `%${search}%` },
+            },
+            {
+              content: { [Op.like]: `%${search}%` },
+            },
+          ],
+        },
+      });
+
+      res.send(board);
     } else {
       // 전체 게시글 조회
 
