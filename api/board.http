@@ -4,6 +4,7 @@
 GET {{server}}/board
 
 ### 특정 게시글 화면
+GET {{server}}/board/1
 
 ### 게시물 삭제
 DELETE {{server}}/board/remove

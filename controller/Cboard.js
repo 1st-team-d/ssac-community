@@ -3,27 +3,32 @@ const { Board } = require("../models");
 // 게시글 조회 화면
 exports.getBoard = async (req, res) => {
   // Todo: 게시글 조회 화면 파일명 확인
+
   res.render("board/listBoard");
   // res.render("board/postBoard");
 };
 
-// 특정 게시글 화면 - 진행 중
+// 특정 게시글 화면
 exports.getBoardId = async (req, res) => {
-  // Todo: 게시글 창 render 방법 확인
-
   try {
     // 특정 게시글의 게시글 시퀀스
-    const { seq } = req.params;
+    const { boardSeq } = req.params;
+    console.log(boardSeq);
 
     // DB 접근
     const board = await Board.findOne({
-      where: { boardSeq: seq },
+      where: { boardSeq: boardSeq },
     });
 
-    res.render("임시값", {
-      isGetBoardId: true,
-      msg: "특정 게시물 화면 띄우기 성공",
-    });
+    // res.render("임시값", {
+    //   isGetBoardId: true,
+    //   title: board.title,
+    //   content: board.content,
+    //   imgPath: board.imgPath,
+    //   count: board.count,
+    //   msg: "특정 게시물 화면 띄우기 성공",
+    // });
+    res.send(board);
   } catch (err) {
     console.error(err);
     res.send({ isGetBoardId: false, msg: "특정 게시물 화면 띄우기 실패" });
