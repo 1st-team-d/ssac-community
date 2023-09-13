@@ -21,7 +21,7 @@ a {
 
 .board_wrap {
   width: 1000px;
-  margin: 100px auto;
+  margin: 150px auto;
 }
 
 .board_title {
@@ -202,9 +202,6 @@ a {
   font-size: 1.4rem;
 }
 
-.board_view .info dl dt {
-}
-
 .board_view .info dl dd {
   margin-left: 10px;
   color: #777;
@@ -288,11 +285,21 @@ a {
 /* 댓글 CSS 코드 */
 .comment_section {
   margin-top: 30px;
+  /* background-color: #a98888; */
+  padding: 50px 20px;
 }
 
-.comment_section h2 {
+.comment_section > div {
+  margin: 0 0 30px 0;
+}
+
+.comment_section > div > span {
   font-size: 2rem;
-  margin-bottom: 10px;
+  background-color: #dbebc5;
+  border-radius: 15px;
+  border: 1px solid #dbebc5;
+  padding: 10px;
+  font-weight: 700;
 }
 
 .comment_form {
@@ -320,20 +327,6 @@ a {
 
 .comment_form textarea {
   height: 100px;
-}
-
-.comment_form button {
-  background-color: #83c13b;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1.6rem;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.comment_form button:hover {
-  background-color: #333;
 }
 
 .scroll_to_list {
