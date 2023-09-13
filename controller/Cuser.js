@@ -26,7 +26,7 @@ const checkPw = async (pw) => {
   }
 };
 
-// 회원가입 처리 - 진행 중
+// 회원가입 처리
 exports.postSignup = async (req, res) => {
   try {
     // 회원가입 요청 시, 암호화된 비밀번호 DB 추가
