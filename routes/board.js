@@ -45,24 +45,24 @@ const uploadConfig = multer({
     },
   }),
   limits: {
-    fileSize: 5 * 1024 * 1024, // 파일 최대 사이즈 : 5MB
+    fileSize: 50 * 1024 * 1024, // 파일 최대 사이즈 : 50MB
   },
 });
 
 router.get("/", controller.getBoard); // 게시글 조회 화면으로 이동
-router.get("/:boardSeq", controller.getBoardId); // 특정 게시글 화면으로 이동 및 조회
+// router.get("/", controller.getBoardId); // 특정 게시글 화면으로 이동 및 조회
 // router.get("?title=###", controller.getSearch); // 게시글 검색 -> 조회
 router.delete("/remove", controller.deleteBoard); // 게시글 삭제 처리
 router.get("/register", controller.getRegister); // 게시글 등록 화면
 router.post(
   "/register",
-  uploadConfig.single("uploadImage"),
+  uploadConfig.single("uploadFile"),
   controller.postRegister
 ); // 게시글 등록 처리
 router.get("/modify", controller.getModify); // 게시글 수정 화면
 router.patch(
   "/modify",
-  uploadConfig.single("uploadImage"),
+  uploadConfig.single("uploadFile"),
   controller.patchModify
 ); // 게시글 수정 처리
 

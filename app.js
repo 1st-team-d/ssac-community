@@ -21,7 +21,7 @@ app.set('/views', 'views');
 
 // static (css)
 app.use('/static', express.static(__dirname + '/static'));
-app.use('/uploadImage', express.static(__dirname + '/uploads'));
+app.use('/uploadFile', express.static(__dirname + '/uploads'));
 
 
 // 미들웨어 등록
