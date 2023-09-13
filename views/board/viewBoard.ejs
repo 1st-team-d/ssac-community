@@ -21,35 +21,42 @@
       </div>
       <div class="board_view_wrap">
         <div class="board_view">
-          <div class="title"><%= data.postTitle %></div>
+          <div class="title"><%= board.title %></div>
           <div class="info">
             <dl>
               <dt>번호</dt>
-              <dd><%= data.postId %></dd>
+              <dd>1</dd>
             </dl>
             <dl>
               <dt>글쓴이</dt>
-              <dd><%= data.userName %></dd>
+              <dd><%= user.name %></dd>
             </dl>
             <dl>
               <dt>작성일</dt>
-              <dd><%= data.postDate %></dd>
+              <dd><%= board.createdAt %></dd>
             </dl>
             <dl>
               <dt>조회</dt>
-              <dd><%= data.postCount %></dd>
+              <dd><%= board.count %></dd>
             </dl>
           </div>
           <div class="cont">
             <!-- 게시물 내용을 출력할 때는 줄바꿈 이런걸 했을 수도 있어서 이스케이프 처리하지 않고 출력 -->
-            <%- data.postContent.replace(/\n/g, '<br />') %>
+            <%- board.content.replace(/\n/g, '<br />') %>
           </div>
         </div>
         <div id="postFile" class="fs-3 my-3">
           <span class="badge text-bg-success mx-3">첨부파일</span>
-          <a class="fs-4" href="<%= data.postFilePath %>" target="_blank"
-            ><%= data.postFileName %></a
+          <a
+            class="fs-4"
+            href="/uploadFile/20230913/postRegister38214764912074.pdf"
+            target="_blank"
+            >첨부파일</a
           >
+          <!-- <img
+            src="/uploadFile/20230913/postRegister38214764912074.pdf"
+            alt="실패!"
+          /> -->
         </div>
       </div>
       <!-- JavaScript 코드와 스타일이 적용된 댓글 목록 -->
@@ -58,7 +65,7 @@
         <div class="comment_form">
           <div class="comment_content mb-4">
             <span id="commentWriter" class="fs-3 fw-bold p-3"
-              ><%= loginUserData.userName %></span
+              ><%# session.name %></span
             >
             <textarea
               class="px-3"
@@ -79,16 +86,16 @@
         </div>
         <div class="comment_list">
           <!-- 댓글 배열 형태로 전달되면 각 요소에 대해 작성자, 댓글 내용 출력 -->
-          <% cmts.forEach(cmt => { %>
+          <%# cmts.forEach(cmt => { %>
           <div class="commentBox px-5 mb-3">
             <div class="commentUser badge text-bg-secondary fw-bold fs-3">
-              <%= cmt.commentUser %>
+              <%#= cmt.commentUser %>
             </div>
             <div class="commentContent mt-2 fs-4">
-              <%= cmt.commentContent %>
+              <%#= cmt.commentContent %>
             </div>
           </div>
-          <% }); %>
+          <%# }); %>
         </div>
       </div>
 

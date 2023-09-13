@@ -36,7 +36,7 @@ async function postLogin() {
       method: 'post',
       data: loginData,
     });
-    if (res.data) {
+    if (res.data.isCorrect) {
       // true -> 로그인 성공 -> 메인 화면으로 이동
       document.location.href = '/';
     } else {
