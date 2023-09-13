@@ -6,8 +6,6 @@
     <title>새싹 스터디 게시판</title>
     <link rel="stylesheet" href="/static/css/boardCommon.css" />
     <link rel="stylesheet" href="/static/css/boardSearch.css" />
-    <!-- cdn -->
-    <%- include('../cdn/cdn.ejs') %>
   </head>
   <body>
     <div class="board_wrap">
@@ -18,7 +16,23 @@
 
       <div class="board_list_wrap">
         <!-- 게시물 -->
-        <div class="board_list" id="boardList"></div>
+        <div class="board_list" id="boardList">
+          <% let count = 1 %> <% data.forEach((board) => { %>
+          <div>
+            <div class="num"><%= count %></div>
+            <div class="title">
+              <a
+                href="/board?boardSeq=<%= board.dataValues.boardSeq %>"
+                class="view-link"
+              >
+                <%= board.dataValues.title %>
+              </a>
+            </div>
+            <div class="date"><%= board.dataValues.createdAt %></div>
+            <div class="count"><%= board.dataValues.count %></div>
+          </div>
+          <% count++ %> <% }) %>
+        </div>
         <!-- 검색 창 -->
         <div class="search_box">
           <input type="text" placeholder="검색어를 입력하세요" />
