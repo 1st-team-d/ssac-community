@@ -1,37 +1,58 @@
-const { Board, Comment } = require('../models');
+const { Board, Comment, User, sequelize } = require("../models");
+const Op = require("sequelize").Op;
 
-// 게시글 조회 화면
+// 게시글 화면
 exports.getBoard = async (req, res) => {
-  // Todo: 게시글 조회 화면 파일명 확인
-
-  res.render('board/listBoard');
-  // res.render("board/postBoard");
-};
-
-// 특정 게시글 화면
-exports.getBoardId = async (req, res) => {
   try {
-    // 특정 게시글의 게시글 시퀀스
-    const { boardSeq } = req.params;
-    console.log(boardSeq);
+    // 특정 게시글의 게시글 시퀀스, 검색어
+    const { boardSeq, search } = req.query;
+    console.log("query >> ", req.query);
 
-    // DB 접근
-    const board = await Board.findOne({
-      where: { boardSeq: boardSeq },
-    });
+    if (boardSeq) {
+      // 특정 게시글 조회
 
-    // res.render("임시값", {
-    //   isGetBoardId: true,
-    //   title: board.title,
-    //   content: board.content,
-    //   imgPath: board.imgPath,
-    //   count: board.count,
-    //   msg: "특정 게시물 화면 띄우기 성공",
-    // });
-    res.send(board);
+      // DB 접근
+      const board = await Board.findOne({
+        where: { boardSeq: boardSeq },
+        include: [{ model: User }],
+      });
+
+      // DB의 조회수(count) 1 증가
+      await Board.update(
+        { count: board.count + 1 },
+        { where: { boardSeq: boardSeq } }
+      );
+
+      res.send(board);
+      // res.render("board/viewBoard", { data: board });
+    } else if (search) {
+      // 게시글 조회
+      const board = await Board.findAll({
+        where: {
+          [Op.or]: [
+            {
+              title: { [Op.like]: `%${search}%` },
+            },
+            {
+              content: { [Op.like]: `%${search}%` },
+            },
+          ],
+        },
+      });
+
+      res.send(board);
+    } else {
+      // 전체 게시글 조회
+
+      // DB 접근
+      const board = await Board.findAll();
+
+      res.render("board/listBoard", { data: board });
+    }
   } catch (err) {
     console.error(err);
-    res.send({ isGetBoardId: false, msg: '특정 게시물 화면 띄우기 실패' });
+    
+    res.send({ isGetBoardId: false, msg: "게시물 화면 띄우기 실패" });
   }
 };
 
@@ -98,7 +119,7 @@ exports.postRegister = async (req, res) => {
       title: title,
       content: content,
       imagePath: imagePath,
-      userSeq: userSeq,
+      userSeq: req.session.userInfo.userSeq,
     });
 
     // console.log(insertOneBoard);
