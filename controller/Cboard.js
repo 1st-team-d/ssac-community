@@ -1,10 +1,4 @@
-const { Board, Comment } = require('../models');
-
-// GET '/board/'
-// 게시글 목록 조회
-exports.board = (req, res) => {
-  res.render('/'); //임시로 index 렌더 -> 나중에 바꿔야함
-};
+const { Board, Comment } = require("../models");
 
 // 게시글 조회 화면
 exports.getBoard = async (req, res) => {
@@ -42,13 +36,13 @@ exports.getBoardId = async (req, res) => {
 };
 
 // 게시글 검색 -> 조회 - 진행 중
-exports.getSearch = async (req, res) => {
-  try {
-  } catch (err) {
-    console.error(err);
-    res.send({ isSearch: false });
-  }
-};
+// exports.getSearch = async (req, res) => {
+//   try {
+//   } catch (err) {
+//     console.error(err);
+//     res.send({ isSearch: false });
+//   }
+// };
 
 // 게시글 삭제 처리
 exports.deleteBoard = async (req, res) => {
@@ -69,11 +63,13 @@ exports.deleteBoard = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.send({ isDelete: false, msg: "게시물 삭제 실패" });
+  }
+};
 
 // GET '/board/register'
 // 게시글 등록 화면으로 이동 // 수정 화면도 동일
 exports.getRegister = (req, res) => {
-  res.render('board/postBoard');
+  res.render("board/postBoard");
 };
 
 // POST '/board/register'
@@ -87,7 +83,7 @@ exports.postRegister = async (req, res) => {
     // console.log('req.files ::::: ', req.files); // fields, array
     // console.log('req.body ::::: ', req.body);
 
-    const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
+    const jsonData = JSON.parse(req.body["data"]); // 넘어온 JSON 데이터를 JS Object로 변환
 
     // console.log('jsonData ::::: ', jsonData);
     // req.file.preFilepath = '/uploadImage/'; // userUpload 설정
@@ -125,7 +121,7 @@ exports.getModify = async (req, res) => {
       },
     });
 
-    res.render('board/postBoard', { result: selectOneBoard });
+    res.render("board/postBoard", { result: selectOneBoard });
   } catch (err) {
     console.log(err);
   }
@@ -139,7 +135,7 @@ exports.patchModify = async (req, res) => {
     const { fieldname, destination, filename } = req.file;
     const imagePath = destination + filename;
 
-    const jsonData = JSON.parse(req.body['data']);
+    const jsonData = JSON.parse(req.body["data"]);
     const { title, content, boardSeq } = jsonData;
 
     // DB 작업

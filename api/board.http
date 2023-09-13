@@ -13,7 +13,7 @@ DELETE {{boardUrl}}/remove
 Content-Type: application/json; charset=UTF-8
 
 {
-    "boardSeq" : 2
+    "boardSeq" : 3
 }
 
 ### 게시글 등록 화면
@@ -36,7 +36,8 @@ Content-Disposition: form-data; name="uploadImage"; filename="postRegister.jpg"
 Content-Type: image/jpeg
 
 # @C:\SeSAC\polar_bear.jpg
-< C:\SeSAC\polar_bear.jpg
+# < C:\SeSAC\polar_bear.jpg
+< /Users/user/Desktop/애플1692602940472.png
 
 --postRegister--
 
@@ -45,7 +46,7 @@ GET {{boardUrl}}/modify
 Content-Type: application/json; charset=UTF-8
 
 {
-  "boardSeq": "7"
+  "boardSeq": "3"
 }
 
 ### 게시글 수정
@@ -58,7 +59,7 @@ Content-Disposition: form-data; name="data"
 {
   "title": "제목 ::: 수정 :::  Test",
   "content": "내용 ::: 수정 ::: Test",
-  "boardSeq": "7"
+  "boardSeq": "3"
 }
 
 --patchRegister
