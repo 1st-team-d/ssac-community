@@ -1,12 +1,20 @@
-const { Board, Comment, User, sequelize } = require("../models");
-const Op = require("sequelize").Op;
+const { Board, Comment, User, sequelize } = require('../models');
+const Op = require('sequelize').Op;
+const path = require('path');
 
 // 게시글 화면
 exports.getBoard = async (req, res) => {
   try {
     // 특정 게시글의 게시글 시퀀스, 검색어
-    const { boardSeq, search } = req.query;
-    console.log("query >> ", req.query);
+    const { boardSeq, search, pageNum } = req.query;
+    // 페이징 처리
+    let boardCountPerPage = 5; // 한 화면에 보여질 게시글 개수
+    let offset = 0; // 페이징 처리
+    if (pageNum > 1) {
+      offset = boardCountPerPage * (pageNum - 1);
+    }
+
+    console.log('query >> ', req.query);
 
     if (boardSeq) {
       // 특정 게시글 조회
@@ -38,6 +46,8 @@ exports.getBoard = async (req, res) => {
             },
           ],
         },
+        offset: offset,
+        limit: boardCountPerPage,
       });
 
       res.send(board);
@@ -45,25 +55,19 @@ exports.getBoard = async (req, res) => {
       // 전체 게시글 조회
 
       // DB 접근
-      const board = await Board.findAll();
+      const board = await Board.findAll({
+        offset: offset,
+        limit: boardCountPerPage,
+      });
 
-      res.render("board/listBoard", { data: board });
+      // console.log(board);
+      res.render('board/listBoard', { data: board });
     }
   } catch (err) {
     console.error(err);
-    
     res.send({ isGetBoardId: false, msg: "게시물 화면 띄우기 실패" });
   }
 };
-
-// 게시글 검색 -> 조회 - 진행 중
-// exports.getSearch = async (req, res) => {
-//   try {
-//   } catch (err) {
-//     console.error(err);
-//     res.send({ isSearch: false });
-//   }
-// };
 
 // 게시글 삭제 처리
 exports.deleteBoard = async (req, res) => {
@@ -77,20 +81,20 @@ exports.deleteBoard = async (req, res) => {
     });
 
     if (board) {
-      res.send({ isDelete: true, msg: '게시물 삭제 성공' });
+      res.send({ isDelete: true, msg: "게시물 삭제 성공" });
     } else {
-      res.send({ isDelete: false, msg: '게시글 시퀀스 오류' });
+      res.send({ isDelete: false, msg: "게시글 시퀀스 오류" });
     }
   } catch (err) {
     console.error(err);
-    res.send({ isDelete: false, msg: '게시물 삭제 실패' });
+    res.send({ isDelete: false, msg: "게시물 삭제 실패" });
   }
 };
 
 // GET '/board/register'
 // 게시글 등록 화면으로 이동 // 수정 화면도 동일
 exports.getRegister = (req, res) => {
-  res.render('board/postBoard');
+  res.render("board/postBoard");
 };
 
 // POST '/board/register'
@@ -98,13 +102,16 @@ exports.getRegister = (req, res) => {
 exports.postRegister = async (req, res) => {
   try {
     // ############### 파일 업로드 문제 없는지 확인 ###############
-    // console.log('req.file ::::: ', req.file); // single
+    console.log('req.file ::::: ', req.file); // single
     const { fieldname, destination, filename } = req.file;
-    const imagePath = destination + filename;
+    // console.log(destination.split(path.sep));
+    // console.log(filename);
+
+    const imagePath = destination.split(path.sep)[1] + path.sep + filename;
     // console.log('req.files ::::: ', req.files); // fields, array
     // console.log('req.body ::::: ', req.body);
 
-    const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
+    const jsonData = JSON.parse(req.body["data"]); // 넘어온 JSON 데이터를 JS Object로 변환
 
     // console.log('jsonData ::::: ', jsonData);
     // req.file.preFilepath = '/uploadFile/'; // userUpload 설정
@@ -119,7 +126,7 @@ exports.postRegister = async (req, res) => {
       title: title,
       content: content,
       imagePath: imagePath,
-      userSeq: req.session.userInfo.userSeq,
+      userSeq: userSeq,
     });
 
     // console.log(insertOneBoard);
@@ -143,7 +150,7 @@ exports.getModify = async (req, res) => {
       },
     });
 
-    res.render('board/postBoard', { result: selectOneBoard });
+    res.render("board/postBoard", { result: selectOneBoard });
   } catch (err) {
     console.log(err);
   }
@@ -155,9 +162,9 @@ exports.patchModify = async (req, res) => {
   try {
     // 이미지 업로드
     const { fieldname, destination, filename } = req.file;
-    const imagePath = destination + filename;
+    const imagePath = destination.split(path.sep)[1] + path.sep + filename;
 
-    const jsonData = JSON.parse(req.body['data']);
+    const jsonData = JSON.parse(req.body["data"]);
     const { title, content, boardSeq } = jsonData;
 
     // DB 작업

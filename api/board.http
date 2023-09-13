@@ -3,13 +3,17 @@
 @server = http://localhost:8080
 
 ### 게시글 화면 (쿼리 없음)
-GET {{boardUrl}}
+GET {{boardUrl}}/?pageNum=1
+# 기본적으로 pageNum이 1이여야 한다.
 
 ### 게시글 화면 (쿼리 있음)
 GET {{boardUrl}}/?boardSeq=6
 
 ### 게시글 검색
 GET {{boardUrl}}/?search=제목
+
+### 게시글 검색 ( + 페이징 처리)
+GET {{boardUrl}}/?search=제목&pageNum=4
 
 ### 게시물 삭제
 DELETE {{boardUrl}}/remove
@@ -68,7 +72,7 @@ Content-Disposition: form-data; name="data"
 {
   "title": "제목 ::: 수정 :::  Test",
   "content": "내용 ::: 수정 ::: Test",
-  "boardSeq": "18"
+  "boardSeq": "25"
 }
 
 --patchRegister
