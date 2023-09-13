@@ -127,7 +127,15 @@ exports.postSignin = async (req, res) => {
             id: user.id,
             userSeq: user.userSeq,
           }; // 회원 정보 세션 생성
-          res.send({ isCorrect, isNoGap, isSignin: true, data: user });
+
+          console.log("sessioninfo >>>>>", req.session);
+
+          res.send({
+            isCorrect,
+            isNoGap,
+            isSignin: true,
+            data: user,
+          });
         } else {
           // 비밀번호 불일치
           res.send({
