@@ -20,7 +20,7 @@ Content-Type: application/json; charset=UTF-8
 }
 
 ### 게시글 등록 화면
-GET {{boardUrl}}/register/
+GET {{boardUrl}}/register
 
 ### 게시글 등록
 POST {{boardUrl}}/register
@@ -36,12 +36,17 @@ Content-Disposition: form-data; name="data"
 }
 
 --postRegister
-Content-Disposition: form-data; name="uploadImage"; filename="postRegister.jpg"
-Content-Type: image/jpeg
+Content-Disposition: form-data; name="uploadFile"; filename="postRegister.pdf"
+Content-Type: application/pdf
+# Content-Type: image/jpeg
 
-# @C:\SeSAC\polar_bear.jpg
+# 이미지
 # < C:\SeSAC\polar_bear.jpg
-< /Users/user/Desktop/애플1692602940472.png
+# < /Users/user/Desktop/애플1692602940472.png
+
+# 파일
+# < C:\SeSAC\test.pdf
+< C:\SeSAC\Prettier 설정하기.pdf
 
 --postRegister--
 
@@ -50,7 +55,7 @@ GET {{boardUrl}}/modify
 Content-Type: application/json; charset=UTF-8
 
 {
-  "boardSeq": "3"
+  "boardSeq": "18"
 }
 
 ### 게시글 수정
@@ -63,13 +68,19 @@ Content-Disposition: form-data; name="data"
 {
   "title": "제목 ::: 수정 :::  Test",
   "content": "내용 ::: 수정 ::: Test",
-  "boardSeq": "3"
+  "boardSeq": "18"
 }
 
 --patchRegister
-Content-Disposition: form-data; name="uploadImage"; filename="patchRegister.jpg"
-Content-Type: image/jpeg
+Content-Disposition: form-data; name="uploadFile"; filename="patchRegister.pdf"
+Content-Type: application/pdf
+# Content-Type: image/jpeg
 
-< C:\SeSAC\laser4.jpg
+# 이미지
+# < C:\SeSAC\laser4.jpg
+# < /Users/user/Desktop/애플1692602940472.png
+
+# 파일
+< C:\SeSAC\Prettier 설정하기 - 복사본.pdf
 
 --patchRegister--
