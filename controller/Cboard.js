@@ -12,6 +12,8 @@ exports.getBoard = async (req, res) => {
     let offset = 0; // 페이징 처리
     if (pageNum > 1) {
       offset = boardCountPerPage * (pageNum - 1);
+    } else if (pageNum === 'undefined') {
+      pageNum = 1;
     }
 
     // console.log('query >> ', req.query);
@@ -19,10 +21,8 @@ exports.getBoard = async (req, res) => {
     const selectAllBoard = await Board.findAll();
     const allBoardLen = selectAllBoard.length;
 
+    // ### 1. 특정 게시글 조회
     if (boardSeq) {
-      // 특정 게시글 조회
-
-      // DB 접근
       const board = await Board.findOne({
         attributes: [
           'boardSeq',
@@ -60,8 +60,9 @@ exports.getBoard = async (req, res) => {
         session: req.session.userInfo,
       });
       // res.render("board/viewBoard", { data: board });
+
+      // ### 2. 게시글 검색
     } else if (search) {
-      // 게시글 조회
       const board = await Board.findAll({
         attributes: [
           'boardSeq',
@@ -96,10 +97,9 @@ exports.getBoard = async (req, res) => {
         allBoardLen: allBoardLen,
         session: req.session.userInfo,
       });
-    } else {
-      // 전체 게시글 조회
 
-      // DB 접근
+      // ### 3-1. 전체 게시글 조회 (1 페이지)
+    } else if (pageNum === 1) {
       const board = await Board.findAll({
         attributes: [
           'boardSeq',
@@ -130,10 +130,42 @@ exports.getBoard = async (req, res) => {
         allBoardLen: allBoardLen,
         session: req.session.userInfo,
       });
+
+      // ### 3-1. 전체 게시글 조회 (2 페이지 이상)
+    } else {
+      const board = await Board.findAll({
+        attributes: [
+          'boardSeq',
+          'title',
+          'content',
+          'filePath',
+          'count',
+          [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
+          [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
+          [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
+          'createdAt',
+          'updatedAt',
+          'user.userSeq',
+          'user.id',
+          'user.pw',
+          'user.name',
+          'user.isAdmin',
+        ],
+        offset: offset,
+        limit: boardCountPerPage,
+        include: [{ model: User }],
+      });
+
+      // console.log(board.length);
+      console.log('session>>>>>>', req.session.userInfo);
+      res.send({
+        data: board,
+        allBoardLen: allBoardLen,
+        session: req.session.userInfo,
+      });
     }
   } catch (err) {
     console.error(err);
-
     res.send({ isGetBoardId: false, msg: '게시물 화면 띄우기 실패' });
   }
 };
