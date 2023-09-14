@@ -17,7 +17,7 @@ const checkEmailMsg = document.querySelector('#checkEmailMsg');
 // 중복인지 여부 -> 처음부터 true(중복)으로 해놔서 만약 중복체크 버튼 누르지 않을 경우 회원가입 전송이 안되게 함.
 let isDuplicate = true;
 
-// 로그인 모달 창에서 로그인 버튼 누르면 폼 전송 -> 성공하면 main.ejs 리다이렉트
+// 로그인 모달 창에서 로그인 버튼 누르면 폼 전송 -> 성공하면 해당 페이지 리다이렉트
 async function postLogin() {
   const form = document.forms['login'];
   const loginData = {
@@ -37,8 +37,9 @@ async function postLogin() {
       method: 'post',
       data: loginData,
     });
-    if (res.data.isCorrect) {
+    if (res.data.isSignin) {
       // true -> 로그인 성공 -> 현재 페이지 새로고침
+      alert('로그인 성공!'); // 라이브러리 통해 이쁘게 수정 해보기
       document.location.reload();
     } else {
       // false -> 로그인 실패 -> 에러 메세지

@@ -51,9 +51,10 @@
           <span class="badge text-bg-success mx-3">첨부파일</span>
           <a
             class="fs-4"
-            href="/uploadFile/20230913/postRegister38214764912074.pdf"
+            href="<%= '/uploadFile/' + board.filePath %>"
             target="_blank"
-            >첨부파일</a
+            ><%= board.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.'
+            + board.filePath.split('/')[1].split('.')[1] %></a
           >
           <!-- <img
             src="/uploadFile/20230913/postRegister38214764912074.pdf"
