@@ -23,6 +23,9 @@ POST {{server}}/user/signin
 Content-Type: application/json; charset=UTF-8
 
 {
-  "loginEmail": "abc@naver.com",
+  "loginEmail": "aaa@naver.com",
   "loginPw": "Abcd1234!"
 }
+
+### 로그아웃 처리
+GET {{server}}/user/logout
