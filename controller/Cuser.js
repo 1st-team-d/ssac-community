@@ -32,12 +32,14 @@ exports.postSignup = async (req, res) => {
     // 회원가입 요청 시, 암호화된 비밀번호 DB 추가
     const { registerName, registerEmail, registerPw } = req.body;
 
+    // 이름 유효성 검사(공백 확인)
+    isNoGapName = await checkPw(registerName);
     // 이메일(아이디) 유효성 검사(형식 확인)
     isCorrect = await checkEmail(registerEmail);
     // 비밀번호 유효성 검사(공백 확인)
-    isNoGap = await checkPw(registerPw);
+    isNoGapPw = await checkPw(registerPw);
 
-    if (isCorrect && isNoGap) {
+    if (isNoGapName && isCorrect && isNoGap) {
       // 이메일(아이디), 비밀번호 유효성 검사 통과
       const hashedPW = await hashedPw(registerPw); // 비밀번호 암호화
       await User.create({
@@ -46,9 +48,9 @@ exports.postSignup = async (req, res) => {
         name: registerName,
       }); // DB 추가
 
-      res.send({ isCorrect, isSignup: true });
+      res.send({ isCorrect, isSignup: true, session: req.session.userInfo });
     } else {
-      // 이메일(아이디), 비밀번호 유효성 검사 통과 실패
+      // 이름, 이메일(아이디), 비밀번호 유효성 검사 통과 실패
       res.send({ isCorrect, isNoGap });
     }
   } catch (err) {
@@ -128,7 +130,7 @@ exports.postSignin = async (req, res) => {
             userSeq: user.userSeq,
           }; // 회원 정보 세션 생성
 
-          console.log("sessioninfo >>>>>", req.session);
+          console.log("sessioninfo >>>>>", req.session.userInfo);
 
           // 로그인 정보 기억
           const myCookieConf = {
@@ -148,7 +150,7 @@ exports.postSignin = async (req, res) => {
             isNoGap,
             isSignin: true,
             data: user,
-            loginInfo: req.session.userInfo,
+            session: req.session.userInfo,
           });
         } else {
           // 비밀번호 불일치
