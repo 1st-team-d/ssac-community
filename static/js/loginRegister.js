@@ -94,7 +94,10 @@ async function postRegister() {
           });
           if (res.data) {
             // true -> 회원가입 성공 -> 메인 화면으로 이동
-            document.location.href = '/';
+            alert('회원가입 성공!'); // 라이브러리 통해 이쁘게 수정 해보기
+            document.location.reload();
+          } else {
+            alert('회원가입 실패!');
           }
         }
       }
