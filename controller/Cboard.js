@@ -48,7 +48,7 @@ exports.getBoard = async (req, res) => {
         { where: { boardSeq: boardSeq } }
       );
 
-      res.send({ board: board });
+      res.render('board/viewBoard', { board: board, user: board.user });
       // res.render("board/viewBoard", { data: board });
     } else if (search) {
       // 게시글 조회
@@ -67,7 +67,7 @@ exports.getBoard = async (req, res) => {
         limit: boardCountPerPage,
       });
 
-      res.send(board);
+      res.render('board/viewBoard', { board: board, user: board.user });
     } else {
       // 전체 게시글 조회
 
@@ -119,7 +119,8 @@ exports.getRegister = (req, res) => {
 exports.postRegister = async (req, res) => {
   try {
     // ############### 파일 업로드 문제 없는지 확인 ###############
-    console.log('req.file ::::: ', req.file); // single
+    console.log('######### req.file ::::: ', req.file); // single
+    console.log('######### req.body ::::: ', req.body); // single
     let filePath = null;
     // 파일 정보가 있는지 확인
     if (req.file) {
@@ -127,18 +128,24 @@ exports.postRegister = async (req, res) => {
       filePath = destination.split(path.sep)[1] + path.sep + filename; // 파일명
     }
 
-    const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
-    const { title, content, userSeq } = jsonData;
+    // rest client 실행시
+    // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
+    // const { title, content, userSeq } = jsonData;
+
+    // 실제 코드
+    const { title, content } = req.body;
 
     // ############### DB 작업 ###############
     const insertOneBoard = await Board.create({
       title: title,
       content: content,
       filePath: filePath,
-      userSeq: userSeq,
+      userSeq: req.session.userInfo.userSeq,
     });
 
-    res.redirect('board/viewBoard');
+    // res.redirect('/board');
+    // console.log(insertOneBoard);
+    res.send(insertOneBoard);
   } catch (err) {
     console.log(err);
   }
@@ -173,8 +180,12 @@ exports.patchModify = async (req, res) => {
       filePath = destination.split(path.sep)[1] + path.sep + filename; // 파일명
     }
 
-    const jsonData = JSON.parse(req.body['data']);
-    const { title, content, boardSeq } = jsonData;
+    // rest client 실행시
+    // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
+    // const { title, content, userSeq } = jsonData;
+
+    // 실제 코드
+    const { title, content } = req.body;
 
     // DB 작업
     const updateOneBoard = await Board.update(
