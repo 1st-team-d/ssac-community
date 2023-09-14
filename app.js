@@ -47,7 +47,6 @@ const boardRouter = require("./routes/board");
 app.use("/board", boardRouter);
 const userRouter = require("./routes/user");
 app.use("/user", userRouter);
-
 // 에러 처리
 app.get("*", (req, res) => {
   res.render("error");
