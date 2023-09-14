@@ -12,6 +12,8 @@
     <script defer src="/static/js/viewBoard.js"></script>
     <!-- header -->
     <link rel="stylesheet" href="/static/css/header.css" />
+    <!-- 로그인 회원가입 js -->
+    <script defer src="/static/js/loginRegister.js"></script>
   </head>
   <body>
     <%- include('../includes/header.ejs') %>
@@ -61,6 +63,17 @@
             alt="실패!"
           /> -->
         </div>
+        <% if (typeof session !== 'undefined') { %> <% if (board.user.userSeq
+        === session.userSeq) { %>
+        <div class="deleteBtnWrap d-flex justify-content-end">
+          <button
+            class="deleteBtn btn bg-secondary text-light fs-4 me-5"
+            onclick="deleteBoard()"
+          >
+            게시물 삭제
+          </button>
+        </div>
+        <% } %> <% } %>
       </div>
       <!-- JavaScript 코드와 스타일이 적용된 댓글 목록 -->
       <div class="comment_section">

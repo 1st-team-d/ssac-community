@@ -16,6 +16,21 @@ function listBoard() {
   document.location.href = '/board';
 }
 
+// 게시물 삭제
+async function deleteBoard() {
+  const boardSeq = document.querySelector('#hiddenInput').value;
+  const res = await axios({
+    url: '/board/remove',
+    method: 'delete',
+    data: { boardSeq: boardSeq },
+  });
+  console.log(res.data);
+  if (res.data.isDelete) {
+    alert(res.data.msg);
+    document.location.href = '/board';
+  }
+}
+
 // 댓글 등록
 function submitComment() {
   let registeredComment = document.createElement('div');
