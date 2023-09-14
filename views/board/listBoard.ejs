@@ -28,16 +28,25 @@
 
       <div class="board_list_wrap">
         <!-- 게시물 -->
+        <div class="top row">
+          <div class="num col-1">번호</div>
+          <div class="title col-1">제목</div>
+          <div class="date col-1">작성일</div>
+          <div class="count col-1">조회수</div>
+        </div>
         <div class="board_list" id="boardList">
           <% let num = 1 %> <% data.forEach((board) => { %>
-          <div>
+          <div class="">
             <div class="num"><%= num %></div>
             <div class="title">
               <a href="/board?boardSeq=<%= board.boardSeq %>" class="view-link">
                 <%= board.title %>
               </a>
             </div>
-            <div class="date"><%= board.year %></div>
+            <div class="date">
+              <%= board.dataValues.year + '/' + board.dataValues.month + '/' +
+              board.dataValues.month %>
+            </div>
             <div class="count"><%= board.count %></div>
           </div>
           <% num++ %> <% }) %>
@@ -53,7 +62,7 @@
           <button id="searchButton">검색</button>
         </div>
         <!-- 검색 결과를 표시할 목록 -->
-        <div id="boardList"></div>
+        <div id="searchBoardList"></div>
       </div>
       <!-- 페이지 번호 -->
       <div class="board_page" id="pagination">

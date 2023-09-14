@@ -96,6 +96,38 @@ exports.getBoard = async (req, res) => {
         allBoardLen: allBoardLen,
         session: req.session.userInfo,
       });
+    } else if (pageNum) {
+      const board = await Board.findAll({
+        attributes: [
+          'boardSeq',
+          'title',
+          'content',
+          'filePath',
+          'count',
+          [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
+          [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
+          [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
+          'createdAt',
+          'updatedAt',
+          'user.userSeq',
+          'user.id',
+          'user.pw',
+          'user.name',
+          'user.isAdmin',
+        ],
+        offset: offset,
+        limit: boardCountPerPage,
+        include: [{ model: User }],
+      });
+
+      // console.log(board.length);
+      console.log('보드는>>>>>>>', board);
+      console.log('session>>>>>>', req.session.userInfo);
+      res.send({
+        data: board,
+        // allBoardLen: allBoardLen,
+        session: req.session.userInfo,
+      });
     } else {
       // 전체 게시글 조회
 
@@ -125,6 +157,7 @@ exports.getBoard = async (req, res) => {
 
       // console.log(board.length);
       console.log('session>>>>>>', req.session.userInfo);
+      console.log('전체 게시글 보드 정보', board[0]);
       res.render('board/listBoard', {
         data: board,
         allBoardLen: allBoardLen,

@@ -53,16 +53,38 @@ async function changePageNum(pageDiv) {
     method: 'get',
   });
   console.log(res.data);
+  let boards = res.data.data;
+  const newDivs = document.createElement('div'); // boardList에 바꿔줄 div 여러개 담고 있는
+  boards.forEach((board, index) => {
+    const count = board.count;
+    const title = board.title;
+    const boardSeq = board.boardSeq;
+    const year = board.year;
+    const month = board.month;
+    const day = board.day;
+    const newDiv = document.createElement('div');
+    newDiv.innerHTML = `
+      <div class="num">${(pageNum - 1) * 5 + 1 + index}</div>
+      <div class="title">
+          <a href="/board?boardSeq=${boardSeq}" class="view-link">${title}</a>
+      </div>
+      <div class="date">${year}/${month}/${day}</div>
+      <div class="count">${count}</div>`;
+    newDivs.append(newDiv);
+  });
+  document.querySelector('#boardList').innerHTML = newDivs.innerHTML;
+  // newDivs의 innerHTML 이 곧 num, title ~~ 이런거니까 이걸 계속 바꿔주면 됨.
 }
 
 // 검색 버튼 요소 가져오기
 const searchButton = document.getElementById('searchButton');
 const searchInput = document.getElementById('searchInput');
 // 검색 버튼 클릭 이벤트 리스너 추가
-searchButton.addEventListener('click', () => {
+searchButton.addEventListener('click', async () => {
   // 입력된 검색어 가져오기
   const keyword = searchInput.value;
   // 검색어를 서버로 전송하여 검색 요청 보내기
+
   fetch(`/board?search=${keyword}`)
     .then((response) => response.json()) // 서버 응답을 JSON으로 파싱
     .then((data) => {

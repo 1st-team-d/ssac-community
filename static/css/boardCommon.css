@@ -62,6 +62,9 @@ a {
   color: #fff;
 }
 
+.boardHeader {
+}
+
 .board_list {
   width: 100%;
   border-top: 2px solid #000;
@@ -73,7 +76,7 @@ a {
 }
 
 .board_list > div.top {
-  border-bottom: 1px solid #999;
+  /* border-bottom: 1px solid #999; */
 }
 
 .board_list > div:last-child {
@@ -91,11 +94,7 @@ a {
   font-weight: 600;
 }
 
-.board_list .num {
-  width: 10%;
-}
-
-.board_list .title {
+.title {
   width: 60%;
   text-align: left;
 }
