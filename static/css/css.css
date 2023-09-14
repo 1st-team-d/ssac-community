@@ -1,0 +1,6 @@
+/* main css */
+@import url(index.css);
+/* 게시판 style.css */
+@import url(style.css);
+/* 게시판 반응형 css */
+@import url(media.css);
