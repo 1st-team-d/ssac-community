@@ -1,5 +1,4 @@
 // User 모델 모듈 불러오기
-const express = require("express");
 const { User } = require("../models");
 // bcrypt 패키지 불러오기
 const { hashedPw, comparePw } = require("../utils/encrypt");
@@ -177,5 +176,24 @@ exports.postSignin = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.send({ isSignin: false, msg: "로그인 실패" });
+  }
+};
+
+exports.getLogout = async (req, res) => {
+  try {
+    if (req.session.userInfo) {
+      req.session.destroy((err) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+      });
+      res.send({ isLogout: true, msg: "로그아웃 성공" });
+    } else {
+      res.send({ isLogout: false, msg: "로그인 정보가 없습니다" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.send({ isLogout: false, msg: "로그아웃 실패" });
   }
 };

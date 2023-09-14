@@ -11,6 +11,9 @@ router.post("/checkEmail", controller.postCheckEmail);
 // 로그인 처리
 router.post("/signin", controller.postSignin);
 
+// 로그아웃
+router.get("/logout", controller.getLogout);
+
 // 모든 유저 조회
 // 특정 유저 조회
 // 유저 검색
