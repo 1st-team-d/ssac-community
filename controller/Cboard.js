@@ -152,7 +152,7 @@ exports.postRegister = async (req, res) => {
     const { title, content } = req.body;
 
     // ############### DB 작업 ###############
-    await Board.create({
+    const insertOneBoard = await Board.create({
       title: title,
       content: content,
       filePath: filePath,
