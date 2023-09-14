@@ -1,30 +1,9 @@
-
-// 페이지당 게시물 수와 현재 페이지 번호
 const itemsPerPage = 5; // 한 페이지에 표시할 게시물 수
+// 페이지당 게시물 수와 현재 페이지 번호
 let currentPage = 1; // 현재 페이지 번호
 // 게시물을 동적으로 생성하고 표시하는 함수
+
 function renderBoard() {
-  const boardList = document.getElementById('boardList');
-  boardList.innerHTML = ''; // 이전 게시물 목록 초기화
-  // 게시물 데이터를 역순으로 정렬하여 최신 게시물이 제일 위에 표시되도록
-  const reversedData = boardData.slice().reverse();
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const paginatedData = reversedData.slice(startIndex, endIndex);
-  // 각 게시물 데이터를 HTML 요소로 변환하여 게시판 목록에 추가
-  paginatedData.forEach((item) => {
-    const boardItem = document.createElement('div');
-    boardItem.innerHTML = `
-      <div class="num">${item.num}</div>
-      <div class="title">
-        <a href="#" class="view-link" data-id="${item.num}">${item.title}</a>
-      </div>
-      <div class="writer">${item.writer}</div>
-      <div class="date">${item.date}</div>
-      <div class="count">${item.count}</div>
-    `;
-    boardList.appendChild(boardItem);
-  });
   // 게시물 제목 링크에 클릭 이벤트 리스너 추가
   const viewLinks = boardList.querySelectorAll('.view-link');
   viewLinks.forEach((viewLink) => {
@@ -36,11 +15,11 @@ function renderBoard() {
     });
   });
 }
+
 // 페이지 번호를 생성하고 표시하는 함수
 function renderPagination() {
   const pagination = document.getElementById('pagination');
   pagination.innerHTML = ''; // 이전 페이지 번호 초기화
-  const totalPages = Math.ceil(boardData.length / itemsPerPage);
   // 페이지 번호를 생성하고 클릭 이벤트를 연결하여 페이지를 변경할 때마다 업데이트
   for (let i = 1; i <= totalPages; i++) {
     const pageLink = document.createElement('a');
@@ -48,8 +27,12 @@ function renderPagination() {
     pageLink.textContent = i;
     pageLink.addEventListener('click', () => {
       currentPage = i; // 페이지 번호 변경
-      renderBoard(); // 게시물 목록 업데이트
-      renderPagination(); // 페이지 번호 업데이트
+      const res = axios({
+        url: '/board',
+        method: 'get',
+        params: { pageNum: currentPage },
+      });
+      const totalPages = Math.ceil(Object.keys(obj).length / itemsPerPage);
     });
     // 현재 페이지에 'on' 클래스를 추가하여 활성화된 페이지를 표시
     if (i === currentPage) {
@@ -60,6 +43,15 @@ function renderPagination() {
     // 페이지 번호를 페이지네이션 컨테이너에 추가
     pagination.appendChild(pageLink);
   }
+}
+
+// 페이지 번호 변경
+async function changePageNum(pageNum) {
+  await axios({
+    url: '/board',
+    method: 'get',
+    params: { pageNum: pageNum },
+  });
 }
 
 // 검색 버튼 요소 가져오기
@@ -98,7 +90,7 @@ function renderSearchResults(results) {
     // 새로운 게시물 요소 생성
     const boardElement = document.createElement('div');
     boardElement.innerHTML = `
-            <div class="num">${index+1}</div>
+            <div class="num">${index + 1}</div>
             <div class="title">
                 <a href="/board?boardSeq=${boardSeq}" class="view-link">${title}</a>
             </div>

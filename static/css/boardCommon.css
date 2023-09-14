@@ -119,10 +119,10 @@ a {
 .board_page {
   margin-top: 30px;
   text-align: center;
-  font-size: 0;
+  font-size: 16px;
 }
 
-.board_page a {
+.board_page div {
   display: inline-block;
   width: 32px;
   height: 32px;
@@ -131,26 +131,27 @@ a {
   border: 1px solid #ddd;
   border-left: 0;
   line-height: 100%;
+  cursor: pointer;
 }
 
-.board_page a.bt {
+.board_page div.bt {
   padding-top: 10px;
   font-size: 1.2rem;
   letter-spacing: -1px;
 }
 
-.board_page a.num {
+.board_page div.num {
   padding-top: 9px;
   font-size: 1.4rem;
 }
 
-.board_page a.num.on {
+.board_page div.num.on {
   border-color: #000;
   background: #000;
   color: #fff;
 }
 
-.board_page a:first-child {
+.board_page div:first-child {
   border-left: 1px solid #ddd;
 }
 

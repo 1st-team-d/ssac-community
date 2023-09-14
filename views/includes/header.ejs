@@ -15,7 +15,7 @@
         <span class="">게시글 조회</span>
       </a>
 
-      <% if (typeof isLogin === 'undefined') { %>
+      <% if (typeof session === 'undefined') { %>
       <!-- 로그인 버튼 -->
       <button
         id="loginBtn"
@@ -27,7 +27,9 @@
         로그인
       </button>
       <% } else { %>
-      <button class="btn">내 프로필</button> <% } %>
+      <button class="btn">내 프로필</button>
+      <a href="/logout">로그아웃</a>
+      <% } %>
     </nav>
   </div>
 </header>

@@ -27,21 +27,20 @@
       <div class="board_list_wrap">
         <!-- 게시물 -->
         <div class="board_list" id="boardList">
-          <% let count = 1 %> <% data.forEach((board) => { %>
+          <% let num = 1 %> <% data.forEach((board) => { %>
           <div>
-            <div class="num"><%= count %></div>
+            <div class="num"><%= num %></div>
             <div class="title">
-              <a
-                href="/board?boardSeq=<%= board.dataValues.boardSeq %>"
-                class="view-link"
-              >
-                <%= board.dataValues.title %>
+              <a href="/board?boardSeq=<%= board.boardSeq %>" class="view-link">
+                <%= board.title %>
               </a>
             </div>
-            <div class="date"><%= board.dataValues.createdAt %></div>
-            <div class="count"><%= board.dataValues.count %></div>
+            <div class="date">
+              <%= board.year + '/' + board.month + '/' + board.day %>
+            </div>
+            <div class="count"><%= board.count %></div>
           </div>
-          <% count++ %> <% }) %>
+          <% num++ %> <% }) %>
         </div>
 
         <!-- 검색 창 -->
@@ -57,7 +56,11 @@
         <div id="boardList"></div>
       </div>
       <!-- 페이지 번호 -->
-      <div class="board_page" id="pagination"></div>
+      <div class="board_page" id="pagination">
+        <% for (i = 1; i < 6; i++) { %>
+        <div onclick="changePageNum(this)"><%= i %></div>
+        <% } %>
+      </div>
       <div class="bt_wrap">
         <a href="/board/register" class="on">글 작성</a>
       </div>
