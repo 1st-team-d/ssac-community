@@ -1,6 +1,6 @@
-const { Board, Comment, User, sequelize } = require("../models");
-const Op = require("sequelize").Op;
-const path = require("path");
+const { Board, Comment, User, sequelize } = require('../models');
+const Op = require('sequelize').Op;
+const path = require('path');
 
 // 게시글 화면
 exports.getBoard = async (req, res) => {
@@ -53,6 +53,18 @@ exports.getBoard = async (req, res) => {
     } else if (search) {
       // 게시글 조회
       const board = await Board.findAll({
+        attributes: [
+          'boardSeq',
+          'title',
+          'content',
+          'filePath',
+          'count',
+          [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
+          [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
+          [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
+          'createdAt',
+          'updatedAt',
+        ],
         where: {
           [Op.or]: [
             {
@@ -67,7 +79,7 @@ exports.getBoard = async (req, res) => {
         limit: boardCountPerPage,
       });
 
-      res.render('board/viewBoard', { board: board, user: board.user });
+      res.send({ data: board });
     } else {
       // 전체 게시글 조회
 
@@ -78,7 +90,7 @@ exports.getBoard = async (req, res) => {
       });
 
       // console.log(board);
-      res.render("board/listBoard", { data: board });
+      res.render('board/listBoard', { data: board });
     }
   } catch (err) {
     console.error(err);

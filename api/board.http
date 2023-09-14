@@ -3,14 +3,14 @@
 @server = http://localhost:8080
 
 ### 게시글 화면 (쿼리 없음)
-GET {{boardUrl}}/?pageNum=1
+GET {{boardUrl}}?pageNum=1
 # 기본적으로 pageNum이 1이여야 한다.
 
 ### 게시글 화면 (쿼리 있음)
 GET {{boardUrl}}/?boardSeq=3
 
 ### 게시글 검색
-GET {{boardUrl}}/?search=제목
+GET {{boardUrl}}?search=제목
 
 ### 게시글 검색 ( + 페이징 처리)
 GET {{boardUrl}}/?search=제목&pageNum=4
