@@ -101,8 +101,26 @@ exports.getBoard = async (req, res) => {
 
       // DB 접근
       const board = await Board.findAll({
+        attributes: [
+          'boardSeq',
+          'title',
+          'content',
+          'filePath',
+          'count',
+          [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
+          [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
+          [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
+          'createdAt',
+          'updatedAt',
+          'user.userSeq',
+          'user.id',
+          'user.pw',
+          'user.name',
+          'user.isAdmin',
+        ],
         offset: offset,
         limit: boardCountPerPage,
+        include: [{ model: User }],
       });
 
       // console.log(board.length);
