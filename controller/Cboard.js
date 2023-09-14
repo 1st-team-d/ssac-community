@@ -94,7 +94,9 @@ exports.getBoard = async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    // res.send({ isGetBoardId: false, msg: '게시물 화면 띄우기 실패' });
+
+    res.send({ isGetBoardId: false, msg: '게시물 화면 띄우기 실패' });
+
   }
 };
 
@@ -131,6 +133,7 @@ exports.getRegister = (req, res) => {
 exports.postRegister = async (req, res) => {
   try {
     // ############### 파일 업로드 문제 없는지 확인 ###############
+
     console.log('######### req.file ::::: ', req.file); // single
     console.log('######### req.body ::::: ', req.body); // single
     let filePath = null;
@@ -144,11 +147,12 @@ exports.postRegister = async (req, res) => {
     // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
     // const { title, content, userSeq } = jsonData;
 
+
     // 실제 코드
     const { title, content } = req.body;
 
     // ############### DB 작업 ###############
-    const insertOneBoard = await Board.create({
+    await Board.create({
       title: title,
       content: content,
       filePath: filePath,
@@ -157,7 +161,9 @@ exports.postRegister = async (req, res) => {
 
     // res.redirect('/board');
     // console.log(insertOneBoard);
+
     res.send(insertOneBoard);
+
   } catch (err) {
     console.log(err);
   }
@@ -196,8 +202,10 @@ exports.patchModify = async (req, res) => {
     // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
     // const { title, content, userSeq } = jsonData;
 
+
     // 실제 코드
     const { title, content } = req.body;
+
 
     // DB 작업
     const updateOneBoard = await Board.update(
