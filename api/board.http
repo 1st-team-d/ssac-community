@@ -3,14 +3,14 @@
 @server = http://localhost:8080
 
 ### 게시글 화면 (쿼리 없음)
-GET {{boardUrl}}/?pageNum=1
+GET {{boardUrl}}?pageNum=1
 # 기본적으로 pageNum이 1이여야 한다.
 
 ### 게시글 화면 (쿼리 있음)
-GET {{boardUrl}}/?boardSeq=6
+GET {{boardUrl}}/?boardSeq=3
 
 ### 게시글 검색
-GET {{boardUrl}}/?search=제목
+GET {{boardUrl}}?search=제목
 
 ### 게시글 검색 ( + 페이징 처리)
 GET {{boardUrl}}/?search=제목&pageNum=4
@@ -39,9 +39,9 @@ Content-Disposition: form-data; name="data"
   "userSeq": 1
 }
 
---postRegister
-Content-Disposition: form-data; name="uploadFile"; filename="postRegister.pdf"
-Content-Type: application/pdf
+# --postRegister
+# Content-Disposition: form-data; name="uploadFile"; filename="postRegister.pdf"
+# Content-Type: application/pdf
 # Content-Type: image/jpeg
 
 # 이미지
@@ -50,7 +50,7 @@ Content-Type: application/pdf
 
 # 파일
 # < C:\SeSAC\test.pdf
-< C:\SeSAC\Prettier 설정하기.pdf
+# < C:\SeSAC\Prettier 설정하기.pdf
 
 --postRegister--
 
@@ -72,7 +72,7 @@ Content-Disposition: form-data; name="data"
 {
   "title": "제목 ::: 수정 :::  Test",
   "content": "내용 ::: 수정 ::: Test",
-  "boardSeq": "25"
+  "boardSeq": "3"
 }
 
 --patchRegister
