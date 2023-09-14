@@ -20,8 +20,8 @@ app.set("view engine", "ejs");
 app.set("/views", "views");
 
 // static (css)
-app.use('/static', express.static(__dirname + '/static'));
-app.use('/uploadFile', express.static(__dirname + '/uploads'));
+app.use("/static", express.static(__dirname + "/static"));
+app.use("/uploadFile", express.static(__dirname + "/uploads"));
 
 // 미들웨어 등록
 // body-parser
