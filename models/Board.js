@@ -18,9 +18,9 @@ const Board = (Sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         comment: '게시글 내용',
       },
-      imagePath: {
+      filePath: {
         type: DataTypes.STRING, // VARCHAR(255)
-        comment: '게시글 첨부 이미지 경로',
+        comment: '게시글 첨부 파일 경로 (YYYYMMDD/파일명)',
       },
       count: {
         type: DataTypes.INTEGER,
