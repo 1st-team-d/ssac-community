@@ -1,6 +1,6 @@
-const { Board, Comment, User, sequelize } = require('../models');
-const Op = require('sequelize').Op;
-const path = require('path');
+const { Board, Comment, User, sequelize } = require("../models");
+const Op = require("sequelize").Op;
+const path = require("path");
 
 // 게시글 화면
 exports.getBoard = async (req, res) => {
@@ -72,7 +72,7 @@ exports.getBoard = async (req, res) => {
       });
 
       // console.log(board);
-      res.render('board/listBoard', { data: board });
+      res.render("board/listBoard", { data: board });
     }
   } catch (err) {
     console.error(err);
