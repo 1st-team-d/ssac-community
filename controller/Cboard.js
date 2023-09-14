@@ -14,13 +14,30 @@ exports.getBoard = async (req, res) => {
       offset = boardCountPerPage * (pageNum - 1);
     }
 
-    console.log('query >> ', req.query);
+    // console.log('query >> ', req.query);
 
     if (boardSeq) {
       // 특정 게시글 조회
 
       // DB 접근
       const board = await Board.findOne({
+        attributes: [
+          'boardSeq',
+          'title',
+          'content',
+          'filePath',
+          'count',
+          [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
+          [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
+          [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
+          'createdAt',
+          'updatedAt',
+          'user.userSeq',
+          'user.id',
+          'user.pw',
+          'user.name',
+          'user.isAdmin',
+        ],
         where: { boardSeq: boardSeq },
         include: [{ model: User }],
       });
@@ -31,11 +48,23 @@ exports.getBoard = async (req, res) => {
         { where: { boardSeq: boardSeq } }
       );
 
-      res.send(board);
+      res.render('board/viewBoard', { board: board, user: board.user });
       // res.render("board/viewBoard", { data: board });
     } else if (search) {
       // 게시글 조회
       const board = await Board.findAll({
+        attributes: [
+          'boardSeq',
+          'title',
+          'content',
+          'filePath',
+          'count',
+          [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
+          [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
+          [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
+          'createdAt',
+          'updatedAt',
+        ],
         where: {
           [Op.or]: [
             {
@@ -50,7 +79,7 @@ exports.getBoard = async (req, res) => {
         limit: boardCountPerPage,
       });
 
-      res.send(board);
+      res.send({ data: board });
     } else {
       // 전체 게시글 조회
 
@@ -65,7 +94,9 @@ exports.getBoard = async (req, res) => {
     }
   } catch (err) {
     console.error(err);
+
     res.send({ isGetBoardId: false, msg: '게시물 화면 띄우기 실패' });
+
   }
 };
 
@@ -102,38 +133,37 @@ exports.getRegister = (req, res) => {
 exports.postRegister = async (req, res) => {
   try {
     // ############### 파일 업로드 문제 없는지 확인 ###############
-    console.log('req.file ::::: ', req.file); // single
-    const { fieldname, destination, filename } = req.file;
-    // console.log(destination.split(path.sep));
-    // console.log(filename);
 
-    const imagePath = destination.split(path.sep)[1] + path.sep + filename;
-    // console.log('req.files ::::: ', req.files); // fields, array
-    // console.log('req.body ::::: ', req.body);
+    console.log('######### req.file ::::: ', req.file); // single
+    console.log('######### req.body ::::: ', req.body); // single
+    let filePath = null;
+    // 파일 정보가 있는지 확인
+    if (req.file) {
+      const { destination, filename } = req.file;
+      filePath = destination.split(path.sep)[1] + path.sep + filename; // 파일명
+    }
 
+    // rest client 실행시
     // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
+    // const { title, content, userSeq } = jsonData;
 
-    // console.log('jsonData ::::: ', jsonData);
-    // req.file.preFilepath = '/uploadFile/'; // userUpload 설정
-    const { title, content, userSeq } = req.body;
 
-    // console.log('title ::::: ', title);
-    // console.log('content ::::: ', content);
-    // console.log('imagePath ::::: ', imagePath);
+    // 실제 코드
+    const { title, content } = req.body;
 
     // ############### DB 작업 ###############
     await Board.create({
       title: title,
       content: content,
-      imagePath: imagePath,
-      userSeq: userSeq,
+      filePath: filePath,
+      userSeq: req.session.userInfo.userSeq,
     });
 
+    // res.redirect('/board');
     // console.log(insertOneBoard);
 
-    // res.send({ file: req.file, data: req.body });
-    res.send({ result: true });
-    // res.send('hello')
+    res.send(insertOneBoard);
+
   } catch (err) {
     console.log(err);
   }
@@ -160,19 +190,29 @@ exports.getModify = async (req, res) => {
 // 게시글 수정 처리
 exports.patchModify = async (req, res) => {
   try {
-    // 이미지 업로드
-    const { fieldname, destination, filename } = req.file;
-    const imagePath = destination.split(path.sep)[1] + path.sep + filename;
+    // 파일 있는지 확인
+    let filePath = null;
+    if (req.file) {
+      // 이미지 업로드
+      const { destination, filename } = req.file;
+      filePath = destination.split(path.sep)[1] + path.sep + filename; // 파일명
+    }
 
-    const jsonData = JSON.parse(req.body['data']);
-    const { title, content, boardSeq } = jsonData;
+    // rest client 실행시
+    // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
+    // const { title, content, userSeq } = jsonData;
+
+
+    // 실제 코드
+    const { title, content } = req.body;
+
 
     // DB 작업
     const updateOneBoard = await Board.update(
       {
         title: title,
         content: content,
-        imagePath: imagePath,
+        filePath: filePath,
       },
       {
         where: {
