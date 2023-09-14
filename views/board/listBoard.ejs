@@ -35,9 +35,7 @@
                 <%= board.title %>
               </a>
             </div>
-            <div class="date">
-              <%= board.year + '/' + board.month + '/' + board.day %>
-            </div>
+            <div class="date"><%= board.year %></div>
             <div class="count"><%= board.count %></div>
           </div>
           <% num++ %> <% }) %>
@@ -57,8 +55,8 @@
       </div>
       <!-- 페이지 번호 -->
       <div class="board_page" id="pagination">
-        <% for (i = 1; i < 6; i++) { %>
-        <div onclick="changePageNum(this)"><%= i %></div>
+        <% for (i = 0; i < Math.ceil(dataLen / 5); i++) { %>
+        <div onclick="changePageNum(this)"><%= dataLen %></div>
         <% } %>
       </div>
       <div class="bt_wrap">

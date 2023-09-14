@@ -35,8 +35,14 @@
             저쩌고 가다나라마바사 커뮤니티입니다.
           </p>
           <div class="btnWrap">
-            <a class="btn" href="/board/register">글쓰기</a>
             <% if (typeof session === 'undefined') { %>
+            <a
+              href=""
+              class="text-decoration-none"
+              data-bs-toggle="modal"
+              data-bs-target="#loginModal"
+              ><span class="btn">글쓰기</span></a
+            >
             <a
               href=""
               class="text-decoration-none"
@@ -44,6 +50,8 @@
               data-bs-target="#registerModal"
               ><span class="btn ghostBtn">가입하기</span></a
             >
+            <% } else { %>
+            <a href="/board/register" class="btn">글쓰기</a>
             <% } %>
           </div>
         </div>
