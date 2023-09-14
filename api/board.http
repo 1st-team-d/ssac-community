@@ -7,7 +7,7 @@ GET {{boardUrl}}/?pageNum=1
 # 기본적으로 pageNum이 1이여야 한다.
 
 ### 게시글 화면 (쿼리 있음)
-GET {{boardUrl}}/?boardSeq=6
+GET {{boardUrl}}/?boardSeq=3
 
 ### 게시글 검색
 GET {{boardUrl}}/?search=제목
