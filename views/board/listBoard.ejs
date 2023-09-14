@@ -7,8 +7,17 @@
     <link rel="stylesheet" href="/static/css/boardCommon.css" />
     <link rel="stylesheet" href="/static/css/boardSearch.css" />
     <link rel="stylesheet" href="css/css.css" />
+    <!-- CDN -->
+    <%- include('../cdn/cdn.ejs') %>
+    <!-- 게시판 목록 조회, 특정 게시글 조회 -->
+    <link rel="stylesheet" href="/static/css/boardCommon.css" />
+    <link rel="stylesheet" href="/static/css/viewBoard.css" />
+    <script defer src="/static/js/viewBoard.js"></script>
+    <!-- header -->
+    <link rel="stylesheet" href="/static/css/header.css" />
   </head>
   <body>
+    <%- include('../includes/header.ejs') %>
     <div class="board_wrap">
       <div class="board_title">
         <strong>새싹 스터디 게시판🌱</strong>
