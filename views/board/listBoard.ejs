@@ -6,6 +6,7 @@
     <title>새싹 스터디 게시판</title>
     <link rel="stylesheet" href="/static/css/boardCommon.css" />
     <link rel="stylesheet" href="/static/css/boardSearch.css" />
+    <link rel="stylesheet" href="css/css.css" />
   </head>
   <body>
     <div class="board_wrap">
@@ -33,16 +34,23 @@
           </div>
           <% count++ %> <% }) %>
         </div>
+
         <!-- 검색 창 -->
         <div class="search_box">
-          <input type="text" placeholder="검색어를 입력하세요" />
-          <button>검색</button>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="검색어를 입력하세요"
+          />
+          <button id="searchButton">검색</button>
         </div>
-        <!-- 페이지 번호 -->
-        <div class="board_page" id="pagination"></div>
-        <div class="bt_wrap">
-          <a href="/board/register" class="on">글 작성</a>
-        </div>
+        <!-- 검색 결과를 표시할 목록 -->
+        <div id="boardList"></div>
+      </div>
+      <!-- 페이지 번호 -->
+      <div class="board_page" id="pagination"></div>
+      <div class="bt_wrap">
+        <a href="/board/register" class="on">글 작성</a>
       </div>
     </div>
 
