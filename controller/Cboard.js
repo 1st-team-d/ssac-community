@@ -15,6 +15,9 @@ exports.getBoard = async (req, res) => {
     }
 
     // console.log('query >> ', req.query);
+    // 전체 게시글 개수 필요
+    const selectAllBoard = await Board.findAll();
+    const allBoardLen = selectAllBoard.length;
 
     if (boardSeq) {
       // 특정 게시글 조회
@@ -52,7 +55,7 @@ exports.getBoard = async (req, res) => {
 
       res.render('board/viewBoard', {
         board: board,
-        dataLen: board.length,
+        allBoardLen: allBoardLen,
         user: board.user,
         session: req.session.userInfo,
       });
@@ -90,7 +93,7 @@ exports.getBoard = async (req, res) => {
 
       res.send({
         data: board,
-        dataLen: board.length,
+        allBoardLen: allBoardLen,
         session: req.session.userInfo,
       });
     } else {
@@ -106,7 +109,7 @@ exports.getBoard = async (req, res) => {
       console.log('session>>>>>>', req.session.userInfo);
       res.render('board/listBoard', {
         data: board,
-        dataLen: board.length,
+        allBoardLen: allBoardLen,
         session: req.session.userInfo,
       });
     }
