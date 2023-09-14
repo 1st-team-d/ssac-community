@@ -36,6 +36,7 @@
           </p>
           <div class="btnWrap">
             <a class="btn" href="/board/register">글쓰기</a>
+            <% if (typeof isLogin === 'undefined') { %>
             <a
               href=""
               class="text-decoration-none"
@@ -43,6 +44,7 @@
               data-bs-target="#registerModal"
               ><span class="btn ghostBtn">가입하기</span></a
             >
+            <% } %>
           </div>
         </div>
       </div>

@@ -14,6 +14,8 @@
         <span class="">📝</span>
         <span class="">게시글 조회</span>
       </a>
+
+      <% if (typeof isLogin === 'undefined') { %>
       <!-- 로그인 버튼 -->
       <button
         id="loginBtn"
@@ -24,6 +26,8 @@
       >
         로그인
       </button>
+      <% } else { %>
+      <button class="btn">내 프로필</button> <% } %>
     </nav>
   </div>
 </header>
