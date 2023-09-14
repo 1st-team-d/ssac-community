@@ -1,6 +1,6 @@
-const { Board, Comment, User, sequelize } = require('../models');
-const Op = require('sequelize').Op;
-const path = require('path');
+const { Board, Comment, User, sequelize } = require("../models");
+const Op = require("sequelize").Op;
+const path = require("path");
 
 // 게시글 화면
 exports.getBoard = async (req, res) => {
@@ -14,7 +14,7 @@ exports.getBoard = async (req, res) => {
       offset = boardCountPerPage * (pageNum - 1);
     }
 
-    console.log('query >> ', req.query);
+    console.log("query >> ", req.query);
 
     if (boardSeq) {
       // 특정 게시글 조회
@@ -31,7 +31,12 @@ exports.getBoard = async (req, res) => {
         { where: { boardSeq: boardSeq } }
       );
 
-      res.send(board);
+      let createDate = String(board.createdAt);
+      let [day, month, date, year] = createDate.split(" ");
+
+      const postDate = day + " " + month + " " + date + " " + year;
+
+      res.send({ board, postDate });
       // res.render("board/viewBoard", { data: board });
     } else if (search) {
       // 게시글 조회
@@ -61,7 +66,7 @@ exports.getBoard = async (req, res) => {
       });
 
       // console.log(board);
-      res.render('board/listBoard', { data: board });
+      res.render("board/listBoard", { data: board });
     }
   } catch (err) {
     console.error(err);
@@ -102,7 +107,7 @@ exports.getRegister = (req, res) => {
 exports.postRegister = async (req, res) => {
   try {
     // ############### 파일 업로드 문제 없는지 확인 ###############
-    console.log('req.file ::::: ', req.file); // single
+    console.log("req.file ::::: ", req.file); // single
     const { fieldname, destination, filename } = req.file;
     // console.log(destination.split(path.sep));
     // console.log(filename);
