@@ -23,6 +23,6 @@ POST {{server}}/user/signin
 Content-Type: application/json; charset=UTF-8
 
 {
-  "loginEmail": "123@naver.com",
-  "loginPw": "1234"
+  "loginEmail": "abc@naver.com",
+  "loginPw": "Abcd1234!"
 }

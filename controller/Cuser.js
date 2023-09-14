@@ -100,7 +100,7 @@ exports.postSignin = async (req, res) => {
 
   try {
     // 1. 이메일(아이디)를 찾아서 회원 존재 유무 확인
-    const { loginEmail, loginPw } = req.body;
+    const { loginEmail, loginPw, loginRemain } = req.body;
 
     // 이메일(아이디) 유효성 검사(형식 확인)
     isCorrect = await checkEmail(loginEmail);
@@ -130,11 +130,25 @@ exports.postSignin = async (req, res) => {
 
           console.log("sessioninfo >>>>>", req.session);
 
+          // 로그인 정보 기억
+          const myCookieConf = {
+            httpOnly: true,
+            maxAge: 86400 * 1000, // 1day
+            signed: true, // 암호화 쿠키
+          };
+
+          if (loginRemain) {
+            res.cookie("remain", { loginEmail, loginPw }, myCookieConf);
+          }
+
+          // console.log(req.signedCookies);
+
           res.send({
             isCorrect,
             isNoGap,
             isSignin: true,
             data: user,
+            loginInfo: req.session.userInfo,
           });
         } else {
           // 비밀번호 불일치

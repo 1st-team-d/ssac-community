@@ -20,8 +20,8 @@ app.set("view engine", "ejs");
 app.set("/views", "views");
 
 // static (css)
-app.use('/static', express.static(__dirname + '/static'));
-app.use('/uploadFile', express.static(__dirname + '/uploads'));
+app.use("/static", express.static(__dirname + "/static"));
+app.use("/uploadFile", express.static(__dirname + "/uploads"));
 
 // 미들웨어 등록
 // body-parser
@@ -39,6 +39,11 @@ app.use(
     },
   })
 );
+
+// 쿠키
+const cookieParser = require("cookie-parser");
+const COOKIE_SECRET_KEY = process.env.COOKIE_SECRET_KEY;
+app.use(cookieParser(COOKIE_SECRET_KEY)); // 암호화 쿠키
 
 // '/' 요청
 const indexRouter = require("./routes/index");
