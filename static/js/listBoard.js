@@ -96,37 +96,32 @@
 // 검색 버튼 요소 가져오기
 const searchButton = document.getElementById("searchButton");
 const searchInput = document.getElementById("searchInput");
-
 // 검색 버튼 클릭 이벤트 리스너 추가
 searchButton.addEventListener("click", () => {
   // 입력된 검색어 가져오기
   const keyword = searchInput.value;
-
   // 검색어를 서버로 전송하여 검색 요청 보내기
   fetch(`/board?search=${keyword}`)
     .then((response) => response.json()) // 서버 응답을 JSON으로 파싱
     .then((data) => {
       // 검색 결과를 받아와서 화면에 표시
-      console.log("검색 결과 데이터:", data);
+      console.log("검색 결과 데이터:", data); // 이 부분을 추가하여 데이터를 콘솔에 출력
       renderSearchResults(data);
     })
     .catch((error) => {
       console.error("검색 오류:", error);
     });
 });
-
 // 검색 결과를 화면에 표시하는 함수
 function renderSearchResults(results) {
   const boardList = document.getElementById("boardList");
   boardList.innerHTML = ""; // 기존 목록을 비우고 검색 결과를 새로 표시
-
   // 검색 결과를 반복하여 목록에 추가
   results.forEach((board) => {
     const count = board.dataValues.count;
     const title = board.dataValues.title;
     const createdAt = board.dataValues.createdAt;
     const boardSeq = board.dataValues.boardSeq;
-
     // 새로운 게시물 요소 생성
     const boardElement = document.createElement("div");
     boardElement.innerHTML = `
@@ -137,7 +132,6 @@ function renderSearchResults(results) {
             <div class="date">${createdAt}</div>
             <div class="count">${count}</div>
         `;
-
     // 생성된 요소를 목록에 추가
     boardList.appendChild(boardElement);
   });

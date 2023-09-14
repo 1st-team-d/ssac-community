@@ -15,7 +15,6 @@
         <p>새싹 스터디 게시판입니다. 자유롭게 작성해주세요~~</p>
       </div>
 
-
       <div class="board_list_wrap">
         <!-- 게시물 -->
         <div class="board_list" id="boardList">
@@ -38,23 +37,24 @@
 
         <!-- 검색 창 -->
         <div class="search_box">
-          <input type="text" id="searchInput" placeholder="검색어를 입력하세요" />
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="검색어를 입력하세요"
+          />
           <button id="searchButton">검색</button>
+        </div>
+        <!-- 검색 결과를 표시할 목록 -->
+        <div id="boardList"></div>
       </div>
-
-          <!-- 검색 결과를 표시할 목록 -->
-          <div id="boardList"></div>
-        </div>
-        <!-- 페이지 번호 -->
-        <div class="board_page" id="pagination"></div>
-        <div class="bt_wrap">
-          <a href="/board/register" class="on">글 작성</a>
-        </div>
+      <!-- 페이지 번호 -->
+      <div class="board_page" id="pagination"></div>
+      <div class="bt_wrap">
+        <a href="/board/register" class="on">글 작성</a>
       </div>
     </div>
 
     <!-- listBoard.js 파일을 연결 -->
     <script src="/static/js/listBoard.js"></script>
-
   </body>
 </html>
