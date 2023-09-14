@@ -86,7 +86,9 @@ searchButton.addEventListener('click', async () => {
   // 검색어를 서버로 전송하여 검색 요청 보내기
 
   fetch(`/board?search=${keyword}`)
-    .then((response) => response.json()) // 서버 응답을 JSON으로 파싱
+    .then((response) => {
+      return response.json();
+    }) // 서버 응답을 JSON으로 파싱
     .then((data) => {
       // 검색 결과를 받아와서 화면에 표시
       console.log('검색 결과 데이터:', data); // 이 부분을 추가하여 데이터를 콘솔에 출력

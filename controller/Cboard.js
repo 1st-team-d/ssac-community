@@ -52,7 +52,7 @@ exports.getBoard = async (req, res) => {
       );
 
       console.log('session>>>>>>', req.session.userInfo);
-
+      console.log('특정 게시글 board>>>>>>>', board);
       res.render('board/viewBoard', {
         board: board,
         allBoardLen: allBoardLen,
@@ -196,7 +196,12 @@ exports.deleteBoard = async (req, res) => {
 // GET '/board/register'
 // 게시글 등록 화면으로 이동 // 수정 화면도 동일
 exports.getRegister = (req, res) => {
-  res.render('board/postBoard');
+  if (req.session.userInfo) {
+    res.render('board/postBoard');
+  } else {
+    // 세션있을 때만 등록 화면 나오게
+    res.redirect('/');
+  }
 };
 
 // POST '/board/register'
@@ -242,13 +247,13 @@ exports.postRegister = async (req, res) => {
 // 게시글 수정 화면
 exports.getModify = async (req, res) => {
   try {
-    const { boardSeq } = req.body;
+    const { boardSeq } = req.query;
     const selectOneBoard = await Board.findOne({
       where: {
         boardSeq: boardSeq,
       },
     });
-
+    console.log('@@@@@@@@@', selectOneBoard);
     res.render('board/postBoard', { result: selectOneBoard });
   } catch (err) {
     console.log(err);
