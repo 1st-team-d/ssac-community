@@ -15,6 +15,8 @@
     <script defer src="/static/js/viewBoard.js"></script>
     <!-- header -->
     <link rel="stylesheet" href="/static/css/header.css" />
+    <!-- 게시물 목록에서도 로그인/회원가입 모달창 사용하기 위해 js 파일 필요함 -->
+    <script defer src="/static/js/loginRegister.js"></script>
   </head>
   <body>
     <%- include('../includes/header.ejs') %>
@@ -55,12 +57,23 @@
       </div>
       <!-- 페이지 번호 -->
       <div class="board_page" id="pagination">
-        <% for (i = 0; i < Math.ceil(dataLen / 5); i++) { %>
-        <div onclick="changePageNum(this)"><%= dataLen %></div>
+        <div onclick="changePageNum(this)">1</div>
+        <% for (i = 1; i < Math.ceil(allBoardLen / 5); i++) { %>
+        <div onclick="changePageNum(this)"><%= i+1 %></div>
         <% } %>
       </div>
       <div class="bt_wrap">
-        <a href="/board/register" class="on">글 작성</a>
+        <% if (typeof session === 'undefined') { %>
+        <a
+          href=""
+          class="text-decoration-none on"
+          data-bs-toggle="modal"
+          data-bs-target="#loginModal"
+          >글 작성하기</a
+        >
+        <% } else { %>
+        <a href="/board/register" class="on">글 작성하기</a>
+        <% } %>
       </div>
     </div>
 

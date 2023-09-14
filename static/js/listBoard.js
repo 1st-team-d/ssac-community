@@ -46,12 +46,13 @@ function renderPagination() {
 }
 
 // 페이지 번호 변경
-async function changePageNum(pageNum) {
-  await axios({
-    url: '/board',
+async function changePageNum(pageDiv) {
+  const pageNum = pageDiv.textContent;
+  const res = await axios({
+    url: `/board?pageNum=${pageNum}`,
     method: 'get',
-    params: { pageNum: pageNum },
   });
+  console.log(res.data);
 }
 
 // 검색 버튼 요소 가져오기
