@@ -263,7 +263,14 @@ exports.getModify = async (req, res) => {
       },
     });
     console.log('@@@@@@@@@', selectOneBoard);
-    res.render('board/postBoard', { result: selectOneBoard });
+    if (req.session.userInfo) {
+      res.render('board/postBoard', {
+        result: selectOneBoard,
+      });
+    } else {
+      // 세션있을 때만 등록 화면 나오게
+      res.redirect('/');
+    }
   } catch (err) {
     console.log(err);
   }
@@ -275,6 +282,8 @@ exports.patchModify = async (req, res) => {
   try {
     // 파일 있는지 확인
     let filePath = null;
+    console.log('수정 응답 >>>>>>', req.body);
+    console.log('파일은 >>>>>>>> ', req.file);
     if (req.file) {
       // 이미지 업로드
       const { destination, filename } = req.file;
@@ -286,7 +295,7 @@ exports.patchModify = async (req, res) => {
     // const { title, content, userSeq } = jsonData;
 
     // 실제 코드
-    const { title, content } = req.body;
+    const { title, content, boardSeq } = req.body;
 
     // DB 작업
     const updateOneBoard = await Board.update(

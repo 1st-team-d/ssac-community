@@ -27,6 +27,9 @@
       <div class="postWrap container w-75">
         <h1 class="fw-bold">새싹 스터디 게시판 🌱</h1>
         <input type="hidden" name="userSeq" value="1" />
+        <% if (typeof result !== 'undefined') { %>
+        <input type="hidden" name="boardSeq" value="<%= result.boardSeq %>" />
+        <% } %>
         <div class="row border-black border-top border-bottom mb-3">
           <div class="col-lg-12 py-3 border-bottom">
             <span class="col-lg-12 me-5 postTitle">제목</span>
@@ -51,9 +54,7 @@
         >
           <input
             class="fileName"
-            value="<% if (typeof result !== 'undefined') { %>
-              <%= result.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.' + result.filePath.split('/')[1].split('.')[1] %>
-            <% } %>"
+            value="<% if (typeof result !== 'undefined') { %><%= result.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.' + result.filePath.split('/')[1].split('.')[1] %><% } %>"
             placeholder="첨부파일"
             type="text"
             disabled
@@ -67,9 +68,19 @@
           <!-- 백과 uploadFile로 name 통일 -->
         </div>
         <div class="d-flex justify-content-end">
+          <% if (typeof result !== 'undefined') { %>
+          <button
+            type="button"
+            class="editBtn btn btn-secondary fw-bold mt-3"
+            onclick="editPost()"
+          >
+            수정
+          </button>
+          <% } else { %>
           <button type="submit" class="postBtn btn btn-secondary fw-bold mt-3">
             글 작성
           </button>
+          <% } %>
         </div>
       </div>
     </form>

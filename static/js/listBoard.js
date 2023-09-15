@@ -3,58 +3,24 @@ const itemsPerPage = 5; // 한 페이지에 표시할 게시물 수
 let currentPage = 1; // 현재 페이지 번호
 // 게시물을 동적으로 생성하고 표시하는 함수
 
-function renderBoard() {
-  // 게시물 제목 링크에 클릭 이벤트 리스너 추가
-  const viewLinks = boardList.querySelectorAll(".view-link");
-  viewLinks.forEach((viewLink) => {
-    viewLink.addEventListener("click", (event) => {
-      event.preventDefault(); // 링크의 기본 동작 방지
-      const postId = event.target.getAttribute("data-id"); // 게시물 ID 가져오기
-      // postId를 사용하여 조회 페이지로 이동
-      window.location.href = `/viewBoard.ejs?id=${postId}`;
-    });
-  });
-}
 
-// 페이지 번호를 생성하고 표시하는 함수
-function renderPagination() {
-  const pagination = document.getElementById("pagination");
-  pagination.innerHTML = ""; // 이전 페이지 번호 초기화
-  // 페이지 번호를 생성하고 클릭 이벤트를 연결하여 페이지를 변경할 때마다 업데이트
-  for (let i = 1; i <= totalPages; i++) {
-    const pageLink = document.createElement("a");
-    pageLink.href = "#";
-    pageLink.textContent = i;
-    pageLink.addEventListener("click", () => {
-      currentPage = i; // 페이지 번호 변경
-      const res = axios({
-        url: "/board",
-        method: "get",
-        params: { pageNum: currentPage },
-      });
-      const totalPages = Math.ceil(Object.keys(obj).length / itemsPerPage);
-    });
-    // 현재 페이지에 'on' 클래스를 추가하여 활성화된 페이지를 표시
-    if (i === currentPage) {
-      pageLink.classList.add("num", "on");
-    } else {
-      pageLink.classList.add("num");
-    }
-    // 페이지 번호를 페이지네이션 컨테이너에 추가
-    pagination.appendChild(pageLink);
-  }
-}
+// 페이지 번호 변경 및 화면 표시 게시물 변경 함수
 
-// 페이지 번호 변경
 async function changePageNum(pageDiv) {
+  // 해당 페이지 번호 클릭 -> 클릭한 this 객체가 pageDiv
   const pageNum = pageDiv.textContent;
+  // 해당 페이지에 해당하는 데이터 보내달라고 요청
   const res = await axios({
     url: `/board?pageNum=${pageNum}`,
     method: "get",
   });
   console.log(res.data);
+  // 서버에서 전송한 게시물 데이터
   let boards = res.data.data;
-  const newDivs = document.createElement("div"); // boardList에 바꿔줄 div 여러개 담고 있는
+
+  // boardList 업데이트 하기 위한 newDivs
+  const newDivs = document.createElement('div'); // boardList에 바꿔줄 div 여러개 담고 있는
+
   boards.forEach((board, index) => {
     const count = board.count;
     const title = board.title;
@@ -62,7 +28,9 @@ async function changePageNum(pageDiv) {
     const year = board.year;
     const month = board.month;
     const day = board.day;
-    const newDiv = document.createElement("div");
+
+    const newDiv = document.createElement('div');
+    // innerHTML로 아예 갈아 엎어서 페이지 누를때마다 새로 집어넣기
     newDiv.innerHTML = `
       <div class="num">${(pageNum - 1) * 5 + 1 + index}</div>
       <div class="title">

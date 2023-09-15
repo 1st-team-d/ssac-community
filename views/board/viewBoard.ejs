@@ -37,7 +37,10 @@
             </dl>
             <dl>
               <dt>작성일</dt>
-              <dd><%= board.createdAt %></dd>
+              <dd>
+                <%= board.dataValues.year + '-' + board.dataValues.month + '-' +
+                board.dataValues.day %>
+              </dd>
             </dl>
             <dl>
               <dt>조회</dt>
@@ -55,9 +58,11 @@
             class="fs-4"
             href="<%= '/uploadFile/' + board.filePath %>"
             target="_blank"
-            ><%= board.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.'
-            + board.filePath.split('/')[1].split('.')[1] %></a
           >
+            <% if (board.filePath !== null) { %> <%=
+            board.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.' +
+            board.filePath.split('/')[1].split('.')[1] %> <% } %>
+          </a>
           <!-- <img
             src="/uploadFile/20230913/postRegister38214764912074.pdf"
             alt="실패!"
@@ -117,7 +122,10 @@
 
       <div class="bt_wrap container d-flex justify-content-center">
         <button class="btn me-5 fs-2 px-4" onclick="listBoard()">목록</button>
+        <% if (typeof session !== 'undefined') { %> <% if (board.user.userSeq
+        === session.userSeq) { %>
         <button class="btn fs-2 px-4" onclick="editBoard()">수정</button>
+        <% } %> <% } %>
       </div>
     </div>
   </body>

@@ -38,8 +38,7 @@ async function postLogin() {
       data: loginData,
     });
     if (res.data.isSignin) {
-      // true -> 로그인 성공 -> 현재 페이지 새로고침
-      alert('로그인 성공!'); // 라이브러리 통해 이쁘게 수정 해보기
+      // 로그인 성공하면 현재 페이지 리로드
       document.location.reload();
     } else {
       // false -> 로그인 실패 -> 에러 메세지
@@ -72,7 +71,6 @@ async function postRegister() {
     const emailTest = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailTest.test(registerData.registerEmail)) {
       errorMsg[1].innerHTML = '이메일 형식이 올바르지 않습니다.';
-      errorMsg.style.color = 'red';
     } else {
       // 비밀번호 유효성 검사
       const pwTest =
@@ -87,17 +85,23 @@ async function postRegister() {
         } else {
           // *back*
           // 회원가입 성공시 true, 실패시 false 응답 해주세요. 아마 다 true 뜰듯?
-          let res = await axios({
-            url: '/user/signup',
-            method: 'post',
-            data: registerData,
-          });
-          if (res.data) {
-            // true -> 회원가입 성공 -> 메인 화면으로 이동
-            alert('회원가입 성공!'); // 라이브러리 통해 이쁘게 수정 해보기
-            document.location.reload();
-          } else {
-            alert('회원가입 실패!');
+          if (confirm('회원가입 하시겠습니까?')) {
+            try {
+              let res = await axios({
+                url: '/user/signup',
+                method: 'post',
+                data: registerData,
+              });
+              if (res.data) {
+                // true -> 회원가입 성공 -> 현재 페이지 리로드
+
+                document.location.reload();
+              } else {
+                alert('회원가입 실패!');
+              }
+            } catch (err) {
+              console.error('에러!!!', err);
+            }
           }
         }
       }

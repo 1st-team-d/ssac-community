@@ -25,3 +25,38 @@ function checkExt(fileName) {
 
   return extArr.includes(ext) > 0 ? true : false;
 }
+
+// 수정 버튼
+async function editPost() {
+  const form = document.forms['data'];
+  const formData = new FormData();
+  const file = document.querySelector('#postFile').files[0];
+
+  console.log(form.boardSeq.value);
+
+  formData.append('boardSeq', form.boardSeq.value);
+  formData.append('userSeq', form.userSeq.value);
+  formData.append('title', form.title.value);
+  formData.append('content', form.content.value);
+  formData.append('uploadFile', file);
+
+  if (confirm('수정 하시겠습니까?')) {
+    try {
+      const res = await axios({
+        url: '/board/modify',
+        method: 'patch',
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      if (res.data) {
+        alert('수정 완료!');
+        document.location.href = '/board';
+      }
+    } catch (error) {
+      console.error(error);
+      // 에러 처리 로직 추가
+    }
+  }
+}
