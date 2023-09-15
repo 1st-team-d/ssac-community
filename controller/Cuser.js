@@ -97,8 +97,6 @@ exports.postCheckEmail = async (req, res) => {
 
 // 로그인 처리
 exports.postSignin = async (req, res) => {
-  // Todo: 필요한 세션 정보 확인
-
   try {
     // 1. 이메일(아이디)를 찾아서 회원 존재 유무 확인
     const { loginEmail, loginPw, loginRemain } = req.body;
@@ -138,6 +136,7 @@ exports.postSignin = async (req, res) => {
             signed: true, // 암호화 쿠키
           };
 
+          // 로그인 정보 기억하기
           if (loginRemain) {
             res.cookie("remain", { loginEmail, loginPw }, myCookieConf);
           }
@@ -150,6 +149,7 @@ exports.postSignin = async (req, res) => {
             isSignin: true,
             data: user,
             session: req.session.userInfo,
+            cookie: req.signedCookies.remain,
           });
         } else {
           // 비밀번호 불일치
