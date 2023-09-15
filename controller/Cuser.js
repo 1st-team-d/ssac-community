@@ -1,5 +1,5 @@
 // User 모델 모듈 불러오기
-const { User, sequelize } = require("../models");
+const { User } = require("../models");
 // bcrypt 패키지 불러오기
 const { hashedPw, comparePw } = require("../utils/encrypt");
 
