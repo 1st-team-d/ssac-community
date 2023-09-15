@@ -38,7 +38,7 @@ exports.postSignup = async (req, res) => {
     // 비밀번호 유효성 검사(공백 확인)
     isNoGapPw = await checkPw(registerPw);
 
-    if (isNoGapName && isCorrect && isNoGap) {
+    if (isNoGapName && isCorrect && isNoGapPw) {
       // 이메일(아이디), 비밀번호 유효성 검사 통과
       const hashedPW = await hashedPw(registerPw); // 비밀번호 암호화
       await User.create({
@@ -50,7 +50,7 @@ exports.postSignup = async (req, res) => {
       res.send({ isCorrect, isSignup: true, session: req.session.userInfo });
     } else {
       // 이름, 이메일(아이디), 비밀번호 유효성 검사 통과 실패
-      res.send({ isCorrect, isNoGap });
+      res.send({ isCorrect, isNoGapPw });
     }
   } catch (err) {
     console.error(err);
@@ -71,6 +71,8 @@ exports.postCheckEmail = async (req, res) => {
     const user = await User.findOne({
       where: { id: registerEmail },
     });
+
+    console.log("중복 정보 >>>>>>>>>>>>>>", user);
 
     if (isCorrect) {
       // 이메일(아이디) 유효성 검사 통과
