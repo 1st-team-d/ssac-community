@@ -85,6 +85,9 @@ exports.getBoard = async (req, res) => {
             },
           ],
         },
+        order: [
+          [sequelize.col('board.createdAt'), 'DESC']
+        ],
         offset: offset,
         limit: boardCountPerPage,
       });
@@ -114,6 +117,9 @@ exports.getBoard = async (req, res) => {
           'user.pw',
           'user.name',
           'user.isAdmin',
+        ],
+        order: [
+          [sequelize.col('board.createdAt'), 'DESC']
         ],
         offset: offset,
         limit: boardCountPerPage,
@@ -149,6 +155,9 @@ exports.getBoard = async (req, res) => {
           'user.pw',
           'user.name',
           'user.isAdmin',
+        ],
+        order: [
+          [sequelize.col('board.createdAt'), 'DESC']
         ],
         offset: offset,
         limit: boardCountPerPage,
