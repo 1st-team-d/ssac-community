@@ -60,14 +60,12 @@
             href="<%= '/uploadFile/' + board.filePath %>"
             target="_blank"
           >
-            <% if (board.filePath !== null) { %> <%=
-            board.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.' +
-            board.filePath.split('/')[1].split('.')[1] %> <% } %>
+            <% if (board.filePath !== undefined && board.filePath !== null) { %>
+            <%= board.filePath.replace('\\',
+            '/').split('/')[1].split('.')[0].slice(0, -15) + '.' +
+            board.filePath.replace('\\', '/').split('/')[1].split('.')[1] %> <%
+            } %>
           </a>
-          <!-- <img
-            src="/uploadFile/20230913/postRegister38214764912074.pdf"
-            alt="실패!"
-          /> -->
         </div>
         <% if (session !== undefined && session !== null) { %>
         <% if (board.user.userSeq === session.userSeq) { %>
