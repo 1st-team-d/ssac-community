@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CDN -->
+    <%- include('./cdn/cdn.ejs') %>
+    <link rel="stylesheet" href="/static/css/header.css" />
+    <style>
+      .btn {
+        background-color: blue;
+      }
+    </style>
+    <title>스터디 정보 페이지</title>
+  </head>
+  <body>
+    <%- include('./includes/header.ejs') %>
+    <div
+      class="container d-flex flex-column justify-content-center"
+      style="height: 100vh"
+    >
+      <div class="border leaderStudy mb-5">
+        <h1 class="text-center">모집중인 스터디</h1>
+        <p class="text-center">
+          내가 모집중인(팀장인) 스터디에 대한 정보입니다.
+        </p>
+        <p class="text-center">
+          <a class="btn btn-primary btn-lg" href="#"
+            >내가 모집중인 스터디 정보 확인하기</a
+          >
+        </p>
+      </div>
+      <div class="border crewStudy">
+        <h1 class="text-center">지원한 스터디</h1>
+        <p class="text-center">내가 참여한(팀원인) 스터디에 대한 정보입니다.</p>
+        <p class="text-center">
+          <a class="btn btn-primary btn-lg" href="#"
+            >내가 지원한 스터디 정보 확인하기</a
+          >
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
