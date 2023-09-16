@@ -69,8 +69,8 @@
             alt="실패!"
           /> -->
         </div>
-        <% if (typeof session !== 'undefined') { %> <% if (board.user.userSeq
-        === session.userSeq) { %>
+        <% if (session !== undefined && session !== null) { %>
+        <% if (board.user.userSeq === session.userSeq) { %>
         <div class="deleteBtnWrap d-flex justify-content-end">
           <button
             class="deleteBtn btn bg-secondary text-light fs-4 me-5"
