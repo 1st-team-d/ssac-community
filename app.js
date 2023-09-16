@@ -47,15 +47,13 @@ app.use(cookieParser(COOKIE_SECRET_KEY)); // 암호화 쿠키
 
 // '/' 요청
 const indexRouter = require('./routes/index');
-app.use('/', indexRouter);
+app.use('/', indexRouter); // 메인
 const boardRouter = require('./routes/board');
-app.use('/board', boardRouter);
+app.use('/board', boardRouter); // 게시글
 const userRouter = require('./routes/user');
-app.use('/user', userRouter);
-
-app.get('/study', (req, res) => {
-  res.render('study');
-});
+app.use('/user', userRouter); // 유저
+const studyRouter = require('./routes/study');
+app.use('/study', studyRouter); // 스터디
 
 // 에러 처리
 app.get('*', (req, res) => {
