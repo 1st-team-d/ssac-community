@@ -54,7 +54,7 @@ const userRouter = require('./routes/user');
 app.use('/user', userRouter);
 
 app.get('/study', (req, res) => {
-  res.render('study');
+  res.render('study', { session: req.session.userInfo });
 });
 
 // 에러 처리

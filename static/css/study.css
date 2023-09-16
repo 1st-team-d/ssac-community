@@ -1,0 +1,26 @@
+/* 스터디 관리 페이지 */
+/* Common */
+
+.studySection {
+  height: 200px;
+}
+
+.studyStatus {
+  height: 100%;
+  background-color: green;
+}
+
+.studyInfo {
+  width: 75%;
+  height: 80%;
+}
+
+/* 스터디 정보 studyInfo */
+.studyInfo .card {
+  margin-right: 10px;
+}
+
+/* 스터디 정보 맨 마지막 항목은 마진 0 */
+.studyInfo > div:last-child {
+  margin: 0;
+}
