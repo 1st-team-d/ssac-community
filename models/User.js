@@ -12,6 +12,7 @@ const User = (Sequelize, DataTypes) => {
       id: {
         type: DataTypes.STRING, // VARCHAR(255)
         allowNull: false,
+        unique: true,
         comment: '유저 아이디',
       },
       pw: {
@@ -22,7 +23,7 @@ const User = (Sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING, // VARCHAR(255)
         allowNull: false,
-        comment: '유저 이름(실명)',
+        comment: '유저 닉네임',
       },
       isAdmin: {
         type: DataTypes.INTEGER,

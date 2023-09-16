@@ -49,7 +49,8 @@
           </div>
           <div class="cont">
             <!-- 게시물 내용을 출력할 때는 줄바꿈 이런걸 했을 수도 있어서 이스케이프 처리하지 않고 출력 -->
-            <%- board.content.replace(/\n/g, '<br />') %>
+            <% if (board.content !== null && board.content !== undefined) { %>
+            <%- board.content.replace(/\n/g, '<br />') %> <% } %>
           </div>
         </div>
         <div id="postFile" class="fs-3 my-3">
@@ -59,17 +60,15 @@
             href="<%= '/uploadFile/' + board.filePath %>"
             target="_blank"
           >
-            <% if (board.filePath !== null) { %> <%=
-            board.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.' +
-            board.filePath.split('/')[1].split('.')[1] %> <% } %>
+            <% if (board.filePath !== undefined && board.filePath !== null) { %>
+            <%= board.filePath.replace('\\',
+            '/').split('/')[1].split('.')[0].slice(0, -15) + '.' +
+            board.filePath.replace('\\', '/').split('/')[1].split('.')[1] %> <%
+            } %>
           </a>
-          <!-- <img
-            src="/uploadFile/20230913/postRegister38214764912074.pdf"
-            alt="실패!"
-          /> -->
         </div>
-        <% if (typeof session !== 'undefined') { %> <% if (board.user.userSeq
-        === session.userSeq) { %>
+        <% if (session !== undefined && session !== null) { %>
+        <% if (board.user.userSeq === session.userSeq) { %>
         <div class="deleteBtnWrap d-flex justify-content-end">
           <button
             class="deleteBtn btn bg-secondary text-light fs-4 me-5"

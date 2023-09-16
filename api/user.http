@@ -22,10 +22,35 @@ Content-Type: application/json; charset=UTF-8
 POST {{server}}/user/signin
 Content-Type: application/json; charset=UTF-8
 
+# 김철수(Web 리더, AI 팀원)
+# {
+#   "loginEmail": "sesac-k@gmail.com",
+#   "loginPw": "aaaassss1111!!!!"
+# }
+
+# 홍길동(Web 팀원)
+# {
+#   "loginEmail": "sesac-h@gmail.com",
+#   "loginPw": "aaaassss1111!!!!"
+# }
+
+# 박영희(App 리더, Web 팀원)
+# {
+#   "loginEmail": "sesac-p@gmail.com",
+#   "loginPw": "aaaassss1111!!!!"
+# }
+
+# 손흥민(Web,App 팀원 / AI 리더)
 {
-  "loginEmail": "aaa@naver.com",
-  "loginPw": "Abcd1234!"
+  "loginEmail": "sesac-s@gmail.com",
+  "loginPw": "aaaassss1111!!!!"
 }
+
+# 이재성(App 팀원)
+# {
+#   "loginEmail": "sesac-l@gmail.com",
+#   "loginPw": "aaaassss1111!!!!"
+# }
 
 ### 로그아웃 처리
 GET {{server}}/user/logout

@@ -1,7 +1,7 @@
 // User 모델 모듈 불러오기
-const { User } = require("../models");
+const { User } = require('../models');
 // bcrypt 패키지 불러오기
-const { hashedPw, comparePw } = require("../utils/encrypt");
+const { hashedPw, comparePw } = require('../utils/encrypt');
 
 // 이메일(아이디) 유효성 검사 함수
 const checkEmail = async (email) => {
@@ -54,7 +54,7 @@ exports.postSignup = async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    res.send({ isSignup: false, msg: "회원가입 실패" });
+    res.send({ isSignup: false, msg: '회원가입 실패' });
   }
 };
 
@@ -78,13 +78,13 @@ exports.postCheckEmail = async (req, res) => {
       // 이메일(아이디) 유효성 검사 통과
       if (user) {
         // 이메일(아이디)가 중복되는 경우
-        res.send({ isCorrect, isCheck: false, msg: "이메일이 중복입니다!" });
+        res.send({ isCorrect, isCheck: false, msg: '이메일이 중복입니다!' });
       } else {
         // 이메일(아이디)가 중복되지 않는 경우
         res.send({
           isCorrect,
           isCheck: true,
-          msg: "이메일이 중복되지 않습니다!",
+          msg: '이메일이 중복되지 않습니다!',
         });
       }
     } else {
@@ -93,7 +93,7 @@ exports.postCheckEmail = async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    res.send({ isCheck: false, msg: "중복 확인 실패" });
+    res.send({ isCheck: false, msg: '중복 확인 실패' });
   }
 };
 
@@ -129,7 +129,7 @@ exports.postSignin = async (req, res) => {
             userSeq: user.userSeq,
           }; // 회원 정보 세션 생성
 
-          console.log("sessioninfo >>>>>", req.session.userInfo);
+          console.log('sessioninfo >>>>>', req.session.userInfo);
 
           // 로그인 정보 기억
           const myCookieConf = {
@@ -140,7 +140,7 @@ exports.postSignin = async (req, res) => {
 
           // 로그인 정보 기억하기
           if (loginRemain) {
-            res.cookie("remain", { loginEmail, loginPw }, myCookieConf);
+            res.cookie('remain', { loginEmail, loginPw }, myCookieConf);
           }
 
           // console.log(req.signedCookies);
@@ -159,7 +159,7 @@ exports.postSignin = async (req, res) => {
             isCorrect,
             isNoGap,
             isSignin: false,
-            msg: "비밀번호가 틀림",
+            msg: '비밀번호가 틀림',
           });
         }
       } else {
@@ -168,7 +168,7 @@ exports.postSignin = async (req, res) => {
           isCorrect,
           isNoGap,
           isSignin: false,
-          msg: "사용자가 존재하지 않음",
+          msg: '사용자가 존재하지 않음',
         });
       }
     } else {
@@ -177,7 +177,7 @@ exports.postSignin = async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    res.send({ isSignin: false, msg: "로그인 실패" });
+    res.send({ isSignin: false, msg: '로그인 실패' });
   }
 };
 
@@ -190,12 +190,12 @@ exports.getLogout = async (req, res) => {
           return;
         }
       });
-      res.send({ isLogout: true, msg: "로그아웃 성공" });
-    } else {
-      res.send({ isLogout: false, msg: "로그인 정보가 없습니다" });
     }
+    // 로그인 정보가 있을 때만 로그아웃 처리 가능하게
+    // 로그인 정보가 없는 사용자가 주소창에 /user/logout 누르면 홈으로 리다이렉트
+    res.redirect('/');
   } catch (err) {
     console.error(err);
-    res.send({ isLogout: false, msg: "로그아웃 실패" });
+    res.send({ isLogout: false, msg: '로그아웃 실패' });
   }
 };
