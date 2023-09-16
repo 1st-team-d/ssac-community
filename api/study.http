@@ -8,8 +8,7 @@ PATCH {{studyUrl}}/apply
 Content-Type:application/json; charset=UTF-8
 
 {
-    "studySeq": 1,
-    "userSeq": 2
+    "studySeq": 4
 }
 
 ### 스터디 마감 처리
@@ -17,5 +16,5 @@ PATCH {{studyUrl}}/close
 Content-Type: application/json; charset=UTF-8
 
 {
-    "studySeq": 1
+    "studySeq": 2
 }

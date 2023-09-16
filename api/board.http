@@ -37,7 +37,7 @@ Content-Disposition: form-data; name="data"
 {
   "title": "제목 Test",
   "content": "내용 Test",
-  "userSeq": 1,
+  "userSeq": 4,
   "category": 0,
   "maxPeople": 5
 }

@@ -1,19 +1,96 @@
-const { User, Board, Study, StudyApply } = require('../models');
+const { User, Board, Study, StudyApply, sequelize } = require('../models');
+const Op = require('sequelize').Op;
 
 // GET '/study/'
 // 스터디 (관리) 화면으로 이동
 exports.getStudy = async (req, res) => {
   try {
-    // 스터디 모집 정보
-    const recruitInfo = await Study.findAll({
-
+    // 1) 모집하는 스터디 글 + 스터디 정보
+    const recruitBoardInfo = await Board.findAll({
+      include: [{ model: Study }],
+      where: {
+        userSeq: req.session.userInfo.userSeq,
+      },
+      attributes: [
+        'boardSeq',
+        'title',
+        'content',
+        'filePath',
+        'count',
+        [sequelize.fn('year', sequelize.col('board.createdAt')), 'year'],
+        [sequelize.fn('month', sequelize.col('board.createdAt')), 'month'],
+        [sequelize.fn('day', sequelize.col('board.createdAt')), 'day'],
+        'createdAt',
+        'updatedAt',
+        'study.category',
+        'study.maxPeople',
+        'study.status',
+      ],
     });
 
-    // 스터디 참여 정보
-    const applyInfo = await Study.findAll({
-        
+    // console.log('######## recruitBoardInfo #########');
+    // console.log(recruitBoardInfo);
+    // console.log(recruitBoardInfo.title);
+    // console.log(recruitBoardInfo.dataValues);
+    // console.log(recruitBoardInfo[0].dataValues.year);
+    // console.log(recruitBoardInfo[0].dataValues.study);
+
+    // 2) 참여하는 스터디 글 + 스터디 정보
+    const applyBoardInfo = await StudyApply.findAll({
+      where: {
+        userSeq: req.session.userInfo.userSeq,
+      },
+      include: [
+        {
+          model: Study,
+          include: [
+            {
+              model: Board,
+            },
+          ],
+        },
+      ],
+      attributes: [
+        'study.studySeq',
+        'study.category',
+        'study.maxPeople',
+        'study.status',
+        'study.board.boardSeq',
+        'study.board.title',
+        'study.board.content',
+        'study.board.filePath',
+        'study.board.count',
+        'study.board.userSeq',
+        [sequelize.fn('year', sequelize.col('study.board.createdAt')), 'year'],
+        [
+          sequelize.fn('MONTH', sequelize.col('study.board.createdAt')),
+          'month',
+        ],
+        [sequelize.fn('DAY', sequelize.col('study.board.createdAt')), 'day'],
+        'study.board.createdAt',
+        'study.board.updatedAt',
+      ],
     });
-  } catch (err) {}
+
+    // console.log('######## applyBoardInfo #########');
+    // console.log(applyBoardInfo);
+    // console.log(applyBoardInfo[0]);
+    // console.log(applyBoardInfo[0].dataValues.year);
+    // console.log(applyBoardInfo[0].dataValues.study.studySeq);
+    // console.log(applyBoardInfo[0].dataValues.study.board);
+    // console.log(applyBoardInfo[0].dataValues.study.board.title);
+
+    // res.render('study/listStudy', {
+    //   recruitBoardInfo: recruitBoardInfo,
+    //   applyBoardInfo: applyBoardInfo,
+    // });
+    res.render('study', {
+      recruitBoardInfo: recruitBoardInfo,
+      applyBoardInfo: applyBoardInfo,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 // PATCH '/study/apply'

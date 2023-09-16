@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    ※ 스터디 카테고리 (0: Web, 1: App, 2: AI, 3: UI/UX, 4: 게임, 5: 기타) <br />
+    ※ 스터디 상태 (0: 모집중, 1: 모집 완료)
+
+    <hr />
+    <hr />
+
+    <h1>1) 모집하는 스터디 글 + 스터디 정보</h1>
+    <% for(let recruitBoard of recruitBoardInfo) { %>
+    <!-- 받아오는 변수가 너무 길어서 새로운 변수 선언 -->
+    <!-- 게시글 날짜 관련 -->
+    <% const boardDate = recruitBoard.dataValues; %>
+    <!-- 스터디 관련 -->
+    <% const study = recruitBoard.dataValues.study; %>
+    <h3>모집하는 스터디 글 정보 입니다.</h3>
+    <ul>
+      <li>boardSeq : <%= recruitBoard.boardSeq %></li>
+      <li>모집하는 스터디 글 제목 : <%= recruitBoard.title %></li>
+      <li>모집하는 스터디 글 내용 : <%= recruitBoard.content %></li>
+      <li>모집하는 스터디글 파일 경로 : <%= recruitBoard.filePath %></li>
+      <li>모집하는 스터디 글 조회 수 : <%= recruitBoard.count %></li>
+      <li>
+        모집하는 스터디 글 작성일 : <%= boardDate.year %>/<%= boardDate.month
+        %>/<%= boardDate.day %>
+      </li>
+    </ul>
+
+    <h3>모집하는 스터디 정보 입니다.</h3>
+    <ul>
+      <li>studySeq : <%= study.studySeq %></li>
+      <li>모집하는 스터디 카테고리 : <%= study.category %></li>
+      <li>모집하는 스터디 최대 인원 : <%= study.maxPeople %></li>
+      <li>모집하는 스터디 상태 : <%= study.status %></li>
+    </ul>
+
+    <br /><br /><br /><br /><br />
+    <% } %>
+
+    <hr />
+    <hr />
+    <hr />
+
+    <h1>2) 참여하는 스터디 글 + 스터디 정보</h1>
+    <% for(let applyBoard of applyBoardInfo) { %>
+    <!-- 받아오는 변수가 너무 길어서 새로운 변수 선언 -->
+    <!-- 스터디 관련 -->
+    <% const study = applyBoard.dataValues.study; %>
+    <!-- 게시글 관련 -->
+    <% const board = applyBoard.dataValues.study.board; %>
+    <!-- 게시글 날짜 관련 -->
+    <% const boardDate = applyBoard.dataValues; %>
+    <h3>참여하는 스터디 글 정보 입니다.</h3>
+    <ul>
+      <li>boardSeq : <%= board.boardSeq %></li>
+      <li>참여하는 스터디 글 제목 : <%= board.title %></li>
+      <li>참여하는 스터디 글 내용 : <%= board.content %></li>
+      <li>참여하는 스터디 글 파일 경로 : <%= board.filePath %></li>
+      <li>참여하는 스터디 글 조회 수 : <%= board.count %></li>
+      <li>
+        참여하는 스터디 글 작성일 : <%= boardDate.year %>/<%=
+        boardDate.month %>/<%= boardDate.day %>
+      </li>
+    </ul>
+
+    <h3>참여하는 스터디 정보 입니다.</h3>
+    <ul>
+      <li>studySeq : <%= study.studySeq %></li>
+      <li>참여하는 스터디 카테고리 : <%= study.category %></li>
+      <li>참여하는 스터디 최대 인원 : <%= study.maxPeople %></li>
+      <li>참여하는 스터디 상태 : <%= study.status %></li>
+    </ul>
+
+    <br /><br /><br /><br /><br />
+    <% } %>
+  </body>
+</html>
