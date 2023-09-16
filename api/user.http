@@ -22,9 +22,16 @@ Content-Type: application/json; charset=UTF-8
 POST {{server}}/user/signin
 Content-Type: application/json; charset=UTF-8
 
+# 김철수(리더)
+# {
+#   "loginEmail": "sesac-k@gmail.com",
+#   "loginPw": "sesac123!@#"
+# }
+
+# 홍길동(팀원)
 {
-  "loginEmail": "aaa@naver.com",
-  "loginPw": "Abcd1234!"
+  "loginEmail": "sesac-h@gmail.com",
+  "loginPw": "sesac123!@#"
 }
 
 ### 로그아웃 처리

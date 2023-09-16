@@ -1,4 +1,4 @@
-const { Board, Comment, User, sequelize } = require('../models');
+const { Board, User, Study, StudyApply, sequelize } = require('../models');
 const Op = require('sequelize').Op;
 const path = require('path');
 
@@ -19,10 +19,8 @@ exports.getBoard = async (req, res) => {
     const selectAllBoard = await Board.findAll();
     const allBoardLen = selectAllBoard.length;
 
+    // 특정 게시글 조회
     if (boardSeq) {
-      // 특정 게시글 조회
-
-      // DB 접근
       const board = await Board.findOne({
         attributes: [
           'boardSeq',
@@ -40,9 +38,10 @@ exports.getBoard = async (req, res) => {
           'user.pw',
           'user.name',
           'user.isAdmin',
+          'study.studySeq',
         ],
         where: { boardSeq: boardSeq },
-        include: [{ model: User }],
+        include: [{ model: User }, { model: Study }],
       });
 
       // DB의 조회수(count) 1 증가
@@ -52,16 +51,16 @@ exports.getBoard = async (req, res) => {
       );
 
       console.log('session>>>>>>', req.session.userInfo);
-      console.log('특정 게시글 board>>>>>>>', board);
+      // console.log('특정 게시글 board>>>>>>>', board);
       res.render('board/viewBoard', {
         board: board,
         allBoardLen: allBoardLen,
         user: board.user,
         session: req.session.userInfo,
       });
-      // res.render("board/viewBoard", { data: board });
+
+      // 게시글 검색
     } else if (search) {
-      // 게시글 조회
       const board = await Board.findAll({
         attributes: [
           'boardSeq',
@@ -85,9 +84,7 @@ exports.getBoard = async (req, res) => {
             },
           ],
         },
-        order: [
-          [sequelize.col('board.createdAt'), 'DESC']
-        ],
+        order: [[sequelize.col('board.createdAt'), 'DESC']],
         offset: offset,
         limit: boardCountPerPage,
       });
@@ -99,7 +96,9 @@ exports.getBoard = async (req, res) => {
         allBoardLen: allBoardLen,
         session: req.session.userInfo,
       });
-    } else if (pageNum) {
+
+      // 페이지 번호 '2'이상 넘어오는 경우
+    } else if (pageNum > 1) {
       const board = await Board.findAll({
         attributes: [
           'boardSeq',
@@ -118,9 +117,7 @@ exports.getBoard = async (req, res) => {
           'user.name',
           'user.isAdmin',
         ],
-        order: [
-          [sequelize.col('board.createdAt'), 'DESC']
-        ],
+        order: [[sequelize.col('board.createdAt'), 'DESC']],
         offset: offset,
         limit: boardCountPerPage,
         include: [{ model: User }],
@@ -134,10 +131,9 @@ exports.getBoard = async (req, res) => {
         // allBoardLen: allBoardLen,
         session: req.session.userInfo,
       });
-    } else {
-      // 전체 게시글 조회
 
-      // DB 접근
+      // 전체 게시글 조회 + 페이지 번호 '1' 인 경우
+    } else {
       const board = await Board.findAll({
         attributes: [
           'boardSeq',
@@ -156,9 +152,7 @@ exports.getBoard = async (req, res) => {
           'user.name',
           'user.isAdmin',
         ],
-        order: [
-          [sequelize.col('board.createdAt'), 'DESC']
-        ],
+        order: [[sequelize.col('board.createdAt'), 'DESC']],
         offset: offset,
         limit: boardCountPerPage,
         include: [{ model: User }],
@@ -175,7 +169,6 @@ exports.getBoard = async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-
     res.send({ isGetBoardId: false, msg: '게시물 화면 띄우기 실패' });
   }
 };
@@ -229,11 +222,11 @@ exports.postRegister = async (req, res) => {
     }
 
     // rest client 실행시
-    // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
-    // const { title, content, userSeq } = jsonData;
+    const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
+    const { title, content, category, maxPeople } = jsonData;
 
     // 실제 코드
-    const { title, content } = req.body;
+    // const { title, content, category, maxPeople } = req.body;
 
     // ############### DB 작업 ###############
     const insertOneBoard = await Board.create({
@@ -242,6 +235,26 @@ exports.postRegister = async (req, res) => {
       filePath: filePath,
       userSeq: req.session.userInfo.userSeq,
     });
+
+    // console.log(insertOneBoard);
+
+    // 게시글 등록이 완료되면 작업
+    // 스터디 정보에 해당 정보 등록
+    // 스터디 신청현황에 모집장(리더)의 정보를 입력
+    if (insertOneBoard) {
+      // 스터디 정보
+      const insertOneStudy = await Study.create({
+        category: category,
+        maxPeople: maxPeople,
+        boardSeq: insertOneBoard.boardSeq,
+      });
+
+      // 스터디 신청현황
+      const insertOneStudyApply = await StudyApply.create({
+        studySeq: insertOneStudy.studySeq,
+        userSeq: req.session.userInfo.userSeq,
+      });
+    }
 
     // res.redirect('/board');
     // console.log(insertOneBoard);
@@ -291,11 +304,12 @@ exports.patchModify = async (req, res) => {
     }
 
     // rest client 실행시
-    // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
-    // const { title, content, userSeq } = jsonData;
+    const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
+    const { title, content, boardSeq, studySeq, category, maxPeople } =
+      jsonData;
 
     // 실제 코드
-    const { title, content, boardSeq } = req.body;
+    // const { title, content, boardSeq, studySeq, category, maxPeople } = req.body;
 
     // DB 작업
     const updateOneBoard = await Board.update(
@@ -310,6 +324,23 @@ exports.patchModify = async (req, res) => {
         },
       }
     );
+
+    // 수정에 성공하면
+    // 스터디 정보 수정 → 현재 category, maxPeople 수정을 허용하지 않으므로 주석처리
+    // 스터디 신청현황은 수정할 필요 없음
+    // if (updateOneBoard) {
+    //   const updateOneStudy = await Study.update(
+    //     {
+    //       // category: category,
+    //       // maxPeople: maxPeople,
+    //     },
+    //     {
+    //       where: {
+    //         studySeq: studySeq,
+    //       },
+    //     }
+    //   );
+    // }
 
     res.send(updateOneBoard);
   } catch (err) {

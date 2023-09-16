@@ -23,11 +23,13 @@ const StudyApply = require('./StudyApply')(sequelize, Sequelize);
 User.hasMany(Board, {
   foreignKey: 'userSeq',
   sourceKey: 'userSeq',
-  // 연쇄 수정 및 삭제 옵션 X
+  // 연쇄 삭제 옵션 X
   // → 새싹을 졸업하거나 탈퇴해도 게시글이 남도록 설정
   // → 작성자가 없는 경우, '탈퇴한 사용자' 등으로 대체 해야함
   // onDelete: 'CASCADE',
-  // onUpdate: 'CASCADE',
+  // 연쇄 수정 옵션 O
+  // userSeq가 수정되면 게시글도 수정되어야 하지만.. userSeq를 수정할 방법은 없어서 효력이 좋을지는 모르겠음
+  onUpdate: 'CASCADE',
 });
 Board.belongsTo(User, {
   foreignKey: { name: 'userSeq', allowNull: false }, // allowNull이 먹히지 않음

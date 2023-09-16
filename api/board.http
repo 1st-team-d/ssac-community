@@ -20,7 +20,7 @@ DELETE {{boardUrl}}/remove
 Content-Type: application/json; charset=UTF-8
 
 {
-    "boardSeq" : 3
+    "boardSeq" : 1
 }
 
 ### 게시글 등록 화면
@@ -33,10 +33,13 @@ Content-Type: multipart/form-data; boundary=postRegister
 --postRegister
 Content-Disposition: form-data; name="data"
 
+# category : 스터디 카테고리 (0: Web, 1: App, 2: AI, 3: UI/UX, 4: 게임, 5: 기타)
 {
   "title": "제목 Test",
   "content": "내용 Test",
-  "userSeq": 1
+  "userSeq": 1,
+  "category": 0,
+  "maxPeople": 5
 }
 
 --postRegister
@@ -69,10 +72,14 @@ Content-Type: multipart/form-data; boundary=patchRegister
 --patchRegister
 Content-Disposition: form-data; name="data"
 
+# category : 스터디 카테고리 (0: Web, 1: App, 2: AI, 3: UI/UX, 4: 게임, 5: 기타)
 {
   "title": "제목 ::: 수정 :::  Test",
   "content": "내용 ::: 수정 ::: Test",
-  "boardSeq": "25"
+  "boardSeq": 1,
+  "studySeq": 1, 
+  "category": 5,
+  "maxPeople": 10
 }
 
 --patchRegister
