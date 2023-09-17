@@ -78,7 +78,7 @@
         >
           <input
             class="fileName"
-            value="<% if (result.filePath !== undefined && result.filePath !== null) { %><%= result.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.' + result.filePath.split('/')[1].split('.')[1] %><% } %>"
+            value="<% if (typeof result !== 'undefined' && result.filePath !== null) { %><%= result.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.' + result.filePath.split('/')[1].split('.')[1] %><% } %>"
             placeholder="첨부파일"
             type="text"
             disabled
