@@ -51,9 +51,11 @@ app.use('/', indexRouter); // 메인
 const boardRouter = require('./routes/board');
 app.use('/board', boardRouter); // 게시글
 const userRouter = require('./routes/user');
+
 app.use('/user', userRouter); // 유저
 const studyRouter = require('./routes/study');
 app.use('/study', studyRouter); // 스터디
+
 
 // 에러 처리
 app.get('*', (req, res) => {

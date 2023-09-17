@@ -132,7 +132,7 @@ async function checkDuplicate(btn) {
   const emailTest = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailTest.test(registerEmail)) {
     checkEmailMsg.innerHTML = '이메일 형식이 올바르지 않습니다.';
-    checkEmailMsg.classList.add('errorMsg');
+    checkEmailMsg.style.color = 'red';
   } else {
     let res = await axios({
       url: '/user/checkEmail',
@@ -147,7 +147,7 @@ async function checkDuplicate(btn) {
     } else {
       checkEmailMsg.innerHTML =
         '이미 사용중인 이메일입니다. 다른 이메일을 입력 해주세요.';
-      checkEmailMsg.classList.add('errorMsg');
+      checkEmailMsg.style.color = 'red';
       isDuplicate = true;
     }
   }

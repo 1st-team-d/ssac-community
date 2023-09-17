@@ -60,3 +60,43 @@ async function editPost() {
     }
   }
 }
+
+// 카테고리 선택 시 색상 달라지게
+const radioInputs = document.querySelectorAll(
+  '.categories input[type="radio"]'
+);
+const labels = document.querySelectorAll('.categories label');
+
+// 라디오 인풋에 클릭 이벤트를 감지하여 처리
+radioInputs.forEach((radioInput, index) => {
+  radioInput.addEventListener('click', function () {
+    // 어떤 라디오 인풋을 클릭했을 때 모든 라디오 인풋의 클래스를 제거
+    labels.forEach((label) => {
+      label.classList.remove('checked');
+    });
+
+    // 클릭된(index에 해당하는) input에 해당하는 label 요소에 checked 클래스 추가
+    labels[index].classList.add('checked');
+  });
+});
+
+// 최대 인원 tagify
+let input = document.querySelector('input[name=maxPeople]'),
+  tagify = new Tagify(input, {
+    enforceWhitelist: true,
+    mode: 'select',
+    value: '5',
+    whitelist: ['5', '6', '7', '8', '9', '10'],
+  });
+
+// bind events
+tagify.on('add', onAddTag);
+tagify.DOM.input.addEventListener('focus', onSelectFocus);
+
+function onAddTag(e) {
+  console.log(e.detail);
+}
+
+function onSelectFocus(e) {
+  console.log(e);
+}

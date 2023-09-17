@@ -6,8 +6,12 @@
     <title>새싹 커뮤니티</title>
     <!-- CDN -->
     <%- include('../cdn/cdn.ejs') %>
-    <!-- Developer custom -->
-    <%- include('../developer/postBoard.ejs') %>
+    <!-- Tagify -->
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+    <script defer src="/static/js/postBoard.js"></script>
+    <link rel="stylesheet" href="/static/css/postBoard.css" />
     <style>
       body {
         height: 100vh;
@@ -27,32 +31,37 @@
       <div class="postWrap container w-75">
         <h1 class="fw-bold">새싹 스터디 게시판 🌱</h1>
         <input type="hidden" name="userSeq" value="1" />
-        <% if (typeof result !== 'undefined') { %>
         <input type="hidden" name="boardSeq" value="<%= result.boardSeq %>" />
-        <% } %>
-        <div class="row border-black border-top border-bottom mb-3">
-          <div class="py-3 border-bottom">
+        <div class="postTop d-flex row flex-wrap align-items-center justify-content-between border-black border-top border-bottom mb-3">
+          <div class="postTitleWrap col-12 d-flex align-items-center mb-3 py-3 border-bottom">
             <span class="me-5 postTitle">제목</span>
-            <input class="" type="text" name="title" placeholder="제목입력" <%
-            if (typeof result !== 'undefined') { %> value="<%= result.title %>"
-            <% } %> />
+            <input class="w-100" type="text" name="title" placeholder="제목입력" value="<%= result.title %>" />
           </div>
-          <div class="inlince-block categories input-group mb-3">
-            <button
+          <div class="categories mb-3 col-9 d-flex flex-wrap align-items-center justify-content-center">
+            <!-- <button
               class="btn btn-outline-secondary dropdown-toggle"
               type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              관심분야
+              카테고리
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
+              <li><a class="dropdown-item" href="#">웹</a></li>
+              <li><a class="dropdown-item" href="#">앱</a></li>
+              <li><a class="dropdown-item" href="#">AI</a></li>
+              <li><a class="dropdown-item" href="#">UI/UX</a></li>
+              <li><a class="dropdown-item" href="#">게임</a></li>
+            </ul> -->
+            <input class="d-none" type="radio" name="category" id="web_cate" value="web"><label onclick="checkedClass(this)" for="web_cate"># 웹</label>
+            <input class="d-none" type="radio" name="category" id="app_cate" value="app"><label onclick="checkedClass(this)" for="app_cate"># 앱</label>
+            <input class="d-none" type="radio" name="category" id="ai_cate" value="ai"><label onclick="checkedClass(this)" for="ai_cate"># AI</label>
+            <input class="d-none" type="radio" name="category" id="uiux_cate" value="ui"><label onclick="checkedClass(this)" for="uiux_cate"># UI / UX</label>
+            <input class="d-none" type="radio" name="category" id="game_cate" value="game"><label onclick="checkedClass(this)" for="game_cate"># 게임</label>
+            <input class="d-none" type="radio" name="category" id="etc_cate" value="etc"><label onclick="checkedClass(this)" for="etc_cate"># 기타</label>
+          </div>
+          <div class="maxPeople mb-3 col-3">
+            <input name='maxPeople' class='selectMode' placeholder="최대 인원" />
           </div>
         </div>
         <div class="row">
@@ -62,16 +71,14 @@
             cols="100"
             rows="15"
             placeholder="내용 입력"
-          >
-<% if (typeof result !== 'undefined') { %><%= result.content %><% } %></textarea
-          >
+          ><%= result.content %></textarea>
         </div>
         <div
           class="file row border d-flex justify-content-between align-items-center p-2 mt-2"
         >
           <input
             class="fileName"
-            value="<% if (result.filePath !== undefined && result.filePath !== null) { %><%= result.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.' + result.filePath.split('/')[1].split('.')[1] %><% } %>"
+            value="<% if (typeof result !== 'undefined' && result.filePath !== null) { %><%= result.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.' + result.filePath.split('/')[1].split('.')[1] %><% } %>"
             placeholder="첨부파일"
             type="text"
             disabled
@@ -85,7 +92,7 @@
           <!-- 백과 uploadFile로 name 통일 -->
         </div>
         <div class="d-flex justify-content-end">
-          <% if (typeof result !== 'undefined') { %>
+          <% if (result) { %>
           <button
             type="button"
             class="editBtn btn btn-secondary fw-bold mt-3"
