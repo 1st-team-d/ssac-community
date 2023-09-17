@@ -49,6 +49,18 @@ async function postLogin() {
   }
 }
 
+// enter 누르면 로그인
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.forms['login'];
+
+  form.addEventListener('keydown', (event) => {
+    if (event.key == 'Enter') {
+      event.preventDefault();
+      postLogin();
+    }
+  });
+});
+
 // 회원가입 모달 창에서 회원가입 버튼 누르면 폼 전송 -> 성공하면 main.ejs 리다이렉트
 async function postRegister() {
   // 회원가입 버튼 누르면 기존 중복체크 메세지 초기화
