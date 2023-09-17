@@ -23,6 +23,27 @@ textarea {
   padding: 15px;
 }
 
+/* 카테고리 */
+.categories label {
+  background-color: rgb(219, 247, 181);
+  margin-right: 10px;
+  border-radius: 20px;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  color: #555;
+}
+
+.categories label.checked {
+  background-color: rgb(82, 105, 50);
+  margin-right: 10px;
+  border-radius: 20px;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  color: #eee;
+}
+
 /* 게시글 작성 main */
 .postWrap {
   margin-top: 100px;
