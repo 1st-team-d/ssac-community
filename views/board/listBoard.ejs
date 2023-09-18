@@ -17,14 +17,14 @@
     <%- include('../includes/header.ejs') %>
     <div class="boardContainer container d-flex flex-column justify-content-center">
       <div class="boardTop d-flex justify-content-between">
-        <div class="board_title col-5">
+        <div class="board_title">
           <h3 class="display-6"><strong>새싹 스터디 게시판🌱</strong></h3>
           <p>새싹 스터디 게시판입니다. 자유롭게 작성해주세요~~</p>
         </div>
   
-        <div class="board_search_post col-7 justify-content-end mt-4">
+        <div class="board_search_post d-flex justify-content-end align-items-center gap-2">
           <!-- 검색 창 -->
-          <div class="input-group w-75 d-flex flex-wrap justify-content-end">
+          <div class="input-group w-75 d-flex">
             <input type="text" class="form-control" id="searchInput" placeholder="검색어를 입력하세요">
             <div class="input-group-append">
               <button class="btn" id="searchButton" type="button">검색</button>
@@ -33,7 +33,7 @@
           <!-- 글 작성 버튼 -->
           <div class="boardPostBtn">
             <% if (typeof session === 'undefined') { %>
-            <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">글 작성하기</a>
+            <a href="" class="btn" data-bs-toggle="modal" data-bs-target="#loginModal">글 작성하기</a>
             <% } else { %>
             <a href="/board/register" class="btn">글 작성하기</a>
             <% } %>

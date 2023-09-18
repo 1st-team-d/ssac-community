@@ -7,6 +7,19 @@
   --modal-input-background-color: #ffffea;
   --input-border-color: rgba(151, 186, 39, 0.5);
 
+  /* 메인 게시글 카드 */
+  --white-color:                  #ffffff;
+  --primary-color:                #8ddf2f;
+  --secondary-color:              #0066CC;
+  --section-bg-color:             #f0f0f0;
+  --custom-btn-bg-color:          #0066CC;
+  --custom-btn-bg-hover-color:    #00CC99;
+  --dark-color:                   #000000;
+  /* --p-color:                      #717275; */
+  /* --border-color:                 #7fffd4; */
+  /* --link-hover-color:             #0066CC; */
+
+
   --h1-font-size:                 58px;
   --h2-font-size:                 46px;
   --h3-font-size:                 32px;
@@ -26,14 +39,17 @@
   --font-weight-semibold:         600;
   --font-weight-bold:             700;
 
+  
 }
+
+
+
 
 /* Common */
 a {
   text-decoration: none;
   color: var(--main-btn-text-color);
 }
-
 
 
 

@@ -67,3 +67,54 @@ body {
 
 @media screen and (max-width: 480px) {
 }
+
+
+
+/*=================================================*/
+/* CUSTOM BLOCK */
+
+/* 카드 a태그 컬러 설정 */
+a {
+  display: inline-block;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+/* 카드 a태그 호버 컬러 설정 */
+a:hover {
+  color: var(--link-hover-color);
+}
+
+/* 카드 css 설정 */
+.custom-block {
+  border: 2px solid var(--primary-color);
+  border-radius: var(--border-radius-medium);
+  position: relative;
+  overflow: hidden;
+  padding: 30px;
+  transition: all 0.3s ease;
+}
+
+/* 카드에 마우스 올렸을 때 위로 올라오는 */
+.custom-block:hover {
+  background: var(--white-color);
+  box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+  border-color: transparent;
+  transform: translateY(-3px);
+}
+
+/* 마우스를 올릴 때 배경 색상이 변경 */
+.custom-block .custom-block-info + div .badge:hover {
+  background-color: var(--secondary-color);
+}
+
+/* 박스 hover하기 전 배경 색 */
+.custom-block-full {
+  background-color: var(--section-bg-color);
+  border-color: transparent;
+}
+
+/* 박스 hover 테두리 */
+.custom-block-full:hover {
+  border-color: var(--primary-color);
+}
