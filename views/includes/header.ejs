@@ -12,12 +12,25 @@
         
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav-menu">
             <ul class="navbar-nav text-center">
+              <% if (typeof session !== 'undefined') {
+                if (session.isAdmin) { %>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/admin">
+                      <span class="">🔑</span>
+                      <span class="">관리자</span>
+                    </a>
+                  </li>
+                  <% }
+              } %>
+
+              <% if (typeof session !== 'undefined') { %>
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/study">
                   <span class="">📖</span>
                   <span class="">스터디</span>
                 </a>
               </li>
+              <% } %>
 
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/board">

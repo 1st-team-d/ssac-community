@@ -45,6 +45,7 @@ exports.postSignup = async (req, res) => {
         id: registerEmail,
         pw: hashedPW,
         name: registerName,
+        isAdmin: 1,
       }); // DB 추가
 
       res.send({ isCorrect, isSignup: true, session: req.session.userInfo });
@@ -153,6 +154,7 @@ exports.postSignin = async (req, res) => {
       const user = await User.findOne({
         where: { id: loginEmail },
       });
+      console.log(user);
 
       // 2. 입력된 비밀번호 암호화하여 DB의 정보와 비교
       if (user) {
@@ -166,6 +168,7 @@ exports.postSignin = async (req, res) => {
             name: user.name,
             id: user.id,
             userSeq: user.userSeq,
+            isAdmin: user.isAdmin,
           }; // 회원 정보 세션 생성
 
           console.log('sessioninfo >>>>>', req.session.userInfo);
