@@ -4,9 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin User</title>
 </head>
 <body>
-    유저 관리
+    <h1>유저 관리</h1>
+    <table border="1" cellspacing="0">
+        <thead>
+          <tr>
+            <th>유저 시퀀스</th>
+            <th>ID</th>
+            <th>이름</th>
+            <th>관리자 여부</th>
+            <th>가입일</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% for (let user of users) { %>
+                <tr id="tr_<%= user.id %>">
+                  <td><%= user.userSeq %></td>
+                  <td><%= user.id %></td>
+                  <td><%= user.name %></td>
+                  <td><%= user.isAdmin %></td>
+                  <td><%= user.createdAt %></td>
+            <% } %>
+        </tbody>
+      </table>
 </body>
 </html>
