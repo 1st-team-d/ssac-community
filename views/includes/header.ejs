@@ -73,29 +73,44 @@ tabindex="-1"
 aria-labelledby="exampleModalLabel"
 aria-hidden="true"
 >
-<div class="modal-dialog modal-dialog-centered">
-<div class="modalBackground modal-content">
-  <div class="modal-header">
-    <h1 class="modal-title w-100 fs-5 text-center" id="exampleModalLabel">
-      새싹 스터디 🌱
-    </h1>
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="modal"
-      aria-label="Close"
-    ></button>
-  </div>
-  <div class="modal-body">
-    <form name="login">
-      <div class="loginEmail form-floating mb-2">
-        <input
-          type="email"
-          class="form-control modalInputBackground"
-          id="loginEmail"
-          placeholder="name@example.com"
-        />
-        <label for="loginEmail">이메일</label>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modalBackground modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title w-100 fs-5 text-center" id="exampleModalLabel">
+          새싹 스터디 🌱
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form name="login">
+          <div class="loginEmail form-floating mb-2">
+            <input
+              type="email"
+              class="form-control modalInputBackground"
+              id="loginEmail"
+              placeholder="name@example.com"
+              value="<%= cookieEmail %>"
+            />
+            <label for="loginEmail">이메일</label>
+          </div>
+          <div class="loginPw form-floating">
+            <input
+              type="password"
+              class="form-control modalInputBackground"
+              id="loginPw"
+              placeholder="Password"
+              pattern=".+@\."
+              value="<%= cookiePw %>"
+            />
+            <label for="loginPw">비밀번호</label>
+          </div>
+          <div class="errorMsg mt-3 ms-2" id="loginMsg"></div>
+        </form>
       </div>
       <div class="loginPw form-floating">
         <input
