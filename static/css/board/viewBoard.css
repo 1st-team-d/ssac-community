@@ -1,0 +1,203 @@
+/* Common Styles (공통 스타일) */
+@import url('/static/css/common.css');
+
+/* 메인 컨텐츠 */
+.board_wrap {
+  height: 100vh;
+}
+
+
+/* 게시물 상세보기 스타일 설정 */
+.board_view {
+  width: 100%; /* 상세보기 컨테이너 너비 설정 */
+  border-top: 2px solid #000; /* 상세보기 상단 경계선 설정 */
+}
+
+.board_view .title {
+  padding: 20px 15px; /* 제목 내부 여백 설정 */
+  border-bottom: 1px dashed #ddd; /* 제목 아래 점선 테두리 설정 */
+}
+
+.board_view .info {
+  padding: 15px; /* 정보 내부 여백 설정 */
+  border-bottom: 1px solid #999; /* 정보 아래 실선 테두리 설정 */
+}
+
+.board_view .info dl {
+  position: relative; /* 상대 위치 설정 */
+  display: inline-block; /* 정보 요소를 가로로 나열 */
+  padding: 0 20px; /* 정보 요소 내부 여백 설정 */
+}
+
+.board_view .info dl:first-child {
+  padding-left: 0; /* 첫 번째 정보 요소의 왼쪽 여백 제거 */
+}
+
+.board_view .info dl::before {
+  content: ''; /* 가상 요소 내용 제거 */
+  position: absolute; /* 절대 위치 설정 */
+  top: 1px; /* 위 여백 설정 */
+  left: 0; /* 왼쪽 여백 설정 */
+  display: block; /* 블록 요소로 설정 */
+  width: 1px; /* 가상 요소 너비 설정 */
+  height: 13px; /* 가상 요소 높이 설정 */
+  background: #ddd; /* 가상 요소 배경색 설정 */
+}
+
+.board_view .info dl:first-child::before {
+  display: none; /* 첫 번째 정보 요소의 가상 요소 숨김 */
+}
+
+.board_view .info dl dt,
+.board_view .info dl dd {
+  display: inline-block; /* 정보 요소를 가로로 나열 */
+}
+
+.board_view .info dl dd {
+  margin-left: 10px; /* 정보 텍스트 왼쪽 여백 설정 */
+  color: #777; /* 정보 텍스트 색상 설정 */
+}
+
+.board_view .cont {
+  padding: 15px; /* 내용 내부 여백 설정 */
+  border-bottom: 1px solid #000; /* 내용 아래 실선 테두리 설정 */
+  line-height: 160%; /* 줄 높이 설정 */
+}
+
+
+/* 댓글 CSS 코드 */
+.comment_section {
+  margin-top: 30px;
+  background-color: #a98888;
+  padding: 50px 20px;
+}
+
+/* 댓글 CSS 코드 */
+.comment_section > div {
+  margin: 0 0 30px 0;
+}
+
+.comment_section > div > span {
+  background-color: #dbebc5;
+  border-radius: 15px;
+  border: 1px solid #dbebc5;
+  padding: 10px;
+  font-weight: 700;
+}
+
+.comment_form {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.comment_form label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.comment_form input[type='text'],
+.comment_form textarea {
+  width: 100%;
+  padding: 1px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 15px;
+}
+
+.comment_form textarea {
+  height: 100px;
+}
+
+
+
+/* 댓글 스타일 */
+.comment_section {
+  margin-top: 20px;
+}
+
+.comment_form label {
+  font-weight: bold;
+}
+
+.comment_form input[type='text'],
+.comment_form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+} 
+
+/* 댓글 목록 스타일 */
+.comment_list {
+  margin-top: 20px;
+}
+
+.comment_item {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  animation: fadeIn 0.5s ease;
+}
+
+.comment_controls {
+  margin-top: 10px;
+}
+
+.comment_controls button {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.comment_controls button:hover {
+  background-color: #c82333;
+}
+
+
+
+
+
+
+/* 기존에 있던 Css */
+textarea {
+    resize: none;
+    border: none !important;
+    background-color: transparent;
+    padding: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  
+textarea:focus {
+  outline: none;
+}
+
+/* 게시글 main */
+
+/* 첨부파일 */
+#postFile a:hover {
+  text-decoration: underline;
+}
+
+/* 댓글 */
+em {
+  font-style: normal;
+}
+
+.comment_content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: #fff;
+}
+
+/* Comment */
+.registeredComment {
+}
