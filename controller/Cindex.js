@@ -18,6 +18,6 @@ exports.index = async (req, res) => {
   res.render('index', {
     session: req.session.userInfo,
     boards: rankBoard,
-    cookie: req.signedCookies.remain,
+    cookie: req.signedCookies,
   });
 };

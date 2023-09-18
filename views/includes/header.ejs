@@ -81,7 +81,7 @@
               pattern=".+@\."
               value=<%if(cookie){%>
                 <%= cookie.loginPw%>
-                <%}%>
+                <%} else {" "}%>
             />
             <label for="loginPw">비밀번호</label>
           </div>
