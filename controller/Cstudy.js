@@ -73,6 +73,7 @@ exports.getStudy = async (req, res) => {
       },
       order: [['study', 'status', 'DESC']],
     });
+    const cookie = req.signedCookies.remain;
 
     // console.log('######## applyBoardInfo #########');
     // console.log(applyBoardInfo);
@@ -90,6 +91,8 @@ exports.getStudy = async (req, res) => {
       recruitBoardInfo: recruitBoardInfo,
       applyBoardInfo: applyBoardInfo,
       session: req.session.userInfo,
+      cookieEmail: cookie ? cookie.loginEmail : '',
+      cookiePw: cookie ? cookie.loginPw : '',
       msg: 'success',
     });
   } catch (err) {

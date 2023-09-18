@@ -105,7 +105,9 @@ aria-hidden="true"
           class="form-control modalInputBackground"
           id="loginEmail"
           placeholder="name@example.com"
-          value="<%= cookieEmail %>"
+          value="<% if (cookieEmail !== undefined) { %>
+            <%= cookieEmail %>
+          <% } %>"
         />
         <label for="loginEmail">이메일</label>
       </div>
@@ -192,9 +194,9 @@ aria-hidden="true"
         <label for="registerName">닉네임</label>
         <button
         type="button"
-        class="checkBtn btn position-absolute top-50 end-0 translate-middle-y me-3"
+        class="checkNickBtn btn position-absolute top-50 end-0 translate-middle-y me-3"
         onclick="checkNameDuplicate(this)"
-        id="checkBtn"
+        id="checkNickBtn"
       >
         중복체크
       </button>
@@ -210,9 +212,9 @@ aria-hidden="true"
         <label for="registerEmail">이메일</label>
         <button
           type="button"
-          class="checkBtn btn position-absolute top-50 end-0 translate-middle-y me-3"
+          class="checkEmailBtn btn position-absolute top-50 end-0 translate-middle-y me-3"
           onclick="checkEmailDuplicate(this)"
-          id="checkBtn"
+          id="checkEmailBtn"
         >
           중복체크
         </button>

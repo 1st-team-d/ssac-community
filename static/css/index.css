@@ -1,20 +1,15 @@
 /* 모든 파일 공통 CSS */
 @import url('/static/css/common.css');
 
-/* main css */
-body {
-  background-color: gainsboro;
-}
-
 /* 메인 화면 내용물 위치 */
 .indexContainer {
-  height: 100vh;
+  margin-top: calc(var(--header-height) + 10px);
 }
 
 /* 메인 텍스트 css */
 /* 메인 텍스트 박스 */
 .textWrap {
-  margin-top: 30%; 
+  margin-top: 30%;
 }
 
 /* 메인 첫번째 텍스트 */
@@ -42,11 +37,9 @@ body {
   margin-bottom: 20px;
 }
 
-
 /* 메인 텍스트 반응형 */
 @media screen and (max-width: 768px) {
-
-/* 메인 텍스트 css */
+  /* 메인 텍스트 css */
   .textWrap {
     width: 100%;
     height: auto;
@@ -67,8 +60,6 @@ body {
 
 @media screen and (max-width: 480px) {
 }
-
-
 
 /*=================================================*/
 
@@ -98,7 +89,7 @@ a:hover {
 /* 카드에 마우스 올렸을 때 위로 올라오는 */
 .custom-block:hover {
   background: var(--white-color);
-  box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
   border-color: transparent;
   transform: translateY(-3px);
 }

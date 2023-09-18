@@ -9,20 +9,18 @@
     <!-- Tagify -->
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css"
+      rel="stylesheet"
+      type="text/css"
+    />
     <script defer src="/static/js/postBoard.js"></script>
     <link rel="stylesheet" href="/static/css/board/postBoard.css" />
-    <style>
-      body {
-        height: 100vh;
-      }
-    </style>
     <!-- header -->
     <link rel="stylesheet" href="/static/css/header.css" />
   </head>
-  <body>
-    <%- include('../includes/header.ejs') %>
-    <% let result; %>
+  <body class="bg-light">
+    <%- include('../includes/header.ejs') %> <% let result; %>
     <form
       name="data"
       action="/board/register"
@@ -32,27 +30,82 @@
       <div class="postWrap container w-50">
         <h1 class="fw-bold">새싹 스터디 게시판 🌱</h1>
         <input type="hidden" name="userSeq" value="1" />
-        <input type="hidden" name="boardSeq" value="<% if (result) { %>
+        <input
+          type="hidden"
+          name="boardSeq"
+          value="<% if (result) { %>
           <%= result.boardSeq %>
-        <% } %>" 
+        <% } %>"
         />
-        <div class="postTop d-flex row flex-wrap align-items-center justify-content-between border-black border-top border-bottom mb-3">
-          <div class="postTitleWrap col-12 d-flex align-items-center mb-3 py-3 border-bottom">
+        <div
+          class="postTop d-flex row flex-wrap align-items-center justify-content-between border-black border-top border-bottom mb-3"
+        >
+          <div
+            class="postTitleWrap col-12 d-flex align-items-center mb-3 py-3 border-bottom"
+          >
             <span class="me-5 postTitle">제목</span>
-            <input class="w-100" type="text" name="title" placeholder="제목입력" value="<% if (result) { %>
+            <input
+              class="w-100"
+              type="text"
+              name="title"
+              placeholder="제목입력"
+              value="<% if (result) { %>
               <%= result.title %>
-            <% } %>" />
+            <% } %>"
+            />
           </div>
-          <div class="categories mb-3 col-9 d-flex flex-wrap align-items-center justify-content-start">
-            <input class="d-none" type="radio" name="category" id="web_cate" value="0"><label for="web_cate"># 웹</label>
-            <input class="d-none" type="radio" name="category" id="app_cate" value="1"><label for="app_cate"># 앱</label>
-            <input class="d-none" type="radio" name="category" id="ai_cate" value="2"><label for="ai_cate"># AI</label>
-            <input class="d-none" type="radio" name="category" id="uiux_cate" value="3"><label for="uiux_cate"># UI / UX</label>
-            <input class="d-none" type="radio" name="category" id="game_cate" value="4"><label for="game_cate"># 게임</label>
-            <input class="d-none" type="radio" name="category" id="etc_cate" value="5"><label for="etc_cate"># 기타</label>
+          <div
+            class="categories mb-3 col-9 d-flex flex-wrap align-items-center justify-content-start"
+          >
+            <input
+              class="d-none"
+              type="radio"
+              name="category"
+              id="web_cate"
+              value="0"
+            /><label for="web_cate"># 웹</label>
+            <input
+              class="d-none"
+              type="radio"
+              name="category"
+              id="app_cate"
+              value="1"
+            /><label for="app_cate"># 앱</label>
+            <input
+              class="d-none"
+              type="radio"
+              name="category"
+              id="ai_cate"
+              value="2"
+            /><label for="ai_cate"># AI</label>
+            <input
+              class="d-none"
+              type="radio"
+              name="category"
+              id="uiux_cate"
+              value="3"
+            /><label for="uiux_cate"># UI / UX</label>
+            <input
+              class="d-none"
+              type="radio"
+              name="category"
+              id="game_cate"
+              value="4"
+            /><label for="game_cate"># 게임</label>
+            <input
+              class="d-none"
+              type="radio"
+              name="category"
+              id="etc_cate"
+              value="5"
+            /><label for="etc_cate"># 기타</label>
           </div>
           <div class="maxPeople mb-3 col-3 d-flex justify-content-start">
-            <input name='maxPeople' class='selectMode' placeholder="최대 인원" />
+            <input
+              name="maxPeople"
+              class="selectMode"
+              placeholder="최대 인원"
+            />
           </div>
         </div>
         <div class="row">
@@ -60,25 +113,25 @@
             name="content"
             id="content"
             cols="100"
-            rows="20"
+            rows="15"
             placeholder="내용 입력"
-          ><% if (result) { %>
+          >
+<% if (result) { %>
             <%= result.content %>
-          <% } %></textarea>
+          <% } %></textarea
+          >
         </div>
         <div
           class="file row border d-flex justify-content-between align-items-center p-2 mt-2"
         >
           <input
-            class="fileName"
-            value="<% if (result.filePath !== undefined && result.filePath !== null) { %><%= result.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.' + result.filePath.split('/')[1].split('.')[1] %><% } %>"
+            class="fileName w-50"
+            value="<% if (result && result.filePath !== undefined && result.filePath !== null) { %><%= result.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.' + result.filePath.split('/')[1].split('.')[1] %><% } %>"
             placeholder="첨부파일"
             type="text"
             disabled
           />
-          <label
-            class="inputFileBtn col-6 badge text-bg-secondary me-3"
-            for="postFile"
+          <label class="inputFileBtn btn text-bg-success me-3" for="postFile"
             >업로드</label
           >
           <input type="file" name="uploadFile" id="postFile" />
