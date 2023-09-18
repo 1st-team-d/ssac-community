@@ -86,10 +86,15 @@ exports.getStudy = async (req, res) => {
     //   recruitBoardInfo: recruitBoardInfo,
     //   applyBoardInfo: applyBoardInfo,
     // });
+
+    const cookie = req.signedCookies.remain;
+
     res.render('study/listStudy', {
       recruitBoardInfo: recruitBoardInfo,
       applyBoardInfo: applyBoardInfo,
       session: req.session.userInfo,
+      cookieEmail: cookie ? cookie.loginEmail : '',
+      cookiePw: cookie ? cookie.loginPw : '',
       msg: 'success',
     });
   } catch (err) {
@@ -171,11 +176,15 @@ exports.getStudyProfile = async (req, res) => {
     // console.log('######## boardInfo #########');
     // console.log(boardInfo);
 
+    const cookie = req.signedCookies.remain;
+
     if (userInfo && studyInfo) {
       res.render('study/viewStudy', {
         userInfo: userInfo,
         studyInfo: studyInfo,
         session: req.session.userInfo,
+        cookieEmail: cookie ? cookie.loginEmail : '',
+        cookiePw: cookie ? cookie.loginPw : '',
         msg: 'success',
       });
     } else {
@@ -197,8 +206,14 @@ exports.patchStudyApply = async (req, res) => {
       userSeq: req.session.userInfo.userSeq,
     });
 
+    const cookie = req.signedCookies.remain;
+
     if (insertOneStudyApply) {
-      res.send({ msg: 'success' });
+      res.send({
+        cookieEmail: cookie ? cookie.loginEmail : '',
+        cookiePw: cookie ? cookie.loginPw : '',
+        msg: 'success',
+      });
     } else {
       res.send({ msg: 'fail' });
     }
@@ -224,8 +239,14 @@ exports.patchStudyClose = async (req, res) => {
       }
     );
 
+    const cookie = req.signedCookies.remain;
+
     if (updateOneStudy) {
-      res.send({ msg: 'success' });
+      res.send({
+        cookieEmail: cookie ? cookie.loginEmail : '',
+        cookiePw: cookie ? cookie.loginPw : '',
+        msg: 'success',
+      });
     } else {
       res.send({ msg: 'fail' });
     }
