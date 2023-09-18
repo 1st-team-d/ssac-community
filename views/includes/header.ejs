@@ -66,6 +66,9 @@
               class="form-control modalInputBackground"
               id="loginEmail"
               placeholder="name@example.com"
+              value=<%if(cookie){%>
+                <%= cookie.loginEmail%>
+                <%}%>
             />
             <label for="loginEmail">이메일</label>
           </div>
@@ -76,6 +79,9 @@
               id="loginPw"
               placeholder="Password"
               pattern=".+@\."
+              value=<%if(cookie){%>
+                <%= cookie.loginPw%>
+                <%}%>
             />
             <label for="loginPw">비밀번호</label>
           </div>

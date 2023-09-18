@@ -15,5 +15,9 @@ exports.index = async (req, res) => {
   //   console.log('rankBoard.count = ', rankBoard[i].count);
   // }
 
-  res.render('index', { session: req.session.userInfo, boards: rankBoard });
+  res.render('index', {
+    session: req.session.userInfo,
+    boards: rankBoard,
+    cookie: req.signedCookies.remain,
+  });
 };

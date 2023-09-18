@@ -72,7 +72,7 @@ exports.postCheckEmail = async (req, res) => {
       where: { id: registerEmail },
     });
 
-    console.log("중복 정보 >>>>>>>>>>>>>>", user);
+    console.log('중복 정보 >>>>>>>>>>>>>>', user);
 
     if (isCorrect) {
       // 이메일(아이디) 유효성 검사 통과
@@ -143,7 +143,7 @@ exports.postSignin = async (req, res) => {
             res.cookie('remain', { loginEmail, loginPw }, myCookieConf);
           }
 
-          // console.log(req.signedCookies);
+          console.log('cookieinfo >>>>>>> ', req.signedCookies.remain);
 
           res.send({
             isCorrect,

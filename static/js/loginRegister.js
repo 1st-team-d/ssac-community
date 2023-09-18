@@ -37,6 +37,10 @@ async function postLogin() {
       method: 'post',
       data: loginData,
     });
+
+    // 쿠키 정보 확인
+    // console.log('>>>', res.data);
+
     if (res.data.isSignin) {
       // 로그인 성공하면 현재 페이지 리로드
       document.location.reload();
