@@ -10,6 +10,14 @@ Content-Type: application/json; charset=UTF-8
     "registerPw": "1234"
 }
 
+### 닉네임 중복 확인
+POST {{server}}/user/checkName
+Content-Type: application/json; charset=UTF-8
+
+{
+    "registerName": "가나다"
+}
+
 ### 이메일(아이디) 중복 확인
 POST {{server}}/user/checkEmail
 Content-Type: application/json; charset=UTF-8

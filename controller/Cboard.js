@@ -199,7 +199,10 @@ exports.deleteBoard = async (req, res) => {
 // 게시글 등록 화면으로 이동 // 수정 화면도 동일
 exports.getRegister = (req, res) => {
   if (req.session.userInfo) {
-    res.render('board/postBoard', { session: req.session.userInfo });
+    res.render('board/postBoard', {
+      result: '',
+      session: req.session.userInfo,
+    });
   } else {
     // 세션있을 때만 등록 화면 나오게
     res.redirect('/');
