@@ -1,5 +1,4 @@
 const { Board } = require('../models');
-
 // GET '/'
 // 메인 화면
 exports.index = async (req, res) => {
@@ -15,5 +14,13 @@ exports.index = async (req, res) => {
   //   console.log('rankBoard.count = ', rankBoard[i].count);
   // }
 
-  res.render('index', { session: req.session.userInfo, boards: rankBoard });
+  const cookie = req.signedCookies.remain;
+
+  console.log('cookieinfo >>>>> ', cookie);
+  res.render('index', {
+    session: req.session.userInfo,
+    boards: rankBoard,
+    cookieEmail: cookie ? cookie.loginEmail : '',
+    cookiePw: cookie ? cookie.loginPw : '',
+  });
 };

@@ -52,11 +52,16 @@ exports.getBoard = async (req, res) => {
 
       console.log('session>>>>>>', req.session.userInfo);
       // console.log('특정 게시글 board>>>>>>>', board);
+
+      const cookie = req.signedCookies.remain;
+
       res.render('board/viewBoard', {
         board: board,
         allBoardLen: allBoardLen,
         user: board.user,
         session: req.session.userInfo,
+        cookieEmail: cookie ? cookie.loginEmail : '',
+        cookiePw: cookie ? cookie.loginPw : '',
       });
 
       // 게시글 검색
@@ -91,10 +96,14 @@ exports.getBoard = async (req, res) => {
 
       console.log('session>>>>>>', req.session.userInfo);
 
+      const cookie = req.signedCookies.remain;
+
       res.send({
         data: board,
         allBoardLen: allBoardLen,
         session: req.session.userInfo,
+        cookieEmail: cookie ? cookie.loginEmail : '',
+        cookiePw: cookie ? cookie.loginPw : '',
       });
 
       // 페이지 번호 '2'이상 넘어오는 경우
@@ -123,6 +132,8 @@ exports.getBoard = async (req, res) => {
         include: [{ model: User }],
       });
 
+      const cookie = req.signedCookies.remain;
+
       // console.log(board.length);
       console.log('보드는>>>>>>>', board);
       console.log('session>>>>>>', req.session.userInfo);
@@ -130,6 +141,8 @@ exports.getBoard = async (req, res) => {
         data: board,
         // allBoardLen: allBoardLen,
         session: req.session.userInfo,
+        cookieEmail: cookie ? cookie.loginEmail : '',
+        cookiePw: cookie ? cookie.loginPw : '',
       });
 
       // 전체 게시글 조회 + 페이지 번호 '1' 인 경우
@@ -161,10 +174,15 @@ exports.getBoard = async (req, res) => {
       // console.log(board.length);
       console.log('session>>>>>>', req.session.userInfo);
       console.log('전체 게시글 보드 정보', board[0]);
+
+      const cookie = req.signedCookies.remain;
+
       res.render('board/listBoard', {
         data: board,
         allBoardLen: allBoardLen,
         session: req.session.userInfo,
+        cookieEmail: cookie ? cookie.loginEmail : '',
+        cookiePw: cookie ? cookie.loginPw : '',
       });
     }
   } catch (err) {
@@ -198,10 +216,14 @@ exports.deleteBoard = async (req, res) => {
 // GET '/board/register'
 // 게시글 등록 화면으로 이동 // 수정 화면도 동일
 exports.getRegister = (req, res) => {
+  const cookie = req.signedCookies.remain;
+
   if (req.session.userInfo) {
     res.render('board/postBoard', {
       result: '',
       session: req.session.userInfo,
+      cookieEmail: cookie ? cookie.loginEmail : '',
+      cookiePw: cookie ? cookie.loginPw : '',
     });
   } else {
     // 세션있을 때만 등록 화면 나오게
@@ -268,15 +290,13 @@ exports.postRegister = async (req, res) => {
         insertOneStudyApply
       );
 
-      // 제대로 응답 가는거 확인했습니다!
-      // res.send({
-      //   insertOneStudy: insertOneStudy,
-      //   insertOneStudyApply: insertOneStudyApply,
-      //   msg: '스터디 게시글 등록 후 메시지입니다.',
-      // });
-      res.redirect('/board');
-    }
-    // console.log(insertOneBoard);
+    const cookie = req.signedCookies.remain;
+
+    res.send(insertOneBoard, {
+      cookieEmail: cookie ? cookie.loginEmail : '',
+      cookiePw: cookie ? cookie.loginPw : '',
+    });
+
   } catch (err) {
     console.log(err);
   }
@@ -293,9 +313,14 @@ exports.getModify = async (req, res) => {
       },
     });
     console.log('@@@@@@@@@', selectOneBoard);
+
+    const cookie = req.signedCookies.remain;
+
     if (req.session.userInfo) {
       res.render('board/postBoard', {
         result: selectOneBoard,
+        cookieEmail: cookie ? cookie.loginEmail : '',
+        cookiePw: cookie ? cookie.loginPw : '',
       });
     } else {
       // 세션있을 때만 등록 화면 나오게
@@ -359,7 +384,12 @@ exports.patchModify = async (req, res) => {
     //   );
     // }
 
-    res.send(updateOneBoard);
+    const cookie = req.signedCookies.remain;
+
+    res.send(updateOneBoard, {
+      cookieEmail: cookie ? cookie.loginEmail : '',
+      cookiePw: cookie ? cookie.loginPw : '',
+    });
   } catch (err) {
     console.log(err);
   }
