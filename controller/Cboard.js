@@ -290,13 +290,13 @@ exports.postRegister = async (req, res) => {
         insertOneStudyApply
       );
 
-    const cookie = req.signedCookies.remain;
+      const cookie = req.signedCookies.remain;
 
-    res.send(insertOneBoard, {
-      cookieEmail: cookie ? cookie.loginEmail : '',
-      cookiePw: cookie ? cookie.loginPw : '',
-    });
-
+      res.send(insertOneBoard, {
+        cookieEmail: cookie ? cookie.loginEmail : '',
+        cookiePw: cookie ? cookie.loginPw : '',
+      });
+    }
   } catch (err) {
     console.log(err);
   }
