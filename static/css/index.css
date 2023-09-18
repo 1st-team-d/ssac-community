@@ -1,73 +1,23 @@
-@import url(common.css);
+/* 모든 파일 공통 CSS */
+@import url('/static/css/common.css');
+
 /* main css */
-* {
-  box-sizing: border-box;
-}
-
-a {
-  text-decoration: none;
-}
-
 body {
   background-color: gainsboro;
 }
 
-.container {
-  position: relative;
-}
-
-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 20px 0;
-  z-index: 3;
-}
-
-header h1 {
-  position: relative;
-  height: 40px;
-  margin: 0;
-  float: left;
-  z-index: 3;
-}
-
-header h1 img {
-  display: block;
-  position: relative;
-  width: 60px;
-}
-
-a {
-  font-size: 16px;
-  text-decoration: none;
-}
-
-.mainNavigation {
-  float: right;
-}
-
-.mainNavigation a {
-  color: black;
-  margin-left: 20px;
-}
-
-.mainNavigation a.active {
-  font-weight: bold;
-  border-bottom: 2px solid #004fff;
-}
-
-.textWrap {
-  width: 520px;
+/* 메인 화면 내용물 위치 */
+.indexContainer {
   height: 100vh;
-  padding: 240px 20px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 1;
 }
 
+/* 메인 텍스트 css */
+/* 메인 텍스트 박스 */
+.textWrap {
+  margin-top: 30%; 
+}
+
+/* 메인 첫번째 텍스트 */
 .textWrap h2 {
   color: black;
   font-size: 64px;
@@ -76,6 +26,7 @@ a {
   margin-bottom: 40px;
 }
 
+/* 메인 두번째 텍스트 */
 .textWrap h3 {
   color: black;
   font-size: 24px;
@@ -83,6 +34,7 @@ a {
   margin-bottom: 20px;
 }
 
+/* 메인 세번째 텍스트 */
 .textWrap p {
   color: black;
   font-size: 16px;
@@ -90,101 +42,11 @@ a {
   margin-bottom: 20px;
 }
 
-.heroBg {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  background-color: rgb(238, 238, 238);
-}
 
-.heroBg .container {
-  height: 100%;
-}
-
-.videoWrap {
-  position: absolute;
-  left: 200px;
-  width: 1600px;
-  height: 100vh;
-  z-index: 1;
-}
-
-.videoWrap video,
-.videoWrap img {
-  position: absolute;
-  display: block;
-  width: 100%;
-}
-
-.moreBtn {
-  display: none;
-}
-
-/* Colors */
-/* 모달창 배경 색상 설정 */
-.modalBackground {
-  background-color: var(--modal-background-color);
-}
-
-/* 모달 input 색상 설정 */
-.modalInputBackground {
-  background-color: var(--modal-input-background-color);
-}
-
-/* 모달 창 에러 메세지 */
-.errorMsg {
-  color: red;
-}
-
+/* 메인 텍스트 반응형 */
 @media screen and (max-width: 768px) {
-  header {
-    padding: 0;
-    height: 56px;
-  }
-  header h1 {
-    height: 56px;
-  }
-  header h1 img {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 50px;
-  }
-  .mainNavigation {
-    position: fixed;
-    top: 0;
-    right: 0;
-    padding: 80px 20px;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(228, 237, 223, 0.9);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateX(100%);
-    transition: 0.3s;
-  }
-  .mainNavigation.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(0);
-    transition: 0.3s;
-  }
-  .mainNavigation a {
-    display: block;
-    margin: auto;
-    margin-bottom: 8px;
-    padding: 12px;
-  }
-  .mainNavigation a.btn {
-    text-align: center;
-  }
 
-  .videoWrap {
-    top: 5vw;
-    left: -50%;
-    width: 200%;
-  }
-
+/* 메인 텍스트 css */
   .textWrap {
     width: 100%;
     height: auto;
@@ -200,30 +62,6 @@ a {
   }
   .textWrap p {
     font-size: 14;
-  }
-
-  .moreBtn {
-    display: block;
-    position: absolute;
-    right: 12px;
-    top: 8px;
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    border: none;
-    background-color: transparent;
-  }
-  .moreBtn .icon {
-    display: block;
-    width: 24px;
-    height: 24px;
-    margin: 0 auto;
-    background: url(../images/icon-menu.svg) no-repeat center;
-    background-size: contain;
-  }
-  .moreBtn.active .icon {
-    background: url(../images/icon-close.svg) no-repeat center;
-    background-size: contain;
   }
 }
 

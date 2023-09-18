@@ -6,15 +6,61 @@
   --modal-background-color: #ffffdd;
   --modal-input-background-color: #ffffea;
   --input-border-color: rgba(151, 186, 39, 0.5);
+
+  --h1-font-size:                 58px;
+  --h2-font-size:                 46px;
+  --h3-font-size:                 32px;
+  --h4-font-size:                 28px;
+  --h5-font-size:                 24px;
+  --h6-font-size:                 20px;
+  --p-font-size:                  16px;
+  --menu-font-size:               14px;
+
+  --border-radius-large:          100px;
+  --border-radius-medium:         20px;
+  --border-radius-small:          10px;
+
+  --font-weight-light:            300;
+  --font-weight-normal:           400;
+  --font-weight-medium:           500;
+  --font-weight-semibold:         600;
+  --font-weight-bold:             700;
+
 }
 
 /* Common */
+a {
+  text-decoration: none;
+  color: var(--main-btn-text-color);
+}
+
+
+
+
+/* 모달 창 설정 */
 .form-control:focus {
   border-color: var(--input-border-color);
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset,
     0px 0px 8px rgba(134, 151, 59, 0.5);
 }
 
+/* Colors */
+/* 모달창 배경 색상 설정 */
+.modalBackground {
+  background-color: var(--modal-background-color);
+}
+
+/* 모달 input 색상 설정 */
+.modalInputBackground {
+  background-color: var(--modal-input-background-color);
+}
+
+/* 모달 창 에러 메세지 */
+.errorMsg {
+  color: red;
+}
+
+/* 버튼 그냥, 호버, 포커스, 투명버튼, 투명버튼 호버에 대한 설정 */
 .btn {
   /* color: var(--main-btn-text-color); */
   background-color: var(--main-btn-background-color);

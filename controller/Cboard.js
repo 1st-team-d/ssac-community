@@ -200,8 +200,8 @@ exports.deleteBoard = async (req, res) => {
 exports.getRegister = (req, res) => {
   if (req.session.userInfo) {
     res.render('board/postBoard', {
-      session: req.session.userInfo,
       result: '',
+      session: req.session.userInfo,
     });
   } else {
     // 세션있을 때만 등록 화면 나오게
