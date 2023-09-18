@@ -34,19 +34,19 @@ Content-Type: application/json; charset=UTF-8
 #   "loginPw": "aaaassss1111!!!!"
 # }
 
-# 박영희(App 리더, Web 팀원)
+# 박영희(App 리더(모집 마감), Web 팀원)
 # {
 #   "loginEmail": "sesac-p@gmail.com",
 #   "loginPw": "aaaassss1111!!!!"
 # }
 
-# 손흥민(Web,App 팀원 / AI 리더)
+# 손흥민(Web,App(모집 마감) 팀원 / AI 리더 / 임의 1개(Web) : 모집중, 임의 1개(Web) : 모집 마감)
 {
   "loginEmail": "sesac-s@gmail.com",
   "loginPw": "aaaassss1111!!!!"
 }
 
-# 이재성(App 팀원)
+# 이재성(App 팀원(모집 마감))
 # {
 #   "loginEmail": "sesac-l@gmail.com",
 #   "loginPw": "aaaassss1111!!!!"

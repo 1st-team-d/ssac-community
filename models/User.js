@@ -23,6 +23,7 @@ const User = (Sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING, // VARCHAR(255)
         allowNull: false,
+        unique: true,
         comment: '유저 닉네임',
       },
       isAdmin: {

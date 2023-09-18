@@ -9,7 +9,7 @@ exports.index = async (req, res) => {
     order: [['count', 'DESC']],
     limit: 5,
   });
-  console.log('rank >>>>>', rankBoard);
+  // console.log('rank >>>>>', rankBoard);
   // rankBoard 사용 예시 : 게시글의 조회수 출력
   // for (i = 0; i < rankBoard.length; i++) {
   //   console.log('rankBoard.count = ', rankBoard[i].count);
