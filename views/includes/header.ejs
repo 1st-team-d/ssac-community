@@ -148,8 +148,17 @@
               id="registerName"
               placeholder="김땡땡"
             />
-            <label for="registerName">이름</label>
+            <label for="registerName">닉네임</label>
+            <button
+            type="button"
+            class="checkBtn btn position-absolute top-50 end-0 translate-middle-y me-3"
+            onclick="checkNameDuplicate(this)"
+            id="checkBtn"
+          >
+            중복체크
+          </button>
           </div>
+          <div class="checkNameMsg mb-1 ms-2" id="checkNameMsg"></div>
           <div class="form-floating mb-2">
             <input
               type="email"
@@ -161,7 +170,7 @@
             <button
               type="button"
               class="checkBtn btn position-absolute top-50 end-0 translate-middle-y me-3"
-              onclick="checkDuplicate(this)"
+              onclick="checkEmailDuplicate(this)"
               id="checkBtn"
             >
               중복체크

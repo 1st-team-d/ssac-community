@@ -1,18 +1,21 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const controller = require("../controller/Cuser");
+const controller = require('../controller/Cuser');
 
 // 회원 가입 처리
-router.post("/signup", controller.postSignup);
+router.post('/signup', controller.postSignup);
+
+// 닉네임 중복 확인
+router.post('/checkName', controller.postCheckName);
 
 // 이메일 중복 확인
-router.post("/checkEmail", controller.postCheckEmail);
+router.post('/checkEmail', controller.postCheckEmail);
 
 // 로그인 처리
-router.post("/signin", controller.postSignin);
+router.post('/signin', controller.postSignin);
 
 // 로그아웃
-router.get("/logout", controller.getLogout);
+router.get('/logout', controller.getLogout);
 
 // 모든 유저 조회
 // 특정 유저 조회
