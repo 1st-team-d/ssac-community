@@ -135,14 +135,17 @@ async function checkNameDuplicate(btn) {
   // *back*
   // 입력한 닉네임로 중복 체크 -> 중복 아니면 true, 중복이면 false 응답 부탁드려요
   // 닉네임 유효성 검사
-  const nameTest = /\s/g; // 공백, 탭
+  const nameTest_1 = /\s/g; // 공백, 탭
+  const nameTest_2 = ''; // null
 
-  console.log('nickname(test) >>>>>>>> ', nameTest.test(registerName));
+  // console.log(
+  //   'name(test) >>>>>>>> ',
+  //   !nameTest_1.test(registerName) && registerName !== nameTest_2
+  // );
+  // console.log('nickname(공백, 탭) >>>>>>>> ', !nameTest_1.test(registerName));
+  // console.log('nickname(공백만) >>>>>>>> ', registerName !== nameTest_2);
 
-  if (nameTest.test(registerName)) {
-    checkNameMsg.innerHTML = '닉네임 형식이 올바르지 않습니다.';
-    checkNameMsg.style.color = 'red';
-  } else {
+  if (!nameTest_1.test(registerName) && registerName !== nameTest_2) {
     let res = await axios({
       url: '/user/checkName',
       method: 'post',
@@ -159,6 +162,9 @@ async function checkNameDuplicate(btn) {
       checkNameMsg.style.color = 'red';
       isNameDuplicate = true;
     }
+  } else {
+    checkNameMsg.innerHTML = '닉네임 형식이 올바르지 않습니다.';
+    checkNameMsg.style.color = 'red';
   }
 }
 

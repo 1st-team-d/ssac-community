@@ -154,7 +154,7 @@ tabindex="-1"
 aria-labelledby="exampleModalLabel"
 aria-hidden="true"
 >
-<div class="modal-dialog modal-dialog-centered">
+<div class="modal-dialog modal-dialog-centered"> 
 <div class="modalBackground modal-content">
   <div class="modal-header">
     <h1 class="modal-title w-100 fs-5 text-center" id="exampleModalLabel">
@@ -180,13 +180,13 @@ aria-hidden="true"
         <button
         type="button"
         class="checkBtn btn position-absolute top-50 end-0 translate-middle-y me-3"
-        onclick="checkDuplicate(this)"
+        onclick="checkNameDuplicate(this)"
         id="checkBtn"
       >
         중복체크
       </button>
       </div>
-      
+      <div class="checkNameMsg mb-1 ms-2" id="checkNameMsg"></div>      
       <div class="form-floating mb-2">
         <input
           type="email"
@@ -198,12 +198,13 @@ aria-hidden="true"
         <button
           type="button"
           class="checkBtn btn position-absolute top-50 end-0 translate-middle-y me-3"
-          onclick="checkDuplicate(this)"
+          onclick="checkEmailDuplicate(this)"
           id="checkBtn"
         >
           중복체크
         </button>
       </div>
+      <div class="checkEmailMsg mb-1 ms-2" id="checkEmailMsg"></div>
       <div class="checkEmailMsg mb-1 ms-2" id="checkEmailMsg"></div>
       <div class="form-floating">
         <input
