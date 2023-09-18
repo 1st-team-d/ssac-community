@@ -13,7 +13,7 @@ const sequelize = new Sequelize(database, username, password, config); // db, us
 // Sequelize 모델
 const User = require('./User')(sequelize, Sequelize);
 const Board = require('./Board')(sequelize, Sequelize);
-// const Comment = require('./Comment')(sequelize, Sequelize);
+const Comment = require('./Comment')(sequelize, Sequelize);
 // const Menu = require('./Menu')(sequelize, Sequelize);
 const Study = require('./Study')(sequelize, Sequelize);
 const StudyApply = require('./StudyApply')(sequelize, Sequelize);
@@ -37,19 +37,17 @@ Board.belongsTo(User, {
 });
 
 // 2) 게시글 : 댓글 = 1 : N
-// Board.hasMany(Comment, {
-//   foreignKey: 'boardSeq',
-//   sourceKey: 'boardSeq',
-//   // 연쇄 수정 및 삭제 옵션 X
-//   // → 새싹을 졸업하거나 탈퇴해도 댓글이 남도록 설정
-//   // → 작성자가 없는 경우, '탈퇴한 사용자' 등으로 대체 해야함
-//   // onDelete: 'CASCADE',
-//   // onUpdate: 'CASCADE',
-// });
-// Comment.belongsTo(Board, {
-//   foreignKey: { name: 'boardSeq', allowNull: false },
-//   targetKey: 'boardSeq',
-// }); // foreignKey: 실제 테이블에 작성할 컬럼명
+Board.hasMany(Comment, {
+  foreignKey: 'boardSeq',
+  sourceKey: 'boardSeq',
+  // 게시글이 삭제되면 모든 댓글 삭제
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
+Comment.belongsTo(Board, {
+  foreignKey: { name: 'boardSeq', allowNull: false },
+  targetKey: 'boardSeq',
+}); // foreignKey: 실제 테이블에 작성할 컬럼명
 
 // 3) 게시글 : 스터디 정보 = 1 : 1
 Board.hasOne(Study, {
@@ -90,7 +88,20 @@ StudyApply.belongsTo(User, {
   targetKey: 'userSeq',
 });
 
-// 6) 게시글 : 메뉴 = 1 : 1
+// 6) 유저 : 댓글 = 1 : 0 or 1 or M
+User.hasMany(Comment, {
+  foreignKey: 'userSeq',
+  sourceKey: 'userSeq',
+  // 유저가 삭제되면 댓글도 모두 삭제 및 수정
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
+Comment.belongsTo(User, {
+  foreignKey: { name: 'userSeq', allowNull: false },
+  targetKey: 'userSeq',
+});
+
+// 7) 게시글 : 메뉴 = 1 : 1
 // Menu.hasOne(Board, {
 //   foreignKey: 'menuSeq',
 //   sourceKey: 'menuSeq',
