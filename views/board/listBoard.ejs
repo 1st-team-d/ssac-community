@@ -41,44 +41,44 @@
         </div>
       </div>
 
-      <div class="board_list_wrap">
+      <div class="board_list_wrap d-flex flex-column justify-content-center align-items-center">
         <!-- 게시물 -->
-        <div class="top row">
-          <div class="num col-1">번호</div>
-          <div class="title col-1">제목</div>
-          <div class="date col-1">작성일</div>
-          <div class="count col-1">조회수</div>
+        <div class="board_top bg-success bg-opacity-10 border-top border-bottom w-100 row justify-content-center text-center">
+          <div class="top py-2 border-top w-100 row text-center">
+            <div class="num col-2">번호</div>
+            <div class="title col-6">제목</div>
+            <div class="date col-2">작성일</div>
+            <div class="count col-2">조회수</div>
+          </div>
         </div>
-        <div class="board_list" id="boardList">
-          <% let num = 1 %> <% data.forEach((board) => { %>
-          <div class="">
-            <div class="num"><%= num %></div>
-            <div class="title">
+        <div class="board_list border-bottom w-100 row justify-content-center text-center" id="boardList">
+          <% let num = 1 %>
+          <% data.forEach((board) => { %>
+          <div class="row py-2">
+            <div class="num col-2"><%= num %></div>
+            <div class="title col-6">
               <a href="/board?boardSeq=<%= board.boardSeq %>" class="view-link">
                 <%= board.title %>
               </a>
             </div>
-            <div class="date">
-              <%= board.dataValues.year + '-' + board.dataValues.month + '-' +
-              board.dataValues.month %>
+            <div class="date col-2">
+              <%= board.dataValues.year + '-' + board.dataValues.month + '-' + board.dataValues.month %>
             </div>
-            <div class="count"><%= board.count %></div>
+            <div class="count col-2"><%= board.count %></div>
           </div>
-          <% num++ %> <% }) %>
+          <% num++ %>
+          <% }) %>
         </div>
   
       <!-- 페이지네이션 -->
+      <button class="beforePage" onclick="changePagination()">이전</button>
       <div class="board_page" id="pagination">
         <div onclick="changePageNum(this)">1</div>
         <% for (i = 1; i < Math.ceil(allBoardLen / 5); i++) { %>
         <div onclick="changePageNum(this)"><%= i+1 %></div>
         <% } %>
       </div>
+      <button class="newtPage" onclick="changePagination()">다음</button>
     </div>
-  
-    <!-- Bootstrap JS 스크립트 추가 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.min.js"></script>
-    <!-- 사용자 정의 JavaScript 파일 추가 -->
-    <script src="/static/js/listBoard.js"></script>
   </body>
 </html>

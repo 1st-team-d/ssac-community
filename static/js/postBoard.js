@@ -16,7 +16,7 @@ $('#postFile').on('change', function () {
 
 // submit 전에 유효성 검사
 const postBtn = document.querySelector('.postBtn');
-postBtn.addEventListener('click', (e) => {
+postBtn.addEventListener('click', function (e) {
   e.preventDefault();
   // check
   const form = document.forms['data'];
@@ -24,6 +24,7 @@ postBtn.addEventListener('click', (e) => {
   const content = form.content.value;
   const category = form.category.value;
   const maxPeople = form.maxPeople.value;
+
   if (!title) {
     alert('제목은 필수입니다!');
   } else if (!content) {
@@ -33,7 +34,7 @@ postBtn.addEventListener('click', (e) => {
   } else if (!maxPeople) {
     alert('최대인원 설정은 필수입니다!');
   } else {
-    this.submit();
+    form.submit();
   }
 });
 

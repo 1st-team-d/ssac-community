@@ -3,9 +3,10 @@
 
 /* ========================================================================= */
 
-/* 게시판 페이지 스타일 설정 */
+/* 게시판 목록 메인 컨텐츠 시작 위치 설정 */
 .boardContainer {
-  margin-top: calc(var(--header-height) + 10px);
+  margin-top: calc(var(--header-height) + 50px);
+  white-space: nowrap;
 }
 
 /* ========================================================================= */
@@ -15,67 +16,19 @@
   margin-bottom: 30px; /* 제목 아래 여백 설정 */
 }
 
-.board_title strong {
-  font-size: 3rem; /* 제목 텍스트 크기 설정 */
-}
-
 .board_title p {
   margin-top: 5px; /* 제목과 내용 사이의 여백 설정 */
-  font-size: 1.4rem; /* 내용 텍스트 크기 설정 */
 }
 
 /* ========================================================================= */
-
-.boardContainer {
-  white-space: nowrap;
-}
-/* ========================================================================= */
-
 /* 게시물 목록 스타일 설정 */
-.board_list {
-  width: 100%; /* 목록 전체 너비 설정 */
-  border-top: 2px solid #000; /* 목록 상단 경계선 설정 */
-}
 
 .board_list > div {
   border-bottom: 1px solid #ddd; /* 목록 아이템 아래 경계선 설정 */
-  font-size: 0; /* 폰트 크기 초기화 */
-}
-
-.board_list > div.top {
-  /* 상단 목록 아이템 스타일 설정 */
 }
 
 .board_list > div:last-child {
-  border-bottom: 1px solid #000; /* 마지막 목록 아이템 아래 경계선 설정 */
-}
-
-.board_list > div > div {
-  display: inline-block; /* 아이템 요소를 가로로 나열 */
-  padding: 15px 0; /* 아이템 내부 여백 설정 */
-  text-align: center; /* 텍스트 가운데 정렬 */
-  font-size: 1.4rem; /* 아이템 텍스트 크기 설정 */
-}
-
-.title {
-  width: 60%; /* 제목 칼럼 너비 설정 */
-  text-align: left; /* 제목 텍스트 왼쪽 정렬 */
-}
-
-.board_list .top .title {
-  text-align: center; /* 상단 제목 가운데 정렬 */
-}
-
-.board_list .writer {
-  width: 10%; /* 작성자 칼럼 너비 설정 */
-}
-
-.board_list .date {
-  width: 10%; /* 작성일 칼럼 너비 설정 */
-}
-
-.board_list .count {
-  width: 10%; /* 조회수 칼럼 너비 설정 */
+  border: none; /* 목록 아이템 아래 경계선 설정 */
 }
 
 /* ========================================================================= */

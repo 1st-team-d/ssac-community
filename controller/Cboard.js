@@ -292,10 +292,7 @@ exports.postRegister = async (req, res) => {
 
       const cookie = req.signedCookies.remain;
 
-      res.send(insertOneBoard, {
-        cookieEmail: cookie ? cookie.loginEmail : '',
-        cookiePw: cookie ? cookie.loginPw : '',
-      });
+      res.redirect('/board');
     }
   } catch (err) {
     console.log(err);
