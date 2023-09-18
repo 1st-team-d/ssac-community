@@ -3,3 +3,7 @@
 exports.getAdmin = (req, res) => {
   res.render('admin/index');
 };
+
+exports.getUser = (req, res) => {
+  res.render('admin/user');
+};
