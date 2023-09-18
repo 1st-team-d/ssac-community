@@ -142,8 +142,7 @@ exports.postSignin = async (req, res) => {
           if (loginRemain) {
             res.cookie('remain', { loginEmail, loginPw }, myCookieConf);
           }
-
-          console.log('cookieinfo >>>>>>> ', req.signedCookies);
+          const cookie = req.signedCookies.remain;
 
           res.send({
             isCorrect,
@@ -151,7 +150,8 @@ exports.postSignin = async (req, res) => {
             isSignin: true,
             data: user,
             session: req.session.userInfo,
-            cookie: req.signedCookies,
+            cookieEmail: cookie ? cookie.loginEmail : '',
+            cookiePw: cookie ? cookie.loginPw : '',
           });
         } else {
           // 비밀번호 불일치
