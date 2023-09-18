@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>새싹 커뮤니티</title>
     <!-- CDN -->
-    <%- include('../cdn/cdn.ejs') %>
+    <%- include('../includes/cdn.ejs') %>
     <!-- Tagify -->
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     <script defer src="/static/js/postBoard.js"></script>
-    <link rel="stylesheet" href="/static/css/postBoard.css" />
+    <link rel="stylesheet" href="/static/css/board/postBoard.css" />
     <style>
       body {
         height: 100vh;
@@ -22,20 +22,26 @@
   </head>
   <body>
     <%- include('../includes/header.ejs') %>
+    <% let result; %>
     <form
       name="data"
       action="/board/register"
       method="post"
       enctype="multipart/form-data"
     >
-      <div class="postWrap container w-75">
+      <div class="postWrap container d-flex flex-column justify-content-center w-75">
         <h1 class="fw-bold">새싹 스터디 게시판 🌱</h1>
         <input type="hidden" name="userSeq" value="1" />
-        <input type="hidden" name="boardSeq" value="<%= result.boardSeq %>" />
+        <input type="hidden" name="boardSeq" value="<% if (result) { %>
+          <%= result.boardSeq %>
+        <% } %>" 
+        />
         <div class="postTop d-flex row flex-wrap align-items-center justify-content-between border-black border-top border-bottom mb-3">
           <div class="postTitleWrap col-12 d-flex align-items-center mb-3 py-3 border-bottom">
             <span class="me-5 postTitle">제목</span>
-            <input class="w-100" type="text" name="title" placeholder="제목입력" value="<%= result.title %>" />
+            <input class="w-100" type="text" name="title" placeholder="제목입력" value="<% if (result) { %>
+              <%= result.title %>
+            <% } %>" />
           </div>
           <div class="categories mb-3 col-9 d-flex flex-wrap align-items-center justify-content-center">
             <!-- <button
@@ -69,9 +75,11 @@
             name="content"
             id="content"
             cols="100"
-            rows="15"
+            rows="20"
             placeholder="내용 입력"
-          ><%= result.content %></textarea>
+          ><% if (result) { %>
+            <%= result.content %>
+          <% } %></textarea>
         </div>
         <div
           class="file row border d-flex justify-content-between align-items-center p-2 mt-2"
@@ -101,7 +109,7 @@
             수정
           </button>
           <% } else { %>
-          <button type="submit" class="postBtn btn btn-secondary fw-bold mt-3">
+          <button type="submit" class="postBtn btn text-light fw-bold mt-3">
             글 작성
           </button>
           <% } %>

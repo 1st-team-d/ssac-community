@@ -220,6 +220,7 @@ exports.getRegister = (req, res) => {
 
   if (req.session.userInfo) {
     res.render('board/postBoard', {
+      result: '',
       session: req.session.userInfo,
       cookieEmail: cookie ? cookie.loginEmail : '',
       cookiePw: cookie ? cookie.loginPw : '',

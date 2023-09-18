@@ -8,14 +8,17 @@ $('.modal').on('hidden.bs.modal', function () {
   $(this).find('form')[0].reset();
   $('.errorMsg').html('');
   $('.checkEmailMsg').html('');
+  $('.checkNameMsg').html('');
 });
 
 // 메세지 나타내는 요소(div)
 const errorMsg = document.querySelectorAll('.errorMsg');
 const checkEmailMsg = document.querySelector('#checkEmailMsg');
+const checkNameMsg = document.querySelector('#checkNameMsg');
 
 // 중복인지 여부 -> 처음부터 true(중복)으로 해놔서 만약 중복체크 버튼 누르지 않을 경우 회원가입 전송이 안되게 함.
-let isDuplicate = true;
+let isEmailDuplicate = true;
+let isNameDuplicate = true;
 
 // 로그인 모달 창에서 로그인 버튼 누르면 폼 전송 -> 성공하면 해당 페이지 리다이렉트
 async function postLogin() {
@@ -68,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // 회원가입 모달 창에서 회원가입 버튼 누르면 폼 전송 -> 성공하면 main.ejs 리다이렉트
 async function postRegister() {
   // 회원가입 버튼 누르면 기존 중복체크 메세지 초기화
+  checkNameMsg.innerHTML = '';
   checkEmailMsg.innerHTML = '';
   const form = document.forms['register'];
   const registerData = {
@@ -96,8 +100,10 @@ async function postRegister() {
           '비밀번호는 대소문자, 특수문자, 숫자를 포함한 8자리 이상';
       } else {
         // 중복체크 하지 않았을 경우
-        if (isDuplicate) {
+        if (isEmailDuplicate) {
           errorMsg[1].innerHTML = '이메일 중복체크를 해주세요.';
+        } else if (isNameDuplicate) {
+          errorMsg[1].innerHTML = '닉네임 중복체크를 해주세요.';
         } else {
           // *back*
           // 회원가입 성공시 true, 실패시 false 응답 해주세요. 아마 다 true 뜰듯?
@@ -125,8 +131,43 @@ async function postRegister() {
   }
 }
 
+// 닉네임 중복체크
+async function checkNameDuplicate(btn) {
+  errorMsg[1].innerHTML = '';
+  const form = document.forms['register'];
+  const registerName = form.registerName.value;
+  // *back*
+  // 입력한 닉네임로 중복 체크 -> 중복 아니면 true, 중복이면 false 응답 부탁드려요
+  // 닉네임 유효성 검사
+  const nameTest = /\s/g; // 공백, 탭
+
+  console.log('nickname(test) >>>>>>>> ', nameTest.test(registerName));
+
+  if (nameTest.test(registerName)) {
+    checkNameMsg.innerHTML = '닉네임 형식이 올바르지 않습니다.';
+    checkNameMsg.style.color = 'red';
+  } else {
+    let res = await axios({
+      url: '/user/checkName',
+      method: 'post',
+      data: { registerName: registerName },
+    });
+    if (res.data.isCheck && res.data.isCorrect) {
+      checkNameMsg.innerHTML = '사용 가능한 닉네임입니다.';
+      checkNameMsg.style.color = 'blue';
+
+      isNameDuplicate = false;
+    } else {
+      checkNameMsg.innerHTML =
+        '이미 사용중인 닉네임입니다. 다른 닉네임을 입력 해주세요.';
+      checkNameMsg.style.color = 'red';
+      isNameDuplicate = true;
+    }
+  }
+}
+
 // 이메일 중복체크
-async function checkDuplicate(btn) {
+async function checkEmailDuplicate(btn) {
   errorMsg[1].innerHTML = '';
   const form = document.forms['register'];
   const registerEmail = form.registerEmail.value;
@@ -147,12 +188,12 @@ async function checkDuplicate(btn) {
       checkEmailMsg.innerHTML = '사용 가능한 이메일입니다.';
       checkEmailMsg.style.color = 'blue';
 
-      isDuplicate = false;
+      isEmailDuplicate = false;
     } else {
       checkEmailMsg.innerHTML =
         '이미 사용중인 이메일입니다. 다른 이메일을 입력 해주세요.';
       checkEmailMsg.style.color = 'red';
-      isDuplicate = true;
+      isEmailDuplicate = true;
     }
   }
 }
