@@ -28,7 +28,7 @@
       method="post"
       enctype="multipart/form-data"
     >
-      <div class="postWrap container w-75">
+      <div class="postWrap container w-50">
         <h1 class="fw-bold">새싹 스터디 게시판 🌱</h1>
         <input type="hidden" name="userSeq" value="1" />
         <input type="hidden" name="boardSeq" value="<%= result.boardSeq %>" />
@@ -37,30 +37,15 @@
             <span class="me-5 postTitle">제목</span>
             <input class="w-100" type="text" name="title" placeholder="제목입력" value="<%= result.title %>" />
           </div>
-          <div class="categories mb-3 col-9 d-flex flex-wrap align-items-center justify-content-center">
-            <!-- <button
-              class="btn btn-outline-secondary dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              카테고리
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">웹</a></li>
-              <li><a class="dropdown-item" href="#">앱</a></li>
-              <li><a class="dropdown-item" href="#">AI</a></li>
-              <li><a class="dropdown-item" href="#">UI/UX</a></li>
-              <li><a class="dropdown-item" href="#">게임</a></li>
-            </ul> -->
-            <input class="d-none" type="radio" name="category" id="web_cate" value="web"><label onclick="checkedClass(this)" for="web_cate"># 웹</label>
-            <input class="d-none" type="radio" name="category" id="app_cate" value="app"><label onclick="checkedClass(this)" for="app_cate"># 앱</label>
-            <input class="d-none" type="radio" name="category" id="ai_cate" value="ai"><label onclick="checkedClass(this)" for="ai_cate"># AI</label>
-            <input class="d-none" type="radio" name="category" id="uiux_cate" value="ui"><label onclick="checkedClass(this)" for="uiux_cate"># UI / UX</label>
-            <input class="d-none" type="radio" name="category" id="game_cate" value="game"><label onclick="checkedClass(this)" for="game_cate"># 게임</label>
-            <input class="d-none" type="radio" name="category" id="etc_cate" value="etc"><label onclick="checkedClass(this)" for="etc_cate"># 기타</label>
+          <div class="categories mb-3 col-9 d-flex flex-wrap align-items-center justify-content-start">
+            <input class="d-none" type="radio" name="category" id="web_cate" value="0"><label for="web_cate"># 웹</label>
+            <input class="d-none" type="radio" name="category" id="app_cate" value="1"><label for="app_cate"># 앱</label>
+            <input class="d-none" type="radio" name="category" id="ai_cate" value="2"><label for="ai_cate"># AI</label>
+            <input class="d-none" type="radio" name="category" id="uiux_cate" value="3"><label for="uiux_cate"># UI / UX</label>
+            <input class="d-none" type="radio" name="category" id="game_cate" value="4"><label for="game_cate"># 게임</label>
+            <input class="d-none" type="radio" name="category" id="etc_cate" value="5"><label for="etc_cate"># 기타</label>
           </div>
-          <div class="maxPeople mb-3 col-3">
+          <div class="maxPeople mb-3 col-3 d-flex justify-content-start">
             <input name='maxPeople' class='selectMode' placeholder="최대 인원" />
           </div>
         </div>
@@ -78,7 +63,7 @@
         >
           <input
             class="fileName"
-            value="<% if (typeof result !== 'undefined' && result.filePath !== null) { %><%= result.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.' + result.filePath.split('/')[1].split('.')[1] %><% } %>"
+            value="<% if (result.filePath !== undefined && result.filePath !== null) { %><%= result.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.' + result.filePath.split('/')[1].split('.')[1] %><% } %>"
             placeholder="첨부파일"
             type="text"
             disabled

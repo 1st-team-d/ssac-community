@@ -199,7 +199,10 @@ exports.deleteBoard = async (req, res) => {
 // 게시글 등록 화면으로 이동 // 수정 화면도 동일
 exports.getRegister = (req, res) => {
   if (req.session.userInfo) {
-    res.render('board/postBoard', { session: req.session.userInfo });
+    res.render('board/postBoard', {
+      session: req.session.userInfo,
+      result: '',
+    });
   } else {
     // 세션있을 때만 등록 화면 나오게
     res.redirect('/');
@@ -222,8 +225,12 @@ exports.postRegister = async (req, res) => {
     }
 
     // rest client 실행시
-    const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
-    const { title, content, category, maxPeople } = jsonData;
+    // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
+    const { title, content, category, maxPeople } = req.body;
+    console.log('최대인원 서버에 바로 넘어온 값 >>>> ', maxPeople);
+    // json 형태로 넘어와서 객체 형태로 전환
+    const maxPeopleObject = JSON.parse(maxPeople);
+    console.log('맥스 피플 제이슨 데이터 >>> ', maxPeopleObject[0]);
 
     // 실제 코드
     // const { title, content, category, maxPeople } = req.body;
@@ -245,7 +252,7 @@ exports.postRegister = async (req, res) => {
       // 스터디 정보
       const insertOneStudy = await Study.create({
         category: category,
-        maxPeople: maxPeople,
+        maxPeople: maxPeopleObject[0].value,
         boardSeq: insertOneBoard.boardSeq,
       });
 
@@ -254,12 +261,22 @@ exports.postRegister = async (req, res) => {
         studySeq: insertOneStudy.studySeq,
         userSeq: req.session.userInfo.userSeq,
       });
+
+      console.log(
+        '스터디 게시물 등록 후 데이터 >>>> ',
+        insertOneStudy,
+        insertOneStudyApply
+      );
+
+      // 제대로 응답 가는거 확인했습니다!
+      // res.send({
+      //   insertOneStudy: insertOneStudy,
+      //   insertOneStudyApply: insertOneStudyApply,
+      //   msg: '스터디 게시글 등록 후 메시지입니다.',
+      // });
+      res.redirect('/board');
     }
-
-    // res.redirect('/board');
     // console.log(insertOneBoard);
-
-    res.send(insertOneBoard);
   } catch (err) {
     console.log(err);
   }
@@ -304,7 +321,7 @@ exports.patchModify = async (req, res) => {
     }
 
     // rest client 실행시
-    const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
+    // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
     const { title, content, boardSeq, studySeq, category, maxPeople } =
       jsonData;
 
