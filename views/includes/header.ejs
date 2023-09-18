@@ -154,71 +154,39 @@ tabindex="-1"
 aria-labelledby="exampleModalLabel"
 aria-hidden="true"
 >
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modalBackground modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title w-100 fs-5 text-center" id="exampleModalLabel">
-          🔖 회원가입
-        </h1>
+<div class="modal-dialog modal-dialog-centered">
+<div class="modalBackground modal-content">
+  <div class="modal-header">
+    <h1 class="modal-title w-100 fs-5 text-center" id="exampleModalLabel">
+      🔖 회원가입
+    </h1>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form name="register">
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          class="form-control modalInputBackground"
+          id="registerName"
+          placeholder="김땡땡"
+        />
+        <label for="registerName">닉네임</label>
         <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        type="button"
+        class="checkBtn btn position-absolute top-50 end-0 translate-middle-y me-3"
+        onclick="checkDuplicate(this)"
+        id="checkBtn"
+      >
+        중복체크
+      </button>
       </div>
-      <div class="modal-body">
-        <form name="register">
-          <div class="form-floating mb-2">
-            <input
-              type="text"
-              class="form-control modalInputBackground"
-              id="registerName"
-              placeholder="김땡땡"
-            />
-            <label for="registerName">닉네임</label>
-            <button
-            type="button"
-            class="checkBtn btn position-absolute top-50 end-0 translate-middle-y me-3"
-            onclick="checkNameDuplicate(this)"
-            id="checkBtn"
-          >
-            중복체크
-          </button>
-          </div>
-          <div class="checkNameMsg mb-1 ms-2" id="checkNameMsg"></div>
-          <div class="form-floating mb-2">
-            <input
-              type="email"
-              class="form-control modalInputBackground"
-              id="registerEmail"
-              placeholder="name@example.com"
-            />
-            <label for="registerEmail">이메일</label>
-            <button
-              type="button"
-              class="checkBtn btn position-absolute top-50 end-0 translate-middle-y me-3"
-              onclick="checkEmailDuplicate(this)"
-              id="checkBtn"
-            >
-              중복체크
-            </button>
-          </div>
-          <div class="checkEmailMsg mb-1 ms-2" id="checkEmailMsg"></div>
-          <div class="form-floating">
-            <input
-              type="password"
-              class="form-control modalInputBackground"
-              id="registerPw"
-              placeholder="Password"
-            />
-            <label for="registerPw"
-              >비밀번호(대소문자, 특수문자, 숫자 포함 8자리 이상)</label
-            >
-          </div>
-          <div class="errorMsg mt-3 ms-2" id="registerMsg"></div>
-        </form>
-      </div>
+      
       <div class="form-floating mb-2">
         <input
           type="email"
