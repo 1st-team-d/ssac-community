@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>새싹커뮤니티</title>
     <!-- CDN -->
-    <%- include('./cdn/cdn.ejs') %>
+    <%- include('./includes/cdn.ejs') %>
     <!-- login.js -->
     <script defer src="/static/js/loginRegister.js"></script>
-    <!-- login.css -->
-    <link rel="stylesheet" href="/static/css/loginRegister.css" />
     <!-- main -->
     <link rel="stylesheet" href="/static/css/index.css" />
 
@@ -19,48 +17,35 @@
     <!-- header -->
     <%- include('./includes/header.ejs') %>
     <main class="heroBg">
-      <!-- 영상 소스 -->
-      <div class="videoWrap dpn">
-        <img src="images/sample.png" alt="" />
-        <video
-          src="images/1041512128-preview.mp4"
-          muted
-          autoplay
-          loop
-          poster="images/sample.png"
-        ></video>
-      </div>
       <!-- 메인 소개 글 -->
-      <div class="container">
-        <div class="textWrap">
-          <h2>새싹 가나다라<br />커뮤니티</h2>
-          <h3>프론트엔드 + 백엔드 + 가나다라</h3>
-          <p>
-            새싹 커뮤니티 전용 어쩌고<br />
-            저쩌고 가다나라마바사 커뮤니티입니다.
-          </p>
-          <div class="btnWrap">
-            <% if (typeof session === 'undefined') { %>
-            <a
-              href=""
-              class="text-decoration-none"
-              data-bs-toggle="modal"
-              data-bs-target="#loginModal"
-              ><span class="btn">글 작성하기</span></a
-            >
-            <a
-              href=""
-              class="text-decoration-none"
-              data-bs-toggle="modal"
-              data-bs-target="#registerModal"
-              ><span class="btn ghostBtn">가입하기</span></a
-            >
-            <% } else { %>
-            <a href="/board/register" class="btn">글쓰기</a>
-            <% } %>
+      <div class="indexContainer container d-flex flex-column justify-content-center">
+        <div class="row">
+          <!-- 왼쪽 열: 메인 소개 글 -->
+          <div class="col-md-6">
+            <div class="textWrap">
+              <h2>새싹 가나다라<br />커뮤니티</h2>
+              <h3>프론트엔드 + 백엔드 + 가나다라</h3>
+              <p>
+                새싹 커뮤니티 전용 어쩌고<br />
+                저쩌고 가다나라마바사 커뮤니티입니다.
+              </p>
+              <div class="btnWrap">
+                <% if (typeof session==='undefined' ) { %>
+                  <a href="" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#loginModal"><span
+                      class="btn">글 작성하기</span></a>
+                  <a href="" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#registerModal"><span
+                      class="btn ghostBtn">가입하기</span></a>
+                  <% } else { %>
+                    <a href="/board/register" class="btn">글쓰기</a>
+                    <% } %>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+
+      <!-- 오른쪽 열: 게시판 소개 카드 추가 -->
+
+
+
     </main>
   </body>
 </html>

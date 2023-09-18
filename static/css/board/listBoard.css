@@ -1,0 +1,325 @@
+/* 공통 CSS 파일을 가져와서 사용 */
+@import url('../common.css');
+
+/* ========================================================================= */
+
+
+/* 게시판 페이지 스타일 설정 */
+.boardContainer {
+    height: 100vh;
+}
+
+/* ========================================================================= */
+
+/* 게시판 제목 스타일 설정 */
+.board_title {
+  margin-bottom: 30px; /* 제목 아래 여백 설정 */
+}
+
+.board_title strong {
+  font-size: 3rem; /* 제목 텍스트 크기 설정 */
+}
+
+.board_title p {
+  margin-top: 5px; /* 제목과 내용 사이의 여백 설정 */
+  font-size: 1.4rem; /* 내용 텍스트 크기 설정 */
+}
+
+
+/* ========================================================================= */
+
+/* ========================================================================= */
+
+/* 게시물 목록 스타일 설정 */
+.board_list {
+  width: 100%; /* 목록 전체 너비 설정 */
+  border-top: 2px solid #000; /* 목록 상단 경계선 설정 */
+}
+
+.board_list > div {
+  border-bottom: 1px solid #ddd; /* 목록 아이템 아래 경계선 설정 */
+  font-size: 0; /* 폰트 크기 초기화 */
+}
+
+.board_list > div.top {
+  /* 상단 목록 아이템 스타일 설정 */
+}
+
+.board_list > div:last-child {
+  border-bottom: 1px solid #000; /* 마지막 목록 아이템 아래 경계선 설정 */
+}
+
+.board_list > div > div {
+  display: inline-block; /* 아이템 요소를 가로로 나열 */
+  padding: 15px 0; /* 아이템 내부 여백 설정 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+  font-size: 1.4rem; /* 아이템 텍스트 크기 설정 */
+}
+
+.title {
+  width: 60%; /* 제목 칼럼 너비 설정 */
+  text-align: left; /* 제목 텍스트 왼쪽 정렬 */
+}
+
+.board_list .top .title {
+  text-align: center; /* 상단 제목 가운데 정렬 */
+}
+
+.board_list .writer {
+  width: 10%; /* 작성자 칼럼 너비 설정 */
+}
+
+.board_list .date {
+  width: 10%; /* 작성일 칼럼 너비 설정 */
+}
+
+.board_list .count {
+  width: 10%; /* 조회수 칼럼 너비 설정 */
+}
+
+/* ========================================================================= */
+
+/* 페이지 번호 스타일 설정 */
+.board_page {
+  margin-top: 30px; /* 페이지 번호 위 여백 설정 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+  font-size: 16px; /* 페이지 번호 텍스트 크기 설정 */
+}
+
+.board_page div {
+  display: inline-block; /* 페이지 번호 요소를 가로로 나열 */
+  width: 32px; /* 페이지 번호 요소 너비 설정 */
+  height: 32px; /* 페이지 번호 요소 높이 설정 */
+  box-sizing: border-box; /* 요소 박스 크기 설정 */
+  vertical-align: middle; /* 요소 수직 정렬 설정 */
+  border: 1px solid #ddd; /* 페이지 번호 테두리 설정 */
+  border-left: 0; /* 페이지 번호 왼쪽 테두리 제거 */
+  line-height: 100%; /* 줄 높이 설정 */
+  cursor: pointer; /* 커서 포인터로 변경 */
+}
+
+.board_page div.bt {
+  padding-top: 10px; /* 페이지 번호 버튼 상단 패딩 설정 */
+  font-size: 1.2rem; /* 페이지 번호 버튼 텍스트 크기 설정 */
+  letter-spacing: -1px; /* 글자 간격 설정 */
+}
+
+.board_page div.num {
+  padding-top: 9px; /* 페이지 번호 숫자 상단 패딩 설정 */
+  font-size: 1.4rem; /* 페이지 번호 숫자 텍스트 크기 설정 */
+}
+
+.board_page div.num.on {
+  border-color: #000; /* 활성화된 페이지 번호 테두리 색상 설정 */
+  background: #000; /* 활성화된 페이지 번호 배경 색상 설정 */
+  color: #fff; /* 활성화된 페이지 번호 텍스트 색상 설정 */
+}
+
+.board_page div:first-child {
+  border-left: 1px solid #ddd; /* 첫 번째 페이지 번호 왼쪽 테두리 설정 */
+}
+
+/* ========================================================================= */
+
+
+
+
+
+/* 애니메이션 효과 설정 */
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* 시작 시 투명도 0 */
+  }
+  to {
+    opacity: 1; /* 종료 시 투명도 1 */
+  }
+}
+
+/* 반응형 스타일 설정 */
+@media (max-width: 1000px) {
+  .board_wrap {
+    width: 100%; /* 컨테이너 전체 너비 설정 */
+    min-width: 320px; /* 컨테이너 최소 너비 설정 */
+    padding: 0 30px; /* 컨테이너 내부 여백 설정 */
+    box-sizing: border-box; /* 컨테이너 박스 크기 설정 */
+  }
+
+  .board_list .num,
+  .board_list .writer,
+  .board_list .count {
+    display: none; /* 번호, 작성자, 조회수 숨김 */
+  }
+
+  .board_list .date {
+    width: 40%; /* 작성일 칼럼 너비 설정 */
+  }
+
+  .board_list .title {
+    text-indent: 10px; /* 제목 들여쓰기 설정 */
+  }
+
+  .board_list .top .title {
+    text-indent: 0; /* 상단 제목 들여쓰기 초기화 */
+  }
+
+  .board_page a {
+    width: 26px; /* 페이지 번호 요소 너비 설정 */
+    height: 26px; /* 페이지 번호 요소 높이 설정 */
+  }
+
+  .board_page a.bt {
+    padding-top: 7px; /* 페이지 번호 버튼 상단 패딩 설정 */
+  }
+
+  .board_page a.num {
+    padding-top: 6px; /* 페이지 번호 숫자 상단 패딩 설정 */
+  }
+
+  .board_view .info dl {
+    width: 50%; /* 정보 요소 너비 설정 */
+    padding: 0; /* 정보 요소 내부 여백 초기화 */
+  }
+
+  .board_view .info dl:nth-child(-n + 2) {
+    margin-bottom: 5px; /* 상위 2개 정보 요소 간격 설정 */
+  }
+
+  .board_view .info dl::before {
+    display: none; /* 정보 요소 구분선 숨김 */
+  }
+
+  .board_view .info dl dt,
+  .board_view .info dl dd {
+    font-size: 1.2rem; /* 정보 텍스트 크기 설정 */
+  }
+
+  .board_write .info dl {
+    width: 49%; /* 정보 요소 너비 설정 */
+  }
+
+  .board_write .info dl:first-child {
+    margin-right: 2%; /* 첫 번째 정보 요소 오른쪽 여백 설정 */
+  }
+
+  .board_write .title dt,
+  .board_write .info dt {
+    display: none; /* 제목과 정보 레이블 숨김 */
+  }
+
+  .board_write .title dd,
+  .board_write .info dd {
+    width: 100%; /* 데이터 요소 전체 너비 설정 */
+  }
+
+  .board_write .title input[type='text'],
+  .board_write .info input[type='text'],
+  .board_write .info input[type='password'] {
+    width: 100%; /* 입력 필드 전체 너비 설정 */
+  }
+}
+
+/* ========================================================================= */
+
+/* 댓글 섹션 스타일 설정 */
+.comment_section {
+  margin-top: 30px; /* 댓글 섹션 상단 여백 설정 */
+  padding: 50px 20px; /* 댓글 섹션 내부 여백 설정 */
+}
+
+.comment_section > div {
+  margin: 0 0 30px 0; /* 하위 요소 간격 설정 */
+}
+
+.comment_section > div > span {
+  font-size: 2rem; /* 타이틀 텍스트 크기 설정 */
+  background-color: #dbebc5; /* 타이틀 배경색 설정 */
+  border-radius: 15px; /* 타이틀 테두리 반경 설정 */
+  border: 1px solid #dbebc5; /* 타이틀 테두리 설정 */
+  padding: 10px; /* 타이틀 내부 여백 설정 */
+  font-weight: 700; /* 타이틀 글꼴 두껍게 설정 */
+}
+
+.comment_form {
+  background-color: #f9f9f9; /* 폼 배경색 설정 */
+  padding: 20px; /* 폼 내부 여백 설정 */
+  border-radius: 5px; /* 폼 테두리 반경 설정 */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 설정 */
+}
+
+.comment_form label {
+  font-size: 1.4rem; /* 라벨 텍스트 크기 설정 */
+  margin-bottom: 10px; /* 라벨 아래 여백 설정 */
+  display: block; /* 라벨을 블록 요소로 설정 */
+}
+
+.comment_form input[type='text'],
+.comment_form textarea {
+  width: 100%; /* 입력 필드 전체 너비 설정 */
+  padding: 1px; /* 입력 필드 내부 여백 설정 */
+  font-size: 1.4rem; /* 입력 필드 텍스트 크기 설정 */
+  border: 1px solid #ccc; /* 입력 필드 테두리 설정 */
+  border-radius: 3px; /* 입력 필드 테두리 반경 설정 */
+  margin-bottom: 15px; /* 입력 필드 아래 여백 설정 */
+}
+
+.comment_form textarea {
+  height: 100px; /* 텍스트 에어리어 높이 설정 */
+}
+
+/* ========================================================================= */
+
+/* 목록으로 스크롤링 링크 스타일 설정 */
+.scroll_to_list {
+  text-align: center; /* 텍스트 가운데 정렬 */
+  margin-top: 30px; /* 링크 상단 여백 설정 */
+}
+
+.scroll_to_list a {
+  background-color: #000; /* 배경색 설정 */
+  color: #fff; /* 텍스트 색상 설정 */
+  padding: 10px 20px; /* 내부 여백 설정 */
+  text-decoration: none; /* 텍스트 밑줄 제거 */
+  border-radius: 3px; /* 테두리 반경 설정 */
+}
+
+.scroll_to_list a:hover {
+  background-color: #333; /* 호버 시 배경색 변경 */
+}
+
+/* ========================================================================= */
+
+/* 파일 첨부 스타일 설정 */
+.file_upload {
+  margin-top: 20px; /* 상단 여백 설정 */
+  padding: 15px; /* 내부 여백 설정 */
+  background-color: #f9f9f9; /* 배경색 설정 */
+  border-radius: 5px; /* 테두리 반경 설정 */
+  display: flex; /* 아이템들을 가로로 나열 */
+  align-items: center; /* 아이템들을 수직 가운데 정렬 */
+}
+
+.file_label {
+  font-size: 1.4rem; /* 라벨 텍스트 크기 설정 */
+  flex: 1; /* 레이블 아이템을 확장하여 나머지 공간 차지 */
+}
+
+.file_input_wrapper {
+  display: flex; /* 아이템들을 가로로 나열 */
+  align-items: center; /* 아이템들을 수직 가운데 정렬 */
+}
+
+.file_icon {
+  margin-right: 10px; /* 우측 여백 설정 */
+  font-size: 1.6rem; /* 아이콘 크기 설정 */
+}
+
+.input_file {
+  width: 100%; /* 입력 필드 전체 너비 설정 */
+  padding: 10px; /* 내부 여백 설정 */
+  font-size: 1.4rem; /* 입력 필드 텍스트 크기 설정 */
+  border: 1px solid #ccc; /* 입력 필드 테두리 설정 */
+  border-radius: 3px; /* 입력 필드 테두리 반경 설정 */
+  background-color: #fff; /* 입력 필드 배경색 설정 */
+}
+
+
