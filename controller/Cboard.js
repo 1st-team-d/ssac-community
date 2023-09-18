@@ -247,8 +247,12 @@ exports.postRegister = async (req, res) => {
     }
 
     // rest client 실행시
-    const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
-    const { title, content, category, maxPeople } = jsonData;
+    // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
+    const { title, content, category, maxPeople } = req.body;
+    console.log('최대인원 서버에 바로 넘어온 값 >>>> ', maxPeople);
+    // json 형태로 넘어와서 객체 형태로 전환
+    const maxPeopleObject = JSON.parse(maxPeople);
+    console.log('맥스 피플 제이슨 데이터 >>> ', maxPeopleObject[0]);
 
     // 실제 코드
     // const { title, content, category, maxPeople } = req.body;
@@ -270,7 +274,7 @@ exports.postRegister = async (req, res) => {
       // 스터디 정보
       const insertOneStudy = await Study.create({
         category: category,
-        maxPeople: maxPeople,
+        maxPeople: maxPeopleObject[0].value,
         boardSeq: insertOneBoard.boardSeq,
       });
 
@@ -279,10 +283,12 @@ exports.postRegister = async (req, res) => {
         studySeq: insertOneStudy.studySeq,
         userSeq: req.session.userInfo.userSeq,
       });
-    }
 
-    // res.redirect('/board');
-    // console.log(insertOneBoard);
+      console.log(
+        '스터디 게시물 등록 후 데이터 >>>> ',
+        insertOneStudy,
+        insertOneStudyApply
+      );
 
     const cookie = req.signedCookies.remain;
 
@@ -290,6 +296,7 @@ exports.postRegister = async (req, res) => {
       cookieEmail: cookie ? cookie.loginEmail : '',
       cookiePw: cookie ? cookie.loginPw : '',
     });
+
   } catch (err) {
     console.log(err);
   }
@@ -339,7 +346,7 @@ exports.patchModify = async (req, res) => {
     }
 
     // rest client 실행시
-    const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
+    // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
     const { title, content, boardSeq, studySeq, category, maxPeople } =
       jsonData;
 
