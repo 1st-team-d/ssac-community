@@ -6,8 +6,8 @@ Content-Type: application/json; charset=UTF-8
 
 {
     "registerName": "손흥민",
-    "registerEmail": "123@naver.com",
-    "registerPw": "1234"
+    "registerEmail": "sesac-s@gmail.com",
+    "registerPw": "aaaassss1111!!!!"
 }
 
 ### 이메일(아이디) 중복 확인
@@ -54,3 +54,6 @@ Content-Type: application/json; charset=UTF-8
 
 ### 로그아웃 처리
 GET {{server}}/user/logout
+
+### 마이페이지 진입
+GET {{server}}/user/myPage

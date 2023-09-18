@@ -72,7 +72,7 @@ exports.postCheckEmail = async (req, res) => {
       where: { id: registerEmail },
     });
 
-    console.log("중복 정보 >>>>>>>>>>>>>>", user);
+    console.log('중복 정보 >>>>>>>>>>>>>>', user);
 
     if (isCorrect) {
       // 이메일(아이디) 유효성 검사 통과
@@ -197,5 +197,21 @@ exports.getLogout = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.send({ isLogout: false, msg: '로그아웃 실패' });
+  }
+};
+
+// 마이페이지
+exports.getMyPage = async (req, res) => {
+  try {
+    console.log('userInfo >>>>', req.session);
+    // DB 접근
+    // const user = await User.findOne({
+    //   where: { id: req.session.userInfo.id },
+    // });
+    // console.log('user >>>>>>>>>>> ', user);
+    res.render('myPage', { session: req.session.userInfo });
+  } catch (err) {
+    console.error(err);
+    res.send({ msg: '마이페이지 진입 실패' });
   }
 };
