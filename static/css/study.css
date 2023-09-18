@@ -1,9 +1,7 @@
+/* 모든 파일 공통 CSS */
+@import url('/static/css/common.css');
+
 /* 스터디 관리 페이지 */
-/* Common */
-a {
-  text-decoration: none;
-  color: #3c3c3c;
-}
 
 /* 스터디 구분 한 컨테이너 */
 .studySection {
