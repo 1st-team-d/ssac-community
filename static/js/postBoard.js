@@ -32,7 +32,8 @@ async function editPost() {
   const formData = new FormData();
   const file = document.querySelector('#postFile').files[0];
 
-  console.log(form.boardSeq.value);
+  // boardSeq 체크
+  // console.log(form.boardSeq.value);
 
   formData.append('boardSeq', form.boardSeq.value);
   formData.append('userSeq', form.userSeq.value);
@@ -51,6 +52,7 @@ async function editPost() {
         },
       });
       if (res.data) {
+        console.log('res.data', res.data);
         alert('수정 완료!');
         document.location.href = '/board';
       }
@@ -81,13 +83,13 @@ radioInputs.forEach((radioInput, index) => {
 });
 
 // 최대 인원 tagify
-let input = document.querySelector('input[name=maxPeople]'),
-  tagify = new Tagify(input, {
-    enforceWhitelist: true,
-    mode: 'select',
-    value: '5',
-    whitelist: ['5', '6', '7', '8', '9', '10'],
-  });
+let input = document.querySelector('input[name=maxPeople]');
+let tagify = new Tagify(input, {
+  enforceWhitelist: true,
+  mode: 'select',
+  value: '5',
+  whitelist: ['5', '6', '7', '8', '9', '10'],
+});
 
 // bind events
 tagify.on('add', onAddTag);

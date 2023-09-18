@@ -5,27 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>새싹 스터디 게시판</title>
     <!-- CDN -->
-    <%- include('../cdn/cdn.ejs') %>
+    <%- include('../includes/cdn.ejs') %>
     <!-- 게시판 목록 조회, 특정 게시글 조회 -->
-    <link rel="stylesheet" href="/static/css/boardCommon.css" />
-    <link rel="stylesheet" href="/static/css/viewBoard.css" />
+    <link rel="stylesheet" href="/static/css/board/viewBoard.css" />
     <script defer src="/static/js/viewBoard.js"></script>
-    <!-- header -->
-    <link rel="stylesheet" href="/static/css/header.css" />
     <!-- 로그인 회원가입 js -->
     <script defer src="/static/js/loginRegister.js"></script>
   </head>
   <body>
     <%- include('../includes/header.ejs') %>
-    <div class="board_wrap container">
-      <div class="board_title">
-        <strong>새싹 스터디 게시판🌱</strong>
+    <div class="board_wrap container d-flex flex-column justify-content-center">
+      <div class="board_title col-5">
+        <h3 class="display-6"><strong>새싹 스터디 게시판🌱</strong></h3>
         <p>새싹 스터디 게시판입니다. 자유롭게 작성해주세요~~</p>
       </div>
       <div class="board_view_wrap">
         <div class="board_view">
           <input id="hiddenInput" type="hidden" value="<%= board.boardSeq %>" />
-          <div class="title"><%= board.title %></div>
+          <div class="title"><button><%= board %></button><%= board.title %></div>
           <div class="info">
             <dl>
               <dt>번호</dt>
@@ -53,10 +50,10 @@
             <%- board.content.replace(/\n/g, '<br />') %> <% } %>
           </div>
         </div>
-        <div id="postFile" class="fs-3 my-3">
+        <div id="postFile" class="fs-5 my-3">
           <span class="badge text-bg-success mx-3">첨부파일</span>
           <a
-            class="fs-4"
+            class="fs-5"
             href="<%= '/uploadFile/' + board.filePath %>"
             target="_blank"
           >
@@ -120,12 +117,17 @@
       </div>
 
       <div class="bt_wrap container d-flex justify-content-center">
-        <button class="btn me-5 fs-2 px-4" onclick="listBoard()">목록</button>
+        <button class="btn me-5 fs-5 px-4" onclick="listBoard()">목록</button>
         <% if (typeof session !== 'undefined') { %> <% if (board.user.userSeq
         === session.userSeq) { %>
         <button class="btn fs-2 px-4" onclick="editBoard()">수정</button>
         <% } %> <% } %>
       </div>
+    </div>
+    <div class="studyStatus">
+      <span>모집 상태</span>
+      <span>최대 인원</span>
+
     </div>
   </body>
 </html>

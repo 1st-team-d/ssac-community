@@ -4,26 +4,41 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>새싹 스터디 게시판</title>
-    <link rel="stylesheet" href="/static/css/boardCommon.css" />
-    <link rel="stylesheet" href="/static/css/boardSearch.css" />
-    <link rel="stylesheet" href="css/css.css" />
     <!-- CDN -->
-    <%- include('../cdn/cdn.ejs') %>
+    <%- include('../includes/cdn.ejs') %>
     <!-- 게시판 목록 조회, 특정 게시글 조회 -->
-    <link rel="stylesheet" href="/static/css/boardCommon.css" />
-    <link rel="stylesheet" href="/static/css/viewBoard.css" />
-    <script defer src="/static/js/viewBoard.js"></script>
-    <!-- header -->
-    <link rel="stylesheet" href="/static/css/header.css" />
-    <!-- 게시물 목록에서도 로그인/회원가입 모달창 사용하기 위해 js 파일 필요함 -->
+    <link rel="stylesheet" href="/static/css/board/boardSearch.css" />
+    <link rel="stylesheet" href="/static/css/board/listBoard.css">
+    <script defer src="/static/js/listBoard.js"></script>
+    <!-- 게시물 목록에서도 로그인/회원가입 모달창 사용하기 위해 css, js 파일 필요함 -->
     <script defer src="/static/js/loginRegister.js"></script>
   </head>
   <body>
     <%- include('../includes/header.ejs') %>
-    <div class="board_wrap">
-      <div class="board_title">
-        <strong>새싹 스터디 게시판🌱</strong>
-        <p>새싹 스터디 게시판입니다. 자유롭게 작성해주세요~~</p>
+    <div class="boardContainer container d-flex flex-column justify-content-center">
+      <div class="boardTop d-flex justify-content-between">
+        <div class="board_title col-5">
+          <h3 class="display-6"><strong>새싹 스터디 게시판🌱</strong></h3>
+          <p>새싹 스터디 게시판입니다. 자유롭게 작성해주세요~~</p>
+        </div>
+  
+        <div class="board_search_post col-7 justify-content-end mt-4">
+          <!-- 검색 창 -->
+          <div class="input-group w-75 d-flex flex-wrap justify-content-end">
+            <input type="text" class="form-control" id="searchInput" placeholder="검색어를 입력하세요">
+            <div class="input-group-append">
+              <button class="btn" id="searchButton" type="button">검색</button>
+            </div>
+          </div>
+          <!-- 글 작성 버튼 -->
+          <div class="boardPostBtn">
+            <% if (typeof session === 'undefined') { %>
+            <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">글 작성하기</a>
+            <% } else { %>
+            <a href="/board/register" class="btn">글 작성하기</a>
+            <% } %>
+          </div>
+        </div>
       </div>
 
       <div class="board_list_wrap">
@@ -51,42 +66,19 @@
           </div>
           <% num++ %> <% }) %>
         </div>
-
-        <!-- 검색 창 -->
-        <div class="search_box">
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="검색어를 입력하세요 (제목 + 내용)"
-          />
-          <button id="searchButton">검색</button>
-        </div>
-        <!-- 검색 결과를 표시할 목록 -->
-        <div id="searchBoardList"></div>
-      </div>
-      <!-- 페이지 번호 -->
+  
+      <!-- 페이지네이션 -->
       <div class="board_page" id="pagination">
         <div onclick="changePageNum(this)">1</div>
         <% for (i = 1; i < Math.ceil(allBoardLen / 5); i++) { %>
         <div onclick="changePageNum(this)"><%= i+1 %></div>
         <% } %>
       </div>
-      <div class="bt_wrap">
-        <% if (typeof session === 'undefined') { %>
-        <a
-          href=""
-          class="text-decoration-none on"
-          data-bs-toggle="modal"
-          data-bs-target="#loginModal"
-          >글 작성하기</a
-        >
-        <% } else { %>
-        <a href="/board/register" class="on">글 작성하기</a>
-        <% } %>
-      </div>
     </div>
-
-    <!-- listBoard.js 파일을 연결 -->
+  
+    <!-- Bootstrap JS 스크립트 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.min.js"></script>
+    <!-- 사용자 정의 JavaScript 파일 추가 -->
     <script src="/static/js/listBoard.js"></script>
   </body>
 </html>

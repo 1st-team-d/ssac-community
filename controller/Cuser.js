@@ -58,6 +58,45 @@ exports.postSignup = async (req, res) => {
   }
 };
 
+// 닉네임 중복 확인
+exports.postCheckName = async (req, res) => {
+  try {
+    // 닉네임을 찾아서 회원 존재 유무 확인
+    const { registerName } = req.body;
+
+    // 닉네임 유효성 검사(형식 확인)
+    isCorrect = await checkPw(registerName);
+
+    // DB 접근
+    const user = await User.findOne({
+      where: { name: registerName },
+    });
+
+    console.log('이름 중복 정보 >>>>>>>>>>>>>>', user);
+
+    if (isCorrect) {
+      // 닉네임 유효성 검사 통과
+      if (user) {
+        // 닉네임이 중복되는 경우
+        res.send({ isCorrect, isCheck: false, msg: '이메일이 중복입니다!' });
+      } else {
+        // 닉네임이 중복되지 않는 경우
+        res.send({
+          isCorrect,
+          isCheck: true,
+          msg: '이메일이 중복되지 않습니다!',
+        });
+      }
+    } else {
+      // 닉네임 유효성 검사 통과 실패
+      res.send({ isCorrect });
+    }
+  } catch (err) {
+    console.error(err);
+    res.send({ isCheck: false, msg: '중복 확인 실패' });
+  }
+};
+
 // 이메일(아이디) 중복 확인
 exports.postCheckEmail = async (req, res) => {
   try {
@@ -72,7 +111,7 @@ exports.postCheckEmail = async (req, res) => {
       where: { id: registerEmail },
     });
 
-    console.log("중복 정보 >>>>>>>>>>>>>>", user);
+    console.log('이메일 중복 정보 >>>>>>>>>>>>>>', user);
 
     if (isCorrect) {
       // 이메일(아이디) 유효성 검사 통과
@@ -142,8 +181,7 @@ exports.postSignin = async (req, res) => {
           if (loginRemain) {
             res.cookie('remain', { loginEmail, loginPw }, myCookieConf);
           }
-
-          // console.log(req.signedCookies);
+          const cookie = req.signedCookies.remain;
 
           res.send({
             isCorrect,
@@ -151,7 +189,8 @@ exports.postSignin = async (req, res) => {
             isSignin: true,
             data: user,
             session: req.session.userInfo,
-            cookie: req.signedCookies.remain,
+            cookieEmail: cookie ? cookie.loginEmail : '',
+            cookiePw: cookie ? cookie.loginPw : '',
           });
         } else {
           // 비밀번호 불일치
