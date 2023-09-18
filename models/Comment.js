@@ -12,6 +12,7 @@ const Comment = (Sequelize, DataTypes) => {
       content: {
         type: DataTypes.TEXT,
         allowNull: false,
+        comment: '댓글 내용',
       },
     },
     {
