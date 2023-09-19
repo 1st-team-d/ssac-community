@@ -33,12 +33,12 @@
         <input
           type="hidden"
           name="userSeq"
-          value="<% result ? result.userSeq : '' %>"
+          value="<% boardInfo && boardInfo.userSeq ? boardInfo.userSeq : '' %>"
         />
         <input
           type="hidden"
           name="boardSeq"
-          value="<% result ? result.boardSeq : '' %>"
+          value="<% boardInfo ? boardInfo.boardSeq : '' %>"
         />
         <div
           class="postTop d-flex row flex-wrap align-items-center justify-content-between border-black border-top border-bottom mb-3"
@@ -52,7 +52,7 @@
               type="text"
               name="title"
               placeholder="제목입력"
-              value="<% if (result) { %><%= result.title %><% } %>"
+              value="<% if (boardInfo) { %><%= boardInfo.title %><% } %>"
             />
           </div>
           <div
@@ -64,48 +64,73 @@
               name="category"
               id="web_cate"
               value="0"
-            /><label for="web_cate"># 웹</label>
+            /><label
+              for="web_cate"
+              class="<%= studyInfo && studyInfo.category === 0 ? 'checked' : '' %>"
+              ># 웹</label
+            >
             <input
               class="d-none"
               type="radio"
               name="category"
               id="app_cate"
               value="1"
-            /><label for="app_cate"># 앱</label>
+            /><label
+              for="app_cate"
+              class="<%= studyInfo && studyInfo.category === 1 ? 'checked' : '' %>"
+              ># 앱</label
+            >
             <input
               class="d-none"
               type="radio"
               name="category"
               id="ai_cate"
               value="2"
-            /><label for="ai_cate"># AI</label>
+            /><label
+              for="ai_cate "
+              class="<%= studyInfo && studyInfo.category === 2 ? 'checked' : '' %>"
+              ># AI</label
+            >
             <input
               class="d-none"
               type="radio"
               name="category"
               id="uiux_cate"
               value="3"
-            /><label for="uiux_cate"># UI / UX</label>
+            /><label
+              for="uiux_cate "
+              class="<%= studyInfo && studyInfo.category === 3 ? 'checked' : '' %>"
+              ># UI / UX</label
+            >
             <input
               class="d-none"
               type="radio"
               name="category"
               id="game_cate"
               value="4"
-            /><label for="game_cate"># 게임</label>
+            /><label
+              for="game_cate "
+              class="<%= studyInfo && studyInfo.category === 4 ? 'checked' : '' %>"
+              ># 게임</label
+            >
             <input
               class="d-none"
               type="radio"
               name="category"
               id="etc_cate"
               value="5"
-            /><label for="etc_cate"># 기타</label>
+            /><label
+              for="etc_cate "
+              class="<%= studyInfo && studyInfo.category === 5 ? 'checked' : '' %>"
+              ># 기타</label
+            >
           </div>
           <div class="maxPeople mb-3 col-3 d-flex justify-content-start">
             <input
               name="maxPeople"
               class="selectMode"
               placeholder="최대 인원"
+              value="<%= studyInfo.maxPeople %>"
             />
           </div>
         </div>
@@ -117,7 +142,7 @@
             rows="15"
             placeholder="내용 입력"
           >
-<% if (result) { %><%= result.content %><% } %></textarea
+<% if (boardInfo) { %><%= boardInfo.content %><% } %></textarea
           >
         </div>
         <div
@@ -125,13 +150,7 @@
         >
           <input
             class="fileName w-50"
-            value="
-            <% if (result && result.filePath) { %>
-              <% const filePath = result.filePath.replace('\\', '/') %>
-              <% const fileName = filePath.split('/')[1] %>
-              <%= fileName.slice(0, fileName.lastIndexOf('.')).slice(0, -15) %>
-            <% } %>
-            "
+            value="<% if (boardInfo && boardInfo.filePath) { %><% const filePath = boardInfo.filePath.replace('\\', '/') %><% const fileName = filePath.split('/')[1] %><%= fileName.slice(0, fileName.lastIndexOf('.')).slice(0, -15) %><% } %>"
             placeholder="첨부파일"
             type="text"
             disabled
@@ -143,7 +162,7 @@
           <!-- 백과 uploadFile로 name 통일 -->
         </div>
         <div class="d-flex justify-content-end">
-          <% if (result) { %>
+          <% if (boardInfo) { %>
           <button
             type="button"
             class="editBtn btn btn-secondary fw-bold mt-3"
