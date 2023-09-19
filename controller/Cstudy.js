@@ -88,8 +88,6 @@ exports.getStudy = async (req, res) => {
     //   applyBoardInfo: applyBoardInfo,
     // });
 
-    const cookie = req.signedCookies.remain;
-
     res.render('study/listStudy', {
       recruitBoardInfo: recruitBoardInfo,
       applyBoardInfo: applyBoardInfo,
