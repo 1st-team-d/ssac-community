@@ -77,3 +77,56 @@ switch (category) {
     studyCategory.innerHTML = '# 기타';
     break;
 }
+
+// 스터디 신청 & 마감
+async function studyCloseApply(btn) {
+  // 스터디 시퀀스
+  const studySeq = document.querySelector('#studySeq').value;
+  // 로그인 한 사람 -> 신청자
+  const userSeq = document.querySelector('#userSeq').value;
+  console.log('헤헤', studySeq, '바보', userSeq);
+  console.log(btn.textContent);
+  let studyClose = {
+    studySeq: studySeq,
+  };
+  let studyApply = {
+    studySeq: studySeq,
+    userSeq: userSeq,
+  };
+  if (btn.textContent === '마감') {
+    if (confirm('스터디 모집을 마감하시겠습니까?')) {
+      try {
+        const res = await axios({
+          url: '/study/close',
+          method: 'patch',
+          data: studyClose,
+        });
+        if (res.data.msg === 'success') {
+          document.location.reload();
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  } else if (btn.textContent === '참가') {
+    if (userSeq) {
+      if (confirm('스터디 참가 신청을 하시겠습니까?')) {
+        try {
+          const res = await axios({
+            url: '/study/apply',
+            method: 'patch',
+            data: studyApply,
+          });
+          if (res.data.msg === 'success') {
+            document.location.reload();
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    } else {
+      alert('로그인 후 신청 해주세요!');
+      $('#loginModal').modal('show');
+    }
+  }
+}

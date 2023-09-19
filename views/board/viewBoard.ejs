@@ -20,14 +20,20 @@
       </svg>
     </button>
     <div class="board_wrap container w-75">
-      <div class="studyStatus mb-3">
-        <span class="fs-6 badge bg-success"><%= board.study.status === 0 ? '모집중' : '마감완료' %></span>
-        <span class="fs-6 badge bg-success">최대<%= board.study.maxPeople %>명</span>
+      <div class="studyControl d-flex justify-content-between mb-3">
+        <div class="studyStatus d-flex align-items-center">
+          <span class="fs-6 badge bg-success me-2"><%= board.study.status === 0 ? '모집중' : '마감완료' %></span>
+          <span class="fs-6 badge bg-success">최대<%= board.study.maxPeople %>명</span>
+        </div>
+        <div class="studyWrap d-flex justify-content-center">
+          <div class="studyCloseApply btn <%= board.user.userSeq === session?.userSeq ? 'close' : ''  %>" onclick="studyCloseApply(this)"><% if (board) { %><%= board.user.userSeq === session?.userSeq ? '스터디 모집 마감하기' : '스터디 참가 신청하기' %><% } %></div>
+        </div>
       </div>
       <div class="board_view_wrap">
         <div class="board_view">
-          <input id="boardSeq" type="hidden" value="<%= board.boardSeq %>" />
-          <input id="studySeq" type="hidden" value="<%= board.study.studySeq %>" />
+          <input id="boardSeq" type="hidden" value="<%= board?.boardSeq %>" />
+          <input id="studySeq" type="hidden" value="<%= board?.study?.studySeq %>" />
+          <input id="userSeq" type="hidden" value="<%= session?.userSeq %>">
           <div class="title">
             <input id="categoryID" type="hidden" value="<%= board.study.category %>">
             <span class="fs-6 badge bg-info opacity-50 me-3" id="studyCategory"></span>
@@ -70,6 +76,7 @@
             <% } %>
           </a>
         </div>
+        
         <% if (session !== undefined && session !== null) { %>
           <% if (board.user.userSeq === session.userSeq) { %>
             <div class="userbtnWrap d-flex justify-content-end">
@@ -80,9 +87,9 @@
                 삭제
               </button>
               <button class="editBtn btn text-light" onclick="editBoard()">수정</button>
+            </div>
           <% } %>
         <% } %>
-      </div>
       <!-- JavaScript 코드와 스타일이 적용된 댓글 목록 -->
       <div class="comment_section">
         <div><span>댓글</span></div>
