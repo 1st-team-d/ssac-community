@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="/static/css/header.css" />
   </head>
   <body class="bg-light">
-    <%- include('../includes/header.ejs') %> <% let result; %>
+    <%- include('../includes/header.ejs') %>
     <form
       name="data"
       action="/board/register"
@@ -30,13 +30,15 @@
     >
       <div class="postWrap container w-50">
         <h1 class="fw-bold">새싹 스터디 게시판 🌱</h1>
-        <input type="hidden" name="userSeq" value="1" />
+        <input
+          type="hidden"
+          name="userSeq"
+          value="<% result ? result.userSeq : '' %>"
+        />
         <input
           type="hidden"
           name="boardSeq"
-          value="<% if (result) { %>
-          <%= result.boardSeq %>
-        <% } %>"
+          value="<% result ? result.boardSeq : '' %>"
         />
         <div
           class="postTop d-flex row flex-wrap align-items-center justify-content-between border-black border-top border-bottom mb-3"
@@ -50,9 +52,7 @@
               type="text"
               name="title"
               placeholder="제목입력"
-              value="<% if (result) { %>
-              <%= result.title %>
-            <% } %>"
+              value="<% if (result) { %><%= result.title %><% } %>"
             />
           </div>
           <div
@@ -117,21 +117,21 @@
             rows="15"
             placeholder="내용 입력"
           >
-<% if (result) { %>
-            <%= result.content %>
-          <% } %></textarea
+<% if (result) { %><%= result.content %><% } %></textarea
           >
         </div>
         <div
           class="file row border d-flex justify-content-between align-items-center p-2 mt-2"
         >
           <input
-            class="fileName"
-            value="<% if (result) {
-                      if(result.filePath) { %>
-                        <%= result.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.' + result.filePath.split('/')[1].split('.')[1] %>
-                    <% }
-                  } %>"
+            class="fileName w-50"
+            value="
+            <% if (result && result.filePath) { %>
+              <% const filePath = result.filePath.replace('\\', '/') %>
+              <% const fileName = filePath.split('/')[1] %>
+              <%= fileName.slice(0, fileName.lastIndexOf('.')).slice(0, -15) %>
+            <% } %>
+            "
             placeholder="첨부파일"
             type="text"
             disabled
