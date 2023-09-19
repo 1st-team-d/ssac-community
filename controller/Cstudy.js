@@ -22,7 +22,13 @@ exports.getStudy = async (req, res) => {
         'study.maxPeople',
         'study.status',
       ],
-      include: [{ model: Study }],
+      include: [
+        {
+          model: Study,
+          required: true, // true / false : inner join / outer join
+          // right: true, // has no effect // right outer join
+        },
+      ],
       where: {
         userSeq: req.session.userInfo.userSeq,
       },
@@ -58,9 +64,13 @@ exports.getStudy = async (req, res) => {
       include: [
         {
           model: Study,
+          required: true, // true / false : inner join / outer join
+          // right: true, // has no effect // right outer join
           include: [
             {
               model: StudyApply,
+              required: true, // true / false : inner join / outer join
+              // right: true, // has no effect // right outer join
               where: {
                 userSeq: req.session.userInfo.userSeq,
               },
@@ -112,9 +122,13 @@ exports.getStudyProfile = async (req, res) => {
       include: [
         {
           model: StudyApply,
+          required: true, // true / false : inner join / outer join
+          // right: true, // has no effect // right outer join
           include: [
             {
               model: Study,
+              required: true, // true / false : inner join / outer join
+              // right: true, // has no effect // right outer join
             },
           ],
           where: {
@@ -161,10 +175,15 @@ exports.getStudyProfile = async (req, res) => {
         [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
         [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
         [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
+        'study.category',
+        'study.maxPeople',
+        'study.status',
       ],
       include: [
         {
           model: Study,
+          required: true, // true / false : inner join / outer join
+          // right: true, // has no effect // right outer join
           where: {
             studySeq: studySeq,
           },
@@ -172,8 +191,8 @@ exports.getStudyProfile = async (req, res) => {
       ],
     });
 
-    // console.log('######## boardInfo #########');
-    // console.log(boardInfo);
+    // console.log('######## studyInfo #########');
+    // console.log(studyInfo);
 
     const cookie = req.signedCookies.remain;
 

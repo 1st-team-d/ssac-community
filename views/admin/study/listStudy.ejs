@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>관리자 / 모든 스터디 조회</title>
+
+    <!-- CDN -->
+    <%- include('../../includes/cdn.ejs') %>
+  </head>
+  <body>
+    <a href="/">home</a> <br />
+    <a href="/admin">관리자 메인</a>
+
+    <hr />
+
+    <h1>모든 스터디 조회</h1>
+
+    <input type="text" name="search" id="search" />
+    <button type="button" onclick="searchStudy();">검색</button>
+
+    <hr />
+
+    <div id="tempDiv">
+      <% for(let study of studyInfo) { const board = study.dataValues.board %>
+      <ul>
+        <a href="/admin/study/profile/<%= study.studySeq %>"><li>스터디 제목 : <%= board.title %></li></a>
+        <li>스터디 내용 : <%= board.content %></li>
+        <li>스터디 카테고리 : <%= study.category %></li>
+        <li>스터디 최대 인원 : <%= study.maxPeople %></li>
+        <li>스터디 상태 : <%= study.status %></li>
+      </ul>
+      <br /><br />
+      <% } %>
+    </div>
+
+    <script>
+      async function searchStudy() {
+        try {
+          const search = document.querySelector('#search');
+          const response = await axios({
+            method: 'get',
+            url: `/admin/study/list?search=${search.value}`,
+          });
+
+          console.log(response);
+          const { studyInfo } = response.data;
+          const tempDiv = document.querySelector('#tempDiv');
+          tempDiv.textContent = '';
+
+          if (!studyInfo) {
+            tempDiv.textContent = '검색 결과가 없습니다.';
+          } else {
+            for (let study of studyInfo) {
+              const ul = document.createElement('ul');
+              const li = document.createElement('li');
+              const li2 = document.createElement('li');
+              const li3 = document.createElement('li');
+              const li4 = document.createElement('li');
+              const li5 = document.createElement('li');
+
+              li.append(`<a href="/study/profile/${study.studySeq}">스터디 제목 : ${study.board.title}</a>`);
+              li2.append(`스터디 내용 : ${study.board.content}`);
+              li3.append(`스터디 카테고리 : ${study.category}`);
+              li4.append(`스터디 최대 인원 : ${study.maxPeople}`);
+              li5.append(`스터디 상태 : ${study.status}`);
+
+              ul.append(li);
+              ul.append(li2);
+              ul.append(li3);
+              ul.append(li4);
+              ul.append(li5);
+
+              tempDiv.append(ul);
+              tempDiv.append(document.createElement('hr'));
+            }
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    </script>
+  </body>
+</html>

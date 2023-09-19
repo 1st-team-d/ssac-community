@@ -177,13 +177,23 @@ exports.getBoard = async (req, res) => {
 
       const cookie = req.signedCookies.remain;
 
-      res.render('board/listBoard', {
-        data: board,
-        allBoardLen: allBoardLen,
-        session: req.session.userInfo,
-        cookieEmail: cookie ? cookie.loginEmail : '',
-        cookiePw: cookie ? cookie.loginPw : '',
-      });
+      if (pageNum === 1) {
+        res.send({
+          data: board,
+          allBoardLen: allBoardLen,
+          session: req.session.userInfo,
+          cookieEmail: cookie ? cookie.loginEmail : '',
+          cookiePw: cookie ? cookie.loginPw : '',
+        });
+      } else{
+        res.render('board/listBoard', {
+          data: board,
+          allBoardLen: allBoardLen,
+          session: req.session.userInfo,
+          cookieEmail: cookie ? cookie.loginEmail : '',
+          cookiePw: cookie ? cookie.loginPw : '',
+        });
+      }
     }
   } catch (err) {
     console.error(err);
@@ -292,7 +302,15 @@ exports.postRegister = async (req, res) => {
 
       const cookie = req.signedCookies.remain;
 
-      res.redirect('/board');
+      if(insertOneBoard){
+        res.redirect(`/board?boardSeq=${insertOneBoard.boardSeq}`);
+      } else{
+        res.render('board/listBoard',{
+          cookieEmail: cookie ? cookie.loginEmail : '',
+          cookiePw: cookie ? cookie.loginPw : '',
+        });
+      }
+      
     }
   } catch (err) {
     console.log(err);
@@ -305,17 +323,42 @@ exports.getModify = async (req, res) => {
   try {
     const { boardSeq } = req.query;
     const selectOneBoard = await Board.findOne({
+      attributes: [
+        'boardSeq',
+        'title',
+        'content',
+        'filePath',
+        'count',
+        [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
+        [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
+        [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
+        'createdAt',
+        'updatedAt',
+        'study.studySeq',
+        'study.category',
+        'study.maxPeople',
+        'study.status',
+      ],
+      include: [{ model: Study }],
       where: {
         boardSeq: boardSeq,
       },
     });
-    console.log('@@@@@@@@@', selectOneBoard);
+
+    // console.log('############# selectOneBoard ##################');
+    // console.log(selectOneBoard);
+    // console.log(selectOneBoard.dataValues);
+    // console.log(selectOneBoard.dataValues.title);
+    // console.log(selectOneBoard.dataValues.study);
+    // console.log(selectOneBoard.dataValues.study.studySeq);
 
     const cookie = req.signedCookies.remain;
 
     if (req.session.userInfo) {
       res.render('board/postBoard', {
-        result: selectOneBoard,
+        // result: selectOneBoard,
+        boardInfo: selectOneBoard.dataValues,
+        studyInfo: selectOneBoard.dataValues.study,
         cookieEmail: cookie ? cookie.loginEmail : '',
         cookiePw: cookie ? cookie.loginPw : '',
       });

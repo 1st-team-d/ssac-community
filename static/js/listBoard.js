@@ -64,7 +64,25 @@ const performSearch = async () => {
     })
     .then((data) => {
       console.log('검색 결과 데이터:', data);
+      // 검색한 게시물 표시하는 함수
       renderSearchResults(data.data);
+      // 검색어 있는 경우에 검색기능
+      const boardPage = document.querySelector('#pagination');
+      if (data.data.length) {
+        // 페이징 처리
+        let allSearchLen = data.data.length;
+        console.log(allSearchLen, data.data);
+        const newDivs = document.createElement('div');
+        for (i = 0; i < Math.ceil(allSearchLen / 5); i++) {
+          const newDiv = document.createElement('div');
+          newDiv.setAttribute('onclick', 'changePageNum(this)');
+          newDiv.textContent = `${i + 1}`;
+          newDivs.append(newDiv);
+        }
+        boardPage.innerHTML = newDivs.innerHTML;
+      } else {
+        boarPage.innerHTML = '<div onclick="changePageNum(this)">1</div>';
+      }
     })
     .catch((error) => {
       console.error('검색 오류:', error);
@@ -96,13 +114,14 @@ function renderSearchResults(results) {
     const day = board.day;
     // 새로운 게시물 요소 생성
     const boardElement = document.createElement('div');
+    boardElement.classList.add('row', 'py-2');
     boardElement.innerHTML = `
-            <div class="num">${index + 1}</div>
-            <div class="title">
+            <div class="num col-2">${index + 1}</div>
+            <div class="title col-6">
                 <a href="/board?boardSeq=${boardSeq}" class="view-link">${title}</a>
             </div>
-            <div class="date">${year}/${month}/${day}</div>
-            <div class="count">${count}</div>
+            <div class="date col-2">${year}/${month}/${day}</div>
+            <div class="count col-2">${count}</div>
         `;
     // 생성된 요소를 목록에 추가
     boardList.appendChild(boardElement);
