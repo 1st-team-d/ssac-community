@@ -45,7 +45,7 @@ exports.postSignup = async (req, res) => {
         id: registerEmail,
         pw: hashedPW,
         name: registerName,
-        isAdmin: 1,
+        // isAdmin: 1, // 관리자 추가 시 필요
       }); // DB 추가
 
       res.send({ isCorrect, isSignup: true, session: req.session.userInfo });
@@ -184,6 +184,7 @@ exports.postSignin = async (req, res) => {
           if (loginRemain) {
             res.cookie('remain', { loginEmail, loginPw }, myCookieConf);
           }
+
           const cookie = req.signedCookies.remain;
 
           res.send({

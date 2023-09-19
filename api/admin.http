@@ -2,3 +2,6 @@
 
 ### 관리자 메인 화면
 GET {{adminUrl}}
+
+### 모든 스터디 조회
+GET {{adminUrl}}/study
