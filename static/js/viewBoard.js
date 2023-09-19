@@ -93,7 +93,7 @@ async function studyCloseApply(btn) {
     studySeq: studySeq,
     userSeq: userSeq,
   };
-  if (btn.textContent === '마감') {
+  if (btn.textContent === '스터디 모집 마감하기') {
     if (confirm('스터디 모집을 마감하시겠습니까?')) {
       try {
         const res = await axios({
@@ -108,7 +108,7 @@ async function studyCloseApply(btn) {
         console.error(err);
       }
     }
-  } else if (btn.textContent === '참가') {
+  } else if (btn.textContent === '스터디 참가 신청하기') {
     if (userSeq) {
       if (confirm('스터디 참가 신청을 하시겠습니까?')) {
         try {
