@@ -24,7 +24,7 @@
     <div id="tempDiv">
       <% for(let study of studyInfo) { const board = study.dataValues.board %>
       <ul>
-        <a href="/admin/study/profile/<%= study.studySeq %>"><li>스터디 제목 : <%= board.title %></li></a>
+        <li><a href="/admin/study/profile/<%= study.studySeq %>">스터디 제목 : <%= board.title %></a></li>
         <li>스터디 내용 : <%= board.content %></li>
         <li>스터디 카테고리 : <%= study.category %></li>
         <li>스터디 최대 인원 : <%= study.maxPeople %></li>
@@ -44,13 +44,11 @@
           });
 
           console.log(response);
-          const { studyInfo } = response.data;
+          const { studyInfo, allStudyLen, msg } = response.data;
           const tempDiv = document.querySelector('#tempDiv');
           tempDiv.textContent = '';
 
-          if (!studyInfo) {
-            tempDiv.textContent = '검색 결과가 없습니다.';
-          } else {
+          if (studyInfo.length > 0) {
             for (let study of studyInfo) {
               const ul = document.createElement('ul');
               const li = document.createElement('li');
@@ -58,8 +56,12 @@
               const li3 = document.createElement('li');
               const li4 = document.createElement('li');
               const li5 = document.createElement('li');
+              const anchor = document.createElement('a');
 
-              li.append(`<a href="/study/profile/${study.studySeq}">스터디 제목 : ${study.board.title}</a>`);
+              anchor.href = `/study/profile/${study.studySeq}`;
+              anchor.innerText = `스터디 제목 : ${study.board.title}`;
+
+              li.append(anchor);
               li2.append(`스터디 내용 : ${study.board.content}`);
               li3.append(`스터디 카테고리 : ${study.category}`);
               li4.append(`스터디 최대 인원 : ${study.maxPeople}`);
@@ -74,6 +76,8 @@
               tempDiv.append(ul);
               tempDiv.append(document.createElement('hr'));
             }
+          } else {
+            tempDiv.textContent = '검색 결과가 없습니다.';
           }
         } catch (err) {
           console.log(err);
