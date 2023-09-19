@@ -128,3 +128,24 @@ function onAddTag(e) {
 function onSelectFocus(e) {
   console.log(e);
 }
+
+// f유효성 검사
+function validationForm() {
+  const maxPeople = document.querySelector('input[name=maxPeople]'); // 최대 인원
+  const category = document.querySelector('[name=category]:checked'); // 카테고리(선택됨)
+
+  // 최대 인원
+  if (!maxPeople.value) {
+    alert('최대 인원을 선택해주세요.');
+    // maxPeople.focus();
+    return false;
+  }
+  // 카테고리
+  if (!category) {
+    alert('카테고리를 선택해주세요.');
+    // category.focus();
+    return false;
+  }
+
+  return true;
+}
