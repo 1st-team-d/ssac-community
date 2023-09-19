@@ -185,7 +185,7 @@ exports.getBoard = async (req, res) => {
           cookieEmail: cookie ? cookie.loginEmail : '',
           cookiePw: cookie ? cookie.loginPw : '',
         });
-      } else{
+      } else {
         res.render('board/listBoard', {
           data: board,
           allBoardLen: allBoardLen,
@@ -230,7 +230,8 @@ exports.getRegister = (req, res) => {
 
   if (req.session.userInfo) {
     res.render('board/postBoard', {
-      result: '',
+      boardInfo: '',
+      studyInfo: '',
       session: req.session.userInfo,
       cookieEmail: cookie ? cookie.loginEmail : '',
       cookiePw: cookie ? cookie.loginPw : '',
@@ -302,15 +303,14 @@ exports.postRegister = async (req, res) => {
 
       const cookie = req.signedCookies.remain;
 
-      if(insertOneBoard){
+      if (insertOneBoard) {
         res.redirect(`/board?boardSeq=${insertOneBoard.boardSeq}`);
-      } else{
-        res.render('board/listBoard',{
+      } else {
+        res.render('board/listBoard', {
           cookieEmail: cookie ? cookie.loginEmail : '',
           cookiePw: cookie ? cookie.loginPw : '',
         });
       }
-      
     }
   } catch (err) {
     console.log(err);

@@ -159,6 +159,17 @@ textarea:focus {
   text-decoration: underline;
 }
 
+/* 스터디 참가 / 마감 버튼 */
+.studyWrap .studyCloseApply {
+  background-color: #b6e8b1;
+  font-weight: 800;
+}
+
+.studyWrap .close {
+  background-color: #e27575;
+  font-weight: 800;
+}
+
 /* 댓글 */
 em {
   font-style: normal;

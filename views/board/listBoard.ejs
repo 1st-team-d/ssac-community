@@ -71,14 +71,16 @@
         </div>
   
       <!-- 페이지네이션 -->
-      <button class="beforePage" onclick="changePagination()">이전</button>
-      <div class="board_page" id="pagination">
-        <div onclick="changePageNum(this)">1</div>
-        <% for (i = 1; i < Math.ceil(allBoardLen / 5); i++) { %>
-        <div onclick="changePageNum(this)"><%= i+1 %></div>
-        <% } %>
+      <div class="pageWrap d-flex mt-3">
+        <button class="beforePage" onclick="changePagination()">이전</button>
+        <div class="board_page" id="pagination">
+          <div onclick="changePageNum(this)">1</div>
+          <% for (i = 1; i < Math.ceil(allBoardLen / 5); i++) { %>
+            <div onclick="changePageNum(this)"><%= i+1 %></div>
+          <% } %>
+          </div>
+          <button class="newPage" onclick="changePagination()">다음</button>
+        </div>
       </div>
-      <button class="newtPage" onclick="changePagination()">다음</button>
-    </div>
   </body>
 </html>
