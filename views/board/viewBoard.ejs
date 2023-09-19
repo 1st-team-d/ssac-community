@@ -63,11 +63,11 @@
             href="<%= '/uploadFile/' + board.filePath %>"
             target="_blank"
           >
-            <% if (board.filePath !== undefined && board.filePath !== null) { %>
-            <%= board.filePath.replace('\\',
-            '/').split('/')[1].split('.')[0].slice(0, -15) + '.' +
-            board.filePath.replace('\\', '/').split('/')[1].split('.')[1] %> <%
-            } %>
+            <% if (board && board.filePath) { %>
+              <% const filePath = board.filePath.replace('\\', '/') %>
+              <% const fileName = filePath.split('/')[1] %>
+              <%= fileName.slice(0, fileName.lastIndexOf('.')).slice(0, -15) %>
+            <% } %>
           </a>
         </div>
         <% if (session !== undefined && session !== null) { %>

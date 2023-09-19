@@ -16,27 +16,29 @@ $('#postFile').on('change', function () {
 
 // submit 전에 유효성 검사
 const postBtn = document.querySelector('.postBtn');
-postBtn.addEventListener('click', function (e) {
-  e.preventDefault();
-  // check
-  const form = document.forms['data'];
-  const title = form.title.value;
-  const content = form.content.value;
-  const category = form.category.value;
-  const maxPeople = form.maxPeople.value;
+if (postBtn) {
+  postBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    // check
+    const form = document.forms['data'];
+    const title = form.title.value;
+    const content = form.content.value;
+    const category = form.category.value;
+    const maxPeople = form.maxPeople.value;
 
-  if (!title) {
-    alert('제목은 필수입니다!');
-  } else if (!content) {
-    alert('내용은 필수입니다!');
-  } else if (!category) {
-    alert('카테고리 선택은 필수입니다!');
-  } else if (!maxPeople) {
-    alert('최대인원 설정은 필수입니다!');
-  } else {
-    form.submit();
-  }
-});
+    if (!title) {
+      alert('제목은 필수입니다!');
+    } else if (!content) {
+      alert('내용은 필수입니다!');
+    } else if (!category) {
+      alert('카테고리 선택은 필수입니다!');
+    } else if (!maxPeople) {
+      alert('최대인원 설정은 필수입니다!');
+    } else {
+      form.submit();
+    }
+  });
+}
 
 // 확장자 체크
 function checkExt(fileName) {
@@ -109,6 +111,12 @@ radioInputs.forEach((radioInput, index) => {
 });
 
 // 최대 인원 tagify
+document
+  .querySelector('.maxPeople')
+  .addEventListener('click', function (event) {
+    // 이벤트 핸들러 내에서 포커스 이동을 막음
+    event.stopPropagation();
+  });
 let input = document.querySelector('input[name=maxPeople]');
 let tagify = new Tagify(input, {
   enforceWhitelist: true,
