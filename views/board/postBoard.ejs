@@ -28,6 +28,7 @@
       action="/board/register"
       method="post"
       enctype="multipart/form-data"
+      onsubmit="return validationForm();"
     >
       <div class="postWrap container w-50">
         <h1 class="fw-bold">새싹 스터디 게시판 🌱</h1>
@@ -71,7 +72,11 @@
         >
           <input
             class="fileName"
-            value="<% if (result.filePath !== undefined && result.filePath !== null) { %><%= result.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.' + result.filePath.split('/')[1].split('.')[1] %><% } %>"
+            value="<% if (result) {
+                      if(result.filePath) { %>
+                        <%= result.filePath.split('/')[1].split('.')[0].slice(0, -15) + '.' + result.filePath.split('/')[1].split('.')[1] %>
+                    <% }
+                  } %>"
             placeholder="첨부파일"
             type="text"
             disabled

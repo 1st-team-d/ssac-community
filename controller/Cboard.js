@@ -177,13 +177,23 @@ exports.getBoard = async (req, res) => {
 
       const cookie = req.signedCookies.remain;
 
-      res.render('board/listBoard', {
-        data: board,
-        allBoardLen: allBoardLen,
-        session: req.session.userInfo,
-        cookieEmail: cookie ? cookie.loginEmail : '',
-        cookiePw: cookie ? cookie.loginPw : '',
-      });
+      if (pageNum === 1) {
+        res.send({
+          data: board,
+          allBoardLen: allBoardLen,
+          session: req.session.userInfo,
+          cookieEmail: cookie ? cookie.loginEmail : '',
+          cookiePw: cookie ? cookie.loginPw : '',
+        });
+      } else{
+        res.render('board/listBoard', {
+          data: board,
+          allBoardLen: allBoardLen,
+          session: req.session.userInfo,
+          cookieEmail: cookie ? cookie.loginEmail : '',
+          cookiePw: cookie ? cookie.loginPw : '',
+        });
+      }
     }
   } catch (err) {
     console.error(err);
@@ -292,10 +302,15 @@ exports.postRegister = async (req, res) => {
 
       const cookie = req.signedCookies.remain;
 
-      res.send(insertOneBoard, {
-        cookieEmail: cookie ? cookie.loginEmail : '',
-        cookiePw: cookie ? cookie.loginPw : '',
-      });
+      if(insertOneBoard){
+        res.redirect(`/board?boardSeq=${insertOneBoard.boardSeq}`);
+      } else{
+        res.render('board/listBoard',{
+          cookieEmail: cookie ? cookie.loginEmail : '',
+          cookiePw: cookie ? cookie.loginPw : '',
+        });
+      }
+      
     }
   } catch (err) {
     console.log(err);

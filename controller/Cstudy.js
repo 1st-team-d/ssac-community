@@ -157,6 +157,9 @@ exports.getStudyProfile = async (req, res) => {
         [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
         [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
         [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
+        'study.category',
+        'study.maxPeople',
+        'study.status',
       ],
       include: [
         {
@@ -168,8 +171,8 @@ exports.getStudyProfile = async (req, res) => {
       ],
     });
 
-    // console.log('######## boardInfo #########');
-    // console.log(boardInfo);
+    // console.log('######## studyInfo #########');
+    // console.log(studyInfo);
 
     if (userInfo && studyInfo) {
       res.render('study/viewStudy', {
