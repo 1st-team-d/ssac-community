@@ -26,63 +26,10 @@ textarea {
   padding: 15px; /* 내부 여백 설정 */
 }
 
-/* 게시판 작성 폼 스타일 설정 */
-.board_write {
-  border-top: 2px solid #000; /* 작성 폼 상단 경계선 설정 */
+/* 게시글 작성 본문 위치 조정 */
+.postWrap {
+  margin-top: calc(var(--header-height) + 10px);
 }
-
-.board_write .title,
-.board_write .info {
-  padding: 15px; /* 제목과 정보 영역 내부 여백 설정 */
-}
-
-.board_write .info {
-  border-top: 1px dashed #ddd; /* 정보 영역 위 점선 테두리 설정 */
-  border-bottom: 1px solid #000; /* 정보 영역 아래 실선 테두리 설정 */
-  font-size: 0; /* 폰트 크기 초기화 */
-}
-
-.board_write .title dl {
-  font-size: 0; /* 제목 영역 폰트 크기 초기화 */
-}
-
-.board_write .info dl {
-  display: inline-block; /* 정보 요소를 가로로 나열 */
-  width: 50%; /* 정보 요소 너비 설정 */
-  vertical-align: middle; /* 요소 수직 정렬 설정 */
-}
-
-.board_write .title dt,
-.board_write .title dd,
-.board_write .info dt,
-.board_write .info dd {
-  display: inline-block; /* 정보 요소를 가로로 나열 */
-  vertical-align: middle; /* 요소 수직 정렬 설정 */
-  font-size: 1.4rem; /* 정보 텍스트 크기 설정 */
-}
-
-.board_write .title dt,
-.board_write .info dt {
-  width: 100px; /* 제목과 정보 요소 레이블 너비 설정 */
-}
-
-.board_write .title dd {
-  width: calc(100% - 100px); /* 제목 데이터 너비 설정 */
-}
-
-.board_write .title input[type='text'],
-.board_write .info input[type='text'],
-.board_write .info input[type='password'] {
-  width: 100%; /* 입력 필드 전체 너비 설정 */
-  padding: 10px; /* 입력 필드 내부 여백 설정 */
-  box-sizing: border-box; /* 입력 필드 박스 크기 설정 */
-}
-
-.board_write .title input[type='text'] {
-  width: 80%; /* 제목 입력 필드 너비 설정 */
-}
-
-/* ========================================================================= */
 
 /* 카테고리 스타일 설정 */
 .categories label {
@@ -138,5 +85,5 @@ textarea {
 
 .file .inputFileBtn {
   cursor: pointer; /* 커서 모양 변경 (손가락) */
-  width: 50px; /* 너비 설정 */
+  width: 15%;
 }

@@ -1,4 +1,4 @@
-<header class="position-fixed top-0 w-100">
+<header class="position-fixed top-0 w-100 z-3">
   <!-- 헤더 / navbar start -->
   <nav class="navbar navbar-expand-md bg-light navbar-light">
     <div class="container">
@@ -50,7 +50,7 @@
                 <button
                   id="loginBtn"
                   type="button"
-                  class="btn fs-7 text-light fw-bold"
+                  class="btn text-light fw-bold"
                   data-bs-toggle="modal"
                   data-bs-target="#loginModal"
                 >
@@ -105,7 +105,9 @@ aria-hidden="true"
           class="form-control modalInputBackground"
           id="loginEmail"
           placeholder="name@example.com"
-          value="<%= cookieEmail %>"
+          value="<% if (cookieEmail !== undefined) { %>
+            <%= cookieEmail %>
+          <% } %>"
         />
         <label for="loginEmail">이메일</label>
       </div>
@@ -192,9 +194,9 @@ aria-hidden="true"
         <label for="registerName">닉네임</label>
         <button
         type="button"
-        class="checkBtn btn position-absolute top-50 end-0 translate-middle-y me-3"
+        class="checkNickBtn btn position-absolute top-50 end-0 translate-middle-y me-3"
         onclick="checkNameDuplicate(this)"
-        id="checkBtn"
+        id="checkNickBtn"
       >
         중복체크
       </button>
@@ -210,9 +212,9 @@ aria-hidden="true"
         <label for="registerEmail">이메일</label>
         <button
           type="button"
-          class="checkBtn btn position-absolute top-50 end-0 translate-middle-y me-3"
+          class="checkEmailBtn btn position-absolute top-50 end-0 translate-middle-y me-3"
           onclick="checkEmailDuplicate(this)"
-          id="checkBtn"
+          id="checkEmailBtn"
         >
           중복체크
         </button>
