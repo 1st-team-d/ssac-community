@@ -29,6 +29,7 @@
       <br />
 
       <h3>3) 스터디 참여자 정보</h3>
+      <li>스터디 총 참여자 수 : <%= allUserLen %>명</li>
       <% for(let user of userInfo) {
         const applyDate = user.dataValues; %>
         <li>참여자 이메일 : <%= user.id %></li>

@@ -149,7 +149,6 @@ exports.getProfileStudy = async (req, res) => {
     res.render('admin/study/viewStudy', {
       studyInfo: studyInfo,
       userInfo: userInfo,
-      allStudyLen: studyInfo.length,
       allUserLen: userInfo.length,
     });
   } catch (err) {
