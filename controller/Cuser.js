@@ -184,6 +184,7 @@ exports.postSignin = async (req, res) => {
           if (loginRemain) {
             res.cookie('remain', { loginEmail, loginPw }, myCookieConf);
           }
+
           const cookie = req.signedCookies.remain;
 
           res.send({
