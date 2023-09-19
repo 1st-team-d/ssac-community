@@ -22,14 +22,16 @@
       </thead>
       <tbody>
         <% for (let user of users) { %>
-        <tr id="tr_<%= user.id %>">
+        <tr id="tr_<%= user.userSeq %>">
           <td><%= user.userSeq %></td>
-          <td><a href=""><%= user.id %></a></td>
+          <td>
+            <a href="/admin/user?userSeq=<%=user.userSeq %>"><%= user.id %></a>
+          </td>
           <td><%= user.name %></td>
           <td><%= user.isAdmin %></td>
           <td>
             <%= user.dataValues.year + '-' + user.dataValues.month + '-' +
-            user.dataValues.month %>
+            user.dataValues.day %>
           </td>
           <% } %>
         </tr>
