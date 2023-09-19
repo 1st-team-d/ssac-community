@@ -16,6 +16,7 @@ exports.index = async (req, res) => {
 
   const cookie = req.signedCookies.remain;
 
+  console.log('req.signedCookies >>>>> ', req.signedCookies);
   console.log('cookieinfo >>>>> ', cookie);
   res.render('index', {
     session: req.session.userInfo,

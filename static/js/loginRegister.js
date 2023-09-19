@@ -1,5 +1,5 @@
 // front js
-// 로그인 기능
+// 로그인/회원가입 기능
 
 // 모달창 내용 초기화: 다른 모달창으로 전환 시 기존 input에 입력했던 데이터 초기화
 $('.modal').on('hidden.bs.modal', function () {

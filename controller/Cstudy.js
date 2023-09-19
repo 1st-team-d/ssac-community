@@ -73,6 +73,7 @@ exports.getStudy = async (req, res) => {
       },
       order: [['study', 'status', 'DESC']],
     });
+    const cookie = req.signedCookies.remain;
 
     // console.log('######## applyBoardInfo #########');
     // console.log(applyBoardInfo);

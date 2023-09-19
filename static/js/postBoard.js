@@ -14,6 +14,30 @@ $('#postFile').on('change', function () {
   }
 });
 
+// submit 전에 유효성 검사
+const postBtn = document.querySelector('.postBtn');
+postBtn.addEventListener('click', function (e) {
+  e.preventDefault();
+  // check
+  const form = document.forms['data'];
+  const title = form.title.value;
+  const content = form.content.value;
+  const category = form.category.value;
+  const maxPeople = form.maxPeople.value;
+
+  if (!title) {
+    alert('제목은 필수입니다!');
+  } else if (!content) {
+    alert('내용은 필수입니다!');
+  } else if (!category) {
+    alert('카테고리 선택은 필수입니다!');
+  } else if (!maxPeople) {
+    alert('최대인원 설정은 필수입니다!');
+  } else {
+    form.submit();
+  }
+});
+
 // 확장자 체크
 function checkExt(fileName) {
   let ext = fileName.split('.');
@@ -34,11 +58,13 @@ async function editPost() {
 
   // boardSeq 체크
   // console.log(form.boardSeq.value);
-
+  console.log(maxPeople);
   formData.append('boardSeq', form.boardSeq.value);
   formData.append('userSeq', form.userSeq.value);
   formData.append('title', form.title.value);
   formData.append('content', form.content.value);
+  formData.append('category', form.category.value);
+  formData.append('maxPeople', form.maxPeople.value);
   formData.append('uploadFile', file);
 
   if (confirm('수정 하시겠습니까?')) {

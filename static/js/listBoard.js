@@ -1,10 +1,4 @@
-const itemsPerPage = 5; // 한 페이지에 표시할 게시물 수
-// 페이지당 게시물 수와 현재 페이지 번호
-let currentPage = 1; // 현재 페이지 번호
-// 게시물을 동적으로 생성하고 표시하는 함수
-
 // 페이지 번호 변경 및 화면 표시 게시물 변경 함수
-
 async function changePageNum(pageDiv) {
   // 해당 페이지 번호 클릭 -> 클릭한 this 객체가 pageDiv
   const pageNum = pageDiv.textContent;
@@ -30,16 +24,20 @@ async function changePageNum(pageDiv) {
     const day = board.day;
 
     const newDiv = document.createElement('div');
+    newDiv.classList.add('row', 'py-2');
     // innerHTML로 아예 갈아 엎어서 페이지 누를때마다 새로 집어넣기
-    newDiv.innerHTML = `
-      <div class="num">${(pageNum - 1) * 5 + 1 + index}</div>
-      <div class="title">
+    const innerHTML = `
+      <div class="num col-2">${(pageNum - 1) * 5 + 1 + index}</div>
+      <div class="title col-6">
           <a href="/board?boardSeq=${boardSeq}" class="view-link">${title}</a>
       </div>
-      <div class="date">${year}/${month}/${day}</div>
-      <div class="count">${count}</div>`;
+      <div class="date col-2">${year}/${month}/${day}</div>
+      <div class="count col-2">${count}</div>
+    `;
+    newDiv.innerHTML = innerHTML;
     newDivs.append(newDiv);
   });
+  console.log(newDivs);
   document.querySelector('#boardList').innerHTML = newDivs.innerHTML;
   // newDivs의 innerHTML 이 곧 num, title ~~ 이런거니까 이걸 계속 바꿔주면 됨.
 }
