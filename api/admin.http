@@ -3,5 +3,11 @@
 ### 관리자 메인 화면
 GET {{adminUrl}}
 
-### 모든 스터디 조회
+### 스터디 조회 화면
 GET {{adminUrl}}/study
+
+### 모든 스터디 조회 + 스터디 검색
+GET {{adminUrl}}/study/list?search=a
+
+### 특정 스터디 조회
+GET {{adminUrl}}/study/profile/1
