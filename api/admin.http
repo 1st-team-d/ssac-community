@@ -3,6 +3,12 @@
 ### 관리자 메인 화면
 GET {{adminUrl}}
 
+### 관리자 전체 유저 조회 화면
+GET {{adminUrl}}/user
+
+### 관리자 특정 유저 조회 화면
+GET {{adminUrl}}/user?userSeq=1
+
 ### 스터디 조회 화면
 GET {{adminUrl}}/study
 
