@@ -46,6 +46,7 @@
     </div>
 
     <script>
+      // 댓글 검색
       async function searchComment() {
         try {
           const search = document.querySelector('#search');
@@ -67,6 +68,7 @@
               const li3 = document.createElement('li');
               const li4 = document.createElement('li');
               const anchor = document.createElement('a');
+              const deleteBtn = document.createElement('button');
 
               anchor.href = `/board/profile/${comment.board.boardSeq}`;
               anchor.innerText = `게시글 제목 : ${comment.board.title}`;
@@ -81,7 +83,14 @@
               ul.append(li3);
               ul.append(li4);
 
+              deleteBtn.type = 'button';
+              deleteBtn.onclick = function(){
+                removeComment(`${comment.commentSeq}`);
+              }
+              deleteBtn.textContent = '삭제';
+
               tempDiv.append(ul);
+              tempDiv.append(deleteBtn);
               tempDiv.append(document.createElement('hr'));
             }
           } else {
