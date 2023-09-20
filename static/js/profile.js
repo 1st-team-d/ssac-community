@@ -61,6 +61,7 @@ function validPw() {
 
   if (!pwTest.test(newPassword.value)) {
     checkPwMsg.textContent = '비밀번호 형식이 올바르지 않습니다.';
+    checkPwMsg.style.color = 'red';
   } else {
     checkPwMsg.textContent = '';
   }
@@ -70,8 +71,10 @@ function samePw() {
   if (confirmPassword.value) {
     if (newPassword.value === confirmPassword.value) {
       samePwMsg.textContent = '비밀번호가 일치합니다.';
+      samePwMsg.style.color = 'blue';
     } else {
       samePwMsg.textContent = '비밀번호가 일치하지 않습니다.';
+      samePwMsg.style.color = 'red';
     }
   }
 }

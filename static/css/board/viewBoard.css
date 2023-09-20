@@ -72,7 +72,6 @@ textarea:focus {
 }
 
 .board_view .info div span {
-  margin-left: 10px; /* 정보 텍스트 왼쪽 여백 설정 */
   color: #777; /* 정보 텍스트 색상 설정 */
 }
 
@@ -81,7 +80,7 @@ textarea:focus {
 }
 
 .board_view .cont {
-  padding: 15px; /* 내용 내부 여백 설정 */
+  padding: 20px; /* 내용 내부 여백 설정 */
   border-bottom: 1px solid #000; /* 내용 아래 실선 테두리 설정 */
   line-height: 160%; /* 줄 높이 설정 */
 }
@@ -97,8 +96,19 @@ textarea:focus {
   font-weight: 800;
 }
 
+.studyWrap .studyCloseApply:hover {
+  background-color: #68be60;
+  font-weight: 800;
+}
+
 .studyWrap .close {
   background-color: #e27575;
+  font-weight: 800;
+  color: #eee;
+}
+
+.studyWrap .studyCloseApply.close:hover {
+  background-color: #d44040;
   font-weight: 800;
 }
 
@@ -164,52 +174,60 @@ textarea:focus {
 .comment_list .commentBox .cmtBtnWrap .editCmtBtn,
 .comment_list .commentBox .cmtBtnWrap .deleteCmtBtn {
   background-color: transparent;
-  border: 1px solid #b0adad;
+  border: none;
   padding: 3px 5px;
-  color: #b0adad;
+  color: #383838;
   font-weight: 600;
 }
 
 .comment_list .commentBox .cmtBtnWrap .editCmtBtn:hover,
 .comment_list .commentBox .cmtBtnWrap .deleteCmtBtn:hover {
-  background-color: #b0adad;
+  background-color: #acacac;
   color: #fff;
   font-weight: 600;
 }
 
 /* Comment Edit */
 .editCmtWrap {
-  background-color: #eee;
-  padding: 10px;
   border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .editCmtInput {
-  background-color: #fff;
   height: auto;
   width: 100%;
-  position: relative;
-  padding: 10px;
 }
 
-.editCmtInput span {
+.editCmtInput .editCmtUser {
+  /* background-color: #fff; */
+}
+
+.editCmtInput .editCmtUser span {
   font-weight: 700;
 }
 
 .editCmtInput textarea {
-  display: block;
-  height: 100px;
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
+  border-radius: 10px;
 }
 
-.editCmtInput button {
-  position: absolute;
-  bottom: 5%;
-  right: 1rem;
-  transform: translateY(-50%);
+.editCmtInput textarea:focus {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.editCmtInput .editBtnWrap button {
+  width: 10%;
+  background-color: transparent;
+  border: 1px solid #383838;
+  padding: 3px 5px;
+  color: #383838;
+  font-weight: 600;
+  font-size: small;
+}
+
+.editCmtInput button.patchCommentBtn:hover,
+.editCmtInput button.cancelEditBtn:hover {
+  background-color: #b0adad;
+  border: 1px solid #b0adad;
+  color: #fff;
+  font-weight: 600;
 }

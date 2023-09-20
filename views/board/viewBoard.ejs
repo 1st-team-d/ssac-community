@@ -22,11 +22,11 @@
     <div class="board_wrap container w-75">
       <div class="studyControl d-flex justify-content-between mb-3">
         <div class="studyStatus d-flex align-items-center">
-          <span class="fs-6 badge bg-success me-2"><%= board.study.status === 0 ? '모집중' : '마감완료' %></span>
-          <span class="fs-6 badge bg-success">최대<%= board.study.maxPeople %>명</span>
+          <span class="fs-6 badge <%= board.study.status === 0 ? 'bg-success' : 'bg-warning' %> me-2"><%= board.study.status === 0 ? '모집중' : '마감완료' %></span>
+          <span class="fs-6 badge bg-primary opacity-75">최대<%= board.study.maxPeople %>명</span>
         </div>
         <div class="studyWrap d-flex justify-content-center">
-          <div class="studyCloseApply btn <%= board.user.userSeq === session?.userSeq ? 'close' : ''  %>" onclick="studyCloseApply(this)"><% if (board) { %><%= board.user.userSeq === session?.userSeq ? '스터디 모집 마감하기' : '스터디 참가 신청하기' %><% } %></div>
+          <% if (!board.study.status) { %><div class="studyCloseApply btn <%= board.user.userSeq === session?.userSeq ? 'close' : ''  %>" onclick="studyCloseApply(this)"><%= board.user.userSeq === session?.userSeq ? '스터디 모집 마감하기' : '스터디 참가 신청하기' %></div><% } %>
         </div>
       </div>
       <div class="board_view_wrap">
@@ -62,10 +62,10 @@
             <%- board.content.replace(/\n/g, '<br />') %> <% } %>
           </div>
         </div>
-        <div id="postFile" class="fs-5 my-3">
+        <div id="postFile" class="fs-5 my-3 d-flex align-items-center">
           <span class="badge text-bg-secondary mx-3">첨부파일</span>
           <a
-            class="fs-5"
+            class="fs-6"
             href="<%= '/uploadFile/' + board.filePath %>"
             target="_blank"
           >
@@ -95,19 +95,21 @@
         <div class="comment_form">
           <div class="comment_content mb-4">
             <span id="commentWriter" class="fw-bold p-3"
-              ><%= session ? session.name : 'guest' %></span
+              ><%= session ? session.name : 'guest' %><span class="fw-normal"> 님</span></span
             >
             <% if (session) { %>
               <textarea
                 class="px-3"
                 id="comment_content_textarea"
                 name="comment_content"
+                placeholder="댓글을 남겨보세요!"
               ></textarea>
             <% } else { %>
               <textarea
                 class="px-3"
                 id="comment_content_textarea"
                 name="comment_content"
+                placeholder="로그인 후 이용해주세요."
                 disabled
               ></textarea>
             <% } %>
@@ -139,14 +141,14 @@
                 <button class="deleteCmtBtn btn" onclick="deleteCmt(<%= cmt.commentSeq %>)">삭제</button>
               </div>
             <% } %>
-            <div class="editCmtWrap" style="display: none;">
+            <!-- <div class="editCmtWrap">
               <div class="editCmtInput">
                 <span><%= cmt.user.name %></span>
                 <textarea name="editCmtContent" id="editCmtContent<%= cmt.commentSeq %>"></textarea>
                 <button>수정</button>
                 <button>취소</button>
               </div>
-            </div>
+            </div> -->
           </div>
           <% }); %>
         </div>

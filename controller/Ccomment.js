@@ -1,10 +1,30 @@
 const { Board } = require('../models/Board');
-const { Comment } = require('../models');
+const { Comment, User } = require('../models');
 
 // GET '/comment'
 // 모든 댓글 조회
 exports.getComment = (req, res) => {
   res.send('hello');
+};
+
+// 댓글 수정 취소 -> cmtSeq에 해당하는 하나의 댓글 조회해서 원상복구
+exports.getOneComment = async (req, res) => {
+  try {
+    const { commentSeq } = req.query;
+    const oneComment = await Comment.findOne({
+      where: { commentSeq },
+      include: [{ model: User }],
+    });
+    console.log('cmtSeq 로 조회한 댓글 @@@@@@@@@@@@@@@@', oneComment);
+    if (oneComment) {
+      res.send({ oneComment: oneComment, result: true });
+    } else {
+      res.send({ oneComment: '', result: false });
+    }
+  } catch (err) {
+    console.log('err----------------', err);
+    res.send('Internal Server Error!!!');
+  }
 };
 
 // 댓글 등록

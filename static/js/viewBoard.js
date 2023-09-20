@@ -31,7 +31,9 @@ async function submitComment() {
   const boardSeq = document.querySelector('#boardSeq').value;
   // 댓글 관련 각 요소 접근
   // const commentAuthor = document.getElementById('commentWriter');
-  const commentContentInput = document.getElementById('comment_content');
+  const commentContentInput = document.getElementById(
+    'comment_content_textarea'
+  );
   // const commentList = document.querySelector('.comment_list');
   let cmtData = {
     postID: boardSeq,
@@ -45,14 +47,6 @@ async function submitComment() {
   console.log(res.data);
   if (res.data.result) {
     document.location.reload();
-    // // 새로운 댓글
-    // let registeredComment = document.createElement('div');
-    // registeredComment.classList.add('commentBox', 'px-5', 'mb-3');
-    // registeredComment.innerHTML = `
-    // <div class="commentUser badge text-bg-secondary fw-bold">${commentAuthor.innerHTML}</div>
-    // <div class="commentContent ms-1 mt-2">${commentContentInput.value}</div>
-    // `;
-    // commentList.append(registeredComment);
   } else {
     alert('다시 댓글 써라 ㅋㅋ');
   }
@@ -73,17 +67,87 @@ async function deleteCmt(commentSeq) {
   }
 }
 
-// 댓글 수정
+// 댓글 수정창 이동
 function editCmt(commentSeq) {
+  // commentSeq 에 해당하는 commentBox(각 댓글 감싸는거) 요소 선택
   const cmt = document.querySelector(`.Cmt${commentSeq}`);
-  cmt.style.display = 'none';
-  const editCmt = document.querySelector(`.Cmt${commentSeq} > div:last-child `);
-  console.log(editCmt);
-  if (editCmt.style.display === 'none') {
-    editCmt.style.display === 'block';
-    console.log(editCmt, '헤헤');
+  const cmtUser = document.querySelector(
+    `.Cmt${commentSeq} > .commentUser`
+  ).textContent;
+  const cmtContent = document.querySelector(
+    `.Cmt${commentSeq} > .commentContent`
+  ).textContent;
+  cmt.innerHTML = `
+  <div class="editCmtWrap w-100">
+    <div class="editCmtInput d-flex flex-column">
+      <div class="editCmtUser mx-4 my-3"><span>${cmtUser}</span></div>
+      <div class="editCmtContent mx-3 d-flex justify-content-center">
+        <textarea class="p-2 w-100" name="editCmtContent" id="editCmtContent<%= cmt.commentSeq %>" autofocus>${cmtContent.trim()}</textarea>
+      </div>
+      <div class="editBtnWrap d-flex justify-content-end my-3 me-3">
+        <button class="patchCommentBtn btn me-1" onclick="patchComment(${commentSeq}, this)">수정</button>
+        <button class="cancelEditBtn btn" onclick="cancelComment(${commentSeq})">취소</button>
+      </div>
+    </div>
+  </div>
+  `;
+}
+
+// 댓글 수정 취소 -> cmtSeq 하나의 데이터 조회하는 것도 필요
+async function cancelComment(cmtSeq) {
+  const cmt = document.querySelector(`.Cmt${cmtSeq}`);
+  const res = await axios({
+    url: '/comment/cancel',
+    method: 'get',
+    params: { commentSeq: cmtSeq },
+  });
+  if (res.data.result) {
+    cmt.innerHTML = `
+    <div class="commentUser badge text-bg-secondary fw-bold">
+      ${res.data.oneComment.user.name}
+    </div>
+    <div class="commentContent ms-1 mt-2">
+      ${res.data.oneComment.content}
+    </div>
+    <div class="cmtBtnWrap">
+      <button class="editCmtBtn btn" onclick="editCmt(${cmtSeq})">수정</button>
+      <button class="deleteCmtBtn btn" onclick="deleteCmt(${cmtSeq})">삭제</button>
+    </div>
+    `;
   } else {
-    editCmt.style.display === 'none';
+    alert('그럴일 없지롱~~~');
+  }
+}
+
+// 댓글 수정 요청 -> patch /comment/modify
+async function patchComment(cmtSeq, editBtn) {
+  const cmtContent =
+    editBtn.parentElement.previousElementSibling.firstElementChild.value;
+  console.log(cmtContent);
+  const cmtData = { commentSeq: cmtSeq, cmtContent: cmtContent };
+  if (confirm('댓글을 수정하시겠습니까?')) {
+    const res = await axios({
+      url: '/comment/modify',
+      method: 'patch',
+      data: cmtData,
+    });
+    if (res.data.result) {
+      document.location.reload();
+    }
+  }
+}
+
+// 댓글 삭제 요청 -> delete /comment/remove
+async function deleteComment(cmtSeq) {
+  if (confirm('댓글을 삭제하시겠습니까?')) {
+    const res = await axios({
+      url: '/comment/remove',
+      method: 'delete',
+      data: { commentSeq: cmtSeq },
+    });
+    if (res.data.result) {
+      document.location.reload();
+    }
   }
 }
 

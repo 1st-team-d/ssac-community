@@ -37,9 +37,8 @@
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
-  --header-height: 90px;
+  --header-height: 70px;
 }
-
 
 /* 스크롤 바 없애기 */
 /* ( 크롬, 사파리, 오페라, 엣지 ) 동작 */
