@@ -32,25 +32,27 @@ async function deleteBoard() {
 }
 
 // 댓글 등록
-function submitComment() {
+async function submitComment() {
   let registeredComment = document.createElement('div');
   registeredComment.classList.add('commentBox', 'px-5', 'mb-3');
   registeredComment.innerHTML = `
     <div class="commentUser badge text-bg-secondary fw-bold fs-3">${commentAuthor.innerHTML}</div>
     <div class="commentContent mt-2 fs-4">${commentContentInput.value}</div>
   `;
-  commentList.append(registeredComment);
   const commentContent = document.querySelector('.commentContent');
   const commentUser = document.querySelector('.commentUser');
   let cmtData = {
     commentContent: commentContent.textContent,
     commentUser: commentUser.textContent,
   };
-  axios({
+  const res = await axios({
     url: '/comment/register',
     method: 'post',
     data: cmtData,
   }); // 등록되면 true
+  if (res.data.result) {
+    commentList.append(registeredComment);
+  }
 }
 
 // 스터디 정보 표시
