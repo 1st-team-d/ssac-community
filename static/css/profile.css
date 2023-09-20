@@ -1,12 +1,6 @@
 /* 모든 파일 공통 CSS */
 @import url('/static/css/common.css');
 
-/* 전체 페이지의 공통 스타일 */
-body {
-    margin-top: 20px; /* 페이지 상단 여백 설정 */
-    background: #f5f5f5; /* 배경 색상 설정 */
-}
-
 /* 이게,, */
 /* html, body {
     height: 100%;
@@ -20,63 +14,69 @@ body {
     padding-right: 15px; 
 } */
 
+/* 메인 컨텐츠 위치 */
+.profileWrap {
+  min-height: 100vh;
+}
+
 /* 패널 스타일 */
 .panel {
-    box-shadow: none; /* 패널의 그림자 제거 */
+  box-shadow: none; /* 패널의 그림자 제거 */
+  width: 500px;
 }
 
 /* 패널 헤더 스타일 */
 .panel-heading {
-    border-bottom: 0; /* 패널 헤더의 하단 테두리 제거 */
+  border-bottom: 0; /* 패널 헤더의 하단 테두리 제거 */
 }
 
 /* 패널 타이틀 스타일 */
 .panel-title {
-    font-size: 17px; /* 패널 타이틀의 글꼴 크기 설정 */
+  font-size: 17px; /* 패널 타이틀의 글꼴 크기 설정 */
 }
 
 /* 패널 타이틀 작은 텍스트 스타일 */
 .panel-title > small {
-    font-size: 0.75em; /* 패널 타이틀 하위 작은 텍스트의 글꼴 크기 설정 */
-    color: #999999; /* 작은 텍스트의 색상 설정 */
+  font-size: 0.75em; /* 패널 타이틀 하위 작은 텍스트의 글꼴 크기 설정 */
+  color: #999999; /* 작은 텍스트의 색상 설정 */
 }
 
 /* 패널 바디 첫 번째 자식 요소 스타일 */
 .panel-body *:first-child {
-    margin-top: 0; /* 패널 바디의 첫 번째 자식 요소의 상단 여백 제거 */
+  margin-top: 0; /* 패널 바디의 첫 번째 자식 요소의 상단 여백 제거 */
 }
 
 /* 패널 푸터 스타일 */
 .panel-footer {
-    border-top: 0; /* 패널 푸터의 상단 테두리 제거 */
+  border-top: 0; /* 패널 푸터의 상단 테두리 제거 */
 }
 
 /* 패널 디폴트 스타일 */
 .panel-default > .panel-heading {
-    color: #333333; /* 패널 헤더의 글꼴 색상 설정 */
-    background-color: transparent; /* 패널 헤더의 배경 색상 설정 */
-    border-color: rgba(0, 0, 0, 0.07); /* 패널 헤더의 테두리 색상 설정 */
+  color: #333333; /* 패널 헤더의 글꼴 색상 설정 */
+  background-color: transparent; /* 패널 헤더의 배경 색상 설정 */
+  border-color: rgba(0, 0, 0, 0.07); /* 패널 헤더의 테두리 색상 설정 */
 }
 
 /* 폼 레이블 스타일 */
 form label {
-    color: #999999; /* 폼 레이블의 글꼴 색상 설정 */
-    font-weight: 400; /* 폼 레이블의 글꼴 두께 설정 */
+  color: #999999; /* 폼 레이블의 글꼴 색상 설정 */
+  font-weight: 400; /* 폼 레이블의 글꼴 두께 설정 */
 }
 
 /* 수평형 폼 그룹 스타일 */
 .form-horizontal .form-group {
-    margin-left: -15px; /* 수평형 폼 그룹의 좌측 여백 설정 */
-    margin-right: -15px; /* 수평형 폼 그룹의 우측 여백 설정 */
+  margin-left: -15px; /* 수평형 폼 그룹의 좌측 여백 설정 */
+  margin-right: -15px; /* 수평형 폼 그룹의 우측 여백 설정 */
 }
 
 /* 반응형 */
 @media (min-width: 768px) {
-    .form-horizontal .control-label {
-        text-align: right; /* 화면 폭이 768px 이상일 때, 컨트롤 레이블을 오른쪽 정렬 */
-        margin-bottom: 0; /* 컨트롤 레이블의 하단 여백 제거 */
-        padding-top: 7px; /* 컨트롤 레이블의 상단 여백 설정 */
-    }
+  .form-horizontal .control-label {
+    text-align: right; /* 화면 폭이 768px 이상일 때, 컨트롤 레이블을 오른쪽 정렬 */
+    margin-bottom: 0; /* 컨트롤 레이블의 하단 여백 제거 */
+    padding-top: 7px; /* 컨트롤 레이블의 상단 여백 설정 */
+  }
 }
 
 /* 웹 페이지를 수직 및 수평 가운데로 위치 */
