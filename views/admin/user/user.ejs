@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin User</title>
+
+    <!-- CDN -->
+    <%- include('../../includes/cdn.ejs') %>
   </head>
   <body>
     <h1>유저 관리</h1>
@@ -17,6 +20,7 @@
           <th>이름</th>
           <th>관리자 여부</th>
           <th>가입일</th>
+          <th></th>
           <th></th>
           <th></th>
         </tr>
@@ -38,6 +42,9 @@
           <td>
             <a href="/admin/user/comment/<%=user.userSeq%>">댓글</a>
           </td>
+          <td>
+            <button onclick="userDelete('<%= user.userSeq%>')">삭제</button>
+          </td>
         </tr>
         <% } %><% } catch {%>
         <tr id="tr_<%= users.userSeq %>">
@@ -55,10 +62,35 @@
           <td>
             <a href="/admin/user/comment/<%=users.userSeq%>">댓글</a>
           </td>
-          <td><button>삭제</button></td>
+          <td>
+            <button onclick="userDelete('<%= users.userSeq%>')">삭제</button>
+          </td>
         </tr>
         <%}%>
       </tbody>
     </table>
+
+    <script>
+      async function userDelete(userSeq) {
+        if (confirm('유저를 삭제하시겠습니까?')) {
+          try {
+            const res = await axios({
+              method: 'delete',
+              url: '/admin/user/remove',
+              data: { userSeq: userSeq },
+            });
+
+            if (!res.data.isDelete) {
+              alert('유저 삭제에 실패했습니다.');
+            }
+
+            location.href = '/admin/user';
+          } catch (err) {
+            alert('유저 삭제에 실패했습니다.');
+            console.log(err);
+          }
+        }
+      }
+    </script>
   </body>
 </html>
