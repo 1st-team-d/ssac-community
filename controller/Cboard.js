@@ -1,4 +1,11 @@
-const { Board, User, Study, StudyApply, sequelize } = require('../models');
+const {
+  Board,
+  User,
+  Study,
+  StudyApply,
+  sequelize,
+  Comment,
+} = require('../models');
 const Op = require('sequelize').Op;
 const path = require('path');
 
@@ -19,7 +26,7 @@ exports.getBoard = async (req, res) => {
     const selectAllBoard = await Board.findAll();
     const allBoardLen = selectAllBoard.length;
 
-    // 특정 게시글 조회
+    // 특정 게시글 조회 및 해당 게시글의 댓글 조회
     if (boardSeq) {
       const board = await Board.findOne({
         attributes: [
@@ -50,6 +57,17 @@ exports.getBoard = async (req, res) => {
         { where: { boardSeq: boardSeq } }
       );
 
+      // 해당 게시글의 댓글 조회
+      const allComment = await Comment.findAll({
+        attributes: ['content'],
+        where: {
+          boardSeq: {
+            [Op.eq]: boardSeq,
+          },
+        },
+      });
+      console.log('comments >>>>>>>>>>>>>>>>>', allComment);
+
       console.log('session>>>>>>', req.session.userInfo);
       // console.log('특정 게시글 board>>>>>>>', board);
 
@@ -62,6 +80,7 @@ exports.getBoard = async (req, res) => {
         session: req.session.userInfo,
         cookieEmail: cookie ? cookie.loginEmail : '',
         cookiePw: cookie ? cookie.loginPw : '',
+        comments: allComment,
       });
 
       // 게시글 검색
