@@ -40,7 +40,8 @@
   --header-height: 90px;
 }
 
-/* 스크롤바 없애기 */
+
+/* 스크롤 바 없애기 */
 /* ( 크롬, 사파리, 오페라, 엣지 ) 동작 */
 body::-webkit-scrollbar {
   display: none;
