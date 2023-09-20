@@ -181,5 +181,29 @@ em {
 }
 
 /* Comment */
-.registeredComment {
+.comment_list .commentBox {
+  position: relative;
+}
+
+.comment_list .commentBox .cmtBtnWrap {
+  position: absolute;
+  top: 50%;
+  right: 3rem;
+  transform: translateY(-50%);
+}
+
+.comment_list .commentBox .cmtBtnWrap .editCmtBtn,
+.comment_list .commentBox .cmtBtnWrap .deleteCmtBtn {
+  background-color: transparent;
+  border: 1px solid #b0adad;
+  padding: 3px 5px;
+  color: #b0adad;
+  font-weight: 600;
+}
+
+.comment_list .commentBox .cmtBtnWrap .editCmtBtn:hover,
+.comment_list .commentBox .cmtBtnWrap .deleteCmtBtn:hover {
+  background-color: #b0adad;
+  color: #fff;
+  font-weight: 600;
 }

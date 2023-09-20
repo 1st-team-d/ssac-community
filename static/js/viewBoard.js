@@ -1,9 +1,3 @@
-// 각 요소 접근
-const submitButton = document.getElementById('submit_comment');
-const commentAuthor = document.getElementById('commentWriter');
-const commentContentInput = document.getElementById('comment_content');
-const commentList = document.querySelector('.comment_list');
-
 // 게시물 수정
 async function editBoard() {
   const boardSeq = document.querySelector('#boardSeq').value;
@@ -33,27 +27,50 @@ async function deleteBoard() {
 
 // 댓글 등록
 async function submitComment() {
-  let registeredComment = document.createElement('div');
-  registeredComment.classList.add('commentBox', 'px-5', 'mb-3');
-  registeredComment.innerHTML = `
-    <div class="commentUser badge text-bg-secondary fw-bold fs-3">${commentAuthor.innerHTML}</div>
-    <div class="commentContent mt-2 fs-4">${commentContentInput.value}</div>
-  `;
-  const commentContent = document.querySelector('.commentContent');
-  const commentUser = document.querySelector('.commentUser');
+  // boardSeq
+  const boardSeq = document.querySelector('#boardSeq').value;
+  // 댓글 관련 각 요소 접근
+  // const commentAuthor = document.getElementById('commentWriter');
+  const commentContentInput = document.getElementById('comment_content');
+  // const commentList = document.querySelector('.comment_list');
   let cmtData = {
-    commentContent: commentContent.textContent,
-    commentUser: commentUser.textContent,
+    postID: boardSeq,
+    cmtContent: commentContentInput.value,
   };
   const res = await axios({
     url: '/comment/register',
     method: 'post',
     data: cmtData,
   }); // 등록되면 true
-  if (res.data.result) {
-    commentList.append(registeredComment);
+  console.log(res.data);
+  if (res.data.msg !== 'newComment success') {
+    // // 새로운 댓글
+    // let registeredComment = document.createElement('div');
+    // registeredComment.classList.add('commentBox', 'px-5', 'mb-3');
+    // registeredComment.innerHTML = `
+    // <div class="commentUser badge text-bg-secondary fw-bold">${commentAuthor.innerHTML}</div>
+    // <div class="commentContent ms-1 mt-2">${commentContentInput.value}</div>
+    // `;
+    // commentList.append(registeredComment);
+    alert('다시 댓글 써라 ㅋㅋ');
   }
 }
+
+// 댓글 삭제
+async function deleteCmt(commentSeq) {
+  if (confirm('삭제 하시겠습니까?')) {
+    const res = await axios({
+      url: '/comment/remove',
+      method: 'delete',
+      data: { commentSeq },
+    });
+    if (res.data) {
+      document.location.reload();
+    }
+  }
+}
+
+// 댓글 삭제
 
 // 스터디 정보 표시
 const studyCategory = document.querySelector('#studyCategory');

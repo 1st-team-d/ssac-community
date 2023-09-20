@@ -63,7 +63,7 @@
           </div>
         </div>
         <div id="postFile" class="fs-5 my-3">
-          <span class="badge text-bg-success mx-3">첨부파일</span>
+          <span class="badge text-bg-secondary mx-3">첨부파일</span>
           <a
             class="fs-5"
             href="<%= '/uploadFile/' + board.filePath %>"
@@ -126,16 +126,22 @@
         </div>
         <div class="comment_list">
           <!-- 댓글 배열 형태로 전달되면 각 요소에 대해 작성자, 댓글 내용 출력 -->
-          <%# cmts.forEach(cmt => { %>
+          <% comments.forEach(cmt => { %>
           <div class="commentBox px-5 mb-3">
             <div class="commentUser badge text-bg-secondary fw-bold">
-              김땡땡
+              <%= cmt.user.name %>
             </div>
             <div class="commentContent ms-1 mt-2">
-              좋은데요?
+              <%= cmt.content %>
             </div>
+            <% if (cmt.user.id === session?.id) { %> 
+              <div class="cmtBtnWrap">
+                <button class="editCmtBtn btn" onclick="editCmt(<%= cmt.commentSeq %>)">수정</button>
+                <button class="deleteCmtBtn btn" onclick="deleteCmt(<%= cmt.commentSeq %>)">삭제</button>
+              </div>
+            <% } %>
           </div>
-          <%# }); %>
+          <% }); %>
         </div>
       </div>
     </div>
