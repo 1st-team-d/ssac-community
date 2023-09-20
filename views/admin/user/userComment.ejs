@@ -9,7 +9,7 @@
   <body>
     <h1>유저 관리</h1>
     <h3><특정 유저 정보></h3>
-    <h4><%= comments.user.name%>이 작성한 게시물입니다.</h4>
+    <h4><%= user.name%>이 작성한 게시물입니다.</h4>
     <!-- <h1>길이 : <%#= Object.keys(comments).length%> </h1> -->
     <table border="1" cellspacing="0">
       <thead>
@@ -37,7 +37,7 @@
             comment.dataValues.updatedDay %>
           </td>
         </tr>
-        <% } %> <% } catch {%>
+        <% } %> <% } catch { if(comments !== null) {%>
         <tr id="tr_<%= comments.commentSeq %>">
           <td><%= comments.commentSeq %> (임시값)</td>
           <td><%= comments.content%></td>
@@ -52,7 +52,7 @@
             comments.dataValues.updatedDay %>
           </td>
         </tr>
-        <%}%>
+        <%}%> <%}%>
       </tbody>
     </table>
   </body>

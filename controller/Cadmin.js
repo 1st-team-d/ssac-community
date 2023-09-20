@@ -141,8 +141,10 @@ exports.getUserComment = async (req, res) => {
       ],
     });
 
-    // res.send({ comment });
-    res.render('admin/user/userComment', { comments: comment });
+    const user = await User.findOne({ where: { userSeq: userSeq } });
+
+    // res.send({ comment, user });
+    res.render('admin/user/userComment', { comments: comment, user: user });
   } catch (err) {
     console.error(err);
     res.send({ msg: false });
