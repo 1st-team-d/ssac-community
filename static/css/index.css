@@ -1,24 +1,35 @@
 /* 모든 파일 공통 CSS */
 @import url('/static/css/common.css');
 
-/* 메인 화면 내용물 위치 */
+/* main css */
+body {
+  background-color: #dfe8d9;
+}
+
+/* 게시글 작성 본문 위치 조정 */
 .indexContainer {
   margin-top: calc(var(--header-height) + 10px);
 }
 
+/*=================================================*/
+
+/* 메인 화면 내용물 위치 */
+.indexContainer {
+  height: 100vh;
+}
+
 /* 메인 텍스트 css */
 /* 메인 텍스트 박스 */
-.textWrap {
-  margin-top: 30%;
-}
+/* .textWrap {
+  margin-top: 30%; 
+ } */
 
 /* 메인 첫번째 텍스트 */
 .textWrap h2 {
   color: black;
-  font-size: 64px;
+  font-size: 45px;
   line-height: 1.25;
-  font-weight: lighter;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 /* 메인 두번째 텍스트 */
@@ -37,8 +48,29 @@
   margin-bottom: 20px;
 }
 
+.btnWrap {
+  margin-bottom: 40px;
+}
+
+/* 메인 배경 이미지 */
+body {
+  /* background-image: url('/static/images/bg_02.png'); */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 /* 메인 텍스트 반응형 */
 @media screen and (max-width: 768px) {
+  /* .indexContainer {
+  margin-top: calc(var(--header-height) + 10px);
+   } */
+
+  /* 메인 화면 내용물 위치 */
+  .indexContainer {
+    height: 150vh;
+  }
+
   /* 메인 텍스트 css */
   .textWrap {
     width: 100%;
@@ -56,9 +88,6 @@
   .textWrap p {
     font-size: 14;
   }
-}
-
-@media screen and (max-width: 480px) {
 }
 
 /*=================================================*/
@@ -86,6 +115,12 @@ a:hover {
   transition: all 0.3s ease;
 }
 
+  /* 게시판 소개 카드의 높이를 300px로 고정 */
+  .custom-block-info {
+    height: 250px;
+    overflow: hidden; /* 내용이 넘치면 숨김 처리 */
+  }
+
 /* 카드에 마우스 올렸을 때 위로 올라오는 */
 .custom-block:hover {
   background: var(--white-color);
@@ -108,4 +143,49 @@ a:hover {
 /* 박스 hover 테두리 */
 .custom-block-full:hover {
   border-color: var(--primary-color);
+}
+
+/* 이전 버튼의 위치를 조정 */
+.carousel-control-prev {
+  left: -120px;
+}
+
+/* 다음 버튼의 위치를 조정 */
+.carousel-control-next {
+  right: -120px;
+}
+
+
+
+/* 모바일 화면에서 슬라이드 비활성화 및 가로 스크롤 제거 */
+@media (max-width: 768px) {
+  body {
+    overflow-y: hidden;
+  }
+
+  .indexContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .carousel-inner {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .carousel-indicators {
+    display: none;
+  }
+
+  /* 이전 버튼의 위치를 조정 */
+  .carousel-control-prev {
+    left: 0px;
+  }
+
+  /* 다음 버튼의 위치를 조정 */
+  .carousel-control-next {
+    right: 0px;
+  }
 }
