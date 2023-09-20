@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>user Comment</title>
+  </head>
+  <body>
+    <h1>유저 관리</h1>
+    <h3><특정 유저 정보></h3>
+    <h4><%= comments.user.name%>이 작성한 게시물입니다.</h4>
+    <!-- <h1>길이 : <%#= Object.keys(comments).length%> </h1> -->
+    <table border="1" cellspacing="0">
+      <thead>
+        <tr>
+          <th>해당 보드</th>
+          <th>댓글 내용</th>
+          <th>작성일</th>
+          <th>수정일</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%try {%> <% for (let comment of comments) { %>
+        <tr id="tr_<%= comment.userSeq %>"></tr>
+        <tr id="tr_<%= comment.commentSeq %>">
+          <td><%= comment.commentSeq %> (임시값)</td>
+          <td><%= comment.content%></td>
+          <td>
+            <%= comment.dataValues.createdYear + '-' +
+            comment.dataValues.createdMonth + '-' +
+            comment.dataValues.createdDay %>
+          </td>
+          <td>
+            <%= comment.dataValues.updatedYear + '-' +
+            comment.dataValues.updatedMonth + '-' +
+            comment.dataValues.updatedDay %>
+          </td>
+        </tr>
+        <% } %> <% } catch {%>
+        <tr id="tr_<%= comments.commentSeq %>">
+          <td><%= comments.commentSeq %> (임시값)</td>
+          <td><%= comments.content%></td>
+          <td>
+            <%= comments.dataValues.createdYear + '-' +
+            comments.dataValues.createdMonth + '-' +
+            comments.dataValues.createdDay %>
+          </td>
+          <td>
+            <%= comments.dataValues.updatedYear + '-' +
+            comments.dataValues.updatedMonth + '-' +
+            comments.dataValues.updatedDay %>
+          </td>
+        </tr>
+        <%}%>
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -25,7 +25,7 @@
         </tr>
       </thead>
       <tbody>
-        <% for (let board of users.boards) { %>
+        <%try {%> <% for (let board of users.boards) { %>
         <tr id="tr_<%= board.userSeq %>">
           <td>
             <% switch (board.study.category) { case 0: %> 웹 <% break; case 1:
@@ -46,8 +46,32 @@
             <%= board.dataValues.updatedYear + '-' +
             board.dataValues.updatedMonth + '-' + board.dataValues.updatedDay %>
           </td>
-          <% } %>
         </tr>
+        <% } %><% } catch {%>
+        <tr id="tr_<%= users.boards.userSeq %>">
+          <td>
+            <% switch (users.boards.study.category) { case 0: %> 웹 <% break;
+            case 1: %> 앱 <% break; case 2: %> AI <% break; case 3: %> UI/UX <%
+            break; case4: %> 게임 <% default: %> 기타 <% } %>
+          </td>
+          <td><%= users.boards.title %></td>
+          <td><%= users.boards.content%></td>
+          <td><%= users.boards.study.maxPeople%></td>
+          <td><%= users.boards.study.status ? "모집 완료" : "모집 중"%></td>
+          <td><%= users.boards.filePath ? "Yes" : "No" %></td>
+          <td><%= users.boards.count %></td>
+          <td>
+            <%= users.boards.dataValues.createdYear + '-' +
+            users.boards.dataValues.createdMonth + '-' +
+            users.boards.dataValues.createdDay %>
+          </td>
+          <td>
+            <%= users.boards.dataValues.updatedYear + '-' +
+            users.boards.dataValues.updatedMonth + '-' +
+            users.boards.dataValues.updatedDay %>
+          </td>
+        </tr>
+        <%}%>
       </tbody>
     </table>
   </body>

@@ -18,76 +18,131 @@ exports.getAdmin = (req, res) => {
 // 유저 관리 화면
 exports.getUser = async (req, res) => {
   try {
+    // 전체 유저 조회
+    const user = await User.findAll({
+      attributes: [
+        'userSeq',
+        'id',
+        'name',
+        'isAdmin',
+        [sequelize.fn('YEAR', sequelize.col('user.createdAt')), 'year'],
+        [sequelize.fn('MONTH', sequelize.col('user.createdAt')), 'month'],
+        [sequelize.fn('DAY', sequelize.col('user.createdAt')), 'day'],
+        'createdAt',
+        'updatedAt',
+      ],
+      include: [{ model: Board }],
+    });
+
+    res.render('admin/user/user', { users: user });
+  } catch (err) {
+    console.error(err);
+    res.send({ msg: false });
+  }
+};
+
+// 게시글 조회
+exports.getUserBoard = async (req, res) => {
+  try {
     // 특정 유저의 유저 시퀀스
-    const { userSeq } = req.query;
+    const { userSeq } = req.params;
 
     // 특정 유저 화면
-    if (userSeq) {
-      const user = await User.findOne({
-        where: { userSeq: userSeq },
-        include: [
-          {
-            model: Board,
-            attributes: [
-              'boardSeq',
-              'title',
-              'content',
-              'filePath',
-              'count',
-              [
-                sequelize.fn('YEAR', sequelize.col('boards.createdAt')),
-                'createdYear',
-              ],
-              [
-                sequelize.fn('MONTH', sequelize.col('boards.createdAt')),
-                'createdMonth',
-              ],
-              [
-                sequelize.fn('DAY', sequelize.col('boards.createdAt')),
-                'createdDay',
-              ],
-              'createdAt',
-              [
-                sequelize.fn('YEAR', sequelize.col('boards.updatedAt')),
-                'updatedYear',
-              ],
-              [
-                sequelize.fn('MONTH', sequelize.col('boards.updatedAt')),
-                'updatedMonth',
-              ],
-              [
-                sequelize.fn('DAY', sequelize.col('boards.updatedAt')),
-                'updatedDay',
-              ],
-              'updatedAt',
+    const user = await User.findOne({
+      where: { userSeq: userSeq },
+      include: [
+        {
+          model: Board,
+          attributes: [
+            'boardSeq',
+            'title',
+            'content',
+            'filePath',
+            'count',
+            [
+              sequelize.fn('YEAR', sequelize.col('boards.createdAt')),
+              'createdYear',
             ],
+            [
+              sequelize.fn('MONTH', sequelize.col('boards.createdAt')),
+              'createdMonth',
+            ],
+            [
+              sequelize.fn('DAY', sequelize.col('boards.createdAt')),
+              'createdDay',
+            ],
+            'createdAt',
+            [
+              sequelize.fn('YEAR', sequelize.col('boards.updatedAt')),
+              'updatedYear',
+            ],
+            [
+              sequelize.fn('MONTH', sequelize.col('boards.updatedAt')),
+              'updatedMonth',
+            ],
+            [
+              sequelize.fn('DAY', sequelize.col('boards.updatedAt')),
+              'updatedDay',
+            ],
+            'updatedAt',
+          ],
 
-            include: [{ model: Study }],
-          },
+          include: [{ model: Study }],
+        },
+      ],
+    });
+
+    // res.send({ user });
+    res.render('admin/user/userBoard', { users: user });
+  } catch (err) {
+    console.error(err);
+    res.send({ msg: false });
+  }
+};
+
+// 댓글 조회
+exports.getUserComment = async (req, res) => {
+  try {
+    // 특정 유저의 유저 시퀀스
+    const { userSeq } = req.params;
+
+    // 특정 유저 화면
+    const comment = await Comment.findOne({
+      where: { userSeq: userSeq },
+      attributes: [
+        'commentSeq',
+        'content',
+        [
+          sequelize.fn('YEAR', sequelize.col('comment.createdAt')),
+          'createdYear',
         ],
-      });
-
-      // res.send({ user });
-      res.render('admin/userInfo', { users: user });
-    } else {
-      // 전체 유저 조회
-      const user = await User.findAll({
-        attributes: [
-          'userSeq',
-          'id',
-          'name',
-          'isAdmin',
-          [sequelize.fn('YEAR', sequelize.col('user.createdAt')), 'year'],
-          [sequelize.fn('MONTH', sequelize.col('user.createdAt')), 'month'],
-          [sequelize.fn('DAY', sequelize.col('user.createdAt')), 'day'],
-          'createdAt',
-          'updatedAt',
+        [
+          sequelize.fn('MONTH', sequelize.col('comment.createdAt')),
+          'createdMonth',
         ],
-        include: [{ model: Board }],
-      });
+        [sequelize.fn('DAY', sequelize.col('comment.createdAt')), 'createdDay'],
+        'createdAt',
+        [
+          sequelize.fn('YEAR', sequelize.col('comment.updatedAt')),
+          'updatedYear',
+        ],
+        [
+          sequelize.fn('MONTH', sequelize.col('comment.updatedAt')),
+          'updatedMonth',
+        ],
+        [sequelize.fn('DAY', sequelize.col('comment.updatedAt')), 'updatedDay'],
+        'updatedAt',
+      ],
+      include: [
+        {
+          model: User,
+          include: [{ model: Board }],
+        },
+      ],
+    });
 
-      res.render('admin/user', { users: user });
-    }
+    // res.send({ comment });
+    res.render('admin/user/userComment', { comments: comment });
   } catch (err) {
     console.error(err);
     res.send({ msg: false });
