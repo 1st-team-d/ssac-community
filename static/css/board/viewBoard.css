@@ -46,17 +46,17 @@ textarea:focus {
   border-bottom: 1px solid #999; /* 정보 아래 실선 테두리 설정 */
 }
 
-.board_view .info dl {
+.board_view .info div {
   position: relative; /* 상대 위치 설정 */
   display: inline-block; /* 정보 요소를 가로로 나열 */
   padding: 0 20px; /* 정보 요소 내부 여백 설정 */
 }
 
-.board_view .info dl:first-child {
+.board_view .info div:first-child {
   padding-left: 0; /* 첫 번째 정보 요소의 왼쪽 여백 제거 */
 }
 
-.board_view .info dl::before {
+.board_view .info div::before {
   content: ''; /* 가상 요소 내용 제거 */
   position: absolute; /* 절대 위치 설정 */
   top: 1px; /* 위 여백 설정 */
@@ -67,18 +67,17 @@ textarea:focus {
   background: #ddd; /* 가상 요소 배경색 설정 */
 }
 
-.board_view .info dl:first-child::before {
+.board_view .info div:first-child::before {
   display: none; /* 첫 번째 정보 요소의 가상 요소 숨김 */
 }
 
-.board_view .info dl dt,
-.board_view .info dl dd {
-  display: inline-block; /* 정보 요소를 가로로 나열 */
-}
-
-.board_view .info dl dd {
+.board_view .info div span {
   margin-left: 10px; /* 정보 텍스트 왼쪽 여백 설정 */
   color: #777; /* 정보 텍스트 색상 설정 */
+}
+
+.board_view .info div span:first-child {
+  font-weight: 700;
 }
 
 .board_view .cont {
