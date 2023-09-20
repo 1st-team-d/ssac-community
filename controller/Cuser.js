@@ -182,6 +182,10 @@ exports.postSignin = async (req, res) => {
 
           // 로그인 정보 기억하기
           if (loginRemain) {
+            // 기존의 쿠키 정보 삭제하기
+            res.clearCookie('remain', { loginEmail, loginPw }, myCookieConf);
+
+            // 새로운 쿠키 정보 설정하기
             res.cookie('remain', { loginEmail, loginPw }, myCookieConf);
           }
 
