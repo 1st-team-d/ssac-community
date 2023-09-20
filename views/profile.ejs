@@ -5,15 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Profile</title>
 
-    <!-- 부트스트랩 CSS를 불러옴 -->
-    <link
-      href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+
     <!-- CDN -->
     <%- include('./includes/cdn.ejs') %>
     <script defer src="/static/js/loginRegister.js"></script>
@@ -27,99 +19,57 @@
   </head>
   <body>
     <%- include('./includes/header.ejs') %>
-    <div class="container bootstrap snippets bootdeys">
+    <div class="container mt-5">
       <div class="row">
-        <div class="col-xs-12 col-sm-9">
-          <form class="form-horizontal">
-            <!-- 프로필 정보 패널 -->
-            <div class="panel panel-default">
-              <div class="panel-body text-center">
-                <img
-                  src="#"
-                  class="img-circle profile-avatar"
-                  alt="아마두 새싹 이미지?"
-                />
-                <h3><%= session.name%></h3>
-              </div>
+        <div class="col-md-4">
+          <!-- 프로필 정보 카드 -->
+
+
+          <div class="profileCard card text-center">
+            <div class="card-header text-white bg-body-secondary">
+            <h4 class="card-title">유저정보</h4>
+          </div>
+          <div class="userCard">
+            <div class="card-body mt-3">
+              <img src="/static/images/1453035.png" class="card-img-top profile-avatar" alt="새싹이미지">
+          <div class="card-text">
+              <h3 class="card-title"><%= session.name %></h3>
+              <p class="card-id"><%= session.id %></p>
             </div>
-            <!-- 유저 정보 패널 -->
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">User info</h4>
-              </div>
-              <div class="panel-body">
-                <!-- 포지션 선택 -->
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">Email</label>
-                  <div class="col-sm-10"><%= session.id %></div>
-                </div>
-                <!-- 웹사이트 입력 -->
-                <!-- <div class="form-group">
-                            <label class="col-sm-2 control-label">Website</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control">
-                            </div>
-                        </div> -->
-                <!-- 기술 스킬 입력 -->
-                <!-- <div class="form-group">
-                            <label class="col-sm-2 control-label">Skills</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control">
-                            </div>
-                        </div> -->
-              </div>
+          </div>
+        </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-8">
+          <!-- 비밀번호 변경 카드 -->
+          <div class="profileCard card">
+            <div class="card-header text-white bg-body-secondary">
+              <h4 class="card-title">비밀번호 변경</h4>
             </div>
-            <!-- 보안 설정 패널 -->
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">비밀번호 변경</h4>
-              </div>
-              <div class="panel-body">
-                <!-- 현재 비밀번호 입력 -->
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">새로운 비밀번호</label>
-                  <div class="col-sm-10">
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="newPassword"
-                      placeholder="새로운 비밀번호를 입력해주세요 (대소문자, 특수문자, 숫자 포함 8자리 이상)"
-                    />
-                  </div>
-                  <div class="checkPwMsg mb-1 ms-2" id="checkPwMsg"></div>
+            <div class="card-body">
+
+              <form>
+                <div class="mb-3">
+                  <label for="newPassword" class="form-label">새로운 비밀번호</label>
+                  <input type="password" class="form-control" id="newPassword" placeholder="새로운 비밀번호를 입력해주세요 (대소문자, 특수문자, 숫자 포함 8자리 이상)">
                 </div>
-                <!-- 새로운 비밀번호 입력 -->
-                <div class="form-group">
-                  <label class="col-sm-2 control-label"
-                    >새로운 비밀번호 확인</label
-                  >
-                  <div class="col-sm-10">
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="confirmPassword"
-                      placeholder="새로운 비밀번호를 한 번 더 입력해주세요"
-                    />
-                  </div>
-                  <div class="samePwMsg mb-1 ms-2" id="samePwMsg"></div>
+
+                <div class="mb-3">
+                  <label for="confirmPassword" class="form-label">새로운 비밀번호 확인</label>
+                  <input type="password" class="form-control" id="confirmPassword" placeholder="새로운 비밀번호를 한 번 더 입력해주세요">
+
                 </div>
-                <!-- 제출 및 취소 버튼 -->
-                <div class="form-group">
-                  <div class="col-sm-10 col-sm-offset-2">
-                    <button type="button" class="btn" onclick="editPw()">
-                      Submit
-                    </button>
-                    <button type="reset" class="btn btn-default">Cancel</button>
-                  </div>
+                <div class="d-grid gap-2">
+                  <button type="button" class="btn" onclick="editPw()">비밀번호 변경</button>
+                  <button type="reset" class="btn ghostBtn">취소</button>
                 </div>
-              </div>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
-    <!-- jQuery 및 부트스트랩 JS를 불러옴 -->
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </body>
 </html>
