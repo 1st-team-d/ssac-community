@@ -22,13 +22,10 @@
         </tr>
       </thead>
       <tbody>
-        <% for (let user of users) { %>
+        <%try {%><% for (let user of users) { %>
         <tr id="tr_<%= user.userSeq %>">
           <td><%= user.userSeq %></td>
-          <td>
-            <!-- <a href="/admin/user?userSeq=<#%=user.userSeq %>"><#%= user.id %></a> -->
-            <%= user.id %>
-          </td>
+          <td><%= user.id %></td>
           <td><%= user.name %></td>
           <td><%= user.isAdmin %></td>
           <td>
@@ -41,8 +38,26 @@
           <td>
             <a href="/admin/user/comment/<%=user.userSeq%>">댓글</a>
           </td>
-          <% } %>
         </tr>
+        <% } %><% } catch {%>
+        <tr id="tr_<%= users.userSeq %>">
+          <td><%= users.userSeq %></td>
+          <td><%= users.id %></td>
+          <td><%= users.name %></td>
+          <td><%= users.isAdmin %></td>
+          <td>
+            <%= users.dataValues.year + '-' + users.dataValues.month + '-' +
+            users.dataValues.day %>
+          </td>
+          <td>
+            <a href="/admin/user/board/<%=users.userSeq%>">게시물</a>
+          </td>
+          <td>
+            <a href="/admin/user/comment/<%=users.userSeq%>">댓글</a>
+          </td>
+          <td><button>삭제</button></td>
+        </tr>
+        <%}%>
       </tbody>
     </table>
   </body>
