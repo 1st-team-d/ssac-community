@@ -28,3 +28,23 @@ exports.postComment = async (req, res) => {
     res.send('Internal Server Error!!!');
   }
 };
+
+exports.patchComment = async (req, res) => {
+  try {
+    const { commentSeq, cmtContent } = req.body;
+    const patchedComment = await Comment.update(
+      {
+        content: cmtContent,
+      },
+      {
+        where: {
+          commentSeq: commentSeq,
+        },
+      }
+    );
+    res.send('success');
+  } catch (err) {
+    console.log('err----------------', err);
+    res.send('Internal Server Error!!!');
+  }
+};

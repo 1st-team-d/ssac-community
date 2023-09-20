@@ -15,3 +15,12 @@ Content-Type: application/json; charset=UTF-8
     "postID" : 1,
     "cmtContent" : "fsfsdnewnewnewnenwnewnenwfsfdf"
 }
+
+### 댓글 수정
+PATCH {{server}}/comment/modify
+Content-Type: application/json; charset=UTF-8
+
+{
+    "commentSeq" : 1,
+    "cmtContent" : "modified comment"
+}
