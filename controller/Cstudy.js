@@ -197,7 +197,7 @@ exports.getStudyProfile = async (req, res) => {
     const cookie = req.signedCookies.remain;
 
     if (userInfo && studyInfo) {
-      res.render('study/viewStudy', {
+      res.render('study/detailStudy', {
         userInfo: userInfo,
         studyInfo: studyInfo,
         session: req.session.userInfo,
