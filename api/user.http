@@ -28,7 +28,6 @@ Content-Type: application/json; charset=UTF-8
 
 ### 로그인 처리
 POST {{server}}/user/signin
-Content-Type: application/json; charset=UTF-8
 
 # 김철수(Web 리더, AI 팀원)
 # {
@@ -55,10 +54,10 @@ Content-Type: application/json; charset=UTF-8
 # }
 
 # 이재성(App 팀원(모집 마감))
-{
-  "loginEmail": "sesac-l@gmail.com",
-  "loginPw": "aaaassss1111!!!!"
-}
+# {
+#   "loginEmail": "sesac-l@gmail.com",
+#   "loginPw": "aaaassss1111!!!!"
+# }
 
 # 관리자
 # {
@@ -68,3 +67,12 @@ Content-Type: application/json; charset=UTF-8
 
 ### 로그아웃 처리
 GET {{server}}/user/logout
+
+### 유저 프로필 수정
+PATCH {{server}}/user/modify
+Content-Type: application/json; charset=UTF-8
+
+{
+    "newPassword": "Aabcd1234!",
+    "confirmPassword": "Aabcd1234!"
+}

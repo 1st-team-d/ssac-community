@@ -20,6 +20,7 @@ router.get('/logout', controller.getLogout);
 // 유저 프로필
 router.get('/profile', controller.getProfile);
 
-// 유저 수정
+// 유저 프로필 수정
+router.patch('/modify', controller.updateProfile);
 
 module.exports = router;

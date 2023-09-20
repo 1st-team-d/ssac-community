@@ -1,4 +1,5 @@
 // User 모델 모듈 불러오기
+const session = require('express-session');
 const { User } = require('../models');
 // bcrypt 패키지 불러오기
 const { hashedPw, comparePw } = require('../utils/encrypt');
@@ -228,6 +229,7 @@ exports.postSignin = async (req, res) => {
   }
 };
 
+// 로그아웃
 exports.getLogout = async (req, res) => {
   try {
     if (req.session.userInfo) {
@@ -247,6 +249,7 @@ exports.getLogout = async (req, res) => {
   }
 };
 
+// 유저 프로필
 exports.getProfile = async (req, res) => {
   try {
     const cookie = req.signedCookies.remain;
@@ -259,5 +262,44 @@ exports.getProfile = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.send({ msg: 'false' });
+  }
+};
+
+// 유저 프로필 수정
+exports.updateProfile = async (req, res) => {
+  try {
+    console.log('pw info >>>>>>', req.body);
+
+    const { newPassword, confirmPassword } = req.body;
+
+    if (newPassword === confirmPassword) {
+      // 입력된 두 비밀번호가 일치할 때
+
+      // 비밀번호 유효성 검사(공백 확인)
+      isNoGapNewPw = await checkPw(newPassword);
+      isNoGapConfirmPw = await checkPw(confirmPassword);
+
+      if (isNoGapNewPw && isNoGapConfirmPw) {
+        // 비밀번호 유효성 검사 통과
+        const hashedNewPw = await hashedPw(newPassword); // newPw 암호화
+        await User.update(
+          {
+            pw: hashedNewPw,
+          },
+          { where: { id: req.session.userInfo.id } }
+        );
+
+        res.send({ isConfirm: true, isMatch: true, msg: '수정 성공' });
+      } else {
+        // 비밀번호 유효성 검사 통과 실패
+        res.send({ isConfirm: false, isMatch: true });
+      }
+    } else {
+      // 입력된 두 비밀번호가 일치하지 않을 때
+      res.send({ isConfirm: false, isMatch: false });
+    }
+  } catch (err) {
+    console.error(err);
+    res.send({ isConfirm: false, msg: '수정 실패' });
   }
 };
