@@ -43,7 +43,8 @@ async function submitComment() {
     data: cmtData,
   }); // 등록되면 true
   console.log(res.data);
-  if (res.data.msg !== 'newComment success') {
+  if (res.data.result) {
+    document.location.reload();
     // // 새로운 댓글
     // let registeredComment = document.createElement('div');
     // registeredComment.classList.add('commentBox', 'px-5', 'mb-3');
@@ -52,25 +53,39 @@ async function submitComment() {
     // <div class="commentContent ms-1 mt-2">${commentContentInput.value}</div>
     // `;
     // commentList.append(registeredComment);
+  } else {
     alert('다시 댓글 써라 ㅋㅋ');
   }
 }
 
 // 댓글 삭제
 async function deleteCmt(commentSeq) {
+  const boardSeq = document.querySelector('#boardSeq').value;
   if (confirm('삭제 하시겠습니까?')) {
     const res = await axios({
       url: '/comment/remove',
       method: 'delete',
-      data: { commentSeq },
+      data: { commentSeq: commentSeq, postID: boardSeq },
     });
-    if (res.data) {
+    if (res.data.result) {
       document.location.reload();
     }
   }
 }
 
-// 댓글 삭제
+// 댓글 수정
+function editCmt(commentSeq) {
+  const cmt = document.querySelector(`.Cmt${commentSeq}`);
+  cmt.style.display = 'none';
+  const editCmt = document.querySelector(`.Cmt${commentSeq} > div:last-child `);
+  console.log(editCmt);
+  if (editCmt.style.display === 'none') {
+    editCmt.style.display === 'block';
+    console.log(editCmt, '헤헤');
+  } else {
+    editCmt.style.display === 'none';
+  }
+}
 
 // 스터디 정보 표시
 const studyCategory = document.querySelector('#studyCategory');

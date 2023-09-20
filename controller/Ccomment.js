@@ -23,9 +23,9 @@ exports.postComment = async (req, res) => {
 
     if (newComment) {
       // res.redirect(`${process.env.DB_HOST}/board/${postID}`)
-      res.redirect(`/board?boardSeq=${postID}`);
+      res.send({ result: true });
     } else {
-      res.send({ msg: 'newComment fail' });
+      res.send({ result: false });
     }
   } catch (err) {
     console.log('err----------------', err);
@@ -35,7 +35,7 @@ exports.postComment = async (req, res) => {
 
 exports.patchComment = async (req, res) => {
   try {
-    const { commentSeq, cmtContent, postID } = req.body;
+    const { commentSeq, cmtContent } = req.body;
     const patchedComment = await Comment.update(
       {
         content: cmtContent,
@@ -47,9 +47,9 @@ exports.patchComment = async (req, res) => {
       }
     );
     if (patchedComment) {
-      res.redirect(`/board?boardSeq=${postID}`);
+      res.send({ result: true });
     } else {
-      res.send({ msg: 'patchedComment fail' });
+      res.send({ result: false });
     }
   } catch (err) {
     console.log('err----------------', err);
@@ -59,14 +59,14 @@ exports.patchComment = async (req, res) => {
 
 exports.removeComment = async (req, res) => {
   try {
-    const { commentSeq, postID } = req.body;
+    const { commentSeq } = req.body;
     const deletedComment = await Comment.destroy({
       where: { commentSeq: commentSeq },
     });
     if (deletedComment) {
-      res.redirect(`/board?boardSeq=${postID}`);
+      res.send({ result: true });
     } else {
-      res.send({ msg: 'deletedComment fail' });
+      res.send({ result: false });
     }
   } catch (err) {
     console.log('err----------------', err);

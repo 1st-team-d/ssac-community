@@ -90,7 +90,6 @@
             </div>
           <% } %>
         <% } %>
-      <!-- JavaScript 코드와 스타일이 적용된 댓글 목록 -->
       <div class="comment_section">
         <div><span>댓글</span></div>
         <div class="comment_form">
@@ -101,13 +100,13 @@
             <% if (session) { %>
               <textarea
                 class="px-3"
-                id="comment_content"
+                id="comment_content_textarea"
                 name="comment_content"
               ></textarea>
             <% } else { %>
               <textarea
                 class="px-3"
-                id="comment_content"
+                id="comment_content_textarea"
                 name="comment_content"
                 disabled
               ></textarea>
@@ -126,8 +125,8 @@
         </div>
         <div class="comment_list">
           <!-- 댓글 배열 형태로 전달되면 각 요소에 대해 작성자, 댓글 내용 출력 -->
-          <% comments.forEach(cmt => { %>
-          <div class="commentBox px-5 mb-3">
+          <% comments.forEach((cmt, index) => { %>
+          <div class="commentBox Cmt<%= cmt.commentSeq %> px-5 mb-3">
             <div class="commentUser badge text-bg-secondary fw-bold">
               <%= cmt.user.name %>
             </div>
@@ -140,6 +139,14 @@
                 <button class="deleteCmtBtn btn" onclick="deleteCmt(<%= cmt.commentSeq %>)">삭제</button>
               </div>
             <% } %>
+            <div class="editCmtWrap" style="display: none;">
+              <div class="editCmtInput">
+                <span><%= cmt.user.name %></span>
+                <textarea name="editCmtContent" id="editCmtContent<%= cmt.commentSeq %>"></textarea>
+                <button>수정</button>
+                <button>취소</button>
+              </div>
+            </div>
           </div>
           <% }); %>
         </div>

@@ -86,6 +86,23 @@ textarea:focus {
   line-height: 160%; /* 줄 높이 설정 */
 }
 
+/* 첨부파일 */
+#postFile a:hover {
+  text-decoration: underline;
+}
+
+/* 스터디 참가 / 마감 버튼 */
+.studyWrap .studyCloseApply {
+  background-color: #b6e8b1;
+  font-weight: 800;
+}
+
+.studyWrap .close {
+  background-color: #e27575;
+  font-weight: 800;
+}
+
+/* Comment */
 /* 댓글 CSS 코드 */
 .comment_section {
   margin-top: 30px;
@@ -93,6 +110,7 @@ textarea:focus {
 }
 
 /* 댓글 CSS 코드 */
+/* 댓글 입력창 */
 .comment_section > div {
   margin: 0 0 30px 0;
 }
@@ -112,66 +130,13 @@ textarea:focus {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.comment_form label {
-  margin-bottom: 10px;
-  display: block;
-}
-
-.comment_form input[type='text'],
-.comment_form textarea {
-  width: 100%;
-  padding: 1px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  margin-bottom: 15px;
-}
-
 .comment_form textarea {
   height: 100px;
-}
-
-/* 댓글 스타일 */
-.comment_section {
-  margin-top: 20px;
-}
-
-.comment_form label {
-  font-weight: bold;
-}
-
-.comment_form input[type='text'],
-.comment_form textarea {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-}
-
-/* 댓글 목록 스타일 */
-.comment_list {
-  margin-top: 20px;
-}
-
-/* 첨부파일 */
-#postFile a:hover {
-  text-decoration: underline;
-}
-
-/* 스터디 참가 / 마감 버튼 */
-.studyWrap .studyCloseApply {
-  background-color: #b6e8b1;
-  font-weight: 800;
-}
-
-.studyWrap .close {
-  background-color: #e27575;
-  font-weight: 800;
-}
-
-/* 댓글 */
-em {
-  font-style: normal;
 }
 
 .comment_content {
@@ -180,7 +145,11 @@ em {
   background-color: #fff;
 }
 
-/* Comment */
+/* 댓글 목록 스타일 */
+.comment_list {
+  margin-top: 20px;
+}
+
 .comment_list .commentBox {
   position: relative;
 }
@@ -206,4 +175,41 @@ em {
   background-color: #b0adad;
   color: #fff;
   font-weight: 600;
+}
+
+/* Comment Edit */
+.editCmtWrap {
+  background-color: #eee;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.editCmtInput {
+  background-color: #fff;
+  height: auto;
+  width: 100%;
+  position: relative;
+  padding: 10px;
+}
+
+.editCmtInput span {
+  font-weight: 700;
+}
+
+.editCmtInput textarea {
+  display: block;
+  height: 100px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.editCmtInput button {
+  position: absolute;
+  bottom: 5%;
+  right: 1rem;
+  transform: translateY(-50%);
 }
