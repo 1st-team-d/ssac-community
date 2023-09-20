@@ -246,3 +246,18 @@ exports.getLogout = async (req, res) => {
     res.send({ isLogout: false, msg: '로그아웃 실패' });
   }
 };
+
+exports.getProfile = async (req, res) => {
+  try {
+    const cookie = req.signedCookies.remain;
+
+    res.render('profile', {
+      session: req.session.userInfo,
+      cookieEmail: cookie ? cookie.loginEmail : '',
+      cookiePw: cookie ? cookie.loginPw : '',
+    });
+  } catch (err) {
+    console.error(err);
+    res.send({ msg: 'false' });
+  }
+};
