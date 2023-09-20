@@ -11,6 +11,14 @@ GET {{adminUrl}}/user/board/1
 
 ### 관리자 특정 유저 조회 화면
 GET {{adminUrl}}/user/comment/5
+Content-Type: application/json; charset=UTF-8
+
+{
+    "userSeq": 5
+}
+
+### 특정 유저 삭제
+DELETE {{adminUrl}}/user/remove
 
 ### 게시글 조회 화면
 GET {{adminUrl}}/board

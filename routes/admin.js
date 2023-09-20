@@ -7,6 +7,7 @@ router.get('/', controller.getAdmin); // 관리자 메인 화면
 router.get('/user', controller.getUser); // 모든 유저 조회
 router.get('/user/board/:userSeq', controller.getUserBoard); // 게시글 조회
 router.get('/user/comment/:userSeq', controller.getUserComment); // 댓글 조회
+router.delete('/user/remove', controller.deleteUser); // 유저 삭제
 
 // ################# 관리자 게시글 #################
 router.get('/board', controller.getBoard); // 게시글 조회 화면

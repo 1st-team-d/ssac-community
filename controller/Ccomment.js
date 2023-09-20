@@ -22,11 +22,11 @@ exports.postComment = async (req, res) => {
     });
 
     if (newComment) {
-      res.send({ msg: 'newComment success' });
+      // res.redirect(`${process.env.DB_HOST}/board/${postID}`)
+      res.redirect(`/board?boardSeq=${postID}`);
     } else {
       res.send({ msg: 'newComment fail' });
     }
-    // res.redirect(`/board?boardSeq=${postID}`);
   } catch (err) {
     console.log('err----------------', err);
     res.send('Internal Server Error!!!');
@@ -35,7 +35,7 @@ exports.postComment = async (req, res) => {
 
 exports.patchComment = async (req, res) => {
   try {
-    const { commentSeq, cmtContent } = req.body;
+    const { commentSeq, cmtContent, postID } = req.body;
     const patchedComment = await Comment.update(
       {
         content: cmtContent,
@@ -47,7 +47,7 @@ exports.patchComment = async (req, res) => {
       }
     );
     if (patchedComment) {
-      res.send({ msg: 'patchedComment success' });
+      res.redirect(`/board?boardSeq=${postID}`);
     } else {
       res.send({ msg: 'patchedComment fail' });
     }
@@ -59,12 +59,12 @@ exports.patchComment = async (req, res) => {
 
 exports.removeComment = async (req, res) => {
   try {
-    const { commentSeq } = req.body;
+    const { commentSeq, postID } = req.body;
     const deletedComment = await Comment.destroy({
       where: { commentSeq: commentSeq },
     });
     if (deletedComment) {
-      res.send({ msg: 'deletedComment success' });
+      res.redirect(`/board?boardSeq=${postID}`);
     } else {
       res.send({ msg: 'deletedComment fail' });
     }
