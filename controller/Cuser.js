@@ -254,11 +254,16 @@ exports.getProfile = async (req, res) => {
   try {
     const cookie = req.signedCookies.remain;
 
-    res.render('profile', {
-      session: req.session.userInfo,
-      cookieEmail: cookie ? cookie.loginEmail : '',
-      cookiePw: cookie ? cookie.loginPw : '',
-    });
+    if (req.session.userInfo) {
+      res.render('profile', {
+        session: req.session.userInfo,
+        cookieEmail: cookie ? cookie.loginEmail : '',
+        cookiePw: cookie ? cookie.loginPw : '',
+      });
+    } else {
+      console.log('session missing');
+      res.redirect('/');
+    }
   } catch (err) {
     console.error(err);
     res.send({ msg: 'false' });
