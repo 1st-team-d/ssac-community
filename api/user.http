@@ -28,6 +28,7 @@ Content-Type: application/json; charset=UTF-8
 
 ### 로그인 처리
 POST {{server}}/user/signin
+Content-Type: application/json; charset=UTF-8
 
 # 김철수(Web 리더, AI 팀원)
 # {
