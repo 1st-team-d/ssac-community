@@ -59,17 +59,16 @@ exports.getBoard = async (req, res) => {
 
       // 해당 게시글의 댓글 조회
       const allComment = await Comment.findAll({
-        attributes: ['content'],
+        attributes: ['commentSeq', 'content', 'user.name'],
         where: {
-          boardSeq: {
-            [Op.eq]: boardSeq,
-          },
+          boardSeq: boardSeq,
         },
+        include: [{ model: User }],
       });
       console.log('comments >>>>>>>>>>>>>>>>>', allComment);
 
       console.log('session>>>>>>', req.session.userInfo);
-      // console.log('특정 게시글 board>>>>>>>', board);
+      console.log('특정 게시글 board>>>>>>>', board);
 
       const cookie = req.signedCookies.remain;
 
