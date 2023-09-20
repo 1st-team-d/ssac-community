@@ -151,6 +151,26 @@ exports.getUserComment = async (req, res) => {
   }
 };
 
+// 유저 삭제
+exports.deleteUser = async (req, res) => {
+  try {
+    const { userSeq } = req.body;
+
+    const deleteUser = await User.destroy({
+      where: { userSeq: userSeq },
+    });
+
+    if (deleteUser) {
+      res.send({ isDelete: true });
+    } else {
+      res.send({ isDelete: false, msg: '삭제에 실패했습니다' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.send({ isDelete: false });
+  }
+};
+
 // ################# 관리자 게시글 #################
 // GET '/admin/board'
 // 게시글 조회 화면
