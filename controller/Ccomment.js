@@ -22,11 +22,11 @@ exports.postComment = async (req, res) => {
     });
 
     if (newComment) {
-      res.send({ msg: 'newComment success' });
+      // res.redirect(`${process.env.DB_HOST}/board/${postID}`)
+      res.redirect(`/board?boardSeq=${postID}`);
     } else {
       res.send({ msg: 'newComment fail' });
     }
-    // res.redirect(`/board?boardSeq=${postID}`);
   } catch (err) {
     console.log('err----------------', err);
     res.send('Internal Server Error!!!');
