@@ -24,3 +24,11 @@ Content-Type: application/json; charset=UTF-8
     "commentSeq" : 1,
     "cmtContent" : "modified comment"
 }
+
+### 댓글 삭제
+DELETE {{server}}/comment/remove
+Content-Type: application/json; charset=UTF-8
+
+{
+    "commentSeq" : 1
+}

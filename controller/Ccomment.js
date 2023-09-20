@@ -48,3 +48,16 @@ exports.patchComment = async (req, res) => {
     res.send('Internal Server Error!!!');
   }
 };
+
+exports.removeComment = async (req, res) => {
+  try {
+    const { commentSeq } = req.body;
+    const deletedComment = await Comment.destroy({
+      where: { commentSeq: commentSeq },
+    });
+    res.send('remove success');
+  } catch (err) {
+    console.log('err----------------', err);
+    res.send('Internal Server Error!!!');
+  }
+};
