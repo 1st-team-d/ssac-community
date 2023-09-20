@@ -113,7 +113,7 @@ Comment.belongsTo(User, {
 
 db.User = User;
 db.Board = Board;
-// db.Comment = Comment;
+db.Comment = Comment;
 // db.Menu = Menu;
 db.Study = Study;
 db.StudyApply = StudyApply;
