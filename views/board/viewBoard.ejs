@@ -39,22 +39,22 @@
             <span class="fs-6 badge bg-info opacity-50 me-3" id="studyCategory"></span>
             <span><%= board.title %></span>
           </div>
-          <div class="info">
-            <dl>
-              <dt>작성자</dt>
-              <dd><%= user.name %></dd>
-            </dl>
-            <dl>
-              <dt>작성일</dt>
-              <dd>
+          <div class="info d-flex align-items-center">
+            <div>
+              <span>작성자</span>
+              <span><%= user.name %></span>
+            </div>
+            <div>
+              <span>작성일</span>
+              <span>
                 <%= board.dataValues.year + '-' + board.dataValues.month + '-' +
                 board.dataValues.day %>
-              </dd>
-            </dl>
-            <dl>
-              <dt>조회</dt>
-              <dd><%= board.count %></dd>
-            </dl>
+              </span>
+            </div>
+            <div>
+              <span>조회</span>
+              <span><%= board.count %></span>
+            </div>
           </div>
           <div class="cont">
             <!-- 게시물 내용을 출력할 때는 줄바꿈 이런걸 했을 수도 있어서 이스케이프 처리하지 않고 출력 -->

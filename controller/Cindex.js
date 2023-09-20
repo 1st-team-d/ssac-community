@@ -1,4 +1,4 @@
-const { Board } = require('../models');
+const { Board, Study } = require('../models');
 // GET '/'
 // 메인 화면
 exports.index = async (req, res) => {
@@ -7,6 +7,7 @@ exports.index = async (req, res) => {
   const rankBoard = await Board.findAll({
     order: [['count', 'DESC']],
     limit: 5,
+    include: [{ model: Study }],
   });
   console.log('rank >>>>>', rankBoard);
   // rankBoard 사용 예시 : 게시글의 조회수 출력

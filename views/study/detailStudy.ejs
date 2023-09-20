@@ -1,120 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>스터디 상세 페이지</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- 부트스트랩 CSS를 불러옴 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <!-- CDN -->
-    <%- include('./includes/cdn.ejs') %>
+    <%- include('../includes/cdn.ejs') %>
+    <!-- 로그인 / 회원가입 -->
     <script defer src="/static/js/loginRegister.js"></script>
-    <!-- header css -->
-    <link rel="stylesheet" href="/static/css/header.css" />
     <!-- 스터디 상세페이지 css -->
-    <link rel="stylesheet" href="/static/css/detailStudy.css" />
+    <link rel="stylesheet" href="/static/css/study/detailStudy.css" />
     <title>스터디 정보 페이지</title>
-    </head>
-    <%- include('./includes/header.ejs') %>
-    <body>
-        <div class="studyDetail container">
-            <div class="row">
-                <div class="col-md-8 offset-md-2 col-lg-8 offset-lg-2">
-                    <!-- 게시글 라인 -->
-                    <hr class="post-line">
-        
-                    <!-- 첫 번째 아코디언 (스터디 정보) -->
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex flex-column text-center align-items-center">
-                                <div class="flex-grow-1 pt-4">
-                                    <span class="d-block text-muted">'스터디명'에 대한 스터디 정보입니다</span>
-                                    <br>
-                                    <h5>스터디 주제</h5>
-                                    <span class="d-block text-muted">스터디에 대한 간단한 설명 또는 정보를 입력하세요.</span>
-                                    <br>
-                                    <div class="mb-4">
-                                        <span class="badge rounded-pill bg-success">모집중</span>
-                                        <span class="badge rounded-pill bg-dark">마감</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-        
-                        <div class="card-footer py-0 border-top">
-                            <div class="row">
-                                <div class="col text-center p-3">
-                                    <h4 class="fs-6 mb-2">모집기간 </h4>
-                                    <span class="d-block font-size-sm">23.09.18-23</span>
-                                </div>
-                                <div class="col p-3 text-center border-end border-start">
-                                    <h4 class="fs-6 mb-2"> 스터디</h4>
-                                    <span class="d-block font-size-sm" data-bs-toggle="collapse" data-bs-target="#postCollapse1" aria-expanded="false" aria-controls="postCollapse1">
-                                    <a href="#">게시글 보러가기</a>
-                                    </span>
-                                </div>
-                                <div class="col text-center p-3">
-                                    <h4 class="fs-6 mb-2">모집인원</h4>
-                                    <span class="d-block font-size-sm">0 / 5</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-        
-                        <!-- 아코디언 (신청자 목록) -->
-                        <div class="card">
-                            <div class="card-header bg-success text-center" id="postHeading2">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#postCollapse2" aria-expanded="false" aria-controls="postCollapse2">
-                                        스터디 신청자 목록
-                                    </button>
-                                </h2>
-                            </div>
-        
-                            <div id="postCollapse2" class="collapse" aria-labelledby="postHeading2" data-bs-parent="#postAccordion">
-                                <div class="card-body">
-                                    <!-- 스터디 신청자 목록 시작 -->
-                                    <div class="applicant-table">
-                                        <table class="table project-list-table table-nowrap align-middle table-borderless">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Num</th>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Position</th>
-                                                    <th scope="col">Email</th>
-                                                    <th scope="col">Date</th>
-                                                </tr>
-                                            </thead>
-        
-                                            <tbody>
-                                                <!-- 스터디 신청자 목록을 여기에 추가 -->
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td><a href="#" class="text-body">김새싹</a></td>
-                                                    <td><span class="badge badge-soft-success mb-0">Full Stack Developer</span></td>
-                                                    <td><a href="mailto:example@example.com">example@example.com</a></td>
-                                                    <td>23.09.19</td>
-                                                </tr>
-                                                <!-- 추가 신청자 여러 명을 추가 -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-        
+  </head>
+  <%- include('../includes/header.ejs') %>
+  <body>
+    <div class="studyDetail container">
+      <div class="row">
+        <div class="col-md-8 offset-md-2 col-lg-8 offset-lg-2">
+          <!-- 첫 번째 아코디언 (스터디 정보) -->
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex flex-column text-center align-items-center">
+                <div class="flex-grow-1 pt-4">
+                  <span class="d-block text-muted"
+                    >'스터디명'에 대한 스터디 정보입니다</span
+                  >
+                  <br />
+                  <h5><%= studyInfo.title %></h5>
+                  <span class="d-block text-muted"
+                    >스터디에 대한 간단한 설명 또는 정보를 입력하세요.</span
+                  >
+                  <br />
+                  <div class="mb-4">
+                    <% if (studyInfo.study.status) { %>
+                    <span class="badge rounded-pill bg-dark">마감</span>
+                    <% } else { %>
+                    <span class="badge rounded-pill bg-success">모집중</span>
+                    <% } %>
+                  </div>
                 </div>
+              </div>
             </div>
+
+            <div class="card-footer py-0 border-top">
+              <div class="row">
+                <div class="col text-center p-3">
+                  <h4 class="fs-6 mb-2">모집기간</h4>
+                  <span class="d-block font-size-sm">일단 미정</span>
+                </div>
+                <div class="col p-3 text-center border-end border-start">
+                  <h4 class="fs-6 mb-2">스터디</h4>
+                  <a href="/board?boardSeq=<%= studyInfo.boardSeq %>">
+                    <span
+                      class="d-block font-size-sm"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#postCollapse1"
+                      aria-expanded="false"
+                      aria-controls="postCollapse1"
+                    >
+                      모집글로 이동
+                    </span>
+                  </a>
+                </div>
+                <div class="col text-center p-3">
+                  <h4 class="fs-6 mb-2">모집인원</h4>
+                  <span class="d-block font-size-sm"
+                    ><%= userInfo.length %> / <%= studyInfo.study.maxPeople
+                    %></span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 아코디언 (신청자 목록) -->
+          <div class="card">
+            <div class="card-header bg-secondary text-center" id="postHeading2">
+              <h2 class="mb-0">
+                <button
+                  class="btn btn-link bg-light opacitiy-25 applyList"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#postCollapse2"
+                  aria-expanded="false"
+                  aria-controls="postCollapse2"
+                >
+                  스터디 신청자 목록
+                </button>
+              </h2>
+            </div>
+
+            <div
+              id="postCollapse2"
+              class="collapse"
+              aria-labelledby="postHeading2"
+              data-bs-parent="#postAccordion"
+            >
+              <div class="card-body">
+                <!-- 스터디 신청자 목록 시작 -->
+                <div class="applicant-table">
+                  <table
+                    class="table project-list-table table-nowrap align-middle table-borderless"
+                  >
+                    <thead>
+                      <tr>
+                        <th scope="col">Num</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Date</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <!-- 스터디 신청자 목록을 여기에 추가 -->
+                      <!-- forEach로 정보 입력 -->
+                      <% userInfo.forEach((user, index) => { %>
+                      <tr>
+                        <td><%= index + 1 %></td>
+                        <td>
+                          <a href="#" class="text-body"><%= user.name %></a>
+                        </td>
+                        <td>
+                          <a href="mailto:example@example.com"
+                            ><%= user.id %></a
+                          >
+                        </td>
+                        <td>
+                          <%= [user.dataValues.year.toString(),
+                          user.dataValues.month.toString(),
+                          user.dataValues.day.toString()].join('.') %>
+                        </td>
+                      </tr>
+                      <% }) %>
+                      <!-- 추가 신청자 여러 명을 추가 -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        
-        <!-- 포지션 아이콘 -->
-        <!-- <td><span class="badge badge-soft-primary mb-0">Backend Developer</span></td>
-        <td><span class="badge badge-soft-success mb-0">Full Stack Developer</span></td>
-        <td><span class="badge badge-soft-danger mb-0">UI/UX Designer</span></td>
-        <td><span class="badge badge-soft-info mb-0">Frontend Developer</span></td> -->
-        
-        <!-- Bootstrap 및 JavaScript 라이브러리 로드 -->
-        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-        </body>
-        </html>
+      </div>
+    </div>
+  </body>
+</html>
