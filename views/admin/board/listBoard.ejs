@@ -46,6 +46,7 @@
     </div>
 
     <script>
+      // 게시글 검색
       async function searchBoard() {
         try {
           const search = document.querySelector('#search');
@@ -68,6 +69,7 @@
               const li4 = document.createElement('li');
               const li5 = document.createElement('li');
               const anchor = document.createElement('a');
+              const deleteBtn = document.createElement('button');
 
               anchor.href = `/board/profile/${board.boardSeq}`;
               anchor.innerText = `게시글 제목 : ${board.title}`;
@@ -84,7 +86,14 @@
               ul.append(li4);
               ul.append(li5);
 
+              deleteBtn.type = 'button';
+              deleteBtn.onclick = function(){
+                removeBoard(`${board.boardSeq}`);
+              }
+              deleteBtn.textContent = '삭제';
+
               tempDiv.append(ul);
+              tempDiv.append(deleteBtn);
               tempDiv.append(document.createElement('hr'));
             }
           } else {
