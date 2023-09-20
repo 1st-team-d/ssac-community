@@ -11,9 +11,14 @@
 }
 
 /* 모집중 / 참여중 스터디 섹션 */
-.studyStatus {
+.leaderStudy .studyStatus {
   height: 100%;
   background-color: rgb(164, 207, 164);
+}
+
+.crewStudy .studyStatus {
+  height: 100%;
+  background-color: rgb(201, 219, 128);
 }
 
 /* 각 스터디에 대한 정보 확인할 수 있는 곳 */
