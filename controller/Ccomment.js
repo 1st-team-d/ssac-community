@@ -20,8 +20,12 @@ exports.postComment = async (req, res) => {
       boardSeq: postID,
       userSeq: req.session.userInfo.userSeq,
     });
-    console.log('..................................');
-    res.send('success');
+
+    if (newComment) {
+      res.send({ msg: 'newComment success' });
+    } else {
+      res.send({ msg: 'newComment fail' });
+    }
     // res.redirect(`/board?boardSeq=${postID}`);
   } catch (err) {
     console.log('err----------------', err);
@@ -42,7 +46,11 @@ exports.patchComment = async (req, res) => {
         },
       }
     );
-    res.send('success');
+    if (patchedComment) {
+      res.send({ msg: 'patchedComment success' });
+    } else {
+      res.send({ msg: 'patchedComment fail' });
+    }
   } catch (err) {
     console.log('err----------------', err);
     res.send('Internal Server Error!!!');
@@ -55,7 +63,11 @@ exports.removeComment = async (req, res) => {
     const deletedComment = await Comment.destroy({
       where: { commentSeq: commentSeq },
     });
-    res.send('remove success');
+    if (deletedComment) {
+      res.send({ msg: 'deletedComment success' });
+    } else {
+      res.send({ msg: 'deletedComment fail' });
+    }
   } catch (err) {
     console.log('err----------------', err);
     res.send('Internal Server Error!!!');
