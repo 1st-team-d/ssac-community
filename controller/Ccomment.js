@@ -21,7 +21,8 @@ exports.postComment = async (req, res) => {
       userSeq: req.session.userInfo.userSeq,
     });
     console.log('..................................');
-    res.redirect(`/board?boardSeq=${postID}`);
+    res.send('success');
+    // res.redirect(`/board?boardSeq=${postID}`);
   } catch (err) {
     console.log('err----------------', err);
     res.send('Internal Server Error!!!');
