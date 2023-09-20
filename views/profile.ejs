@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile</title>
+
+    <!-- 부트스트랩 CSS를 불러옴 -->
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CDN -->
+    <%- include('./includes/cdn.ejs') %>
+    <script defer src="/static/js/loginRegister.js"></script>
+    <link rel="stylesheet" href="/static/css/header.css" />
+    <!-- 프로필 css -->
+    <link rel="stylesheet" href="/static/css/profile.css" />
+    
+    <title>프로필 페이지</title>
+</head>
+<body>
+    <%- include('./includes/header.ejs') %>
+<div class="container bootstrap snippets bootdeys">
+    <div class="row">
+        <div class="col-xs-12 col-sm-9">
+            <form class="form-horizontal">
+                <!-- 프로필 정보 패널 -->
+                <div class="panel panel-default">
+                    <div class="panel-body text-center">
+                        <img src="#" class="img-circle profile-avatar" alt="아마두 새싹 이미지?">
+                        <h3>김새싹</h3>
+                        <p>Web Developer</p>
+                    </div>
+                </div>
+                <!-- 유저 정보 패널 -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">User info</h4>
+                    </div>
+                    <div class="panel-body">
+                        <!-- 포지션 선택 -->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Position</label>
+                            <div class="col-sm-10">
+                                <select class="form-control">
+                                    <option selected>Position</option>
+                                    <option>Web</option>
+                                    <option>App</option>
+                                    <option>AI</option>
+                                    <option>UI/UX</option>
+                                    <option>Game</option>
+                                    <option>etc</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- 웹사이트 입력 -->
+                        <!-- <div class="form-group">
+                            <label class="col-sm-2 control-label">Website</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div> -->
+                        <!-- 기술 스킬 입력 -->
+                        <!-- <div class="form-group">
+                            <label class="col-sm-2 control-label">Skills</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <!-- 보안 설정 패널 -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Security</h4>
+                    </div>
+                    <div class="panel-body">
+                        <!-- 현재 비밀번호 입력 -->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Current password</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control">
+                            </div>
+                        </div>
+                        <!-- 새로운 비밀번호 입력 -->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">New password</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control">
+                            </div>
+                        </div>
+                        <!-- 제출 및 취소 버튼 -->
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-2">
+                                <button type="submit" class="btn">Submit</button>
+                                <button type="reset" class="btn btn-default">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- jQuery 및 부트스트랩 JS를 불러옴 -->
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
