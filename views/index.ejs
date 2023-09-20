@@ -73,14 +73,19 @@
                 <div class="carousel-item<%= i === 0 ? ' active' : '' %>">
                   <div class="row">
                     <div class="col-12 mb-4">
+                      <a>
                       <div class="custom-block custom-block-full">
                         <div class="custom-block-image-wrap">
                           <a href=""> </a>
                         </div>
                         <div class="custom-block-info">
-                          <h4 class="mb-2">
-                            <a href=""> # 카테고리 </a>
-                          </h4>
+                          <a href="/board?boardSeq=<%= combinedBoards.boardSeq %>">
+                            <h4 class="mb-2"> #
+                              <% switch (combinedBoards[i].study.category) { case 0: %> 웹 <% break; case 1:
+                                %> 앱 <% break; case 2: %> AI <% break; case 3: %> UI/UX <% break;
+                                case4: %> 게임 <% default: %> 기타 <% } %>
+                            </h4>
+                          </a>
                           <br /><br />
                           <div class="profile-block d-flex">
                             <h4><%= combinedBoards[i].title %></h4>
@@ -93,6 +98,7 @@
                           </div>
                         </div>
                       </div>
+                    </a>
                     </div>
                   </div>
                 </div>
@@ -123,9 +129,13 @@
                               <a href=""> </a>
                             </div>
                             <div class="custom-block-info">
-                              <h4 class="mb-2">
-                                <a href=""> # 카테고리 </a>
-                              </h4>
+                              <a href="/board?boardSeq=<%= combinedBoards.boardSeq %>">
+                                <h4 class="mb-2"> #
+                                  <% switch (combinedBoards[i].study.category) { case 0: %> 웹 <% break; case 1:
+                                    %> 앱 <% break; case 2: %> AI <% break; case 3: %> UI/UX <% break;
+                                    case4: %> 게임 <% default: %> 기타 <% } %>
+                                </h4>
+                            </a>
                               <br /><br />
                               <div class="profile-block d-flex">
                                 <h4><%= combinedBoards[i].title %></h4>

@@ -4,9 +4,11 @@ const { Board, Study } = require('../models');
 exports.index = async (req, res) => {
   // console.log(req.session.userInfo);
   // 조회수가 높은 차례대로 글 5개 전달
+  const MAIN_CARD_COUNT = 6;
+
   const rankBoard = await Board.findAll({
     order: [['count', 'DESC']],
-    limit: 5,
+    limit: MAIN_CARD_COUNT,
     include: [{ model: Study }],
   });
   // console.log('rank >>>>>', rankBoard);
