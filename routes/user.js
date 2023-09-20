@@ -17,10 +17,10 @@ router.post('/signin', controller.postSignin);
 // 로그아웃
 router.get('/logout', controller.getLogout);
 
-// 모든 유저 조회
-// 특정 유저 조회
-// 유저 검색
-// 유저 수정
-// 유저 삭제
+// 유저 프로필
+router.get('/profile', controller.getProfile);
+
+// 유저 프로필 수정
+router.patch('/modify', controller.updateProfile);
 
 module.exports = router;
