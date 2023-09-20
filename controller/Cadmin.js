@@ -1,5 +1,12 @@
 // User 모델 모듈 불러오기
-const { User, Board, Comment, Study, StudyApply, sequelize } = require('../models');
+const {
+  User,
+  Board,
+  Comment,
+  Study,
+  StudyApply,
+  sequelize,
+} = require('../models');
 const Op = require('sequelize').Op;
 
 // GET '/admin'
@@ -87,6 +94,184 @@ exports.getUser = async (req, res) => {
   }
 };
 
+// ################# 관리자 게시글 #################
+// GET '/admin/board'
+// 게시글 조회 화면
+exports.getBoard = async (req, res) => {
+  try {
+    const boardInfo = await Board.findAll({
+      attributes: [
+        'boardSeq',
+        'title',
+        'content',
+        'filePath',
+        'count',
+        [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
+        [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
+        [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
+        'board.createdAt',
+        'user.userSeq',
+        'user.id',
+        'user.name',
+        'user.isAdmin',
+        'user.createdAt',
+      ],
+      include: [{ model: User }],
+      order: [['createdAt', 'DESC']],
+    });
+
+    res.render('admin/board/listBoard', {
+      boardInfo: boardInfo,
+      allBoardLen: boardInfo.length,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// GET '/admin/board/list?search=###'
+// 게시글 검색 + 모든 게시글 조회 가능(검색어 없이 입력 시)
+exports.getBoardList = async (req, res) => {
+  try {
+    const { search } = req.query;
+    let where = {};
+    if (search) {
+      where = {
+        [Op.or]: [
+          {
+            title: { [Op.like]: `%${search}%` },
+          },
+          {
+            content: { [Op.like]: `%${search}%` },
+          },
+        ],
+      };
+    }
+
+    const boardInfo = await Board.findAll({
+      attributes: [
+        'boardSeq',
+        'title',
+        'content',
+        'filePath',
+        'count',
+        [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
+        [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
+        [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
+        'board.createdAt',
+        'user.userSeq',
+        'user.id',
+        'user.name',
+        'user.isAdmin',
+        'user.createdAt',
+      ],
+      where: where,
+      include: [{ model: User }],
+      order: [['createdAt', 'DESC']],
+    });
+
+    res.send({
+      boardInfo: boardInfo,
+      allBoardLen: boardInfo.length,
+      msg: 'success',
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({ msg: 'fail' });
+  }
+};
+
+// GET '/admin/board/profile/:boardSeq'
+// 특정 게시글 조회
+exports.getProfileBoard = async (req, res) => {
+  try {
+    const { boardSeq } = req.params;
+
+    // 게시글 정보
+    const boardInfo = await Board.findOne({
+      attributes: [
+        'boardSeq',
+        'title',
+        'content',
+        'filePath',
+        'count',
+        [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
+        [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
+        [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
+        'board.createdAt',
+        'user.userSeq',
+        'user.id',
+        'user.name',
+        'user.isAdmin',
+        'user.createdAt',
+      ],
+      include: [{ model: User }],
+      where: {
+        boardSeq: boardSeq,
+      },
+      order: [['createdAt', 'DESC']],
+    });
+
+    res.render('admin/board/viewBoard', {
+      boardInfo: boardInfo,
+      allBoardLen: boardInfo.length,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// PATCH '/admin/board/modify'
+// (특정) 게시글 수정
+exports.patchBoard = async (req, res) => {
+  try {
+    const { title, content, boardSeq } = req.body;
+    const updateOneBoard = await Board.update(
+      {
+        title: title,
+        content: content,
+      },
+      {
+        where: {
+          boardSeq: boardSeq,
+        },
+      }
+    );
+
+    if (updateOneBoard) {
+      res.send({ msg: 'success' });
+    } else {
+      res.send({ msg: 'fail' });
+    }
+  } catch (err) {
+    console.log(err);
+    res.send({ msg: 'fail' });
+  }
+};
+
+// DELETE '/admin/board/remove'
+// 게시글 삭제
+exports.deleteBoard = async (req, res) => {
+  try {
+    const { boardSeq } = req.body;
+    const deleteOneBoard = await Board.destroy({
+      where: {
+        boardSeq: boardSeq,
+      },
+    });
+
+    if (deleteOneBoard) {
+      res.send({ msg: 'success' });
+    } else {
+      res.send({ msg: 'fail' });
+    }
+  } catch (err) {
+    console.log(err);
+    res.send({ msg: 'fail' });
+  }
+};
+
+// ################# 관리자 스터디 #################
 // GET '/admin/study'
 // 스터디 조회 화면
 exports.getStudy = async (req, res) => {
@@ -117,7 +302,7 @@ exports.getStudy = async (req, res) => {
 };
 
 // GET '/admin/study/list?search=###'
-// 모든 스터디 조회 + 스터디 검색
+// 스터디 검색 + 모든 스터디 조회 가능(검색어 없이 입력 시)
 exports.getStudyList = async (req, res) => {
   try {
     const { search } = req.query;

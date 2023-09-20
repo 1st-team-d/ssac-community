@@ -9,10 +9,37 @@ GET {{adminUrl}}/user
 ### 관리자 특정 유저 조회 화면
 GET {{adminUrl}}/user?userSeq=1
 
+### 게시글 조회 화면
+GET {{adminUrl}}/board
+
+### 게시글 검색 + 모든 게시글 조회 가능(검색어 없이 입력 시)
+GET {{adminUrl}}/board/list?search=a
+
+### 특정 게시글 조회
+GET {{adminUrl}}/board/profile/5
+
+### (특정) 게시글 수정
+PATCH {{adminUrl}}/board/modify
+Content-Type: application/json; charset=UTF-8
+
+{
+    "title": "손흥민의 AI 스터디 제목 (수정)",
+    "content": "손흥민의 AI 스터디 내용 (수정)",
+    "boardSeq": 5
+}
+
+### 게시글 삭제
+DELETE {{adminUrl}}/board/remove
+Content-Type: application/json; charset=UTF-8
+
+{
+    "boardSeq": 5
+}
+
 ### 스터디 조회 화면
 GET {{adminUrl}}/study
 
-### 모든 스터디 조회 + 스터디 검색
+### 스터디 검색 + 모든 스터디 조회 가능(검색어 없이 입력 시)
 GET {{adminUrl}}/study/list?search=a
 
 ### 특정 스터디 조회
