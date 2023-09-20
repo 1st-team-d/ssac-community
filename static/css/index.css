@@ -58,6 +58,8 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  overflow-y: hidden;
+
 }
 
 /* 메인 텍스트 반응형 */
@@ -100,10 +102,14 @@ a {
   text-decoration: none;
 }
 
+
+
 /* 카드 a태그 호버 컬러 설정 */
 a:hover {
   color: var(--link-hover-color);
 }
+
+
 
 /* 카드 css 설정 */
 .custom-block {
@@ -129,6 +135,7 @@ a:hover {
   transform: translateY(-3px);
 }
 
+
 /* 마우스를 올릴 때 배경 색상이 변경 */
 .custom-block .custom-block-info + div .badge:hover {
   background-color: var(--secondary-color);
@@ -146,16 +153,22 @@ a:hover {
 }
 
 /* 이전 버튼의 위치를 조정 */
-.carousel-control-prev {
+/* .carousel-control-prev {
   left: -120px;
-}
+} */
 
 /* 다음 버튼의 위치를 조정 */
-.carousel-control-next {
+/* .carousel-control-next {
   right: -120px;
+} */
+
+.myCarousel {
+  display: flex;
+  width: 80%;
+  height: 80%;
+  align-items: center;
+  justify-content: center;
 }
-
-
 
 /* 모바일 화면에서 슬라이드 비활성화 및 가로 스크롤 제거 */
 @media (max-width: 768px) {
@@ -171,6 +184,7 @@ a:hover {
   }
 
   .carousel-inner {
+    overflow: visible; /* 내용물이 넘치지 않도록 */
     overflow-x: auto;
     white-space: nowrap;
   }
@@ -180,12 +194,35 @@ a:hover {
   }
 
   /* 이전 버튼의 위치를 조정 */
-  .carousel-control-prev {
+  /* .carousel-control-prev {
     left: 0px;
-  }
+  } */
 
   /* 다음 버튼의 위치를 조정 */
-  .carousel-control-next {
+  /* .carousel-control-next {
     right: 0px;
-  }
+  } */
+}
+
+/* test */
+.carousel-container {
+  position: relative;
+}
+
+.carousel-container .custom-control-btn {
+  position: absolute;
+}
+
+.carousel-container .carousel-control-prev {
+  top: 50%;
+  left: -120px;
+  transform: translateY(-50%);
+  
+}
+
+.carousel-container .carousel-control-next {
+  top: 50%;
+  right: -120px;
+  transform: translateY(-50%);
+
 }
