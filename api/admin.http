@@ -36,6 +36,20 @@ Content-Type: application/json; charset=UTF-8
     "boardSeq": 5
 }
 
+### 댓글 조회 화면
+GET {{adminUrl}}/comment
+
+### 댓글 검색 + 모든 댓글 조회 가능
+GET {{adminUrl}}/comment/list?search=(
+
+### (특정) 댓글 삭제
+DELETE {{adminUrl}}/comment/remove
+Content-Type: application/json; charset=UTF-8
+
+{
+    "commentSeq": 1
+}
+
 ### 스터디 조회 화면
 GET {{adminUrl}}/study
 

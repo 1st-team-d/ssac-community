@@ -272,6 +272,132 @@ exports.deleteBoard = async (req, res) => {
 };
 
 // ################# 관리자 스터디 #################
+// GET '/admin/comment'
+// 댓글 조회 화면
+exports.getComment = async (req, res) => {
+  try {
+    const commentInfo = await Comment.findAll({
+      attributes: [
+        'commentSeq',
+        [sequelize.col('comment.content'), 'comment_content'],
+        [sequelize.fn('YEAR', sequelize.col('comment.createdAt')), 'year'],
+        [sequelize.fn('MONTH', sequelize.col('comment.createdAt')), 'month'],
+        [sequelize.fn('DAY', sequelize.col('comment.createdAt')), 'day'],
+        'createdAt',
+        'updatedAt',
+        'board.boardSeq',
+        'board.title',
+        'board.content',
+        'board.filePath',
+        'board.count',
+        'board.createdAt',
+        'board.updatedAt',
+        'user.userSeq',
+        'user.id',
+        'user.name',
+        'user.isAdmin',
+        'user.createdAt',
+        'user.updatedAt',
+      ],
+      include: [
+        { model: Board, required: true },
+        { model: User, required: true },
+      ],
+      order: [['createdAt', 'DESC']],
+    });
+
+    // console.log(commentInfo);
+
+    res.render('admin/comment/listComment', {
+      commentInfo: commentInfo,
+      allCommentLen: commentInfo,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// GET '/admin/comment/list?search=###'
+// 댓글 검색 + 모든 댓글 조회 가능(검색어 없이 입력 시)
+exports.getCommentList = async (req, res) => {
+  try {
+    const { search } = req.query;
+    let where = {};
+    if (search) {
+      where = {
+        [Op.or]: [
+          {
+            content: { [Op.like]: `%${search}%` },
+          },
+        ],
+      };
+    }
+
+    const commentInfo = await Comment.findAll({
+      attributes: [
+        'commentSeq',
+        [sequelize.col('comment.content'), 'comment_content'],
+        [sequelize.fn('YEAR', sequelize.col('comment.createdAt')), 'year'],
+        [sequelize.fn('MONTH', sequelize.col('comment.createdAt')), 'month'],
+        [sequelize.fn('DAY', sequelize.col('comment.createdAt')), 'day'],
+        'createdAt',
+        'updatedAt',
+        'board.boardSeq',
+        'board.title',
+        'board.content',
+        'board.filePath',
+        'board.count',
+        'board.createdAt',
+        'board.updatedAt',
+        'user.userSeq',
+        'user.id',
+        'user.name',
+        'user.isAdmin',
+        'user.createdAt',
+        'user.updatedAt',
+      ],
+      include: [
+        { model: Board, required: true },
+        { model: User, required: true },
+      ],
+      where,
+      order: [['createdAt', 'DESC']],
+    });
+
+    res.send({
+      commentInfo: commentInfo,
+      allCommentLen: commentInfo.length,
+      msg: 'success',
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({ msg: 'fail' });
+  }
+};
+
+// DELETE '/admin/comment/remove'
+// (특정) 댓글 삭제
+exports.deleteComment = async (req, res) => {
+  try {
+    const { commentSeq } = req.body;
+    const deleteOneComment = await Comment.destroy({
+      where: {
+        commentSeq: commentSeq,
+      },
+    });
+
+    if (deleteOneComment) {
+      res.send({ msg: 'success' });
+    } else {
+      res.send({ msg: 'fail' });
+    }
+  } catch (err) {
+    console.log(err);
+    res.send({ msg: 'fail' });
+  }
+};
+
+// ################# 관리자 스터디 #################
 // GET '/admin/study'
 // 스터디 조회 화면
 exports.getStudy = async (req, res) => {
