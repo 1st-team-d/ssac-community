@@ -113,7 +113,12 @@ exports.getBoardList = async (req, res) => {
         },
       });
 
-      res.send({ board: study });
+      res.send({
+        board: study,
+        session: req.session.userInfo,
+        cookieEmail: cookie ? cookie.loginEmail : '',
+        cookiePw: cookie ? cookie.loginPw : '',
+      });
 
       // 특정 게시글 조회 및 해당 게시글의 댓글 조회
     } else if (boardSeq) {
