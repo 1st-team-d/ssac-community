@@ -1,0 +1,24 @@
+@studyUrl = http://localhost:8080/study
+@studySeq = 2
+
+### 스터디 (관리) 화면으로 이동
+GET {{studyUrl}}
+
+### 스터디 세부 정보
+GET {{studyUrl}}/profile/{{studySeq}}
+
+### 스터디 신청 처리
+PATCH {{studyUrl}}/apply
+Content-Type:application/json; charset=UTF-8
+
+{
+    "studySeq": 1
+}
+
+### 스터디 마감 처리
+PATCH {{studyUrl}}/close
+Content-Type: application/json; charset=UTF-8
+
+{
+    "studySeq": 2
+}

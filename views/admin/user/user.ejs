@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin User</title>
+
+    <!-- CDN -->
+    <%- include('../../includes/cdn.ejs') %>
+  </head>
+  <body>
+    <h1>유저 관리</h1>
+    <h3><모든 유저></h3>
+
+    <input type="text" name="search" id="searchInput" />
+    <button type="button" id="searchButton" onclick="searchUser();">
+      검색
+    </button>
+
+    <hr />
+
+    <table border="1" cellspacing="0" id="userTable">
+      <thead>
+        <tr>
+          <th>유저 시퀀스</th>
+          <th>ID</th>
+          <th>이름</th>
+          <th>관리자 여부</th>
+          <th>가입일</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%try {%><% for (let user of users) { %>
+        <tr id="tr_<%= user.userSeq %>">
+          <td><%= user.userSeq %></td>
+          <td><%= user.id %></td>
+          <td><%= user.name %></td>
+          <td><%= user.isAdmin %></td>
+          <td>
+            <%= user.dataValues.year + '-' + user.dataValues.month + '-' +
+            user.dataValues.day %>
+          </td>
+          <td>
+            <a href="/admin/user/board/<%=user.userSeq%>">게시물</a>
+          </td>
+          <td>
+            <a href="/admin/user/comment/<%=user.userSeq%>">댓글</a>
+          </td>
+          <td>
+            <button onclick="userDelete('<%= user.userSeq%>')">삭제</button>
+          </td>
+        </tr>
+        <% } %><% } catch {%>
+        <tr id="tr_<%= users.userSeq %>">
+          <td><%= users.userSeq %></td>
+          <td><%= users.id %></td>
+          <td><%= users.name %></td>
+          <td><%= users.isAdmin %></td>
+          <td>
+            <%= users.dataValues.year + '-' + users.dataValues.month + '-' +
+            users.dataValues.day %>
+          </td>
+          <td>
+            <a href="/admin/user/board/<%=users.userSeq%>">게시물</a>
+          </td>
+          <td>
+            <a href="/admin/user/comment/<%=users.userSeq%>">댓글</a>
+          </td>
+          <td>
+            <button onclick="userDelete('<%= users.userSeq%>')">삭제</button>
+          </td>
+        </tr>
+        <%}%>
+      </tbody>
+    </table>
+    <hr />
+
+    <script>
+      async function searchUser() {
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+
+        if (searchInput.value === '') {
+          console.log('null');
+        }
+
+        const response = await axios({
+          method: 'get',
+          url: `/admin/user?search=${searchInput.value}`,
+        });
+
+        // if (searchInput.value === '') {
+        //   console.log('null');
+        // }
+        // console.log(typeof searchInput.value.toString());
+        // console.log(response.data.users);
+
+        if (response.data.users) {
+          // document.getElementById('userTable').innerHTML = response.data.users;
+          const users = response.data.users;
+          const table = document.getElementById('userTable');
+          const tbody = table.querySelector('tbody');
+          tbody.innerHTML = ''; // tbody 내용을 비움
+
+          users.forEach((user) => {
+            const row = tbody.insertRow();
+
+            // 각 열에 데이터 추가
+            const userSeqCell = row.insertCell(0);
+            userSeqCell.textContent = user.userSeq;
+
+            const idCell = row.insertCell(1);
+            idCell.textContent = user.id;
+
+            const nameCell = row.insertCell(2);
+            nameCell.textContent = user.name;
+
+            const isAdminCell = row.insertCell(3);
+            isAdminCell.textContent = user.isAdmin;
+
+            const dateCell = row.insertCell(4);
+            dateCell.textContent =
+              user.year + '-' + user.month + '-' + user.day;
+
+            // "게시물" 링크 추가
+            const boardLinkCell = row.insertCell(5);
+            const boardLink = document.createElement('a');
+            boardLink.href = `/admin/user/board/${user.userSeq}`;
+            boardLink.textContent = '게시물';
+            boardLinkCell.appendChild(boardLink);
+
+            // "댓글" 링크 추가
+            const commentLinkCell = row.insertCell(6);
+            const commentLink = document.createElement('a');
+            commentLink.href = `/admin/user/comment/${user.userSeq}`;
+            commentLink.textContent = '댓글';
+            commentLinkCell.appendChild(commentLink);
+
+            // "삭제" 버튼 추가
+            const deleteButtonCell = row.insertCell(7);
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = '삭제';
+            deleteButton.onclick = function () {
+              // 버튼을 클릭할 때 사용자 시퀀스를 userDelete 함수에 전달
+              userDelete(user.userSeq);
+            };
+            deleteButtonCell.appendChild(deleteButton);
+          });
+        }
+      }
+
+      async function userDelete(userSeq) {
+        if (confirm('유저를 삭제하시겠습니까?')) {
+          try {
+            const res = await axios({
+              method: 'delete',
+              url: '/admin/user/remove',
+              data: { userSeq: userSeq },
+            });
+
+            if (!res.data.isDelete) {
+              alert('유저 삭제에 실패했습니다.');
+            }
+
+            location.href = '/admin/user';
+          } catch (err) {
+            alert('유저 삭제에 실패했습니다.');
+            console.log(err);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

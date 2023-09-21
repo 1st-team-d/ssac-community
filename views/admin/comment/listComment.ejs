@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>관리자 / 모든 댓글 조회</title>
+
+    <!-- CDN -->
+    <%- include('../../includes/cdn.ejs') %>
+  </head>
+  <body>
+    <a href="/">home</a> <br />
+    <a href="/admin">관리자 메인</a>
+
+    <hr />
+
+    <h1>모든 댓글 조회</h1>
+
+    <input type="text" name="search" id="search" />
+    <button type="button" onclick="searchComment();">검색</button>
+
+    <hr />
+
+    <div id="tempDiv">
+      <% for(let comment of commentInfo) { const user = comment.dataValues.user;
+      const board = comment.dataValues.board; const commentDate =
+      comment.dataValues; %>
+      <ul>
+        <li>
+          <a href="/admin/board/profile/<%= board.boardSeq %>"
+            >게시글 제목 : <%= board.title %></a
+          >
+        </li>
+        <li>댓글 작성자 : <%= user.name %></li>
+        <li>
+          댓글 작성일 : <%= commentDate.year %>/<%= commentDate.month %>/<%=
+          commentDate.day %>
+        </li>
+        <li>댓글 내용 : <%= comment.dataValues.comment_content %></li>
+      </ul>
+      <button type="button" onclick="removeComment('<%= comment.commentSeq %>');">
+        삭제
+      </button>
+      <br /><br />
+      <% } %>
+    </div>
+
+    <script>
+      // 댓글 검색
+      async function searchComment() {
+        try {
+          const search = document.querySelector('#search');
+          const response = await axios({
+            method: 'get',
+            url: `/admin/comment/list?search=${search.value}`,
+          });
+
+          console.log(response);
+          const { commentInfo, allCommentLen, msg } = response.data;
+          const tempDiv = document.querySelector('#tempDiv');
+          tempDiv.textContent = '';
+
+          if (commentInfo.length > 0) {
+            for (let comment of commentInfo) {
+              const ul = document.createElement('ul');
+              const li = document.createElement('li');
+              const li2 = document.createElement('li');
+              const li3 = document.createElement('li');
+              const li4 = document.createElement('li');
+              const anchor = document.createElement('a');
+              const deleteBtn = document.createElement('button');
+
+              anchor.href = `/board/profile/${comment.board.boardSeq}`;
+              anchor.innerText = `게시글 제목 : ${comment.board.title}`;
+
+              li.append(anchor);
+              li2.append(`댓글 작성자 : ${comment.user.name}`);
+              li3.append(`댓글 작성일 : ${comment.year}/${comment.month}/${comment.day}`);
+              li4.append(`댓글 내용 : ${comment.comment_content}`);
+
+              ul.append(li);
+              ul.append(li2);
+              ul.append(li3);
+              ul.append(li4);
+
+              deleteBtn.type = 'button';
+              deleteBtn.onclick = function(){
+                removeComment(`${comment.commentSeq}`);
+              }
+              deleteBtn.textContent = '삭제';
+
+              tempDiv.append(ul);
+              tempDiv.append(deleteBtn);
+              tempDiv.append(document.createElement('hr'));
+            }
+          } else {
+            tempDiv.textContent = '검색 결과가 없습니다.';
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+
+      // 게시글 삭제
+      async function removeComment(commentSeq) {
+        if (confirm('게시글을 삭제하시겠습니까?')) {
+          try {
+            const response = await axios({
+              method: 'delete',
+              url: '/admin/comment/remove',
+              data: { commentSeq: commentSeq },
+            });
+
+            console.log(response.data);
+            if (response.data.msg === 'fail') {
+              alert('댓글 삭제에 실패했습니다.');
+            }
+
+            location.href = '/admin/comment';
+          } catch (err) {
+            alert('댓글 삭제에 실패했습니다.');
+            console.log(err);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

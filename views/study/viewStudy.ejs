@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CDN -->
+    <%- include('../includes/cdn.ejs') %>
+    <link rel="stylesheet" href="/static/css/header.css" />
+    <link rel="stylesheet" href="/static/css/study.css" />
+    <title>특정 스터디 조회 페이지</title>
+  </head>
+  <body>
+    <%- include('../includes/header.ejs') %>
+    <div>
+      <a href="/board?boardSeq=<%= studyInfo.boardSeq %>">
+        <h1><%= studyInfo.title %> 스터디에 해당하는 게시글 입니다.</h1>
+        <p><%= studyInfo.content %></p>
+      </a>
+
+      <hr />
+
+      <h1><%= studyInfo.title %> 스터디에 대한 세부 정보입니다.</h1>
+      <ul>
+        <% for(let user of userInfo){ %>
+        <!-- 변수명이 길어서 새로운 변수 선언 -->
+        <% const apply = user.dataValues; %>
+        <li>유저 아이디(이메일) : <%= user.id %></li>
+        <li>유저 닉네임 : <%= user.name %></li>
+        <li>신청일 : <%= apply.year %>/<%= apply.month %>/<%= apply.day %></li>
+        <% } %>
+      </ul>
+    </div>
+  </body>
+</html>

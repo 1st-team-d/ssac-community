@@ -1,0 +1,120 @@
+/* 모든 파일 공통 CSS */
+@import url('/static/css/common.css');
+
+/* 전체 페이지 배경 설정 */
+body {
+  margin-top: 20px; /* 페이지 상단 여백 설정 */
+  background-color: #eee; /* 페이지 배경 색상 설정 */
+}
+
+/* 메인 컨텐츠 시작 위치 */
+.studyDetail {
+  margin-top: calc(var(--header-height) + 50px);
+}
+
+/* 프로젝트 목록 테이블 스타일 설정 */
+.project-list-table {
+  border-collapse: separate; /* 테이블 셀 경계를 별도로 설정 */
+  border-spacing: 0 12px; /* 셀 간의 수평 및 수직 간격 설정 */
+}
+
+.project-list-table tr {
+  background-color: #fff; /* 테이블 행 배경 색상 설정 */
+}
+
+/* 테이블 셀 내부 공간 설정 */
+.table-nowrap td,
+.table-nowrap th {
+  white-space: nowrap; /* 텍스트 줄 바꿈 금지 */
+}
+
+/* 테이블 스타일 설정 */
+.table > :not(caption) > * > * {
+  padding: 0.75rem 0.75rem; /* 테이블 셀 내부 여백 설정 */
+  background-color: var(--bs-table-bg); /* 테이블 셀 배경 색상 설정 */
+  border-bottom-width: 1px; /* 테이블 셀 아래쪽 테두리 두께 설정 */
+  box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg); /* 테이블 셀 선택 시 효과 설정 */
+}
+
+/* 링크 스타일 설정 */
+a {
+  color: #3b76e1; /* 링크 텍스트 색상 설정 */
+  text-decoration: none; /* 링크 텍스트에 밑줄 제거 */
+}
+
+/* 포지션 뱃지 스타일 설정 */
+.badge-soft-danger {
+  color: #f56e6e !important; /* 뱃지 텍스트 색상 설정 (important를 사용하여 우선 순위 설정) */
+  background-color: rgba(
+    245,
+    110,
+    110,
+    0.1
+  ); /* 뱃지 배경 색상 및 투명도 설정 */
+}
+
+.badge-soft-success {
+  color: #63ad6f !important; /* 뱃지 텍스트 색상 설정 (important를 사용하여 우선 순위 설정) */
+  background-color: rgba(99, 173, 111, 0.1); /* 뱃지 배경 색상 및 투명도 설정 */
+}
+
+.badge-soft-primary {
+  color: #3b76e1 !important; /* 뱃지 텍스트 색상 설정 (important를 사용하여 우선 순위 설정) */
+  background-color: rgba(59, 118, 225, 0.1); /* 뱃지 배경 색상 및 투명도 설정 */
+}
+
+.badge-soft-info {
+  color: #57c9eb !important; /* 뱃지 텍스트 색상 설정 (important를 사용하여 우선 순위 설정) */
+  background-color: rgba(87, 201, 235, 0.1); /* 뱃지 배경 색상 및 투명도 설정 */
+}
+
+/* 아코디언 (신청자 목록) */
+.accordion .card {
+  border: none; /* 아코디언 카드 테두리 제거 */
+}
+
+.accordion .card-header {
+  background-color: #83d36f; /* 아코디언 카드 헤더 배경 색상 설정 */
+  border: none; /* 아코디언 카드 헤더 테두리 제거 */
+  color: white; /* 헤더 텍스트 색상을 흰색(화이트)으로 설정 */
+}
+
+/* 수정된 스타일 - 가운데 정렬과 배경색 초록색으로 설정 */
+.accordion .card-header button {
+  text-align: center; /* 아코디언 버튼 텍스트 가운데 정렬 */
+  width: 100%; /* 아코디언 버튼 폭 100% 설정 */
+  background-color: #83d36f; /* 배경색을 초록색으로 설정 */
+  color: white !important;
+}
+
+.accordion .card-body {
+  background-color: #83c370; /* 아코디언 카드 바디 배경 색상 설정 */
+}
+
+/* 스터디 신청자 목록 테이블 스타일 설정 */
+.applicant-table {
+  max-height: 200px; /* 테이블의 최대 높이 설정 */
+  overflow-y: auto; /* 세로 스크롤 추가 */
+}
+
+/* "모집중" 텍스트 크기 설정 */
+.badge.bg-success {
+  font-size: 1rem; /* "모집중" 텍스트 크기 설정 */
+}
+
+/* "마감" 텍스트 크기 설정 */
+.badge.bg-dark {
+  font-size: 1rem; /* "모집중" 텍스트 크기 설정 */
+}
+
+/* 스터디 게시글 보러가기에 호버 효과 설정 */
+[data-bs-toggle='collapse']:hover {
+  text-decoration: underline; /* 호버 시 밑줄 추가 */
+  color: #3b76e1;
+  cursor: pointer; /* 호버 시 커서를 손가락 형태로 변경 */
+}
+
+/* 스터디 신청자 목록 보여주는 버튼 스타일 */
+.btn-link {
+  text-decoration: none;
+}

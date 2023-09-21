@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Profile</title>
+
+    <!-- CDN -->
+    <%- include('./includes/cdn.ejs') %>
+    <script defer src="/static/js/loginRegister.js"></script>
+    <link rel="stylesheet" href="/static/css/header.css" />
+    <!-- 프로필 css -->
+    <link rel="stylesheet" href="/static/css/profile.css" />
+    <!-- profile.js -->
+    <script defer src="/static/js/profile.js"></script>
+
+    <title>프로필 페이지</title>
+  </head>
+  <body>
+    <%- include('./includes/header.ejs') %>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-4">
+          <!-- 프로필 정보 카드 -->
+
+          <div class="profileCard card text-center">
+            <div class="card-header text-body bg-body-secondary">
+              <h4 class="card-title">유저정보</h4>
+            </div>
+            <div class="userCard">
+              <div class="card-body mt-3">
+                <img
+                  src="/static/images/1453035.png"
+                  class="card-img-top profile-avatar"
+                  alt="새싹이미지"
+                />
+                <div class="card-text">
+                  <h3 class="card-title"><%= session.name %></h3>
+                  <p class="card-id"><%= session.id %></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-8">
+          <!-- 비밀번호 변경 카드 -->
+          <div class="profileCard card">
+            <div class="card-header text-body bg-body-secondary text-center">
+              <h4 class="card-title">비밀번호 변경</h4>
+            </div>
+            <div class="card-body d-flex align-items-center">
+              <form class="w-100">
+                <div class="mb-3">
+                  <label for="newPassword" class="form-label"
+                    >새로운 비밀번호</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="newPassword"
+                    placeholder="새로운 비밀번호를 입력해주세요 (대소문자, 특수문자, 숫자 포함 8자리 이상)"
+                  />
+                  <span id="checkPwMsg"></span>
+                </div>
+
+                <div class="mb-3">
+                  <label for="confirmPassword" class="form-label"
+                    >새로운 비밀번호 확인</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="confirmPassword"
+                    placeholder="새로운 비밀번호를 한 번 더 입력해주세요"
+                  />
+                  <span id="samePwMsg"></span>
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button type="button" class="btn w-25" onclick="editPw()">
+                    비밀번호 변경
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

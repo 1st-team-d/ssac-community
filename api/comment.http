@@ -1,0 +1,34 @@
+@boardUrl=http://localhost:8080/board
+
+@server = http://localhost:8080
+
+@currentPath = "http://localhost:8080/board/?boardSeq=1"
+
+### 게시글 화면 (쿼리 있음)
+GET {{boardUrl}}?boardSeq=1
+
+### 댓글 등록
+POST {{server}}/comment/register
+Content-Type: application/json; charset=UTF-8
+
+{
+    "postID" : 1,
+    "cmtContent" : "fsfsdnewnewnewnenwnewnenwfsfdf"
+}
+
+### 댓글 수정
+PATCH {{server}}/comment/modify
+Content-Type: application/json; charset=UTF-8
+
+{
+    "commentSeq" : 1,
+    "cmtContent" : "modified comment"
+}
+
+### 댓글 삭제
+DELETE {{server}}/comment/remove
+Content-Type: application/json; charset=UTF-8
+
+{
+    "commentSeq" : 1
+}

@@ -1,0 +1,93 @@
+/* Common Styles (공통 스타일) */
+@import url('/static/css/common.css');
+
+
+/* 게시판 목록 메인 컨텐츠 시작 위치 설정 */
+
+
+/* 입력 요소 포커스 스타일 설정 */
+input:focus {
+  outline: none; /* 포커스 시 외곽선 제거 */
+}
+
+textarea:focus {
+  outline: none; /* 포커스 시 외곽선 제거 */
+}
+
+/* 전체 페이지 배경색 설정 */
+body {
+  background-color: #fff; /* 흰색 배경 */
+}
+
+/* 입력 요소 공통 스타일 설정 */
+input {
+  padding: 7px 5px; /* 내부 여백 설정 */
+}
+
+textarea {
+  resize: none; /* 크기 조절 비활성화 */
+  border-radius: 15px; /* 둥근 테두리 설정 */
+  padding: 15px; /* 내부 여백 설정 */
+}
+
+/* 게시글 작성 본문 위치 조정 */
+.postWrap {
+  margin-top: calc(var(--header-height) + 10px);
+}
+
+/* 카테고리 스타일 설정 */
+.categories label {
+  background-color: rgb(168, 168, 168); /* 배경색 설정 */
+  margin-right: 10px; /* 우측 여백 설정 */
+  border-radius: 20px; /* 둥근 테두리 설정 */
+  padding: 10px; /* 내부 여백 설정 */
+  cursor: pointer; /* 커서 모양 변경 (손가락) */
+  font-weight: 700; /* 글꼴 굵기 설정 */
+  color: #555; /* 글자색 설정 */
+}
+
+/* 선택된 카테고리 스타일 설정 */
+.categories label.checked {
+  background-color: rgb(82, 105, 50); /* 배경색 설정 */
+  margin-right: 10px; /* 우측 여백 설정 */
+  border-radius: 20px; /* 둥근 테두리 설정 */
+  padding: 10px; /* 내부 여백 설정 */
+  cursor: pointer; /* 커서 모양 변경 (손가락) */
+  font-weight: 700; /* 글꼴 굵기 설정 */
+  color: #0c9500; /* 글자색 설정 */
+}
+
+/* 게시글 작성 메인 스타일 설정 */
+.postWrap {
+  height: 100vh;
+}
+
+.postWrap span {
+  display: inline-block; /* 인라인 블록 요소로 설정 */
+  width: 60px; /* 너비 설정 */
+}
+
+/* 파일 업로드 스타일 설정 */
+.file .fileName {
+  display: inline-block; /* 인라인 블록 요소로 설정 */
+  height: 40px; /* 높이 설정 */
+  padding: 0 10px; /* 내부 여백 설정 */
+  vertical-align: middle; /* 수직 가운데 정렬 설정 */
+  border: 1px solid #dddddd; /* 테두리 설정 */
+  width: 78%; /* 너비 설정 */
+  color: #999999; /* 글자색 설정 */
+}
+
+.file #postFile {
+  position: absolute; /* 위치 설정 */
+  width: 0; /* 너비 설정 */
+  height: 0; /* 높이 설정 */
+  padding: 0; /* 내부 여백 설정 */
+  overflow: hidden; /* 오버플로우 숨김 설정 */
+  border: 0; /* 테두리 제거 */
+}
+
+.file .inputFileBtn {
+  cursor: pointer; /* 커서 모양 변경 (손가락) */
+  width: 26%;
+}

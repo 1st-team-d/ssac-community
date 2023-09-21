@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>특정 게시글 조회</title>
+
+    <!-- CDN -->
+    <%- include('../../includes/cdn.ejs') %>
+  </head>
+  <body>
+    <a href="/">home</a> <br />
+    <a href="/admin">관리자 메인</a>
+
+    <hr />
+
+    <h1>특정 게시글 조회</h1>
+    <ul>
+      <h3>게시글 정보</h3>
+      <li>스터디 게시물 제목 : <%= boardInfo.title %></li>
+      <li>스터디 게시물 내용 : <%= boardInfo.content %></li>
+      <li>스터디 게시물 조회수 : <%= boardInfo.count %></li>
+
+      <br />
+
+      <h3>2) 게시글 작성자 정보</h3>
+      <% const boardDate = boardInfo.dataValues; %>
+      <li>게시글 작성자 이메일 : <%= boardInfo.user.id %></li>
+      <li>게시글 작성자 닉네임 : <%= boardInfo.user.name %></li>
+      <li>
+        게시글 작성자 신청일 : <%= boardDate.year
+        %>/<%=boardDate.month%>/<%=boardDate.day %>
+      </li>
+    </ul>
+
+    <input
+      type="text"
+      name="title"
+      id=""
+      placeholder="수정할 게시글 제목 작성"
+    />
+    <textarea
+      name="content"
+      id=""
+      cols="30"
+      rows="10"
+      placeholder="수정할 게시글 내용 작성"
+    ></textarea>
+
+    <button type="button" onclick="modifyBoard();">수정</button>
+
+    <script>
+      // 게시글 수정
+      async function modifyBoard() {
+        try {
+          const title = document.querySelector('input[name="title"]');
+          const content = document.querySelector('textarea[name="content"]');
+
+          const response = await axios({
+            method: 'patch',
+            url: '/admin/board/modify',
+            data: {
+              title: title.value,
+              content: content.value,
+              boardSeq: '<%= boardInfo.boardSeq %>',
+            },
+          });
+
+          if (response.data.msg === 'fail') {
+            alert('게시글 수정에 실패했습니다.');
+          }
+          location.href = '/admin/board/profile/<%= boardInfo.boardSeq %>';
+        } catch (err) {
+          alert('게시글 수정에 실패했습니다.');
+          console.log(err);
+        }
+      }
+    </script>
+  </body>
+</html>

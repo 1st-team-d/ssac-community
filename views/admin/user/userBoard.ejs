@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Info</title>
+  </head>
+  <body>
+    <h1>유저 관리</h1>
+    <h3><특정 유저 정보></h3>
+    <h4><%= users.name%>이 작성한 게시물입니다.</h4>
+    <table border="1" cellspacing="0">
+      <thead>
+        <tr>
+          <th>카테고리</th>
+          <th>제목</th>
+          <th>내용</th>
+          <th>최대 인원</th>
+          <th>상태</th>
+          <th>파일 유무</th>
+          <th>조회수</th>
+          <th>작성일</th>
+          <th>수정일</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%try {%> <% for (let board of users.boards) { %>
+        <tr id="tr_<%= board.userSeq %>">
+          <td>
+            <% switch (board.study.category) { case 0: %> 웹 <% break; case 1:
+            %> 앱 <% break; case 2: %> AI <% break; case 3: %> UI/UX <% break;
+            case4: %> 게임 <% default: %> 기타 <% } %>
+          </td>
+          <td><%= board.title %></td>
+          <td><%= board.content%></td>
+          <td><%= board.study.maxPeople%></td>
+          <td><%= board.study.status ? "모집 완료" : "모집 중"%></td>
+          <td><%= board.filePath ? "Yes" : "No" %></td>
+          <td><%= board.count %></td>
+          <td>
+            <%= board.dataValues.createdYear + '-' +
+            board.dataValues.createdMonth + '-' + board.dataValues.createdDay %>
+          </td>
+          <td>
+            <%= board.dataValues.updatedYear + '-' +
+            board.dataValues.updatedMonth + '-' + board.dataValues.updatedDay %>
+          </td>
+        </tr>
+        <% } %><% } catch {%>
+        <tr id="tr_<%= users.boards.userSeq %>">
+          <td>
+            <% switch (users.boards.study.category) { case 0: %> 웹 <% break;
+            case 1: %> 앱 <% break; case 2: %> AI <% break; case 3: %> UI/UX <%
+            break; case4: %> 게임 <% default: %> 기타 <% } %>
+          </td>
+          <td><%= users.boards.title %></td>
+          <td><%= users.boards.content%></td>
+          <td><%= users.boards.study.maxPeople%></td>
+          <td><%= users.boards.study.status ? "모집 완료" : "모집 중"%></td>
+          <td><%= users.boards.filePath ? "Yes" : "No" %></td>
+          <td><%= users.boards.count %></td>
+          <td>
+            <%= users.boards.dataValues.createdYear + '-' +
+            users.boards.dataValues.createdMonth + '-' +
+            users.boards.dataValues.createdDay %>
+          </td>
+          <td>
+            <%= users.boards.dataValues.updatedYear + '-' +
+            users.boards.dataValues.updatedMonth + '-' +
+            users.boards.dataValues.updatedDay %>
+          </td>
+        </tr>
+        <%}%>
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+@boardUrl=http://localhost:8080/board
+
+@server = http://localhost:8080
+
+### 게시글 조회 화면으로 이동
+GET {{boardUrl}}
+
+### 게시글 페이징
+GET {{boardUrl}}/list?pageNum=1
+# 기본적으로 pageNum이 1이여야 한다.
+
+### 게시글 화면 (쿼리 있음)
+GET {{boardUrl}}/list?boardSeq=1
+
+### 게시글 검색
+GET {{boardUrl}}/list?search=제목
+
+### 게시글 카테고리별 조회
+GET {{boardUrl}}/list?category=1
+
+### 게시글 검색 ( + 페이징 처리)
+GET {{boardUrl}}/list?search=제목&pageNum=4
+
+### 게시물 삭제
+DELETE {{boardUrl}}/remove
+Content-Type: application/json; charset=UTF-8
+
+{
+    "boardSeq" : 1
+}
+
+### 게시글 등록 화면
+GET {{boardUrl}}/register
+
+### 게시글 등록
+POST {{boardUrl}}/register
+Content-Type: multipart/form-data; boundary=postRegister
+
+--postRegister
+Content-Disposition: form-data; name="data"
+
+# category : 스터디 카테고리 (0: Web, 1: App, 2: AI, 3: UI/UX, 4: 게임, 5: 기타)
+{
+  "title": "제목 Test",
+  "content": "내용 Test",
+  "userSeq": 4,
+  "category": 0,
+  "maxPeople": 5
+}
+
+--postRegister
+Content-Disposition: form-data; name="uploadFile"; filename="postRegister.pdf"
+Content-Type: application/pdf
+# Content-Type: image/jpeg
+
+# 이미지
+# < C:\SeSAC\polar_bear.jpg
+# < /Users/user/Desktop/애플1692602940472.png
+
+# 파일
+# < C:\SeSAC\test.pdf
+< C:\SeSAC\Prettier 설정하기.pdf
+
+--postRegister--
+
+### 게시글 수정 화면
+GET {{boardUrl}}/modify
+Content-Type: application/json; charset=UTF-8
+
+{
+  "boardSeq": "18"
+}
+
+### 게시글 수정
+PATCH {{boardUrl}}/modify
+Content-Type: multipart/form-data; boundary=patchRegister
+
+--patchRegister
+Content-Disposition: form-data; name="data"
+
+# category : 스터디 카테고리 (0: Web, 1: App, 2: AI, 3: UI/UX, 4: 게임, 5: 기타)
+{
+  "title": "제목 ::: 수정 :::  Test",
+  "content": "내용 ::: 수정 ::: Test",
+  "boardSeq": 1,
+  "studySeq": 1, 
+  "category": 5,
+  "maxPeople": 10
+}
+
+--patchRegister
+Content-Disposition: form-data; name="uploadFile"; filename="patchRegister.pdf"
+Content-Type: application/pdf
+# Content-Type: image/jpeg
+
+# 이미지
+# < C:\SeSAC\laser4.jpg
+# < /Users/user/Desktop/애플1692602940472.png
+
+# 파일
+< C:\SeSAC\Prettier 설정하기 - 복사본.pdf
+
+--patchRegister--

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CDN -->
+    <%- include('../includes/cdn.ejs') %>
+    <link rel="stylesheet" href="/static/css/header.css" />
+    <link rel="stylesheet" href="/static/css/study.css" />
+    <!-- listStudy.css -->
+    <link rel="stylesheet" href="/static/css/study/listStudy.css" />
+    <!-- listStudy.js -->
+    <script defer src="/static/js/listStudy.js"></script>
+    <title>스터디 정보 페이지</title>
+  </head>
+  <body>
+    <%- include('../includes/header.ejs') %>
+    <!-- 모집중, 참여중인 스터디 정보 나타내는 항목 -->
+
+    <div
+      class="studyWrap container d-flex flex-column justify-content-center border py-3 ps-3"
+    >
+      <!-- 내가 팀장으로 모집중인 스터디 -->
+      <div
+        class="studySection w-100 border leaderStudy py-2 mb-5 d-flex align-items-center"
+      >
+        <div
+          class="studyStatus w-25 bg-gradient shadow-lg rounded-3 w-25 me-3 d-flex flex-column justify-content-center align-items-center"
+        >
+          <span class="fs-4 fw-bold">모집중인 스터디</span>
+        </div>
+
+        <div class="studyInfo w-75 text-center d-flex justify-content-center">
+          <!-- 내가 모집중인 스터디 목록 -->
+          <% for (let recruitBoard of recruitBoardInfo) { %>
+          <!-- 받아오는 변수가 너무 길어서 새로운 변수 선언 -->
+          <!-- 게시글 날짜 관련 + sequelize.col()로 컬럼명 변경한 것들 -->
+          <% const boardDate = recruitBoard.dataValues; %>
+          <!-- 스터디 관련 -->
+          <% const study = recruitBoard.dataValues.study; %>
+          <div class="card ithStudy z-3 shadow-sm">
+            <div
+              class="card-body d-flex justify-content-center align-items-center"
+            >
+              <a href="/study/profile/<%= study?.studySeq %>">
+                <span class="card-title study_title fw-bold"
+                  ><%= recruitBoard?.title && recruitBoard.title.length <= 7 ?
+                  recruitBoard?.title : recruitBoard?.title.slice(0, 7) + '...'
+                  %></span
+                >
+                <!-- 카테고리 -->
+                <span class="study_category badge bg-primary">
+                  <% switch(study?.category) { case 0: %> Web <% break; case 1:
+                  %> App <% break; case 2: %> AI <% break; case 3: %> UI/UX <%
+                  break; case 4: %> 게임 <% break; default: %> 기타 <% break; }
+                  %>
+                </span>
+                <p class="card-text d-flex flex-column">
+                  <!-- 최대 인원 -->
+                  <span class="study_max_people"
+                    >최대 인원 : <%= study?.maxPeople %>명</span
+                  >
+                </p>
+                <!-- 스터디 상태 -->
+                <span
+                  class="study_status text-light <%= study?.status ? 'bg-warning' : 'bg-success' %>"
+                >
+                  <%= study?.status ? '모집 마감' : '모집중' %>
+                </span>
+              </a>
+            </div>
+          </div>
+          <% } %>
+          <!-- // 내가 모집중인 스터디 목록 -->
+        </div>
+      </div>
+      <!-- // 내가 팀장으로 모집중인 스터디 -->
+
+      <!-- 내가 참여중인 스터디 -->
+      <div
+        class="studySection w-100 crewStudy border py-2 mb-5 d-flex align-items-center"
+      >
+        <div
+          class="studyStatus w-25 bg-gradient shadow-lg rounded-3 w-25 me-3 d-flex flex-column justify-content-center align-items-center"
+        >
+          <span class="fs-4 fw-bold">참여중인 스터디</span>
+        </div>
+
+        <div class="studyInfo w-75 text-center d-flex justify-content-center">
+          <!-- for문 들어와야 함 -->
+          <% for(let applyBoard of applyBoardInfo) { %>
+          <!-- 받아오는 변수가 너무 길어서 새로운 변수 선언 -->
+          <!-- 스터디 관련 -->
+          <% const study = applyBoard.dataValues.study; %>
+          <!-- 게시글 날짜 관련 + sequelize.col()로 컬럼명 변경한 것들 -->
+          <% const boardDate = applyBoard.dataValues; %>
+          <div class="card ithStudy z-3 shadow-sm">
+            <div
+              class="card-body d-flex justify-content-center align-items-center"
+            >
+              <a href="/study/profile/<%= study?.studySeq %>">
+                <span class="card-title study_title fw-bold"
+                  ><%= !study?.status ? (applyBoard?.title &&
+                  applyBoard.title.length <= 7 ? applyBoard?.title :
+                  applyBoard?.title.slice(0, 7) + '...') : '' %></span
+                >
+                <!-- 카테고리 -->
+                <span class="study_category badge bg-primary">
+                  <% switch(study?.category) { case 0: %> Web <% break; case 1:
+                  %> App <% break; case 2: %> AI <% break; case 3: %> UI/UX <%
+                  break; case 4: %> 게임 <% break; default: %> 기타 <% break; }
+                  %>
+                </span>
+                <p class="card-text">
+                  <!-- 최대 인원 -->
+                  <span class="study_max_people"
+                    >최대 인원 : <%= study?.maxPeople %>명</span
+                  >
+                </p>
+                <!-- 스터디 상태 -->
+                <span
+                  class="study_status text-light <%= study?.status ? 'bg-warning' : 'bg-success' %>"
+                >
+                  <%= study?.status ? '모집 마감' : '모집중' %>
+                </span>
+              </a>
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>특정 스터디 조회</title>
+  </head>
+  <body>
+    <a href="/">home</a> <br />
+    <a href="/admin">관리자 메인</a>
+
+    <hr />
+
+    <h1>특정 스터디 조회</h1>
+    <ul>
+      <h3>1) 스터디 게시물 정보</h3>
+      <li>스터디 게시물 제목 : <%= studyInfo.board.title %></li>
+      <li>스터디 게시물 내용 : <%= studyInfo.board.content %></li>
+      <li>스터디 게시물 조회수 : <%= studyInfo.board.count %></li>
+
+      <br />
+
+      <h3>2) 스터디 정보</h3>
+      <li>스터디 시퀀스 : <%= studyInfo.studySeq %></li>
+      <li>스터디 카테고리 : <%= studyInfo.category %></li>
+      <li>스터디 최대 인원 : <%= studyInfo.maxPeople %></li>
+      <li>스터디 상태 : <%= studyInfo.status %></li>
+
+      <br />
+
+      <h3>3) 스터디 참여자 정보</h3>
+      <li>스터디 총 참여자 수 : <%= allUserLen %>명</li>
+      <% for(let user of userInfo) {
+        const applyDate = user.dataValues; %>
+        <li>참여자 이메일 : <%= user.id %></li>
+        <li>참여자 닉네임 : <%= user.name %></li>
+        <li>참여 신청일 : <%= applyDate.year %>/<%=applyDate.month%>/<%=applyDate.day %></li>
+      <% } %>
+    </ul>
+  </body>
+</html>
