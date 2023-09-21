@@ -27,14 +27,12 @@
             <div class="card-body">
               <div class="d-flex flex-column text-center align-items-center">
                 <div class="flex-grow-1 pt-4">
-                  <span class="d-block text-muted"
-                    >'스터디명'에 대한 스터디 정보입니다</span
-                  >
+                  <span class="d-block text-muted">스터디 현황</span>
                   <br />
                   <h5><%= studyInfo.title %></h5>
-                  <span class="d-block text-muted"
+                  <!-- <span class="d-block text-muted"
                     >스터디에 대한 간단한 설명 또는 정보를 입력하세요.</span
-                  >
+                  > -->
                   <br />
                   <div class="mb-4">
                     <% if (studyInfo.study.status) { %>
@@ -49,11 +47,11 @@
 
             <div class="card-footer py-0 border-top">
               <div class="row">
-                <div class="col text-center p-3">
+                <!-- <div class="col text-center p-3">
                   <h4 class="fs-6 mb-2">모집기간</h4>
                   <span class="d-block font-size-sm">일단 미정</span>
-                </div>
-                <div class="col p-3 text-center border-end border-start">
+                </div> -->
+                <div class="col p-3 text-center border-end">
                   <h4 class="fs-6 mb-2">스터디</h4>
                   <a href="/board?boardSeq=<%= studyInfo.boardSeq %>">
                     <span
