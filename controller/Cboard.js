@@ -14,7 +14,7 @@ exports.getBoard = async (req, res) => {
   try {
     // 페이징 처리
     const pageNum = 1;
-    const boardCountPerPage = 5; // 한 화면에 보여질 게시글 개수
+    const boardCountPerPage = 10; // 한 화면에 보여질 게시글 개수
     const offset = boardCountPerPage * (pageNum - 1); // 페이징 처리
 
     // console.log('query >> ', req.query);
