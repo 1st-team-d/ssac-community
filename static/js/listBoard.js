@@ -5,7 +5,7 @@ async function changePageNum(pageDiv) {
 
   // 해당 페이지에 해당하는 데이터 보내달라고 요청
   const res = await axios({
-    url: `/board?pageNum=${pageNum}`,
+    url: `/board/list?pageNum=${pageNum}`,
     method: 'get',
   });
   console.log(res.data);
@@ -58,7 +58,7 @@ const performSearch = async () => {
   }
 
   // 검색어를 서버로 전송하여 검색 요청 보내기
-  fetch(`/board?search=${sanitizedKeyword}`)
+  fetch(`/board/list?search=${sanitizedKeyword}`)
     .then((response) => {
       return response.json();
     })
@@ -118,7 +118,7 @@ function renderSearchResults(results) {
     boardElement.innerHTML = `
             <div class="num col-2">${index + 1}</div>
             <div class="title col-6">
-                <a href="/board?boardSeq=${boardSeq}" class="view-link">${title}</a>
+                <a href="/board/list?boardSeq=${boardSeq}" class="view-link">${title}</a>
             </div>
             <div class="date col-2">${year}/${month}/${day}</div>
             <div class="count col-2">${count}</div>
