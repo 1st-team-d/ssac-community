@@ -20,6 +20,9 @@ Content-Type: application/json; charset=UTF-8
 ### 특정 유저 삭제
 DELETE {{adminUrl}}/user/remove
 
+### 유저 검색
+GET {{adminUrl}}/user?search=abc
+
 ### 게시글 조회 화면
 GET {{adminUrl}}/board
 

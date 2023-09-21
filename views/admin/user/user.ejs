@@ -12,7 +12,15 @@
   <body>
     <h1>유저 관리</h1>
     <h3><모든 유저></h3>
-    <table border="1" cellspacing="0">
+
+    <input type="text" name="search" id="searchInput" />
+    <button type="button" id="searchButton" onclick="searchUser();">
+      검색
+    </button>
+
+    <hr />
+
+    <table border="1" cellspacing="0" id="userTable">
       <thead>
         <tr>
           <th>유저 시퀀스</th>
@@ -69,8 +77,82 @@
         <%}%>
       </tbody>
     </table>
+    <hr />
 
     <script>
+      async function searchUser() {
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+
+        if (searchInput.value === '') {
+          console.log('null');
+        }
+
+        const response = await axios({
+          method: 'get',
+          url: `/admin/user?search=${searchInput.value}`,
+        });
+
+        // if (searchInput.value === '') {
+        //   console.log('null');
+        // }
+        // console.log(typeof searchInput.value.toString());
+        // console.log(response.data.users);
+
+        if (response.data.users) {
+          // document.getElementById('userTable').innerHTML = response.data.users;
+          const users = response.data.users;
+          const table = document.getElementById('userTable');
+          const tbody = table.querySelector('tbody');
+          tbody.innerHTML = ''; // tbody 내용을 비움
+
+          users.forEach((user) => {
+            const row = tbody.insertRow();
+
+            // 각 열에 데이터 추가
+            const userSeqCell = row.insertCell(0);
+            userSeqCell.textContent = user.userSeq;
+
+            const idCell = row.insertCell(1);
+            idCell.textContent = user.id;
+
+            const nameCell = row.insertCell(2);
+            nameCell.textContent = user.name;
+
+            const isAdminCell = row.insertCell(3);
+            isAdminCell.textContent = user.isAdmin;
+
+            const dateCell = row.insertCell(4);
+            dateCell.textContent =
+              user.year + '-' + user.month + '-' + user.day;
+
+            // "게시물" 링크 추가
+            const boardLinkCell = row.insertCell(5);
+            const boardLink = document.createElement('a');
+            boardLink.href = `/admin/user/board/${user.userSeq}`;
+            boardLink.textContent = '게시물';
+            boardLinkCell.appendChild(boardLink);
+
+            // "댓글" 링크 추가
+            const commentLinkCell = row.insertCell(6);
+            const commentLink = document.createElement('a');
+            commentLink.href = `/admin/user/comment/${user.userSeq}`;
+            commentLink.textContent = '댓글';
+            commentLinkCell.appendChild(commentLink);
+
+            // "삭제" 버튼 추가
+            const deleteButtonCell = row.insertCell(7);
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = '삭제';
+            deleteButton.onclick = function () {
+              // 버튼을 클릭할 때 사용자 시퀀스를 userDelete 함수에 전달
+              userDelete(user.userSeq);
+            };
+            deleteButtonCell.appendChild(deleteButton);
+          });
+        }
+      }
+
       async function userDelete(userSeq) {
         if (confirm('유저를 삭제하시겠습니까?')) {
           try {
