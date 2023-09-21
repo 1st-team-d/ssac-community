@@ -15,28 +15,37 @@ async function changePageNum(pageDiv) {
   // boardList 업데이트 하기 위한 newDivs
   const newDivs = document.createElement('div'); // boardList에 바꿔줄 div 여러개 담고 있는
 
-  boards.forEach((board, index) => {
-    const count = board.count;
-    const title = board.title;
-    const boardSeq = board.boardSeq;
-    const year = board.year;
-    const month = board.month;
-    const day = board.day;
+  // 하나하나의 게시글 정보를 담을 div
+  const newDiv = document.createElement('div');
+  newDiv.classList.add('row', 'py-2');
+  let innerHTML = '';
 
-    const newDiv = document.createElement('div');
-    newDiv.classList.add('row', 'py-2');
-    // innerHTML로 아예 갈아 엎어서 페이지 누를때마다 새로 집어넣기
-    const innerHTML = `
-      <div class="num col-2">${(pageNum - 1) * 5 + 1 + index}</div>
-      <div class="title col-6">
-          <a href="/board?boardSeq=${boardSeq}" class="view-link">${title}</a>
-      </div>
-      <div class="date col-2">${year}/${month}/${day}</div>
-      <div class="count col-2">${count}</div>
-    `;
-    newDiv.innerHTML = innerHTML;
-    newDivs.append(newDiv);
-  });
+  // 페이지 변경했을 때, 값이 있는 경우
+  if (boards) {
+    boards.forEach((board, index) => {
+      const count = board.count;
+      const title = board.title;
+      const boardSeq = board.boardSeq;
+      const year = board.year;
+      const month = board.month;
+      const day = board.day;
+
+      // innerHTML로 아예 갈아 엎어서 페이지 누를때마다 새로 집어넣기
+      innerHTML = `
+        <div class="num col-2">${(pageNum - 1) * 5 + 1 + index}</div>
+        <div class="title col-6">
+            <a href="/board?boardSeq=${boardSeq}" class="view-link">${title}</a>
+        </div>
+        <div class="date col-2">${year}/${month}/${day}</div>
+        <div class="count col-2">${count}</div>
+      `;
+    });
+    // 페이지 변경했을 때, 값이 없는 경우, '게시글이 없습니다.' 출력
+  } else {
+    innerHTML = `<div class="col-12">게시글이 없습니다.</div>`;
+  }
+  newDiv.innerHTML = innerHTML;
+  newDivs.append(newDiv);
   console.log(newDivs);
   document.querySelector('#boardList').innerHTML = newDivs.innerHTML;
   // newDivs의 innerHTML 이 곧 num, title ~~ 이런거니까 이걸 계속 바꿔주면 됨.
@@ -81,7 +90,7 @@ const performSearch = async () => {
         }
         boardPage.innerHTML = newDivs.innerHTML;
       } else {
-        boarPage.innerHTML = '<div onclick="changePageNum(this)">1</div>';
+        boardPage.innerHTML = '<div onclick="changePageNum(this)">1</div>';
       }
     })
     .catch((error) => {
@@ -103,27 +112,38 @@ function renderSearchResults(results) {
   console.log(results);
   const boardList = document.getElementById('boardList');
   boardList.innerHTML = ''; // 기존 목록을 비우고 검색 결과를 새로 표시
-  // 검색 결과를 반복하여 목록에 추가
-  results.forEach((board, index) => {
-    const count = board.count;
-    const title = board.title;
-    // const createdAt = board.createdAt;
-    const boardSeq = board.boardSeq;
-    const year = board.year;
-    const month = board.month;
-    const day = board.day;
-    // 새로운 게시물 요소 생성
-    const boardElement = document.createElement('div');
-    boardElement.classList.add('row', 'py-2');
-    boardElement.innerHTML = `
-            <div class="num col-2">${index + 1}</div>
-            <div class="title col-6">
-                <a href="/board/list?boardSeq=${boardSeq}" class="view-link">${title}</a>
-            </div>
-            <div class="date col-2">${year}/${month}/${day}</div>
-            <div class="count col-2">${count}</div>
-        `;
-    // 생성된 요소를 목록에 추가
-    boardList.appendChild(boardElement);
-  });
+
+  const boardElement = document.createElement('div');
+  boardElement.classList.add('row', 'py-2');
+
+  // 검색 결과 있는 경우
+  if (results.length > 0) {
+    // 검색 결과를 반복하여 목록에 추가
+    results.forEach((board, index) => {
+      const count = board.count;
+      const title = board.title;
+      // const createdAt = board.createdAt;
+      const boardSeq = board.boardSeq;
+      const year = board.year;
+      const month = board.month;
+      const day = board.day;
+
+      // 새로운 게시물 요소 생성
+      boardElement.innerHTML = `
+          <div class="num col-2">${index + 1}</div>
+          <div class="title col-6">
+              <a href="/board/list?boardSeq=${boardSeq}" class="view-link">${title}</a>
+          </div>
+          <div class="date col-2">${year}/${month}/${day}</div>
+          <div class="count col-2">${count}</div>
+      `;
+    });
+
+  // 검색한 값이 없는 경우, '검색된 게시글이 없습니다.' 출력
+  } else {
+    boardElement.innerHTML = `<div class="col-12">검색된 게시글이 없습니다.</div>`;
+  }
+
+  // 생성된 요소를 목록에 추가
+  boardList.appendChild(boardElement);
 }

@@ -48,7 +48,7 @@ exports.getBoard = async (req, res) => {
 
     // console.log(board.length);
     // console.log('session>>>>>>', req.session.userInfo);
-    // console.log('전체 게시글 보드 정보', board[0]);
+    console.log('전체 게시글 보드 정보', board);
 
     const cookie = req.signedCookies.remain;
 
@@ -216,8 +216,6 @@ exports.getBoardList = async (req, res) => {
         cookieEmail: cookie ? cookie.loginEmail : '',
         cookiePw: cookie ? cookie.loginPw : '',
       });
-
-      // 전체 게시글 조회 + 페이지 번호 '1' 인 경우
     }
   } catch (err) {
     console.error(err);
@@ -281,16 +279,15 @@ exports.postRegister = async (req, res) => {
       filePath = destination.split(path.sep)[1] + path.sep + filename; // 파일명
     }
 
-    // rest client 실행시
+    // // ###### rest client 실행시 ######
     // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
+
+    // // ###### 실제 사용 코드 ######
     const { title, content, category, maxPeople } = req.body;
     console.log('최대인원 서버에 바로 넘어온 값 >>>> ', maxPeople);
     // json 형태로 넘어와서 객체 형태로 전환
     const maxPeopleObject = JSON.parse(maxPeople);
     console.log('맥스 피플 제이슨 데이터 >>> ', maxPeopleObject[0]);
-
-    // 실제 코드
-    // const { title, content, category, maxPeople } = req.body;
 
     // ############### DB 작업 ###############
     const insertOneBoard = await Board.create({
@@ -358,6 +355,7 @@ exports.getModify = async (req, res) => {
         [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
         'createdAt',
         'updatedAt',
+        'userSeq',
         'study.studySeq',
         'study.category',
         'study.maxPeople',
@@ -371,9 +369,10 @@ exports.getModify = async (req, res) => {
 
     // console.log('############# selectOneBoard ##################');
     // console.log(selectOneBoard);
+    // console.log(selectOneBoard.boardSeq);
     // console.log(selectOneBoard.dataValues);
     // console.log(selectOneBoard.dataValues.title);
-    // console.log(selectOneBoard.dataValues.study);
+    console.log(selectOneBoard.dataValues.study);
     // console.log(selectOneBoard.dataValues.study.studySeq);
 
     const cookie = req.signedCookies.remain;
@@ -381,8 +380,9 @@ exports.getModify = async (req, res) => {
     if (req.session.userInfo) {
       res.render('board/postBoard', {
         // result: selectOneBoard,
-        boardInfo: selectOneBoard.dataValues,
+        boardInfo: selectOneBoard,
         studyInfo: selectOneBoard.dataValues.study,
+        session: req.session.userInfo,
         cookieEmail: cookie ? cookie.loginEmail : '',
         cookiePw: cookie ? cookie.loginPw : '',
       });
@@ -409,13 +409,34 @@ exports.patchModify = async (req, res) => {
       filePath = destination.split(path.sep)[1] + path.sep + filename; // 파일명
     }
 
-    // rest client 실행시
+    // ###### rest client 실행시 ######
     // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
-    const { title, content, boardSeq, studySeq, category, maxPeople } =
-      jsonData;
 
-    // 실제 코드
-    // const { title, content, boardSeq, studySeq, category, maxPeople } = req.body;
+    // ###### 실제 사용 코드 ######
+    const { title, content, boardSeq, studySeq, category, maxPeople } =
+      req.body;
+    // console.log('최대인원 서버에 바로 넘어온 값 >>>> ', maxPeople);
+    // json 형태로 넘어와서 객체 형태로 전환
+    const maxPeopleObject = JSON.parse(maxPeople);
+    // console.log('맥스 피플 제이슨 데이터 >>> ', maxPeopleObject[0]);
+    // console.log('맥스 피플 제이슨 데이터 >>> ', maxPeopleObject[0].value);
+
+    // ###### 수정 시, 파일 미업로드 시 null로 저장되는 버그 수정 ######
+    // 파일 경로가 없는 경우,
+    // DB에 이미 있는 파일 경로를 찾아와서 있으면 설정
+    // 없으면 null로 저장 → 원래 없었기 때문
+    if (!filePath) {
+      const selectFilePath = await Board.findOne({
+        where: {
+          boardSeq: boardSeq,
+        },
+      });
+
+      // 파일이 있으면 기존 DB에 있는 파일로 설정
+      if(selectFilePath){
+        filePath = selectFilePath.filePath;
+      }
+    }
 
     // DB 작업
     const updateOneBoard = await Board.update(
@@ -431,29 +452,43 @@ exports.patchModify = async (req, res) => {
       }
     );
 
-    // 수정에 성공하면
-    // 스터디 정보 수정 → 현재 category, maxPeople 수정을 허용하지 않으므로 주석처리
+    // 수정에 성공하면 스터디 정보 수정
     // 스터디 신청현황은 수정할 필요 없음
-    // if (updateOneBoard) {
-    //   const updateOneStudy = await Study.update(
-    //     {
-    //       // category: category,
-    //       // maxPeople: maxPeople,
-    //     },
-    //     {
-    //       where: {
-    //         studySeq: studySeq,
-    //       },
-    //     }
-    //   );
-    // }
+    if (updateOneBoard) {
+      const updateOneStudy = await Study.update(
+        {
+          category: parseInt(category), // 문자형 → 정수형
+          maxPeople: parseInt(maxPeopleObject[0].value), // 문자형 → 정수형
+        },
+        {
+          where: {
+            studySeq: studySeq,
+          },
+        }
+      );
 
-    const cookie = req.signedCookies.remain;
+      const cookie = req.signedCookies.remain;
 
-    res.send(updateOneBoard, {
-      cookieEmail: cookie ? cookie.loginEmail : '',
-      cookiePw: cookie ? cookie.loginPw : '',
-    });
+      if (updateOneBoard && updateOneStudy) {
+        res.send({
+          cookieEmail: cookie ? cookie.loginEmail : '',
+          cookiePw: cookie ? cookie.loginPw : '',
+          msg: 'success',
+        });
+      } else {
+        res.send({
+          cookieEmail: cookie ? cookie.loginEmail : '',
+          cookiePw: cookie ? cookie.loginPw : '',
+          msg: 'update study fail',
+        });
+      }
+    } else {
+      res.send({
+        cookieEmail: cookie ? cookie.loginEmail : '',
+        cookiePw: cookie ? cookie.loginPw : '',
+        msg: 'update board fail',
+      });
+    }
   } catch (err) {
     console.log(err);
   }

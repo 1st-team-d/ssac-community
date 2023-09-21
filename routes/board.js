@@ -36,10 +36,11 @@ const uploadConfig = multer({
       callback(null, folderName); // 이미지 업로드 폴더 경로 설정
     },
     filename(req, file, callback) {
+      let fileName = file.originalname = Buffer.from(file.originalname, 'latin1').toString('utf8'); // 한글 처리
       const random = Math.trunc(Math.random() * Math.pow(10, 15)); // 임의의 15자리 숫자를 가지고 온다.
       //   console.log(random);
-      const ext = path.extname(file.originalname); // 확장자 추출
-      const fileName = path.basename(file.originalname, ext) + random + ext; // 파일명
+      const ext = path.extname(fileName); // 확장자 추출
+      fileName = path.basename(fileName, ext) + random + ext; // 파일명
       // Ex) apple.png → apple40195724.png
       callback(null, fileName); // 업로드할 이미지의 파일명 설정
     },
