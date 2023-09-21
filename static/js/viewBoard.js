@@ -39,16 +39,21 @@ async function submitComment() {
     postID: boardSeq,
     cmtContent: commentContentInput.value,
   };
-  const res = await axios({
-    url: '/comment/register',
-    method: 'post',
-    data: cmtData,
-  }); // 등록되면 true
-  console.log(res.data);
-  if (res.data.result) {
-    document.location.reload();
+  if (cmtData.cmtContent) {
+    const res = await axios({
+      url: '/comment/register',
+      method: 'post',
+      data: cmtData,
+    }); // 등록되면 true
+    console.log(res.data);
+    if (res.data.result) {
+      document.location.reload();
+    } else {
+      
+    }
+
   } else {
-    alert('다시 댓글 써라 ㅋㅋ');
+    alert('댓글 내용을 입력해주세요!')
   }
 }
 
