@@ -72,9 +72,9 @@ exports.getBoardList = async (req, res) => {
   try {
     // 특정 게시글의 게시글 시퀀스, 검색어
     const { boardSeq, search, pageNum, category } = req.query;
-    const categories = category.split(',').map(Number);
+    // const categories = category.split(',').map(Number);
 
-    console.log('category >>>>>', categories);
+    console.log('category >>>>>', category);
 
     // 페이징 처리
     let boardCountPerPage = 10; // 한 화면에 보여질 게시글 개수
@@ -91,11 +91,11 @@ exports.getBoardList = async (req, res) => {
     // 쿠키
     const cookie = req.signedCookies.remain;
 
-    if (categories) {
+    if (category) {
       const study = await Study.findAll({
         where: {
           category: {
-            [Op.in]: categories,
+            [Op.in]: category,
           },
         },
         include: {
@@ -470,7 +470,7 @@ exports.patchModify = async (req, res) => {
       });
 
       // 파일이 있으면 기존 DB에 있는 파일로 설정
-      if(selectFilePath){
+      if (selectFilePath) {
         filePath = selectFilePath.filePath;
       }
     }
