@@ -63,7 +63,7 @@
             id="boardCarousel"
             class="carousel slide trending-podcast-section section-padding"
             data-bs-ride="carousel"
-            data-bs-interval="1000"
+            data-bs-interval="3000"
           >
             <div class="boardCarouselContainer">
               <!-- 좁은 화면 슬라이드 기능 활성화 -->
@@ -73,19 +73,14 @@
                 <div class="carousel-item<%= i === 0 ? ' active' : '' %>">
                   <div class="row">
                     <div class="col-12 mb-4">
-                      <a>
                       <div class="custom-block custom-block-full">
                         <div class="custom-block-image-wrap">
                           <a href=""> </a>
                         </div>
                         <div class="custom-block-info">
-                          <a href="/board?boardSeq=<%= combinedBoards.boardSeq %>">
-                            <h4 class="mb-2"> #
-                              <% switch (combinedBoards[i].study.category) { case 0: %> 웹 <% break; case 1:
-                                %> 앱 <% break; case 2: %> AI <% break; case 3: %> UI/UX <% break;
-                                case4: %> 게임 <% default: %> 기타 <% } %>
-                            </h4>
-                          </a>
+                          <h4 class="mb-2">
+                            <a href=""> # 카테고리 </a>
+                          </h4>
                           <br /><br />
                           <div class="profile-block d-flex">
                             <h4><%= combinedBoards[i].title %></h4>
@@ -98,18 +93,13 @@
                           </div>
                         </div>
                       </div>
-                    </a>
                     </div>
                   </div>
                 </div>
                 <% } %>
               </div>
-              
-
-
-              
-
           </section>
+
 
           <!-- 테스트용 -->
           <section class="carousel-container">
@@ -129,13 +119,9 @@
                               <a href=""> </a>
                             </div>
                             <div class="custom-block-info">
-                              <a href="/board?boardSeq=<%= combinedBoards.boardSeq %>">
-                                <h4 class="mb-2"> #
-                                  <% switch (combinedBoards[i].study.category) { case 0: %> 웹 <% break; case 1:
-                                    %> 앱 <% break; case 2: %> AI <% break; case 3: %> UI/UX <% break;
-                                    case4: %> 게임 <% default: %> 기타 <% } %>
-                                </h4>
-                            </a>
+                              <h4 class="mb-2">
+                                <a href=""> # 카테고리 </a>
+                              </h4>
                               <br /><br />
                               <div class="profile-block d-flex">
                                 <h4><%= combinedBoards[i].title %></h4>
@@ -168,34 +154,6 @@
               <span class="visually-hidden">Next</span>
             </button>
           </section>
-
-
-             <!-- 화면 크기에 따라 표시할 슬라이드를 선택하는 컨트롤러 -->
-             <!-- <button
-             class="carousel-control-prev"
-             type="button"
-             data-bs-target="#boardCarousel"
-             data-bs-slide="prev"
-           >
-             <span
-               class="carousel-control-prev-icon"
-               aria-hidden="true"
-             ></span>
-             <span class="visually-hidden">Previous</span>
-           </button>
-           <button
-             class="carousel-control-next"
-             type="button"
-             data-bs-target="#boardCarousel"
-             data-bs-slide="next"
-           >
-             <span
-               class="carousel-control-next-icon"
-               aria-hidden="true"
-             ></span>
-             <span class="visually-hidden">Next</span>
-           </button>
-          </div> -->
         </div>
       </div>
     </main>

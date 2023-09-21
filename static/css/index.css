@@ -63,6 +63,13 @@ body {
 }
 
 /* 메인 텍스트 반응형 */
+@media screen and (max-width: 991px) {
+  .indexContainer {
+    height: 150vh;
+  }
+}
+
+/* 메인 텍스트 반응형 */
 @media screen and (max-width: 768px) {
   /* .indexContainer {
   margin-top: calc(var(--header-height) + 10px);
@@ -90,6 +97,12 @@ body {
   .textWrap p {
     font-size: 14;
   }
+
+  .btnWrap {
+    margin-bottom: 20px;
+  }
+
+  
 }
 
 /*=================================================*/
@@ -193,15 +206,16 @@ a:hover {
     display: none;
   }
 
-  /* 이전 버튼의 위치를 조정 */
-  /* .carousel-control-prev {
-    left: 0px;
-  } */
 
-  /* 다음 버튼의 위치를 조정 */
-  /* .carousel-control-next {
-    right: 0px;
-  } */
+  .carousel-container {
+    display: none;
+  }
+
+  .custom-block-info {
+    height: 180px;
+    overflow: hidden; /* 내용이 넘치면 숨김 처리 */
+  }
+
 }
 
 /* test */
