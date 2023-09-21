@@ -2,6 +2,9 @@
 async function changePageNum(pageDiv) {
   // 해당 페이지 번호 클릭 -> 클릭한 this 객체가 pageDiv
   const pageNum = pageDiv.textContent;
+  const boardList = document.getElementById('boardList');
+
+  boardList.innerHTML = ''; // 기존 목록을 비우고 검색 결과를 새로 표시
 
   // 해당 페이지에 해당하는 데이터 보내달라고 요청
   const res = await axios({
@@ -12,33 +15,42 @@ async function changePageNum(pageDiv) {
   // 서버에서 전송한 게시물 데이터
   let boards = res.data.data;
 
-  // boardList 업데이트 하기 위한 newDivs
-  const newDivs = document.createElement('div'); // boardList에 바꿔줄 div 여러개 담고 있는
-
-  boards.forEach((board, index) => {
+  boards.forEach((board) => {
     const count = board.count;
     const title = board.title;
+    const content = board.content;
     const boardSeq = board.boardSeq;
     const year = board.year;
     const month = board.month;
     const day = board.day;
 
-    const newDiv = document.createElement('div');
-    newDiv.classList.add('row', 'py-2');
+    const div = document.createElement('div');
+
     // innerHTML로 아예 갈아 엎어서 페이지 누를때마다 새로 집어넣기
-    const innerHTML = `
-      <div class="num col-2">${(pageNum - 1) * 5 + 1 + index}</div>
-      <div class="title col-6">
-          <a href="/board?boardSeq=${boardSeq}" class="view-link">${title}</a>
+    const html = `
+    <a href="/board?boardSeq=${boardSeq}" class="view-link">
+      <div class="card mb-3">
+        <div class="card-body row">
+          <div class="board_info text-start fw-bold col-6">
+            ${title}
+            <span class="badge bg-secondary"
+              >${year + '.' + month + '.' + day}</span
+            >
+            <span class="badge bg-secondary">view ${count}</span>
+          </div>
+
+          <div class="content col-12 text-start text-wrap gy-3">
+              ${content <= 180 ? content : content.slice(0, 179) + ' ...'}
+          </div>
+        </div>
       </div>
-      <div class="date col-2">${year}/${month}/${day}</div>
-      <div class="count col-2">${count}</div>
+    </a>
     `;
-    newDiv.innerHTML = innerHTML;
-    newDivs.append(newDiv);
+    div.innerHTML = html;
+    // 생성된 요소를 목록에 추가
+    boardList.append(div);
   });
-  console.log(newDivs);
-  document.querySelector('#boardList').innerHTML = newDivs.innerHTML;
+  console.log(boardList);
   // newDivs의 innerHTML 이 곧 num, title ~~ 이런거니까 이걸 계속 바꿔주면 됨.
 }
 
@@ -81,7 +93,7 @@ const performSearch = async () => {
         }
         boardPage.innerHTML = newDivs.innerHTML;
       } else {
-        boarPage.innerHTML = '<div onclick="changePageNum(this)">1</div>';
+        boardPage.innerHTML = '<div onclick="changePageNum(this)">1</div>';
       }
     })
     .catch((error) => {
@@ -100,30 +112,171 @@ searchInput.addEventListener('keydown', (event) => {
 
 // 검색 결과를 화면에 표시하는 함수
 function renderSearchResults(results) {
-  console.log(results);
+  console.log('검색 결과', results);
   const boardList = document.getElementById('boardList');
   boardList.innerHTML = ''; // 기존 목록을 비우고 검색 결과를 새로 표시
   // 검색 결과를 반복하여 목록에 추가
   results.forEach((board, index) => {
     const count = board.count;
     const title = board.title;
+    const content = board.content;
     // const createdAt = board.createdAt;
     const boardSeq = board.boardSeq;
     const year = board.year;
     const month = board.month;
     const day = board.day;
     // 새로운 게시물 요소 생성
-    const boardElement = document.createElement('div');
-    boardElement.classList.add('row', 'py-2');
-    boardElement.innerHTML = `
-            <div class="num col-2">${index + 1}</div>
-            <div class="title col-6">
-                <a href="/board?boardSeq=${boardSeq}" class="view-link">${title}</a>
-            </div>
-            <div class="date col-2">${year}/${month}/${day}</div>
-            <div class="count col-2">${count}</div>
-        `;
+    const div = document.createElement('div');
+    const html = `
+    <a href="/board?boardSeq=${boardSeq}" class="view-link">
+      <div class="card mb-3">
+        <div class="card-body row">
+          <div class="board_info text-start fw-bold col-6">
+            ${title}
+            <span class="badge bg-secondary"
+              >${year + '.' + month + '.' + day}</span
+            >
+            <span class="badge bg-secondary">view ${count}</span>
+          </div>
+
+          <div class="content col-12 text-start text-wrap gy-3">
+              ${content <= 180 ? content : content.slice(0, 179) + ' ...'}
+          </div>
+        </div>
+      </div>
+    </a>
+    `;
+    div.innerHTML = html;
     // 생성된 요소를 목록에 추가
-    boardList.appendChild(boardElement);
+    boardList.append(div);
   });
+}
+
+// 모집글 카테고리 -> tagify
+let input = document.querySelector('input[name="category"]'),
+  // init Tagify script on the above inputs
+  tagify = new Tagify(input, {
+    enforceWhitelist: true,
+    editTags: false,
+    whitelist: ['웹', '앱', 'AI', 'UI / UX', '게임', '기타', '전체'],
+    maxTags: 6,
+    dropdown: {
+      maxItems: 6, // <- mixumum allowed rendered suggestions
+      classname: 'tags-look', // <- custom classname for this dropdown, so it could be targeted
+      enabled: 0, // <- show suggestions on focus
+      closeOnSelect: false, // <- do not hide the suggestions dropdown once an item has been selected
+    },
+  });
+
+// Chainable event listeners
+tagify
+  .on('add', onAddTag)
+  .on('remove', onRemoveTag)
+  .on('invalid', onInvalidTag)
+  .on('focus', onTagifyFocusBlur)
+  .on('blur', onTagifyFocusBlur)
+  .on('dropdown:hide dropdown:show', (e) => console.log(e.type))
+  .on('dropdown:select', onDropdownSelect);
+
+var mockAjax = (function mockAjax() {
+  var timeout;
+  return function (duration) {
+    clearTimeout(timeout); // abort last request
+    return new Promise(function (resolve, reject) {
+      timeout = setTimeout(resolve, duration || 700, whitelist);
+    });
+  };
+})();
+
+// tag added callback
+async function onAddTag(e) {
+  console.log('onAddTag: ', e.detail);
+  console.log('original input value: ', input.value);
+  // 선택된 카테고리
+  const categories = tagify.value;
+  // 요청을 위한 빈 배열
+  const getCategories = [];
+  // 태그 추가 이벤트 발생 전까지 있던 카테고리 배열에 추가
+  categories.forEach((category) => {
+    switch (category.value) {
+      case '웹':
+        getCategories.push(0);
+        break;
+      case '앱':
+        getCategories.push(1);
+        break;
+      case 'AI':
+        getCategories.push(2);
+        break;
+      case 'UI / UX':
+        getCategories.push(3);
+        break;
+      case '게임':
+        getCategories.push(4);
+        break;
+      case '기타':
+        getCategories.push(5);
+        break;
+    }
+  });
+  console.log('카테고리>>>>', getCategories);
+  tagify.off('add', onAddTag); // exmaple of removing a custom Tagify event
+  // 카테고리 추가되었으므로 input의 모든 카테고리 값으로 조회
+  const res = await axios({
+    url: '/board/list',
+    method: 'get',
+    params: { category: getCategories },
+  });
+}
+
+// tag removed callback
+function onRemoveTag(e) {
+  console.log('onRemoveTag:', e.detail, 'tagify instance value:', tagify.value);
+  // 카테고리 삭제되었으므로 현재 input의 모든 카테고리 값으로 조회
+  // 선택된 카테고리 파싱
+  const categories = tagify.value;
+  // 요청을 위한 빈 배열
+  const getCategories = [];
+  // 태그 추가 이벤트 발생 전까지 있던 카테고리 배열에 추가
+  categories.forEach((category) => {
+    switch (category.value) {
+      case '웹':
+        getCategories.push(0);
+        break;
+      case '앱':
+        getCategories.push(1);
+        break;
+      case 'AI':
+        getCategories.push(2);
+        break;
+      case 'UI / UX':
+        getCategories.push(3);
+        break;
+      case '게임':
+        getCategories.push(4);
+        break;
+      case '기타':
+        getCategories.push(5);
+        break;
+    }
+  });
+  console.log('카테고리>>>>', getCategories);
+  axios({
+    url: '/board/list',
+    method: 'get',
+    params: { category: getCategories },
+  });
+}
+
+// invalid tag added callback
+function onInvalidTag(e) {
+  console.log('onInvalidTag: ', e.detail);
+}
+
+function onTagifyFocusBlur(e) {
+  console.log(e.type, 'event fired');
+}
+
+function onDropdownSelect(e) {
+  console.log('onDropdownSelect: ', e.detail);
 }
