@@ -269,10 +269,10 @@ exports.patchStudyApply = async (req, res) => {
         }
       } else {
         // 인원이 최대인원을 초과한 상황
-        res.send({ msg: 'maxPeople' });
+        res.send({ msg: 'closedStudy' });
       }
     } else {
-      res.send({ msg: 'maxPeople' });
+      res.send({ msg: 'closedStudy' });
     }
   } catch (err) {
     console.log(err);

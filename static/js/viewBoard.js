@@ -218,7 +218,7 @@ async function studyCloseApply(btn) {
           if (res.data.msg === 'success') {
             // if (res.data.msg) {
             document.location.reload();
-          } else if (res.data.msg === 'maxPeople') {
+          } else if (res.data.msg === 'closedStudy') {
             alert('이미 마감된 스터디입니다.');
             document.location.reload();
           }
