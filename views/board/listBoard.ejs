@@ -106,14 +106,17 @@
       >
         <% data.forEach((board, index) => { %>
         <div>
-          <a href="/board?boardSeq=<%= board.boardSeq %>" class="view-link">
+          <a
+            href="/board/list?boardSeq=<%= board.boardSeq %>"
+            class="view-link"
+          >
             <div class="card mb-3">
               <div class="card-body row">
                 <div class="board_info text-start fw-bold col-6">
                   <%= board.title %>
                   <span class="badge bg-secondary"
                     ><%= board.dataValues.year + '.' + board.dataValues.month +
-                    '.' + board.dataValues.month %></span
+                    '.' + board.dataValues.day %></span
                   >
                   <span class="badge bg-secondary"
                     >view <%= board.count %></span
