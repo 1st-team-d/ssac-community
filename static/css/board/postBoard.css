@@ -1,6 +1,10 @@
 /* Common Styles (공통 스타일) */
 @import url('/static/css/common.css');
 
+
+/* 게시판 목록 메인 컨텐츠 시작 위치 설정 */
+
+
 /* 입력 요소 포커스 스타일 설정 */
 input:focus {
   outline: none; /* 포커스 시 외곽선 제거 */
@@ -33,7 +37,7 @@ textarea {
 
 /* 카테고리 스타일 설정 */
 .categories label {
-  background-color: rgb(219, 247, 181); /* 배경색 설정 */
+  background-color: rgb(168, 168, 168); /* 배경색 설정 */
   margin-right: 10px; /* 우측 여백 설정 */
   border-radius: 20px; /* 둥근 테두리 설정 */
   padding: 10px; /* 내부 여백 설정 */
@@ -50,7 +54,7 @@ textarea {
   padding: 10px; /* 내부 여백 설정 */
   cursor: pointer; /* 커서 모양 변경 (손가락) */
   font-weight: 700; /* 글꼴 굵기 설정 */
-  color: #eee; /* 글자색 설정 */
+  color: #0c9500; /* 글자색 설정 */
 }
 
 /* 게시글 작성 메인 스타일 설정 */
@@ -85,5 +89,5 @@ textarea {
 
 .file .inputFileBtn {
   cursor: pointer; /* 커서 모양 변경 (손가락) */
-  width: 15%;
+  width: 26%;
 }
