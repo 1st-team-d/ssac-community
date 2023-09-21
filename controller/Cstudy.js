@@ -219,21 +219,56 @@ exports.getStudyProfile = async (req, res) => {
 exports.patchStudyApply = async (req, res) => {
   try {
     const { studySeq } = req.body;
-    const insertOneStudyApply = await StudyApply.create({
-      studySeq: studySeq,
-      userSeq: req.session.userInfo.userSeq,
+
+    // 신청을 했을때
+    const studyApplyCount = await StudyApply.findAll({
+      where: {
+        studySeq: studySeq,
+      },
+      include: [{ model: Study }],
+    });
+    const studyInfo = await Study.findOne({
+      attributes: ['studySeq', 'maxPeople', 'status'],
+      where: {
+        studySeq: studySeq,
+      },
     });
 
-    const cookie = req.signedCookies.remain;
-
-    if (insertOneStudyApply) {
-      res.send({
-        cookieEmail: cookie ? cookie.loginEmail : '',
-        cookiePw: cookie ? cookie.loginPw : '',
-        msg: 'success',
+    if (studyApplyCount.length < studyInfo.maxPeople) {
+      //인원 추가
+      const insertOneStudyApply = await StudyApply.create({
+        studySeq: studySeq,
+        userSeq: req.session.userInfo.userSeq,
       });
+      const currentLength = studyApplyCount.length + 1;
+      if (currentLength >= studyInfo.maxPeople) {
+        // 모집 마감처리를 한다.
+        const updateOneStudy = await Study.update(
+          {
+            status: 1, // 모집 마감으로 수정
+          },
+          {
+            where: {
+              studySeq: studyInfo.studySeq,
+            },
+          }
+        );
+      }
+      const cookie = req.signedCookies.remain;
+
+      if (insertOneStudyApply) {
+        res.send({
+          cookieEmail: cookie ? cookie.loginEmail : '',
+          cookiePw: cookie ? cookie.loginPw : '',
+          msg: 'success',
+        });
+        // res.redirect('/board?boardSeq=54')
+      } else {
+        res.send({ msg: 'fail' });
+      }
     } else {
-      res.send({ msg: 'fail' });
+      // 인원이 최대인원을 초과한 상황
+      res.send({ msg: 'maxPeople' });
     }
   } catch (err) {
     console.log(err);
