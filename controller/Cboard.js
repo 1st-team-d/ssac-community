@@ -43,7 +43,7 @@ exports.getBoard = async (req, res) => {
       order: [[sequelize.col('board.createdAt'), 'DESC']],
       offset: offset,
       limit: boardCountPerPage,
-      include: [{ model: User }],
+      include: [{ model: User }, { model: Study }],
     });
 
     // console.log(board.length);
