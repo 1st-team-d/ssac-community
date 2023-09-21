@@ -1,10 +1,30 @@
 const { Board } = require('../models/Board');
-const { Comment } = require('../models');
+const { Comment, User } = require('../models');
 
 // GET '/comment'
 // 모든 댓글 조회
 exports.getComment = (req, res) => {
   res.send('hello');
+};
+
+// 댓글 수정 취소 -> cmtSeq에 해당하는 하나의 댓글 조회해서 원상복구
+exports.getOneComment = async (req, res) => {
+  try {
+    const { commentSeq } = req.query;
+    const oneComment = await Comment.findOne({
+      where: { commentSeq },
+      include: [{ model: User }],
+    });
+    console.log('cmtSeq 로 조회한 댓글 @@@@@@@@@@@@@@@@', oneComment);
+    if (oneComment) {
+      res.send({ oneComment: oneComment, result: true });
+    } else {
+      res.send({ oneComment: '', result: false });
+    }
+  } catch (err) {
+    console.log('err----------------', err);
+    res.send('Internal Server Error!!!');
+  }
 };
 
 // 댓글 등록
@@ -23,9 +43,9 @@ exports.postComment = async (req, res) => {
 
     if (newComment) {
       // res.redirect(`${process.env.DB_HOST}/board/${postID}`)
-      res.redirect(`/board?boardSeq=${postID}`);
+      res.send({ result: true });
     } else {
-      res.send({ msg: 'newComment fail' });
+      res.send({ result: false });
     }
   } catch (err) {
     console.log('err----------------', err);
@@ -35,7 +55,7 @@ exports.postComment = async (req, res) => {
 
 exports.patchComment = async (req, res) => {
   try {
-    const { commentSeq, cmtContent, postID } = req.body;
+    const { commentSeq, cmtContent } = req.body;
     const patchedComment = await Comment.update(
       {
         content: cmtContent,
@@ -47,9 +67,9 @@ exports.patchComment = async (req, res) => {
       }
     );
     if (patchedComment) {
-      res.redirect(`/board?boardSeq=${postID}`);
+      res.send({ result: true });
     } else {
-      res.send({ msg: 'patchedComment fail' });
+      res.send({ result: false });
     }
   } catch (err) {
     console.log('err----------------', err);
@@ -59,14 +79,14 @@ exports.patchComment = async (req, res) => {
 
 exports.removeComment = async (req, res) => {
   try {
-    const { commentSeq, postID } = req.body;
+    const { commentSeq } = req.body;
     const deletedComment = await Comment.destroy({
       where: { commentSeq: commentSeq },
     });
     if (deletedComment) {
-      res.redirect(`/board?boardSeq=${postID}`);
+      res.send({ result: true });
     } else {
-      res.send({ msg: 'deletedComment fail' });
+      res.send({ result: false });
     }
   } catch (err) {
     console.log('err----------------', err);

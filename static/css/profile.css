@@ -5,35 +5,42 @@
     margin-top: calc(var(--header-height) + 10px);
   } */
 
-      /* 페이지 전체를 가운데 정렬하기 위한 스타일 */
-      body, html {
-        height: 100%;
-      }
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+/* 페이지 전체를 가운데 정렬하기 위한 스타일 */
+body,
+html {
+  height: 100%;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-      .profileCard {
-        height: 350px;
-      }
+.profileCard {
+  height: 350px;
+}
 
-          /* 카드 내부의 텍스트 가운데 정렬하기 위한 스타일 */
-    .card-title {
-        margin: 0
-    }
+/* 카드 내부의 텍스트 가운데 정렬하기 위한 스타일 */
+.card-title {
+  margin: 0;
+}
 
-    .card-header {
-        background-color: #a2c579;
-    }
-    .card-text {
-        margin-top: 10%;
-    }
+.card-header {
+  background-color: #a2c579;
+}
+.card-text {
+  margin-top: 10%;
+}
 
+/* 프로필 이미지 크기 조절 */
+.profile-avatar {
+  width: 150px; /* 원하는 너비로 조절 */
+  height: 150px; /* 원하는 높이로 조절 */
+}
 
-    /* 프로필 이미지 크기 조절 */
-    .profile-avatar {
-        width: 150px; /* 원하는 너비로 조절 */
-        height: 150px; /* 원하는 높이로 조절 */
-      }
+span#checkPwMsg,
+span#samePwMsg {
+  display: block;
+  margin-top: 10px;
+  margin-left: 10px;
+}
