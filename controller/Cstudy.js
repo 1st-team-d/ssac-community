@@ -224,6 +224,34 @@ exports.patchStudyApply = async (req, res) => {
       userSeq: req.session.userInfo.userSeq,
     });
 
+    // 신청을 했을때
+    const studyApplyCount = await StudyApply.findAll({
+      where: {
+        studySeq: studySeq,
+      },
+      include: [{ model: Study }],
+    });
+    const studyInfo = await Study.findOne({
+      attributes: ['studySeq', 'maxPeople'],
+      where: {
+        studySeq: studySeq,
+      },
+    });
+
+    // 인원이 max가 되면
+    if (studyApplyCount.length >= studyInfo.maxPeople) {
+      // 모집 마감처리를 한다.
+      const updateOneStudy = await Study.update(
+        {
+          status: 1, // 모집 마감으로 수정
+        },
+        {
+          where: {
+            studySeq: studySeq,
+          },
+        }
+      );
+    }
     const cookie = req.signedCookies.remain;
 
     if (insertOneStudyApply) {
