@@ -54,39 +54,43 @@ function checkExt(fileName) {
 
 // 수정 버튼
 async function editPost() {
-  const form = document.forms['data'];
-  const formData = new FormData();
-  const file = document.querySelector('#postFile').files[0];
+  if (validationForm()) {
+    const form = document.forms['data'];
+    const formData = new FormData();
+    const file = document.querySelector('#postFile').files[0];
+    console.log(file);
 
-  // boardSeq 체크
-  // console.log(form.boardSeq.value);
-  console.log(maxPeople);
-  formData.append('boardSeq', form.boardSeq.value);
-  formData.append('userSeq', form.userSeq.value);
-  formData.append('title', form.title.value);
-  formData.append('content', form.content.value);
-  formData.append('category', form.category.value);
-  formData.append('maxPeople', form.maxPeople.value);
-  formData.append('uploadFile', file);
+    // boardSeq 체크
+    // console.log(form.boardSeq.value);
+    // console.log(maxPeople);
+    formData.append('boardSeq', form.boardSeq.value);
+    formData.append('userSeq', form.userSeq.value);
+    formData.append('studySeq', form.studySeq.value);
+    formData.append('title', form.title.value);
+    formData.append('content', form.content.value);
+    formData.append('category', form.category.value);
+    formData.append('maxPeople', form.maxPeople.value);
+    formData.append('uploadFile', file);
 
-  if (confirm('수정 하시겠습니까?')) {
-    try {
-      const res = await axios({
-        url: '/board/modify',
-        method: 'patch',
-        data: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      if (res.data) {
-        console.log('res.data', res.data);
-        alert('수정 완료!');
-        document.location.href = '/board';
+    if (confirm('수정 하시겠습니까?')) {
+      try {
+        const res = await axios({
+          url: '/board/modify',
+          method: 'patch',
+          data: formData,
+          headers: {
+            'Content-Type': 'multipart/form-data; charset: UTF-8',
+          },
+        });
+        if (res.data) {
+          console.log('res.data', res.data);
+          alert('수정 완료!');
+          document.location.href = '/board';
+        }
+      } catch (error) {
+        console.error(error);
+        // 에러 처리 로직 추가
       }
-    } catch (error) {
-      console.error(error);
-      // 에러 처리 로직 추가
     }
   }
 }
@@ -137,11 +141,12 @@ function onSelectFocus(e) {
   console.log(e);
 }
 
-// f유효성 검사
+// 유효성 검사
 function validationForm() {
   const maxPeople = document.querySelector('input[name=maxPeople]'); // 최대 인원
-  const category = document.querySelector('[name=category]:checked'); // 카테고리(선택됨)
-
+  const checkedLabelId = document.querySelector('.checked').getAttribute('for'); // 카테고리(선택됨) // 라벨 태그에 checked가 있음
+  const category = document.querySelector(`#${checkedLabelId}`);
+  
   // 최대 인원
   if (!maxPeople.value) {
     alert('최대 인원을 선택해주세요.');

@@ -33,12 +33,17 @@
         <input
           type="hidden"
           name="userSeq"
-          value="<% boardInfo && boardInfo.userSeq ? boardInfo.userSeq : '' %>"
+          value="<%= boardInfo.userSeq %>"
         />
         <input
           type="hidden"
           name="boardSeq"
-          value="<% boardInfo ? boardInfo.boardSeq : '' %>"
+          value="<%= boardInfo.boardSeq %>"
+        />
+        <input
+          type="hidden"
+          name="studySeq"
+          value="<%= studyInfo.studySeq %>"
         />
         <div
           class="postTop d-flex row flex-wrap align-items-center justify-content-between border-black border-top border-bottom mb-3"

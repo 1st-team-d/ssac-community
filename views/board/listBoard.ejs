@@ -53,21 +53,27 @@
         </div>
         <div class="board_list border-bottom w-100 row justify-content-center text-center" id="boardList">
           <% let num = 1 %>
-          <% data.forEach((board) => { %>
-          <div class="row py-2">
-            <div class="num col-2"><%= num %></div>
-            <div class="title col-6">
-              <a href="/board/list?boardSeq=<%= board.boardSeq %>" class="view-link">
-                <%= board.title %>
-              </a>
+          <% if(data.length > 0) { %>
+            <% data.forEach((board) => { %>
+            <div class="row py-2">
+              <div class="num col-2"><%= num %></div>
+              <div class="title col-6">
+                <a href="/board/list?boardSeq=<%= board.boardSeq %>" class="view-link">
+                  <%= board.title %>
+                </a>
+              </div>
+              <div class="date col-2">
+                <%= board.dataValues.year + '-' + board.dataValues.month + '-' + board.dataValues.day %>
+              </div>
+              <div class="count col-2"><%= board.count %></div>
             </div>
-            <div class="date col-2">
-              <%= board.dataValues.year + '-' + board.dataValues.month + '-' + board.dataValues.day %>
+            <% num++ %>
+            <% }) %>
+          <% } else { %>
+            <div class="row py-2">
+              <div class="col-12">현재 작성된 게시글이 없습니다.</div>
             </div>
-            <div class="count col-2"><%= board.count %></div>
-          </div>
-          <% num++ %>
-          <% }) %>
+          <% } %>
         </div>
   
       <!-- 페이지네이션 -->
