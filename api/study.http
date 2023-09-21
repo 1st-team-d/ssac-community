@@ -12,7 +12,8 @@ PATCH {{studyUrl}}/apply
 Content-Type:application/json; charset=UTF-8
 
 {
-    "studySeq": 1
+    "studySeq": 3,
+    "userSeq":5
 }
 
 ### 스터디 마감 처리

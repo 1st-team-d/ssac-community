@@ -1,7 +1,7 @@
 // 파일 input 업로드하면 text input에 파일명 표시
 $('#postFile').on('change', function () {
   let fileName = $('#postFile').val();
-  // console.log(fileName);
+  console.log('########## fileName ######### ', fileName);
 
   const ext = checkExt(fileName); // 확장자 체크
 

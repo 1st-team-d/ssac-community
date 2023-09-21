@@ -48,7 +48,7 @@ exports.getBoard = async (req, res) => {
 
     // console.log(board.length);
     // console.log('session>>>>>>', req.session.userInfo);
-    console.log('전체 게시글 보드 정보', board);
+    // console.log('전체 게시글 보드 정보', board);
 
     const cookie = req.signedCookies.remain;
 
@@ -74,7 +74,7 @@ exports.getBoardList = async (req, res) => {
     const { boardSeq, search, pageNum, category } = req.query;
     // const categories = category.split(',').map(Number);
 
-    console.log('category >>>>>', category);
+    // console.log('category >>>>>', category);
 
     // 페이징 처리
     let boardCountPerPage = 10; // 한 화면에 보여질 게시글 개수
@@ -409,7 +409,7 @@ exports.getModify = async (req, res) => {
     // console.log(selectOneBoard.boardSeq);
     // console.log(selectOneBoard.dataValues);
     // console.log(selectOneBoard.dataValues.title);
-    console.log(selectOneBoard.dataValues.study);
+    // console.log(selectOneBoard.dataValues.study);
     // console.log(selectOneBoard.dataValues.study.studySeq);
 
     const cookie = req.signedCookies.remain;
