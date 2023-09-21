@@ -72,7 +72,9 @@ exports.getBoardList = async (req, res) => {
   try {
     // 특정 게시글의 게시글 시퀀스, 검색어
     const { boardSeq, search, pageNum, category } = req.query;
-    const categories = [category];
+    const categories = category.split(',').map(Number);
+
+    console.log('category >>>>>', categories);
 
     // 페이징 처리
     let boardCountPerPage = 5; // 한 화면에 보여질 게시글 개수
