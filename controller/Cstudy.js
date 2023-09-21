@@ -223,6 +223,7 @@ exports.patchStudyApply = async (req, res) => {
     const checkUser = await StudyApply.findOne({
       where: {
         userSeq: userSeq,
+        studySeq: studySeq,
       },
     });
 
