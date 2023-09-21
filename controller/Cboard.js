@@ -66,11 +66,16 @@ exports.getBoard = async (req, res) => {
 
 // GET '/board/list'
 // GET '/board/list?search=###'
+// GET '/board/list?category=###'
 // 게시글 검색 및 페이징 처리
 exports.getBoardList = async (req, res) => {
   try {
     // 특정 게시글의 게시글 시퀀스, 검색어
-    const { boardSeq, search, pageNum } = req.query;
+    const { boardSeq, search, pageNum, category } = req.query;
+    const categories = category.split(',').map(Number);
+
+    console.log('category >>>>>', categories);
+
     // 페이징 처리
     let boardCountPerPage = 5; // 한 화면에 보여질 게시글 개수
     let offset = 0; // 페이징 처리
@@ -86,8 +91,39 @@ exports.getBoardList = async (req, res) => {
     // 쿠키
     const cookie = req.signedCookies.remain;
 
-    // 특정 게시글 조회 및 해당 게시글의 댓글 조회
-    if (boardSeq) {
+    if (categories) {
+      const study = await Study.findAll({
+        where: {
+          category: {
+            [Op.in]: categories,
+          },
+        },
+        include: {
+          model: Board,
+          attributes: [
+            'boardSeq',
+            'title',
+            'content',
+            'filePath',
+            'count',
+            [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
+            [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
+            [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
+            'createdAt',
+            'updatedAt',
+          ],
+        },
+      });
+
+      res.send({
+        board: study,
+        session: req.session.userInfo,
+        cookieEmail: cookie ? cookie.loginEmail : '',
+        cookiePw: cookie ? cookie.loginPw : '',
+      });
+
+      // 특정 게시글 조회 및 해당 게시글의 댓글 조회
+    } else if (boardSeq) {
       const board = await Board.findOne({
         attributes: [
           'boardSeq',

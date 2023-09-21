@@ -15,6 +15,9 @@ GET {{boardUrl}}/list?boardSeq=1
 ### 게시글 검색
 GET {{boardUrl}}/list?search=제목
 
+### 게시글 카테고리별 조회
+GET {{boardUrl}}/list?category=1
+
 ### 게시글 검색 ( + 페이징 처리)
 GET {{boardUrl}}/list?search=제목&pageNum=4
 
