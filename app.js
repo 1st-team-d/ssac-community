@@ -62,8 +62,16 @@ app.use('/user', userRouter);
 const studyRouter = require('./routes/study');
 app.use('/study', studyRouter);
 // 관리자
+async function isAdmin(req, res, next) {
+  if (req.session.userInfo.isAdmin) {
+    return res.render('admin/index');
+  } else {
+    return res.render('error');
+  }
+}
+
 const adminRouter = require('./routes/admin');
-app.use('/admin', adminRouter);
+app.use('/admin', isAdmin, adminRouter);
 
 // 에러 처리
 app.get('*', (req, res) => {

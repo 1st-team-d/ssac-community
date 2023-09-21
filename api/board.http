@@ -2,18 +2,24 @@
 
 @server = http://localhost:8080
 
-### 게시글 화면 (쿼리 없음)
-GET {{boardUrl}}?pageNum=1
+### 게시글 조회 화면으로 이동
+GET {{boardUrl}}
+
+### 게시글 페이징
+GET {{boardUrl}}/list?pageNum=1
 # 기본적으로 pageNum이 1이여야 한다.
 
 ### 게시글 화면 (쿼리 있음)
-GET {{boardUrl}}?boardSeq=1
+GET {{boardUrl}}/list?boardSeq=1
 
 ### 게시글 검색
-GET {{boardUrl}}?search=제목
+GET {{boardUrl}}/list?search=제목
+
+### 게시글 카테고리별 조회
+GET {{boardUrl}}/list?category=1
 
 ### 게시글 검색 ( + 페이징 처리)
-GET {{boardUrl}}?search=제목&pageNum=4
+GET {{boardUrl}}/list?search=제목&pageNum=4
 
 ### 게시물 삭제
 DELETE {{boardUrl}}/remove

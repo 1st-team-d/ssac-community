@@ -8,7 +8,7 @@ async function changePageNum(pageDiv) {
 
   // 해당 페이지에 해당하는 데이터 보내달라고 요청
   const res = await axios({
-    url: `/board?pageNum=${pageNum}`,
+    url: `/board/list?pageNum=${pageNum}`,
     method: 'get',
   });
   console.log(res.data);
@@ -70,7 +70,7 @@ const performSearch = async () => {
   }
 
   // 검색어를 서버로 전송하여 검색 요청 보내기
-  fetch(`/board?search=${sanitizedKeyword}`)
+  fetch(`/board/list?search=${sanitizedKeyword}`)
     .then((response) => {
       return response.json();
     })
@@ -147,6 +147,7 @@ function renderSearchResults(results) {
     </a>
     `;
     div.innerHTML = html;
+
     // 생성된 요소를 목록에 추가
     boardList.append(div);
   });

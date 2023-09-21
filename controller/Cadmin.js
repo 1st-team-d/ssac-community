@@ -18,23 +18,55 @@ exports.getAdmin = (req, res) => {
 // 유저 관리 화면
 exports.getUser = async (req, res) => {
   try {
-    // 전체 유저 조회
-    const user = await User.findAll({
-      attributes: [
-        'userSeq',
-        'id',
-        'name',
-        'isAdmin',
-        [sequelize.fn('YEAR', sequelize.col('user.createdAt')), 'year'],
-        [sequelize.fn('MONTH', sequelize.col('user.createdAt')), 'month'],
-        [sequelize.fn('DAY', sequelize.col('user.createdAt')), 'day'],
-        'createdAt',
-        'updatedAt',
-      ],
-      include: [{ model: Board }],
-    });
+    const { search } = req.query;
 
-    res.render('admin/user/user', { users: user });
+    if (search) {
+      // 검색
+      const user = await User.findAll({
+        attributes: [
+          'userSeq',
+          'id',
+          'name',
+          'isAdmin',
+          [sequelize.fn('YEAR', sequelize.col('user.createdAt')), 'year'],
+          [sequelize.fn('MONTH', sequelize.col('user.createdAt')), 'month'],
+          [sequelize.fn('DAY', sequelize.col('user.createdAt')), 'day'],
+          'createdAt',
+          'updatedAt',
+        ],
+        where: {
+          [Op.or]: [
+            {
+              id: { [Op.like]: `%${search}%` },
+            },
+            {
+              name: { [Op.like]: `%${search}%` },
+            },
+          ],
+        },
+        include: [{ model: Board }],
+      });
+
+      res.send({ users: user });
+    } else {
+      // 전체 유저 조회
+      const user = await User.findAll({
+        attributes: [
+          'userSeq',
+          'id',
+          'name',
+          'isAdmin',
+          [sequelize.fn('YEAR', sequelize.col('user.createdAt')), 'year'],
+          [sequelize.fn('MONTH', sequelize.col('user.createdAt')), 'month'],
+          [sequelize.fn('DAY', sequelize.col('user.createdAt')), 'day'],
+          'createdAt',
+          'updatedAt',
+        ],
+        include: [{ model: Board }],
+      });
+
+      res.render('admin/user/user', { users: user });
+    }
   } catch (err) {
     console.error(err);
     res.send({ msg: false });

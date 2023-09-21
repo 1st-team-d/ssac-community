@@ -12,8 +12,70 @@ const path = require('path');
 // 게시글 화면
 exports.getBoard = async (req, res) => {
   try {
+    // 페이징 처리
+    const pageNum = 1;
+    const boardCountPerPage = 5; // 한 화면에 보여질 게시글 개수
+    const offset = boardCountPerPage * (pageNum - 1); // 페이징 처리
+
+    // console.log('query >> ', req.query);
+    // 전체 게시글 개수 필요
+    const selectAllBoard = await Board.findAll();
+    const allBoardLen = selectAllBoard.length;
+
+    const board = await Board.findAll({
+      attributes: [
+        'boardSeq',
+        'title',
+        'content',
+        'filePath',
+        'count',
+        [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
+        [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
+        [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
+        'createdAt',
+        'updatedAt',
+        'user.userSeq',
+        'user.id',
+        'user.pw',
+        'user.name',
+        'user.isAdmin',
+      ],
+      order: [[sequelize.col('board.createdAt'), 'DESC']],
+      offset: offset,
+      limit: boardCountPerPage,
+      include: [{ model: User }, { model: Study }],
+    });
+
+    // console.log(board.length);
+    // console.log('session>>>>>>', req.session.userInfo);
+    // console.log('전체 게시글 보드 정보', board[0]);
+
+    const cookie = req.signedCookies.remain;
+
+    res.render('board/listBoard', {
+      data: board,
+      allBoardLen: allBoardLen,
+      session: req.session.userInfo,
+      cookieEmail: cookie ? cookie.loginEmail : '',
+      cookiePw: cookie ? cookie.loginPw : '',
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// GET '/board/list'
+// GET '/board/list?search=###'
+// GET '/board/list?category=###'
+// 게시글 검색 및 페이징 처리
+exports.getBoardList = async (req, res) => {
+  try {
     // 특정 게시글의 게시글 시퀀스, 검색어
-    const { boardSeq, search, pageNum } = req.query;
+    const { boardSeq, search, pageNum, category } = req.query;
+    const categories = category.split(',').map(Number);
+
+    console.log('category >>>>>', categories);
+
     // 페이징 처리
     let boardCountPerPage = 10; // 한 화면에 보여질 게시글 개수
     let offset = 0; // 페이징 처리
@@ -26,8 +88,42 @@ exports.getBoard = async (req, res) => {
     const selectAllBoard = await Board.findAll();
     const allBoardLen = selectAllBoard.length;
 
-    // 특정 게시글 조회 및 해당 게시글의 댓글 조회
-    if (boardSeq) {
+    // 쿠키
+    const cookie = req.signedCookies.remain;
+
+    if (categories) {
+      const study = await Study.findAll({
+        where: {
+          category: {
+            [Op.in]: categories,
+          },
+        },
+        include: {
+          model: Board,
+          attributes: [
+            'boardSeq',
+            'title',
+            'content',
+            'filePath',
+            'count',
+            [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
+            [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
+            [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
+            'createdAt',
+            'updatedAt',
+          ],
+        },
+      });
+
+      res.send({
+        board: study,
+        session: req.session.userInfo,
+        cookieEmail: cookie ? cookie.loginEmail : '',
+        cookiePw: cookie ? cookie.loginPw : '',
+      });
+
+      // 특정 게시글 조회 및 해당 게시글의 댓글 조회
+    } else if (boardSeq) {
       const board = await Board.findOne({
         attributes: [
           'boardSeq',
@@ -65,12 +161,10 @@ exports.getBoard = async (req, res) => {
         },
         include: [{ model: User }],
       });
-      console.log('comments >>>>>>>>>>>>>>>>>', allComment);
+      // console.log('comments >>>>>>>>>>>>>>>>>', allComment);
 
-      console.log('session>>>>>>', req.session.userInfo);
-      console.log('특정 게시글 board>>>>>>>', board);
-
-      const cookie = req.signedCookies.remain;
+      // console.log('session>>>>>>', req.session.userInfo);
+      // console.log('특정 게시글 board>>>>>>>', board);
 
       res.render('board/viewBoard', {
         board: board,
@@ -107,14 +201,13 @@ exports.getBoard = async (req, res) => {
             },
           ],
         },
+        include: [{ model: Study }],
         order: [[sequelize.col('board.createdAt'), 'DESC']],
         offset: offset,
         limit: boardCountPerPage,
       });
 
-      console.log('session>>>>>>', req.session.userInfo);
-
-      const cookie = req.signedCookies.remain;
+      // console.log('session>>>>>>', req.session.userInfo);
 
       res.send({
         data: board,
@@ -125,45 +218,6 @@ exports.getBoard = async (req, res) => {
       });
 
       // 페이지 번호 '2'이상 넘어오는 경우
-    } else if (pageNum > 1) {
-      const board = await Board.findAll({
-        attributes: [
-          'boardSeq',
-          'title',
-          'content',
-          'filePath',
-          'count',
-          [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
-          [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
-          [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
-          'createdAt',
-          'updatedAt',
-          'user.userSeq',
-          'user.id',
-          'user.pw',
-          'user.name',
-          'user.isAdmin',
-        ],
-        order: [[sequelize.col('board.createdAt'), 'DESC']],
-        offset: offset,
-        limit: boardCountPerPage,
-        include: [{ model: User }],
-      });
-
-      const cookie = req.signedCookies.remain;
-
-      // console.log(board.length);
-      console.log('보드는>>>>>>>', board);
-      console.log('session>>>>>>', req.session.userInfo);
-      res.send({
-        data: board,
-        // allBoardLen: allBoardLen,
-        session: req.session.userInfo,
-        cookieEmail: cookie ? cookie.loginEmail : '',
-        cookiePw: cookie ? cookie.loginPw : '',
-      });
-
-      // 전체 게시글 조회 + 페이지 번호 '1' 인 경우
     } else {
       const board = await Board.findAll({
         attributes: [
@@ -186,32 +240,21 @@ exports.getBoard = async (req, res) => {
         order: [[sequelize.col('board.createdAt'), 'DESC']],
         offset: offset,
         limit: boardCountPerPage,
-        include: [{ model: User }],
+        include: [{ model: User }, { model: Study }],
       });
 
       // console.log(board.length);
-      console.log('session>>>>>>', req.session.userInfo);
-      console.log('전체 게시글 보드 정보', board[0]);
+      // console.log('보드는>>>>>>>', board);
+      // console.log('session>>>>>>', req.session.userInfo);
+      res.send({
+        data: board,
+        allBoardLen: allBoardLen,
+        session: req.session.userInfo,
+        cookieEmail: cookie ? cookie.loginEmail : '',
+        cookiePw: cookie ? cookie.loginPw : '',
+      });
 
-      const cookie = req.signedCookies.remain;
-
-      if (pageNum === 1) {
-        res.send({
-          data: board,
-          allBoardLen: allBoardLen,
-          session: req.session.userInfo,
-          cookieEmail: cookie ? cookie.loginEmail : '',
-          cookiePw: cookie ? cookie.loginPw : '',
-        });
-      } else {
-        res.render('board/listBoard', {
-          data: board,
-          allBoardLen: allBoardLen,
-          session: req.session.userInfo,
-          cookieEmail: cookie ? cookie.loginEmail : '',
-          cookiePw: cookie ? cookie.loginPw : '',
-        });
-      }
+      // 전체 게시글 조회 + 페이지 번호 '1' 인 경우
     }
   } catch (err) {
     console.error(err);
