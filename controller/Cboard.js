@@ -77,7 +77,7 @@ exports.getBoardList = async (req, res) => {
     console.log('category >>>>>', categories);
 
     // 페이징 처리
-    let boardCountPerPage = 5; // 한 화면에 보여질 게시글 개수
+    let boardCountPerPage = 10; // 한 화면에 보여질 게시글 개수
     let offset = 0; // 페이징 처리
     if (pageNum > 1) {
       offset = boardCountPerPage * (pageNum - 1);

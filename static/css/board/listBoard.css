@@ -23,12 +23,10 @@
 /* ========================================================================= */
 /* 게시물 목록 스타일 설정 */
 
-.board_list > div {
-  border-bottom: 1px solid #ddd; /* 목록 아이템 아래 경계선 설정 */
-}
-
-.board_list > div:last-child {
-  border: none; /* 목록 아이템 아래 경계선 설정 */
+.board_list div.card {
+  background-color: #becead;
+  border: none;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* ========================================================================= */
@@ -85,10 +83,6 @@
 
   .board_list .date {
     width: 40%; /* 작성일 칼럼 너비 설정 */
-  }
-
-  .board_list .title {
-    text-indent: 10px; /* 제목 들여쓰기 설정 */
   }
 
   .board_list .top .title {
@@ -149,108 +143,4 @@
   .board_write .info input[type='password'] {
     width: 100%; /* 입력 필드 전체 너비 설정 */
   }
-}
-
-/* ========================================================================= */
-
-/* 댓글 섹션 스타일 설정 */
-.comment_section {
-  margin-top: 30px; /* 댓글 섹션 상단 여백 설정 */
-  padding: 50px 20px; /* 댓글 섹션 내부 여백 설정 */
-}
-
-.comment_section > div {
-  margin: 0 0 30px 0; /* 하위 요소 간격 설정 */
-}
-
-.comment_section > div > span {
-  font-size: 2rem; /* 타이틀 텍스트 크기 설정 */
-  background-color: #dbebc5; /* 타이틀 배경색 설정 */
-  border-radius: 15px; /* 타이틀 테두리 반경 설정 */
-  border: 1px solid #dbebc5; /* 타이틀 테두리 설정 */
-  padding: 10px; /* 타이틀 내부 여백 설정 */
-  font-weight: 700; /* 타이틀 글꼴 두껍게 설정 */
-}
-
-.comment_form {
-  background-color: #f9f9f9; /* 폼 배경색 설정 */
-  padding: 20px; /* 폼 내부 여백 설정 */
-  border-radius: 5px; /* 폼 테두리 반경 설정 */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 설정 */
-}
-
-.comment_form label {
-  font-size: 1.4rem; /* 라벨 텍스트 크기 설정 */
-  margin-bottom: 10px; /* 라벨 아래 여백 설정 */
-  display: block; /* 라벨을 블록 요소로 설정 */
-}
-
-.comment_form input[type='text'],
-.comment_form textarea {
-  width: 100%; /* 입력 필드 전체 너비 설정 */
-  padding: 1px; /* 입력 필드 내부 여백 설정 */
-  font-size: 1.4rem; /* 입력 필드 텍스트 크기 설정 */
-  border: 1px solid #ccc; /* 입력 필드 테두리 설정 */
-  border-radius: 3px; /* 입력 필드 테두리 반경 설정 */
-  margin-bottom: 15px; /* 입력 필드 아래 여백 설정 */
-}
-
-.comment_form textarea {
-  height: 100px; /* 텍스트 에어리어 높이 설정 */
-}
-
-/* ========================================================================= */
-
-/* 목록으로 스크롤링 링크 스타일 설정 */
-.scroll_to_list {
-  text-align: center; /* 텍스트 가운데 정렬 */
-  margin-top: 30px; /* 링크 상단 여백 설정 */
-}
-
-.scroll_to_list a {
-  background-color: #000; /* 배경색 설정 */
-  color: #fff; /* 텍스트 색상 설정 */
-  padding: 10px 20px; /* 내부 여백 설정 */
-  text-decoration: none; /* 텍스트 밑줄 제거 */
-  border-radius: 3px; /* 테두리 반경 설정 */
-}
-
-.scroll_to_list a:hover {
-  background-color: #333; /* 호버 시 배경색 변경 */
-}
-
-/* ========================================================================= */
-
-/* 파일 첨부 스타일 설정 */
-.file_upload {
-  margin-top: 20px; /* 상단 여백 설정 */
-  padding: 15px; /* 내부 여백 설정 */
-  background-color: #f9f9f9; /* 배경색 설정 */
-  border-radius: 5px; /* 테두리 반경 설정 */
-  display: flex; /* 아이템들을 가로로 나열 */
-  align-items: center; /* 아이템들을 수직 가운데 정렬 */
-}
-
-.file_label {
-  font-size: 1.4rem; /* 라벨 텍스트 크기 설정 */
-  flex: 1; /* 레이블 아이템을 확장하여 나머지 공간 차지 */
-}
-
-.file_input_wrapper {
-  display: flex; /* 아이템들을 가로로 나열 */
-  align-items: center; /* 아이템들을 수직 가운데 정렬 */
-}
-
-.file_icon {
-  margin-right: 10px; /* 우측 여백 설정 */
-  font-size: 1.6rem; /* 아이콘 크기 설정 */
-}
-
-.input_file {
-  width: 100%; /* 입력 필드 전체 너비 설정 */
-  padding: 10px; /* 내부 여백 설정 */
-  font-size: 1.4rem; /* 입력 필드 텍스트 크기 설정 */
-  border: 1px solid #ccc; /* 입력 필드 테두리 설정 */
-  border-radius: 3px; /* 입력 필드 테두리 반경 설정 */
-  background-color: #fff; /* 입력 필드 배경색 설정 */
 }
