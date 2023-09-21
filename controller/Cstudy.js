@@ -234,41 +234,45 @@ exports.patchStudyApply = async (req, res) => {
       },
     });
 
-    if (studyApplyCount.length < studyInfo.maxPeople) {
-      //인원 추가
-      const insertOneStudyApply = await StudyApply.create({
-        studySeq: studySeq,
-        userSeq: req.session.userInfo.userSeq,
-      });
-      const currentLength = studyApplyCount.length + 1;
-      if (currentLength >= studyInfo.maxPeople) {
-        // 모집 마감처리를 한다.
-        const updateOneStudy = await Study.update(
-          {
-            status: 1, // 모집 마감으로 수정
-          },
-          {
-            where: {
-              studySeq: studyInfo.studySeq,
-            },
-          }
-        );
-      }
-      const cookie = req.signedCookies.remain;
-
-      if (insertOneStudyApply) {
-        res.send({
-          cookieEmail: cookie ? cookie.loginEmail : '',
-          cookiePw: cookie ? cookie.loginPw : '',
-          msg: 'success',
+    if (studyInfo.status == 0) {
+      if (studyApplyCount.length < studyInfo.maxPeople) {
+        //인원 추가
+        const insertOneStudyApply = await StudyApply.create({
+          studySeq: studySeq,
+          userSeq: req.session.userInfo.userSeq,
         });
-        // res.redirect('/board?boardSeq=54')
+        const currentLength = studyApplyCount.length + 1;
+        if (currentLength >= studyInfo.maxPeople) {
+          // 모집 마감처리를 한다.
+          const updateOneStudy = await Study.update(
+            {
+              status: 1, // 모집 마감으로 수정
+            },
+            {
+              where: {
+                studySeq: studyInfo.studySeq,
+              },
+            }
+          );
+        }
+        const cookie = req.signedCookies.remain;
+
+        if (insertOneStudyApply) {
+          res.send({
+            cookieEmail: cookie ? cookie.loginEmail : '',
+            cookiePw: cookie ? cookie.loginPw : '',
+            msg: 'success',
+          });
+          // res.redirect('/board?boardSeq=54')
+        } else {
+          res.send({ msg: 'fail' });
+        }
       } else {
-        res.send({ msg: 'fail' });
+        // 인원이 최대인원을 초과한 상황
+        res.send({ msg: 'closedStudy' });
       }
     } else {
-      // 인원이 최대인원을 초과한 상황
-      res.send({ msg: 'maxPeople' });
+      res.send({ msg: 'closedStudy' });
     }
   } catch (err) {
     console.log(err);
