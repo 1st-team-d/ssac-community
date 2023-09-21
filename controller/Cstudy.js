@@ -219,10 +219,6 @@ exports.getStudyProfile = async (req, res) => {
 exports.patchStudyApply = async (req, res) => {
   try {
     const { studySeq } = req.body;
-    const insertOneStudyApply = await StudyApply.create({
-      studySeq: studySeq,
-      userSeq: req.session.userInfo.userSeq,
-    });
 
     // 신청을 했을때
     const studyApplyCount = await StudyApply.findAll({
@@ -251,6 +247,12 @@ exports.patchStudyApply = async (req, res) => {
           },
         }
       );
+    } else {
+      //인원이 max가 아닐때
+      const insertOneStudyApply = await StudyApply.create({
+        studySeq: studySeq,
+        userSeq: req.session.userInfo.userSeq,
+      });
     }
     const cookie = req.signedCookies.remain;
 
