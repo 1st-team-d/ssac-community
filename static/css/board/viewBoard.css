@@ -92,17 +92,19 @@ textarea:focus {
 
 /* 스터디 참가 / 마감 버튼 */
 .studyWrap .studyCloseApply {
-  background-color: #b6e8b1;
+  background-color: #198754;
+  color: #eee;
   font-weight: 800;
 }
 
 .studyWrap .studyCloseApply:hover {
   background-color: #68be60;
+    color: #eee;
   font-weight: 800;
 }
 
 .studyWrap .close {
-  background-color: #e27575;
+  background-color: #6a6a6a;
   font-weight: 800;
   color: #eee;
 }
@@ -134,10 +136,10 @@ textarea:focus {
 }
 
 .comment_form {
-  background-color: #f9f9f9;
+  /* background-color: #f9f9f9; */
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
 }
 
 .comment_form textarea {
@@ -166,8 +168,8 @@ textarea:focus {
 
 .comment_list .commentBox .cmtBtnWrap {
   position: absolute;
-  top: 50%;
-  right: 3rem;
+  top: 29%;
+  right: 1rem;
   transform: translateY(-50%);
 }
 
@@ -230,4 +232,14 @@ textarea:focus {
   border: 1px solid #b0adad;
   color: #fff;
   font-weight: 600;
+}
+
+@media (max-width: 767px) { /* 모바일 화면 크기에 따라 조정 */
+  .info .mobile-wrap span {
+    display: block; /* 모바일 화면에서는 각각의 span 요소를 블록 요소로 표시 */
+    margin-bottom: 5px; /* 요소 사이에 간격 추가 */
+  }
+  .listBtn {
+    display: none !important; /* 모바일 화면에서 버튼 숨김 */
+  }
 }
