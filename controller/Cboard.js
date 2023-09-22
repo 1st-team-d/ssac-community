@@ -17,7 +17,6 @@ exports.getBoard = async (req, res) => {
     const boardCountPerPage = 10; // 한 화면에 보여질 게시글 개수
     const offset = boardCountPerPage * (pageNum - 1); // 페이징 처리
 
-    // console.log('query >> ', req.query);
     // 전체 게시글 개수 필요
     const selectAllBoard = await Board.findAll();
     const allBoardLen = selectAllBoard.length;
@@ -46,10 +45,6 @@ exports.getBoard = async (req, res) => {
       include: [{ model: User }, { model: Study }],
     });
 
-    // console.log(board.length);
-    // console.log('session>>>>>>', req.session.userInfo);
-    // console.log('전체 게시글 보드 정보', board);
-
     const cookie = req.signedCookies.remain;
 
     res.render('board/listBoard', {
@@ -72,9 +67,6 @@ exports.getBoardList = async (req, res) => {
   try {
     // 특정 게시글의 게시글 시퀀스, 검색어
     const { boardSeq, search, pageNum, category } = req.query;
-    // const categories = category.split(',').map(Number);
-
-    // console.log('category >>>>>', category);
 
     // 페이징 처리
     let boardCountPerPage = 10; // 한 화면에 보여질 게시글 개수
@@ -83,7 +75,6 @@ exports.getBoardList = async (req, res) => {
       offset = boardCountPerPage * (pageNum - 1);
     }
 
-    // console.log('query >> ', req.query);
     // 전체 게시글 개수 필요
     const selectAllBoard = await Board.findAll();
     const allBoardLen = selectAllBoard.length;
@@ -162,10 +153,6 @@ exports.getBoardList = async (req, res) => {
         },
         include: [{ model: User }],
       });
-      // console.log('comments >>>>>>>>>>>>>>>>>', allComment);
-
-      // console.log('session>>>>>>', req.session.userInfo);
-      // console.log('특정 게시글 board>>>>>>>', board);
 
       res.render('board/viewBoard', {
         board: board,
@@ -208,8 +195,6 @@ exports.getBoardList = async (req, res) => {
         limit: boardCountPerPage,
       });
 
-      // console.log('session>>>>>>', req.session.userInfo);
-
       res.send({
         data: board,
         allBoardLen: allBoardLen,
@@ -244,9 +229,6 @@ exports.getBoardList = async (req, res) => {
         include: [{ model: User }, { model: Study }],
       });
 
-      // console.log(board.length);
-      // console.log('보드는>>>>>>>', board);
-      // console.log('session>>>>>>', req.session.userInfo);
       res.send({
         data: board,
         allBoardLen: allBoardLen,
@@ -284,7 +266,7 @@ exports.deleteBoard = async (req, res) => {
 };
 
 // GET '/board/register'
-// 게시글 등록 화면으로 이동 // 수정 화면도 동일
+// 게시글 등록 화면으로 이동 (수정 화면도 동일)
 exports.getRegister = (req, res) => {
   const cookie = req.signedCookies.remain;
 
@@ -307,7 +289,6 @@ exports.getRegister = (req, res) => {
 exports.postRegister = async (req, res) => {
   try {
     // ############### 파일 업로드 문제 없는지 확인 ###############
-
     console.log('######### req.file ::::: ', req.file); // single
     console.log('######### req.body ::::: ', req.body); // single
     let filePath = null;
@@ -317,10 +298,6 @@ exports.postRegister = async (req, res) => {
       filePath = destination.split(path.sep)[1] + path.sep + filename; // 파일명
     }
 
-    // // ###### rest client 실행시 ######
-    // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
-
-    // // ###### 실제 사용 코드 ######
     const { title, content, category, maxPeople } = req.body;
     console.log('최대인원 서버에 바로 넘어온 값 >>>> ', maxPeople);
     // json 형태로 넘어와서 객체 형태로 전환
@@ -334,8 +311,6 @@ exports.postRegister = async (req, res) => {
       filePath: filePath,
       userSeq: req.session.userInfo.userSeq,
     });
-
-    // console.log(insertOneBoard);
 
     // 게시글 등록이 완료되면 작업
     // 스터디 정보에 해당 정보 등록
@@ -405,19 +380,10 @@ exports.getModify = async (req, res) => {
       },
     });
 
-    // console.log('############# selectOneBoard ##################');
-    // console.log(selectOneBoard);
-    // console.log(selectOneBoard.boardSeq);
-    // console.log(selectOneBoard.dataValues);
-    // console.log(selectOneBoard.dataValues.title);
-    // console.log(selectOneBoard.dataValues.study);
-    // console.log(selectOneBoard.dataValues.study.studySeq);
-
     const cookie = req.signedCookies.remain;
 
     if (req.session.userInfo) {
       res.render('board/postBoard', {
-        // result: selectOneBoard,
         boardInfo: selectOneBoard,
         studyInfo: selectOneBoard.dataValues.study,
         session: req.session.userInfo,
@@ -447,17 +413,10 @@ exports.patchModify = async (req, res) => {
       filePath = destination.split(path.sep)[1] + path.sep + filename; // 파일명
     }
 
-    // ###### rest client 실행시 ######
-    // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
-
-    // ###### 실제 사용 코드 ######
     const { title, content, boardSeq, studySeq, category, maxPeople } =
       req.body;
-    // console.log('최대인원 서버에 바로 넘어온 값 >>>> ', maxPeople);
     // json 형태로 넘어와서 객체 형태로 전환
     const maxPeopleObject = JSON.parse(maxPeople);
-    // console.log('맥스 피플 제이슨 데이터 >>> ', maxPeopleObject[0]);
-    // console.log('맥스 피플 제이슨 데이터 >>> ', maxPeopleObject[0].value);
 
     // ###### 수정 시, 파일 미업로드 시 null로 저장되는 버그 수정 ######
     // 파일 경로가 없는 경우,
