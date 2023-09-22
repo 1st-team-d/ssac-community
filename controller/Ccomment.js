@@ -15,14 +15,12 @@ exports.getOneComment = async (req, res) => {
       where: { commentSeq },
       include: [{ model: User }],
     });
-    console.log('cmtSeq 로 조회한 댓글 @@@@@@@@@@@@@@@@', oneComment);
     if (oneComment) {
       res.send({ oneComment: oneComment, result: true });
     } else {
       res.send({ oneComment: '', result: false });
     }
   } catch (err) {
-    console.log('err----------------', err);
     res.send('Internal Server Error!!!');
   }
 };
@@ -31,10 +29,8 @@ exports.getOneComment = async (req, res) => {
 // 글쓴이, 내용, 게시글seq를 받아서 db에 저장
 exports.postComment = async (req, res) => {
   try {
-    console.log('Ccomment @@@@@@@@@@@@@@@ ', req.body);
     // cmtContent: 댓글 내용
     const { postID, cmtContent } = req.body;
-    console.log('123213123213213');
     const newComment = await Comment.create({
       content: cmtContent,
       boardSeq: postID,
@@ -42,13 +38,11 @@ exports.postComment = async (req, res) => {
     });
 
     if (newComment) {
-      // res.redirect(`${process.env.DB_HOST}/board/${postID}`)
       res.send({ result: true });
     } else {
       res.send({ result: false });
     }
   } catch (err) {
-    console.log('err----------------', err);
     res.send('Internal Server Error!!!');
   }
 };
@@ -72,7 +66,6 @@ exports.patchComment = async (req, res) => {
       res.send({ result: false });
     }
   } catch (err) {
-    console.log('err----------------', err);
     res.send('Internal Server Error!!!');
   }
 };
@@ -89,7 +82,6 @@ exports.removeComment = async (req, res) => {
       res.send({ result: false });
     }
   } catch (err) {
-    console.log('err----------------', err);
     res.send('Internal Server Error!!!');
   }
 };
