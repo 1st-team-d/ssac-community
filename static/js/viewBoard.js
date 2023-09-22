@@ -1,7 +1,9 @@
+// front js
+// 특정 게시물 조회 시
+
 // 게시물 수정
 async function editBoard() {
   const boardSeq = document.querySelector('#boardSeq').value;
-  // console.log(boardSeq);
   document.location.href = `/board/modify?boardSeq=${boardSeq}`;
 }
 
@@ -30,11 +32,9 @@ async function submitComment() {
   // boardSeq
   const boardSeq = document.querySelector('#boardSeq').value;
   // 댓글 관련 각 요소 접근
-  // const commentAuthor = document.getElementById('commentWriter');
   const commentContentInput = document.getElementById(
     'comment_content_textarea'
   );
-  // const commentList = document.querySelector('.comment_list');
   let cmtData = {
     postID: boardSeq,
     cmtContent: commentContentInput.value,
@@ -49,11 +49,9 @@ async function submitComment() {
     if (res.data.result) {
       document.location.reload();
     } else {
-      
     }
-
   } else {
-    alert('댓글 내용을 입력해주세요!')
+    alert('댓글 내용을 입력해주세요!');
   }
 }
 
@@ -120,7 +118,7 @@ async function cancelComment(cmtSeq) {
     </div>
     `;
   } else {
-    alert('그럴일 없지롱~~~');
+    alert('해당 댓글을 조회할 수 없습니다.');
   }
 }
 
@@ -220,13 +218,12 @@ async function studyCloseApply(btn) {
             data: studyApply,
           });
           if (res.data.msg === 'success') {
-            // if (res.data.msg) {
             document.location.reload();
           } else if (res.data.msg === 'closedStudy') {
             alert('이미 마감된 스터디입니다.');
             document.location.reload();
           } else if (res.data.msg === 'alreadyStudy') {
-            alert('이미 신청 완료한 스터디입니다.')
+            alert('이미 신청 완료한 스터디입니다.');
           }
         } catch (err) {
           console.error(err);
