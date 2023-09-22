@@ -28,13 +28,9 @@
       enctype="multipart/form-data"
       onsubmit="return validationForm();"
     >
-      <div class="postWrap container bg-white rounded ">
+      <div class="postWrap container bg-white rounded">
         <h1 class="fw-bold">새싹 스터디 게시판 🌱</h1>
-        <input
-          type="hidden"
-          name="userSeq"
-          value="<%= boardInfo.userSeq %>"
-        />
+        <input type="hidden" name="userSeq" value="<%= boardInfo.userSeq %>" />
         <input
           type="hidden"
           name="boardSeq"
@@ -45,7 +41,9 @@
           name="studySeq"
           value="<%= studyInfo.studySeq %>"
         />
-        <div class="postTop d-flex flex-wrap justify-content-between border-black border-top border-bottom mb-3">
+        <div
+          class="postTop d-flex flex-wrap justify-content-between border-black border-top border-bottom mb-3"
+        >
           <div class="postTitleWrap col-md-12 mb-3 py-3 border-bottom">
             <span class="me-3 postTitle">제목</span>
             <input
@@ -57,7 +55,9 @@
             />
           </div>
           <div class="categories col-md-12 col-lg-3">
-            <div class="mb-3 d-flex flex-wrap align-items-center justify-content-start">
+            <div
+              class="mb-3 d-flex flex-wrap align-items-center justify-content-start"
+            >
               <input
                 class="d-none"
                 type="radio"
@@ -149,11 +149,16 @@
               class="form-control"
               rows="10"
               placeholder="내용 입력"
-            ><% if (boardInfo) { %><%= boardInfo.content %><% } %></textarea>
+            >
+<% if (boardInfo) { %><%= boardInfo.content %><% } %></textarea
+            >
           </div>
         </div>
-        <div class="file row d-flex justify-content-start align-items-center p-2 mt-2">
-          <div class="col-md-8 col-sm-12 d-flex align-items-center"> <!-- 같은 라인에 위치하도록 설정 -->
+        <div
+          class="file row d-flex justify-content-start align-items-center p-2 mt-2"
+        >
+          <div class="col-md-8 col-sm-12 d-flex align-items-center">
+            <!-- 같은 라인에 위치하도록 설정 -->
             <input
               class="fileName w-100 form-control me-1"
               value="<% if (boardInfo && boardInfo.filePath) { %><% const filePath = boardInfo.filePath.replace('\\', '/') %><% const fileName = filePath.split('/')[1] %><%= fileName.slice(0, fileName.lastIndexOf('.')).slice(0, -15) %><% } %>"
@@ -177,12 +182,7 @@
             수정
           </button>
           <% } else { %>
-          <button
-            type="submit"
-            class="postBtn btn fw-bold"
-          >
-            글 작성
-          </button>
+          <button type="submit" class="postBtn btn fw-bold">글 작성</button>
           <% } %>
         </div>
       </div>

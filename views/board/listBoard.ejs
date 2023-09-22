@@ -27,13 +27,6 @@
       <!-- 카테고리 및 검색 작성 기능 -->
       <div class="boardTop my-md-5 d-flex justify-content-between">
         <div class="category_select d-flex flex-column">
-          <!-- <input
-            name="category"
-            class=""
-            placeholder=""
-            value="웹, 앱, AI, UI / UX, 게임, 기타"
-            data-blacklist=".NET,PHP"
-          /> -->
           <label class="fw-bold fs-5 mb-2" for="category"
             >관심있는 카테고리를 선택해보세요!</label
           >
@@ -44,12 +37,6 @@
             placeholder=""
             value="웹, 앱, AI, UI / UX, 게임, 기타"
           />
-          <!-- <div class="btn">전체</div>
-          <div class="btn">웹</div>
-          <div class="btn">앱</div>
-          <div class="btn">AI</div>
-          <div class="btn">UI / UX</div>
-          <div class="btn">기타</div> -->
         </div>
         <div
           class="board_search_post d-flex justify-content-sm-end align-items-sm-center gap-2"
@@ -97,9 +84,7 @@
         </div>
       </div>
       <!-- 스터디 모집글 본문 -->
-
       <!-- 게시물 -->
-
       <div
         class="board_list row justify-content-center text-center"
         id="boardList"
@@ -113,7 +98,6 @@
             <div class="card mb-3">
               <div class="card-body row">
                 <div class="board_info text-start fw-bold col-6">
-
                   <span class="badge bg-primary"
                     ><% switch (board?.study?.category) { case 0: %> 웹 <%
                     break; case 1: %> 앱 <% break; case 2: %> AI <% break; case
@@ -127,10 +111,8 @@
                   >
                   <span class="badge bg-secondary"
                     >view <%= board.count %></span
-
                   >
                 </div>
-
                 <div class="content col-12 text-start text-wrap gy-3">
                   <%= board.content.length <= 100 ? board.content :
                   board.content.slice(0, 100) + ' ...' %>
@@ -139,7 +121,6 @@
             </div>
           </a>
         </div>
-
         <% }) %>
       </div>
     </div>
