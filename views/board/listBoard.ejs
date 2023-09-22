@@ -113,24 +113,30 @@
             <div class="card mb-3">
               <div class="card-body row">
                 <div class="board_info text-start fw-bold col-6">
-                  <span class="badge bg-primary"
-                    ><% switch (board.study.category) { case 0: %> 웹 <% break;
-                    case 1: %> 앱 <% break; case 2: %> AI <% break; case 3: %>
-                    UI/UX <% break; case4: %> 게임 <% default: %> 기타 <% } %>
-                  </span>
-                  <%= board.title %>
-                  <span class="badge bg-secondary"
-                    ><%= board.dataValues.year + '.' + board.dataValues.month +
-                    '.' + board.dataValues.day %></span
-                  >
-                  <span class="badge bg-secondary"
-                    >view <%= board.count %></span
+                  <div class="cate_date_count">
+                    <span class="badge bg-primary"
+                      ><% switch (board.study.category) { case 0: %> # 웹 <%
+                      break; case 1: %> # 앱 <% break; case 2: %> # AI <% break;
+                      case 3: %> # UI/UX <% break; case4: %> # 게임 <% default:
+                      %> # 기타 <% } %>
+                    </span>
+                    <span class="badge bg-secondary"
+                      ><%= board.dataValues.year + '.' + board.dataValues.month
+                      + '.' + board.dataValues.day %></span
+                    >
+                    <span class="badge bg-secondary"
+                      >view <%= board.count %></span
+                    >
+                  </div>
+                  <span class="title text-wrap"
+                    ><%= board.title.length >= 50 ? board.title.slice(0, 50) +
+                    '...' : board.title %></span
                   >
                 </div>
 
                 <div class="content col-12 text-start text-wrap gy-3">
-                  <%= board.content.length <= 180 ? board.content :
-                  board.content.slice(0, 179) + ' ...' %>
+                  <%= board.content.length <= 100 ? board.content :
+                  board.content.slice(0, 100) + ' ...' %>
                 </div>
               </div>
             </div>

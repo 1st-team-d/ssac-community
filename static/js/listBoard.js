@@ -165,11 +165,8 @@ function renderSearchResults(results) {
       boardList.append(div);
     });
   } else {
-    boardElement.innerHTML = `<div class="col-12">검색된 게시글이 없습니다.</div>`;
+    boardList.innerHTML = `<div class="col-12">검색된 게시글이 없습니다.</div>`;
   }
-
-  // 생성된 요소를 목록에 추가
-  boardList.appendChild(boardElement);
 }
 
 // 모집글 카테고리 -> tagify
