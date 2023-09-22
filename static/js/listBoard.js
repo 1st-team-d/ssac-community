@@ -8,7 +8,10 @@ function updateElement(boards) {
     boards.forEach((board) => {
       const count = board.count;
       const title = board.title;
-      const content = board.content;
+      const content =
+        board.content.length <= 180
+          ? board.content
+          : board.content.slice(0, 179) + '...';
       const boardSeq = board.boardSeq;
       const year = board.year;
       const month = board.month;
@@ -30,7 +33,7 @@ function updateElement(boards) {
             </div>
 
             <div class="content col-12 text-start text-wrap gy-3">
-                ${content <= 180 ? content : content.slice(0, 179) + ' ...'}
+                ${content}
             </div>
           </div>
         </div>
@@ -126,7 +129,10 @@ function renderSearchResults(results) {
     results.forEach((board, index) => {
       const count = board.count;
       const title = board.title;
-      const content = board.content;
+      const content =
+        board.content.length <= 180
+          ? board.content
+          : board.content.slice(0, 179) + '...';
       // const createdAt = board.createdAt;
       const boardSeq = board.boardSeq;
       const year = board.year;
@@ -147,7 +153,7 @@ function renderSearchResults(results) {
             </div>
 
             <div class="content col-12 text-start text-wrap gy-3">
-                ${content <= 180 ? content : content.slice(0, 179) + ' ...'}
+                ${content}
             </div>
           </div>
         </div>
@@ -250,7 +256,10 @@ async function onAddTag(e) {
     boards.forEach((board) => {
       const count = board.board.count;
       const title = board.board.title;
-      const content = board.board.content;
+      const content =
+        board.board.content.length <= 180
+          ? board.board.content
+          : board.board.content.slice(0, 179) + '...';
       const boardSeq = board.board.boardSeq;
       const year = board.board.year;
       const month = board.board.month;
@@ -273,7 +282,7 @@ async function onAddTag(e) {
             </div>
 
             <div class="content col-12 text-start text-wrap gy-3">
-                ${content <= 180 ? content : content.slice(0, 179) + ' ...'}
+                ${content}
             </div>
           </div>
         </div>
@@ -350,7 +359,10 @@ async function onRemoveTag(e) {
     boards.forEach((board) => {
       const count = board.board.count;
       const title = board.board.title;
-      const content = board.board.content;
+      const content =
+        board.board.content.length <= 180
+          ? board.board.content
+          : board.board.content.slice(0, 179) + '...';
       const boardSeq = board.board.boardSeq;
       const year = board.board.year;
       const month = board.board.month;
@@ -373,7 +385,7 @@ async function onRemoveTag(e) {
             </div>
 
             <div class="content col-12 text-start text-wrap gy-3">
-                ${content <= 180 ? content : content.slice(0, 179) + ' ...'}
+                ${content}
             </div>
           </div>
         </div>
