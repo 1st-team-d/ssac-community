@@ -1,10 +1,12 @@
-// 요소 추가하는 함수 반복돼서 분리
+// 요소 추가하는 함수 반복돼서 분리 -> boards 배열 안에 요소에 대한 정보가 있을 때만 사용 가능.
+// boards 배열 안에 객체로 한번 더 쌓여 있으면 한번 더 접근하는 과정이 필요해서 용이하지 않음
 function updateElement(boards) {
   const boardList = document.getElementById('boardList');
 
   boardList.innerHTML = ''; // 기존 목록을 비우고 검색 결과를 새로 표시
 
   if (boards) {
+    // 게시글이 있을 때
     boards.forEach((board) => {
       const count = board.count;
       const title = board.title;
@@ -44,7 +46,10 @@ function updateElement(boards) {
       boardList.append(div);
     });
   } else {
-    innerHTML = `<div class="col-12">게시글이 없습니다.</div>`;
+    // 게시글이 없을 때
+    const boardList = document.getElementById('boardList');
+    const html = `<div class="col-12">게시글이 없습니다.</div>`;
+    boardList.innerHTML = html;
   }
 }
 
@@ -83,7 +88,6 @@ const performSearch = async () => {
       return response.json();
     })
     .then((data) => {
-      console.log('검색 결과 데이터:', data);
       // 검색한 게시물 표시하는 함수
       renderSearchResults(data.data);
       // 검색어 있는 경우에 검색기능
@@ -120,7 +124,6 @@ searchInput.addEventListener('keydown', (event) => {
 
 // 검색 결과를 화면에 표시하는 함수
 function renderSearchResults(results) {
-  console.log('검색 결과', results);
   const boardList = document.getElementById('boardList');
   boardList.innerHTML = ''; // 기존 목록을 비우고 검색 결과를 새로 표시
 
@@ -169,7 +172,7 @@ function renderSearchResults(results) {
   }
 }
 
-// 모집글 카테고리 -> tagify
+// 모집글 목록에서 카테고리 별로 게시물 표시 -> tagify 라이브러리 활용
 let input = document.querySelector('input[name="category"]'),
   // init Tagify script on the above inputs
   tagify = new Tagify(input, {
@@ -185,30 +188,18 @@ let input = document.querySelector('input[name="category"]'),
     },
   });
 
-// Chainable event listeners
+// tagify 어떤 이벤트 추가할건지
 tagify
   .on('add', onAddTag)
   .on('remove', onRemoveTag)
   .on('invalid', onInvalidTag)
   .on('focus', onTagifyFocusBlur)
   .on('blur', onTagifyFocusBlur)
-  .on('dropdown:hide dropdown:show', (e) => console.log(e.type))
+  .on('dropdown:hide dropdown:show')
   .on('dropdown:select', onDropdownSelect);
 
-var mockAjax = (function mockAjax() {
-  var timeout;
-  return function (duration) {
-    clearTimeout(timeout); // abort last request
-    return new Promise(function (resolve, reject) {
-      timeout = setTimeout(resolve, duration || 700, whitelist);
-    });
-  };
-})();
-
-// tag added callback
+// 각 이벤트 발생 시 실행할 함수
 async function onAddTag(e) {
-  console.log('onAddTag: ', e.detail);
-  console.log('original input value: ', input.value);
   // 선택된 카테고리
   const categories = tagify.value;
   // 요청을 위한 빈 배열
@@ -236,8 +227,6 @@ async function onAddTag(e) {
         break;
     }
   });
-  console.log('카테고리>>>>', getCategories);
-  tagify.off('add', onAddTag); // exmaple of removing a custom Tagify event
   // 카테고리 추가되었으므로 input의 모든 카테고리 값으로 조회
   const res = await axios({
     url: '/board/list',
@@ -299,7 +288,6 @@ async function onAddTag(e) {
         pageDiv.textContent = i + 1;
         newDiv.append(pageDiv);
       }
-      console.log('뉴디브', newDiv);
       boardPage.innerHTML = newDiv.innerHTML;
     });
   } else {
@@ -311,9 +299,7 @@ async function onAddTag(e) {
 
 // tag removed callback
 async function onRemoveTag(e) {
-  console.log('onRemoveTag:', e.detail, 'tagify instance value:', tagify.value);
   // 카테고리 삭제되었으므로 현재 input의 모든 카테고리 값으로 조회
-  // 선택된 카테고리 파싱
   const categories = tagify.value;
   // 요청을 위한 빈 배열
   const getCategories = [];
@@ -340,13 +326,11 @@ async function onRemoveTag(e) {
         break;
     }
   });
-  console.log('카테고리>>>>', getCategories);
   const res = await axios({
     url: '/board/list',
     method: 'get',
     params: { category: getCategories },
   });
-  console.log(res.data);
   if (res.data.board) {
     const boards = res.data.board;
     const boardList = document.getElementById('boardList');
@@ -401,10 +385,10 @@ async function onRemoveTag(e) {
         pageDiv.textContent = i + 1;
         newDiv.append(pageDiv);
       }
-      console.log('뉴디브', newDiv);
       boardPage.innerHTML = newDiv.innerHTML;
     });
   } else {
+    // 카테고리 선택된게 없으면 전체 게시물 조회
     const boards = res.data.data;
     const boardList = document.getElementById('boardList');
 
@@ -456,7 +440,6 @@ async function onRemoveTag(e) {
         pageDiv.textContent = i + 1;
         newDiv.append(pageDiv);
       }
-      console.log('뉴디브', newDiv);
       boardPage.innerHTML = newDiv.innerHTML;
     });
   }
