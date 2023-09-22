@@ -55,7 +55,6 @@ exports.getBoard = async (req, res) => {
       cookiePw: cookie ? cookie.loginPw : '',
     });
   } catch (err) {
-    console.log(err);
   }
 };
 
@@ -288,9 +287,6 @@ exports.getRegister = (req, res) => {
 // 게시글 등록
 exports.postRegister = async (req, res) => {
   try {
-    // ############### 파일 업로드 문제 없는지 확인 ###############
-    console.log('######### req.file ::::: ', req.file); // single
-    console.log('######### req.body ::::: ', req.body); // single
     let filePath = null;
     // 파일 정보가 있는지 확인
     if (req.file) {
@@ -299,10 +295,8 @@ exports.postRegister = async (req, res) => {
     }
 
     const { title, content, category, maxPeople } = req.body;
-    console.log('최대인원 서버에 바로 넘어온 값 >>>> ', maxPeople);
     // json 형태로 넘어와서 객체 형태로 전환
     const maxPeopleObject = JSON.parse(maxPeople);
-    console.log('맥스 피플 제이슨 데이터 >>> ', maxPeopleObject[0]);
 
     // ############### DB 작업 ###############
     const insertOneBoard = await Board.create({
@@ -329,12 +323,6 @@ exports.postRegister = async (req, res) => {
         userSeq: req.session.userInfo.userSeq,
       });
 
-      console.log(
-        '스터디 게시물 등록 후 데이터 >>>> ',
-        insertOneStudy,
-        insertOneStudyApply
-      );
-
       const cookie = req.signedCookies.remain;
 
       if (insertOneBoard) {
@@ -347,7 +335,6 @@ exports.postRegister = async (req, res) => {
       }
     }
   } catch (err) {
-    console.log(err);
   }
 };
 
@@ -395,7 +382,6 @@ exports.getModify = async (req, res) => {
       res.redirect('/');
     }
   } catch (err) {
-    console.log(err);
   }
 };
 
@@ -405,8 +391,7 @@ exports.patchModify = async (req, res) => {
   try {
     // 파일 있는지 확인
     let filePath = null;
-    console.log('수정 응답 >>>>>>', req.body);
-    console.log('파일은 >>>>>>>> ', req.file);
+    
     if (req.file) {
       // 이미지 업로드
       const { destination, filename } = req.file;
@@ -487,6 +472,5 @@ exports.patchModify = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
   }
 };
