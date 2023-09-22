@@ -415,8 +415,6 @@ exports.getComment = async (req, res) => {
       order: [['createdAt', 'DESC']],
     });
 
-    // console.log(commentInfo);
-
     res.render('admin/comment/listComment', {
       commentInfo: commentInfo,
       allCommentLen: commentInfo,
@@ -607,13 +605,12 @@ exports.getProfileStudy = async (req, res) => {
       include: [
         {
           model: StudyApply,
-          required: true, // true / false : inner join / outer join
-          // right: true, // has no effect // right outer join
+          required: true, // true : false = inner join : outer join
+          // right: true, // inner join 시에는 효과 없음 // right outer join
           include: [
             {
               model: Study,
-              required: true, // true / false : inner join / outer join
-              // right: true, // has no effect // right outer join
+              required: true,
             },
           ],
           where: {
