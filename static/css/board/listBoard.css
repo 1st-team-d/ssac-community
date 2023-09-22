@@ -24,7 +24,8 @@
 /* 게시물 목록 스타일 설정 */
 
 .board_list div.card {
-  background-color: #becead;
+  background-color: #f3f9ec;
+  /* background-color: #a2c579; */
   border: none;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
