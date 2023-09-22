@@ -4,17 +4,36 @@
 POST {{server}}/user/signup
 Content-Type: application/json; charset=UTF-8
 
+{
+    "registerName": "손흥민",
+    "registerEmail": "123@naver.com",
+    "registerPw": "1234"
+}
+
 ### 닉네임 중복 확인
 POST {{server}}/user/checkName
 Content-Type: application/json; charset=UTF-8
+
+{
+    "registerName": "가나다"
+}
 
 ### 이메일(아이디) 중복 확인
 POST {{server}}/user/checkEmail
 Content-Type: application/json; charset=UTF-8
 
+{
+    "registerEmail": "123@naver.com"
+}
+
 ### 로그인 처리
 POST {{server}}/user/signin
 Content-Type: application/json; charset=UTF-8
+# 김철수(Web 리더, AI 팀원)
+{
+  "loginEmail": "sesac-k@gmail.com",
+  "loginPw": "aaaassss1111!!!!"
+}
 
 ### 로그아웃 처리
 GET {{server}}/user/logout
@@ -22,3 +41,8 @@ GET {{server}}/user/logout
 ### 유저 프로필 수정
 PATCH {{server}}/user/modify
 Content-Type: application/json; charset=UTF-8
+
+{
+    "newPassword": "Aabcd1234!",
+    "confirmPassword": "Aabcd1234!"
+}
