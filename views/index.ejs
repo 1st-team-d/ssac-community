@@ -74,6 +74,7 @@
                         <div class="custom-block-image-wrap">
                           <a href=""> </a>
                         </div>
+                        <% if(combinedBoards[i].study) { %>
                         <div class="custom-block-info">
                           <a href="/board/list?boardSeq=<%= combinedBoards[i].boardSeq %>">
                             <h4 class="mb-2"> # 
@@ -93,6 +94,7 @@
                           >
                           </div>
                         </div>
+                        <% } %>
                       </div>
                     </a>
                     </div>
@@ -116,6 +118,7 @@
                             <div class="custom-block-image-wrap">
                               <a href=""> </a>
                             </div>
+                            <% if(combinedBoards[i].study) { %>
                             <div class="custom-block-info">
                               <a href="/board/list?boardSeq=<%= combinedBoards[i].boardSeq %>">
                                 <h4 class="mb-2"> #
@@ -135,6 +138,7 @@
                               >
                               </div>
                             </div>
+                            <% } %>
                           </div>
                         </div>
                         <!-- 한 줄에 3개의 카드가 끝나는 경우 -->
