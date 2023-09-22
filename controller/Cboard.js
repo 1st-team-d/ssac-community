@@ -113,6 +113,7 @@ exports.getBoardList = async (req, res) => {
             'updatedAt',
           ],
         },
+        order: [[sequelize.col('board.createdAt'), 'DESC']],
       });
 
       res.send({
