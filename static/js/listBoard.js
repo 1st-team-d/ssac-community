@@ -8,7 +8,10 @@ function updateElement(boards) {
     boards.forEach((board) => {
       const count = board.count;
       const title = board.title;
-      const content = board.content;
+      const content =
+        board.content.length <= 180
+          ? board.content
+          : board.content.slice(0, 179) + '...';
       const boardSeq = board.boardSeq;
       const year = board.year;
       const month = board.month;
@@ -30,7 +33,7 @@ function updateElement(boards) {
             </div>
 
             <div class="content col-12 text-start text-wrap gy-3">
-                ${content <= 180 ? content : content.slice(0, 179) + ' ...'}
+                ${content}
             </div>
           </div>
         </div>
@@ -126,7 +129,10 @@ function renderSearchResults(results) {
     results.forEach((board, index) => {
       const count = board.count;
       const title = board.title;
-      const content = board.content;
+      const content =
+        board.content.length <= 180
+          ? board.content
+          : board.content.slice(0, 179) + '...';
       // const createdAt = board.createdAt;
       const boardSeq = board.boardSeq;
       const year = board.year;
@@ -147,7 +153,7 @@ function renderSearchResults(results) {
             </div>
 
             <div class="content col-12 text-start text-wrap gy-3">
-                ${content <= 180 ? content : content.slice(0, 179) + ' ...'}
+                ${content}
             </div>
           </div>
         </div>
@@ -159,11 +165,8 @@ function renderSearchResults(results) {
       boardList.append(div);
     });
   } else {
-    boardElement.innerHTML = `<div class="col-12">검색된 게시글이 없습니다.</div>`;
+    boardList.innerHTML = `<div class="col-12">검색된 게시글이 없습니다.</div>`;
   }
-
-  // 생성된 요소를 목록에 추가
-  boardList.appendChild(boardElement);
 }
 
 // 모집글 카테고리 -> tagify
@@ -250,7 +253,10 @@ async function onAddTag(e) {
     boards.forEach((board) => {
       const count = board.board.count;
       const title = board.board.title;
-      const content = board.board.content;
+      const content =
+        board.board.content.length <= 180
+          ? board.board.content
+          : board.board.content.slice(0, 179) + '...';
       const boardSeq = board.board.boardSeq;
       const year = board.board.year;
       const month = board.board.month;
@@ -273,7 +279,7 @@ async function onAddTag(e) {
             </div>
 
             <div class="content col-12 text-start text-wrap gy-3">
-                ${content <= 180 ? content : content.slice(0, 179) + ' ...'}
+                ${content}
             </div>
           </div>
         </div>
@@ -350,7 +356,10 @@ async function onRemoveTag(e) {
     boards.forEach((board) => {
       const count = board.board.count;
       const title = board.board.title;
-      const content = board.board.content;
+      const content =
+        board.board.content.length <= 180
+          ? board.board.content
+          : board.board.content.slice(0, 179) + '...';
       const boardSeq = board.board.boardSeq;
       const year = board.board.year;
       const month = board.board.month;
@@ -373,7 +382,7 @@ async function onRemoveTag(e) {
             </div>
 
             <div class="content col-12 text-start text-wrap gy-3">
-                ${content <= 180 ? content : content.slice(0, 179) + ' ...'}
+                ${content}
             </div>
           </div>
         </div>

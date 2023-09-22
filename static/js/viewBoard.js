@@ -39,16 +39,21 @@ async function submitComment() {
     postID: boardSeq,
     cmtContent: commentContentInput.value,
   };
-  const res = await axios({
-    url: '/comment/register',
-    method: 'post',
-    data: cmtData,
-  }); // 등록되면 true
-  console.log(res.data);
-  if (res.data.result) {
-    document.location.reload();
+  if (cmtData.cmtContent) {
+    const res = await axios({
+      url: '/comment/register',
+      method: 'post',
+      data: cmtData,
+    }); // 등록되면 true
+    console.log(res.data);
+    if (res.data.result) {
+      document.location.reload();
+    } else {
+      
+    }
+
   } else {
-    alert('다시 댓글 써라 ㅋㅋ');
+    alert('댓글 내용을 입력해주세요!')
   }
 }
 
@@ -182,7 +187,6 @@ async function studyCloseApply(btn) {
   const studySeq = document.querySelector('#studySeq').value;
   // 로그인 한 사람 -> 신청자
   const userSeq = document.querySelector('#userSeq').value;
-  console.log('헤헤', studySeq, '바보', userSeq);
   console.log(btn.textContent);
   let studyClose = {
     studySeq: studySeq,
@@ -221,6 +225,8 @@ async function studyCloseApply(btn) {
           } else if (res.data.msg === 'closedStudy') {
             alert('이미 마감된 스터디입니다.');
             document.location.reload();
+          } else if (res.data.msg === 'alreadyStudy') {
+            alert('이미 신청 완료한 스터디입니다.')
           }
         } catch (err) {
           console.error(err);
