@@ -1,5 +1,5 @@
 @hostname=127.0.0.1
 @port=8080
 
-### 일단 잘 되는지 확인
+### 홈페이지
 GET http://{{hostname}}:{{port}}/

@@ -13,7 +13,6 @@ const sequelize = new Sequelize(database, username, password, config); // db, us
 const User = require('./User')(sequelize, Sequelize);
 const Board = require('./Board')(sequelize, Sequelize);
 const Comment = require('./Comment')(sequelize, Sequelize);
-// const Menu = require('./Menu')(sequelize, Sequelize);
 const Study = require('./Study')(sequelize, Sequelize);
 const StudyApply = require('./StudyApply')(sequelize, Sequelize);
 
@@ -32,7 +31,7 @@ User.hasMany(Board, {
   onUpdate: 'CASCADE',
 });
 Board.belongsTo(User, {
-  foreignKey: { name: 'userSeq', allowNull: false }, // allowNull이 먹히지 않음
+  foreignKey: { name: 'userSeq', allowNull: false },
   targetKey: 'userSeq',
 });
 
