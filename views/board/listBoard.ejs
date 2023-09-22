@@ -113,6 +113,11 @@
             <div class="card mb-3">
               <div class="card-body row">
                 <div class="board_info text-start fw-bold col-6">
+                  <span class="badge bg-primary"
+                    ><% switch (board.study.category) { case 0: %> 웹 <% break;
+                    case 1: %> 앱 <% break; case 2: %> AI <% break; case 3: %>
+                    UI/UX <% break; case4: %> 게임 <% default: %> 기타 <% } %>
+                  </span>
                   <%= board.title %>
                   <span class="badge bg-secondary"
                     ><%= board.dataValues.year + '.' + board.dataValues.month +
