@@ -2,8 +2,7 @@ const { Board, Study } = require('../models');
 // GET '/'
 // 메인 화면
 exports.index = async (req, res) => {
-  // console.log(req.session.userInfo);
-  // 조회수가 높은 차례대로 글 5개 전달
+  // 조회수가 높은 차례대로 글 6개까지 전달
   const MAIN_CARD_COUNT = 6;
 
   const rankBoard = await Board.findAll({
