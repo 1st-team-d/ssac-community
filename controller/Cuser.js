@@ -54,7 +54,6 @@ exports.postSignup = async (req, res) => {
       res.send({ isCorrect, isNoGapPw });
     }
   } catch (err) {
-    console.error(err);
     res.send({ isSignup: false, msg: '회원가입 실패' });
   }
 };
@@ -72,8 +71,6 @@ exports.postCheckName = async (req, res) => {
     const user = await User.findOne({
       where: { name: registerName },
     });
-
-    console.log('이름 중복 정보 >>>>>>>>>>>>>>', user);
 
     if (isCorrect) {
       // 닉네임 유효성 검사 통과
@@ -93,7 +90,6 @@ exports.postCheckName = async (req, res) => {
       res.send({ isCorrect });
     }
   } catch (err) {
-    console.error(err);
     res.send({ isCheck: false, msg: '중복 확인 실패' });
   }
 };
@@ -111,8 +107,6 @@ exports.postCheckEmail = async (req, res) => {
     const user = await User.findOne({
       where: { id: registerEmail },
     });
-
-    console.log('이메일 중복 정보 >>>>>>>>>>>>>>', user);
 
     if (isCorrect) {
       // 이메일(아이디) 유효성 검사 통과
@@ -154,7 +148,6 @@ exports.postSignin = async (req, res) => {
       const user = await User.findOne({
         where: { id: loginEmail },
       });
-      console.log(user);
 
       // 2. 입력된 비밀번호 암호화하여 DB의 정보와 비교
       if (user) {
@@ -170,8 +163,6 @@ exports.postSignin = async (req, res) => {
             userSeq: user.userSeq,
             isAdmin: user.isAdmin,
           }; // 회원 정보 세션 생성
-
-          console.log('sessioninfo >>>>>', req.session.userInfo);
 
           // 로그인 정보 기억
           const myCookieConf = {
@@ -234,7 +225,6 @@ exports.getLogout = async (req, res) => {
     if (req.session.userInfo) {
       req.session.destroy((err) => {
         if (err) {
-          console.log(err);
           return;
         }
       });
@@ -260,7 +250,6 @@ exports.getProfile = async (req, res) => {
         cookiePw: cookie ? cookie.loginPw : '',
       });
     } else {
-      console.log('session missing');
       res.redirect('/');
     }
   } catch (err) {
@@ -272,8 +261,6 @@ exports.getProfile = async (req, res) => {
 // 유저 프로필 수정
 exports.updateProfile = async (req, res) => {
   try {
-    console.log('pw info >>>>>>', req.body);
-
     const { newPassword, confirmPassword } = req.body;
 
     if (newPassword === confirmPassword) {
