@@ -74,9 +74,10 @@
                         <div class="custom-block-image-wrap">
                           <a href=""> </a>
                         </div>
+                        <% if(combinedBoards[i].study) { %>
                         <div class="custom-block-info">
-                          <a href="/board?boardSeq=<%= combinedBoards.boardSeq %>">
-                            <h4 class="mb-2"> #
+                          <a href="/board/list?boardSeq=<%= combinedBoards[i].boardSeq %>">
+                            <h4 class="mb-2"> # 
                               <% switch (combinedBoards[i].study.category) { case 0: %> 웹 <% break; case 1:
                                 %> 앱 <% break; case 2: %> AI <% break; case 3: %> UI/UX <% break;
                                 case4: %> 게임 <% default: %> 기타 <% } %>
@@ -93,6 +94,7 @@
                           >
                           </div>
                         </div>
+                        <% } %>
                       </div>
                     </a>
                     </div>
@@ -117,7 +119,7 @@
                               <a href=""> </a>
                             </div>
                             <div class="custom-block-info">
-                              <a href="/board?boardSeq=<%= combinedBoards.boardSeq %>">
+                              <a href="/board/list?boardSeq=<%= combinedBoards[i].boardSeq %>">
                                 <h4 class="mb-2"> #
                                   <% switch (combinedBoards[i].study.category) { case 0: %> 웹 <% break; case 1:
                                     %> 앱 <% break; case 2: %> AI <% break; case 3: %> UI/UX <% break;

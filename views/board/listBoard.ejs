@@ -113,6 +113,7 @@
             <div class="card mb-3">
               <div class="card-body row">
                 <div class="board_info text-start fw-bold col-6">
+
                   <span class="badge bg-primary"
                     ><% switch (board?.study?.category) { case 0: %> 웹 <%
                     break; case 1: %> 앱 <% break; case 2: %> AI <% break; case
@@ -126,12 +127,13 @@
                   >
                   <span class="badge bg-secondary"
                     >view <%= board.count %></span
+
                   >
                 </div>
 
                 <div class="content col-12 text-start text-wrap gy-3">
-                  <%= board.content.length <= 180 ? board.content :
-                  board.content.slice(0, 179) + ' ...' %>
+                  <%= board.content.length <= 100 ? board.content :
+                  board.content.slice(0, 100) + ' ...' %>
                 </div>
               </div>
             </div>
