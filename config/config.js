@@ -8,15 +8,16 @@ const config = {
     database: process.env.DB_DATABASE,
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT,
-    timezone: "+09:00", // DB에 저장할 때 시간 설정
+    timezone: 'Asia/Seoul', // DB에 저장할 때 시간 설정
     dialectOptions: {
       // useUTC: false,
-      timezone: "+09:00" // DB에서 가져올 때 시간 설정
-    }
+      charset: 'utf8mb4',
+      dateStrings: true,
+      typeCast: true,
+      timezone: 'Asia/Seoul', // DB에 저장할 때 시간 설정
+    },
   },
-  prod: {
-    
-  },
+  prod: {},
 };
 
 module.exports = config;
