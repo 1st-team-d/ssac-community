@@ -83,8 +83,8 @@ function editCmt(commentSeq) {
         <textarea class="p-2 w-100" name="editCmtContent" id="editCmtContent<%= cmt.commentSeq %>" autofocus>${cmtContent.trim()}</textarea>
       </div>
       <div class="editBtnWrap d-flex justify-content-end my-3 me-3">
-        <button class="patchCommentBtn btn me-1" onclick="patchComment(${commentSeq}, this)">수정</button>
-        <button class="cancelEditBtn btn" onclick="cancelComment(${commentSeq})">취소</button>
+        <button class="patchCommentBtn btn me-1 fs-6" onclick="patchComment(${commentSeq}, this)">수정</button>
+        <button class="cancelEditBtn btn fs-6" onclick="cancelComment(${commentSeq})">취소</button>
       </div>
     </div>
   </div>

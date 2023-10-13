@@ -107,7 +107,7 @@
           </button>
         </div>
         <% } %> <% } %>
-        <div class="comment_section">
+        <div class="comment_section mt-5 mt-lg-0">
           <div><span>댓글</span></div>
           <div class="comment_form">
             <div class="comment_content mb-4">
@@ -170,17 +170,6 @@
                 </button>
               </div>
               <% } %>
-              <div class="editCmtWrap">
-                <div class="editCmtInput">
-                  <span><%= cmt.user.name %></span>
-                  <textarea
-                    name="editCmtContent"
-                    id="editCmtContent<%= cmt.commentSeq %>"
-                  ></textarea>
-                  <button>수정</button>
-                  <button>취소</button>
-                </div>
-              </div>
             </div>
             <% }); %>
           </div>
