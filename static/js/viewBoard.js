@@ -7,11 +7,6 @@ async function editBoard() {
   document.location.href = `/board/modify?boardSeq=${boardSeq}`;
 }
 
-// 게시물 목록으로 이동
-function listBoard() {
-  document.location.href = '/board';
-}
-
 // 게시물 삭제
 async function deleteBoard() {
   const boardSeq = document.querySelector('#boardSeq').value;

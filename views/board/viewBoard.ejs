@@ -14,25 +14,8 @@
   </head>
   <body>
     <%- include('../includes/header.ejs') %>
-    <button
-      class="btn listBtn d-flex align-items-center justify-content-center position-fixed top-50 left-20"
-      onclick="listBoard()"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-arrow-left"
-        viewBox="0 0 16 16"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
-        />
-      </svg>
-    </button>
-    <div class="board_wrap container w-75">
+
+    <div class="board_wrap container-md">
       <div class="studyControl d-flex justify-content-between mb-3">
         <div class="studyStatus d-flex align-items-center">
           <span
@@ -77,19 +60,19 @@
             <span><%= board.title %></span>
           </div>
           <div class="info d-flex align-items-center">
-            <div>
-              <span>작성자</span>
+            <div class="d-flex flex-wrap d-lg-block">
+              <span class="me-3">작성자</span>
               <span><%= user.name %></span>
             </div>
-            <div>
-              <span>작성일</span>
+            <div class="d-flex flex-wrap d-lg-block">
+              <span class="me-3">작성일</span>
               <span>
                 <%= board.dataValues.year + '-' + board.dataValues.month + '-' +
                 board.dataValues.day %>
               </span>
             </div>
-            <div>
-              <span>조회</span>
+            <div class="d-flex flex-wrap d-lg-block">
+              <span class="me-3">조회</span>
               <span><%= board.count %></span>
             </div>
           </div>

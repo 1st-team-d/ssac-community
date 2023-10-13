@@ -54,8 +54,7 @@ exports.getBoard = async (req, res) => {
       cookieEmail: cookie ? cookie.loginEmail : '',
       cookiePw: cookie ? cookie.loginPw : '',
     });
-  } catch (err) {
-  }
+  } catch (err) {}
 };
 
 // GET '/board/list'
@@ -104,8 +103,9 @@ exports.getBoardList = async (req, res) => {
           ],
         },
         order: [[sequelize.col('board.createdAt'), 'DESC']],
+        offset: offset,
+        limit: boardCountPerPage,
       });
-
       res.send({
         board: study,
         session: req.session.userInfo,
@@ -334,8 +334,7 @@ exports.postRegister = async (req, res) => {
         });
       }
     }
-  } catch (err) {
-  }
+  } catch (err) {}
 };
 
 // GET '/board/modify'
@@ -381,8 +380,7 @@ exports.getModify = async (req, res) => {
       // 세션있을 때만 등록 화면 나오게
       res.redirect('/');
     }
-  } catch (err) {
-  }
+  } catch (err) {}
 };
 
 // PATCH '/board/modify'
@@ -391,7 +389,7 @@ exports.patchModify = async (req, res) => {
   try {
     // 파일 있는지 확인
     let filePath = null;
-    
+
     if (req.file) {
       // 이미지 업로드
       const { destination, filename } = req.file;
@@ -471,6 +469,5 @@ exports.patchModify = async (req, res) => {
         msg: 'update board fail',
       });
     }
-  } catch (err) {
-  }
+  } catch (err) {}
 };

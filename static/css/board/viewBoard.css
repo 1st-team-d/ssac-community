@@ -231,3 +231,10 @@ textarea:focus {
   color: #fff;
   font-weight: 600;
 }
+
+@media (max-width: 390px) {
+  .comment_section {
+    margin-top: 0;
+    padding: 0;
+  }
+}

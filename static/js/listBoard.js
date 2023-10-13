@@ -7,6 +7,7 @@ function updateElement(boards) {
 
   if (boards) {
     // 게시글이 있을 때
+    console.log(boards);
     boards.forEach((board) => {
       const count = board.count || board.board.count;
       const title = board.title || board.board.title;
@@ -26,7 +27,7 @@ function updateElement(boards) {
       const year = board.year || board.board.year;
       const month = board.month || board.board.month;
       const day = board.day || board.board.day;
-      const study = board.category || board.board.category;
+      const study = board.study?.category || board.category;
       let studyString;
       switch (study) {
         case 0:
@@ -81,6 +82,7 @@ function updateElement(boards) {
     const boardList = document.getElementById('boardList');
     const html = `<div class="col-12">게시글이 없습니다.</div>`;
     boardList.innerHTML = html;
+    console.log('하이하이');
   }
 }
 
