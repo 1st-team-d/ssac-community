@@ -215,7 +215,6 @@ textarea:focus {
 }
 
 .editCmtInput .editBtnWrap button {
-  width: 10%;
   background-color: transparent;
   border: 1px solid #383838;
   padding: 3px 5px;
@@ -232,7 +231,7 @@ textarea:focus {
   font-weight: 600;
 }
 
-@media (max-width: 390px) {
+@media (max-width: 480px) {
   .comment_section {
     margin-top: 0;
     padding: 0;

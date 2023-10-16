@@ -27,7 +27,7 @@ function updateElement(boards) {
       const year = board.year || board.board.year;
       const month = board.month || board.board.month;
       const day = board.day || board.board.day;
-      const study = board.study?.category || board.category;
+      const study = board.category || board.study.category;
       let studyString;
       switch (study) {
         case 0:

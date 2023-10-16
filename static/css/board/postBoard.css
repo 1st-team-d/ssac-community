@@ -35,7 +35,7 @@ h1 {
 
 /* 게시글 작성 본문 위치 조정 */
 .postWrap {
-  margin-top: calc(var(--header-height) + 30px);
+  margin-top: calc(var(--header-height) + 50px);
 }
 
 /* 카테고리 스타일 설정 */
@@ -82,4 +82,16 @@ h1 {
 
 .file .inputFileBtn {
   cursor: pointer; /* 커서 모양 변경 (손가락) */
+}
+
+@media (max-width: 390px) {
+  .postWrap {
+    margin-top: calc(var(--header-height) + 100px);
+  }
+  textarea {
+    resize: none; /* 크기 조절 비활성화 */
+    border-radius: 15px; /* 둥근 테두리 설정 */
+    padding: 15px; /* 내부 여백 설정 */
+    height: 300px;
+  }
 }
