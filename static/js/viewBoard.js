@@ -7,11 +7,6 @@ async function editBoard() {
   document.location.href = `/board/modify?boardSeq=${boardSeq}`;
 }
 
-// 게시물 목록으로 이동
-function listBoard() {
-  document.location.href = '/board';
-}
-
 // 게시물 삭제
 async function deleteBoard() {
   const boardSeq = document.querySelector('#boardSeq').value;
@@ -88,8 +83,8 @@ function editCmt(commentSeq) {
         <textarea class="p-2 w-100" name="editCmtContent" id="editCmtContent<%= cmt.commentSeq %>" autofocus>${cmtContent.trim()}</textarea>
       </div>
       <div class="editBtnWrap d-flex justify-content-end my-3 me-3">
-        <button class="patchCommentBtn btn me-1" onclick="patchComment(${commentSeq}, this)">수정</button>
-        <button class="cancelEditBtn btn" onclick="cancelComment(${commentSeq})">취소</button>
+        <button class="patchCommentBtn btn me-1 fs-6" onclick="patchComment(${commentSeq}, this)">수정</button>
+        <button class="cancelEditBtn btn fs-6" onclick="cancelComment(${commentSeq})">취소</button>
       </div>
     </div>
   </div>
@@ -185,7 +180,6 @@ async function studyCloseApply(btn) {
   const studySeq = document.querySelector('#studySeq').value;
   // 로그인 한 사람 -> 신청자
   const userSeq = document.querySelector('#userSeq').value;
-  console.log(btn.textContent);
   let studyClose = {
     studySeq: studySeq,
   };
@@ -193,7 +187,7 @@ async function studyCloseApply(btn) {
     studySeq: studySeq,
     userSeq: userSeq,
   };
-  if (btn.textContent === '스터디 모집 마감하기') {
+  if (btn.textContent.trim() === '스터디 모집 마감하기') {
     if (confirm('스터디 모집을 마감하시겠습니까?')) {
       try {
         const res = await axios({
@@ -208,7 +202,7 @@ async function studyCloseApply(btn) {
         console.error(err);
       }
     }
-  } else if (btn.textContent === '스터디 참가 신청하기') {
+  } else if (btn.textContent.trim() === '스터디 참가 신청하기') {
     if (userSeq) {
       if (confirm('스터디 참가 신청을 하시겠습니까?')) {
         try {

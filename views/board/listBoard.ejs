@@ -23,9 +23,9 @@
   </head>
   <body>
     <%- include('../includes/header.ejs') %>
-    <div class="boardContainer container w-75">
+    <div class="boardContainer container w-lg-75 w-100">
       <!-- 카테고리 및 검색 작성 기능 -->
-      <div class="boardTop my-md-5 d-flex justify-content-between">
+      <div class="boardTop my-md-5 d-flex flex-wrap justify-content-lg-between">
         <div class="category_select d-flex flex-column">
           <label class="fw-bold fs-5 mb-2" for="category"
             >관심있는 카테고리를 선택해보세요!</label
@@ -39,7 +39,7 @@
           />
         </div>
         <div
-          class="board_search_post d-flex justify-content-sm-end align-items-sm-center gap-2"
+          class="board_search_post d-flex justify-content-sm-end align-items-sm-center gap-2 mt-2 mt-lg-0"
         >
           <!-- 검색 창 -->
           <div class="input-group w-100 d-flex">
@@ -101,8 +101,8 @@
                   <span class="badge bg-primary"
                     ><% switch (board?.study?.category) { case 0: %> 웹 <%
                     break; case 1: %> 앱 <% break; case 2: %> AI <% break; case
-                    3: %> UI/UX <% break; case4: %> 게임 <% default: %> 기타 <%
-                    } %>
+                    3: %> UI/UX <% break; case 4: %> 게임 <% break; default: %>
+                    기타 <% } %>
                   </span>
                   <%= board.title %>
                   <span class="badge bg-secondary"

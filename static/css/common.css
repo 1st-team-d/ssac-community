@@ -112,3 +112,9 @@ header nav > div.container {
 .ghostBtn:hover {
   color: var(--main-btn-text-color);
 }
+
+@media (max-width: 480px) {
+  html {
+    font-size: 62.5%;
+  }
+}

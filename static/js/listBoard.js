@@ -7,17 +7,48 @@ function updateElement(boards) {
 
   if (boards) {
     // 게시글이 있을 때
+    console.log(boards);
     boards.forEach((board) => {
-      const count = board.count;
-      const title = board.title;
-      const content =
-        board.content.length <= 180
-          ? board.content
-          : board.content.slice(0, 179) + '...';
-      const boardSeq = board.boardSeq;
-      const year = board.year;
-      const month = board.month;
-      const day = board.day;
+      const count = board.count || board.board.count;
+      const title = board.title || board.board.title;
+      let content;
+      if (board.board) {
+        content =
+          board.board.content.length <= 180
+            ? board.board.content
+            : board.board.content.slice(0, 179) + '...';
+      } else {
+        content =
+          board.content.length <= 180
+            ? board.content
+            : board.content.slice(0, 179) + '...';
+      }
+      const boardSeq = board.boardSeq || board.board.boardSeq;
+      const year = board.year || board.board.year;
+      const month = board.month || board.board.month;
+      const day = board.day || board.board.day;
+      const study = board.category || board.study.category;
+      let studyString;
+      switch (study) {
+        case 0:
+          studyString = '웹';
+          break;
+        case 1:
+          studyString = '앱';
+          break;
+        case 2:
+          studyString = 'AI';
+          break;
+        case 3:
+          studyString = 'UI/UX';
+          break;
+        case 4:
+          studyString = '게임';
+          break;
+        default:
+          studyString = '기타';
+          break;
+      }
 
       const div = document.createElement('div');
 
@@ -27,6 +58,7 @@ function updateElement(boards) {
         <div class="card mb-3">
           <div class="card-body row">
             <div class="board_info text-start fw-bold col-6">
+              <span class="badge bg-primary">${studyString}</span>
               ${title}
               <span class="badge bg-secondary"
                 >${year + '.' + month + '.' + day}</span
@@ -50,6 +82,7 @@ function updateElement(boards) {
     const boardList = document.getElementById('boardList');
     const html = `<div class="col-12">게시글이 없습니다.</div>`;
     boardList.innerHTML = html;
+    console.log('하이하이');
   }
 }
 
@@ -65,6 +98,7 @@ async function changePageNum(pageDiv) {
   });
   let boards = res.data.data;
   updateElement(boards);
+  console.log(boards);
 }
 
 // 검색 버튼 요소 가져오기
@@ -129,46 +163,7 @@ function renderSearchResults(results) {
 
   // 검색 결과를 반복하여 목록에 추가
   if (results.length > 0) {
-    results.forEach((board, index) => {
-      const count = board.count;
-      const title = board.title;
-      const content =
-        board.content.length <= 180
-          ? board.content
-          : board.content.slice(0, 179) + '...';
-      // const createdAt = board.createdAt;
-      const boardSeq = board.boardSeq;
-      const year = board.year;
-      const month = board.month;
-      const day = board.day;
-      // 새로운 게시물 요소 생성
-      const div = document.createElement('div');
-      const html = `
-      <a href="/board/list?boardSeq=${boardSeq}" class="view-link">
-        <div class="card mb-3">
-          <div class="card-body row">
-            <div class="board_info text-start fw-bold col-6">
-              ${title}
-              <span class="badge bg-secondary"
-                >${year + '.' + month + '.' + day}</span
-              >
-              <span class="badge bg-secondary">view ${count}</span>
-            </div>
-
-            <div class="content col-12 text-start text-wrap gy-3">
-                ${content}
-            </div>
-          </div>
-        </div>
-      </a>
-      `;
-      div.innerHTML = html;
-
-      // 생성된 요소를 목록에 추가
-      boardList.append(div);
-    });
-  } else {
-    boardList.innerHTML = `<div class="col-12">검색된 게시글이 없습니다.</div>`;
+    updateElement(results);
   }
 }
 
@@ -199,7 +194,7 @@ tagify
   .on('dropdown:select', onDropdownSelect);
 
 // 각 이벤트 발생 시 실행할 함수
-async function onAddTag(e) {
+async function onAddTag() {
   // 선택된 카테고리
   const categories = tagify.value;
   // 요청을 위한 빈 배열
@@ -234,71 +229,23 @@ async function onAddTag(e) {
     params: { category: getCategories },
   });
   if (res.data.board) {
-    const boards = res.data.board;
-    const boardList = document.getElementById('boardList');
-
-    boardList.innerHTML = ''; // 기존 목록을 비우고 검색 결과를 새로 표시
-
-    boards.forEach((board) => {
-      const count = board.board.count;
-      const title = board.board.title;
-      const content =
-        board.board.content.length <= 180
-          ? board.board.content
-          : board.board.content.slice(0, 179) + '...';
-      const boardSeq = board.board.boardSeq;
-      const year = board.board.year;
-      const month = board.board.month;
-      const day = board.board.day;
-      const boardLength = boards.length;
-
-      const div = document.createElement('div');
-
-      // innerHTML로 아예 갈아 엎어서 페이지 누를때마다 새로 집어넣기
-      const html = `
-      <a href="/board/list?boardSeq=${boardSeq}" class="view-link">
-        <div class="card mb-3">
-          <div class="card-body row">
-            <div class="board_info text-start fw-bold col-6">
-              ${title}
-              <span class="badge bg-secondary"
-                >${year + '.' + month + '.' + day}</span
-              >
-              <span class="badge bg-secondary">view ${count}</span>
-            </div>
-
-            <div class="content col-12 text-start text-wrap gy-3">
-                ${content}
-            </div>
-          </div>
-        </div>
-      </a>
-      `;
-      div.innerHTML = html;
-      // 생성된 요소를 목록에 추가
-      boardList.append(div);
-      // 페이징 처리
-      // 페이징 처리
-      const boardPage = document.querySelector('.board_page');
-      boardPage.innerHTML = '';
-      const newDiv = document.createElement('div');
-      for (i = 0; i < Math.ceil(boardLength / 10); i++) {
-        const pageDiv = document.createElement('div');
-        pageDiv.setAttribute('onclick', 'changePageNum(this)');
-        pageDiv.textContent = i + 1;
-        newDiv.append(pageDiv);
-      }
-      boardPage.innerHTML = newDiv.innerHTML;
-    });
-  } else {
-    const boardList = document.getElementById('boardList');
-    const html = `<div class="col-12">게시글이 없습니다.</div>`;
-    boardList.innerHTML = html;
+    updateElement(res.data.board);
   }
+  // 페이징 처리
+  const boardPage = document.querySelector('.board_page');
+  boardPage.innerHTML = '';
+  const newDiv = document.createElement('div');
+  for (i = 0; i < Math.ceil(res.data.board.length / 10); i++) {
+    const pageDiv = document.createElement('div');
+    pageDiv.setAttribute('onclick', 'changePageNum(this)');
+    pageDiv.textContent = i + 1;
+    newDiv.append(pageDiv);
+  }
+  boardPage.innerHTML = newDiv.innerHTML;
 }
 
 // tag removed callback
-async function onRemoveTag(e) {
+async function onRemoveTag() {
   // 카테고리 삭제되었으므로 현재 input의 모든 카테고리 값으로 조회
   const categories = tagify.value;
   // 요청을 위한 빈 배열
@@ -338,6 +285,7 @@ async function onRemoveTag(e) {
     boardList.innerHTML = ''; // 기존 목록을 비우고 검색 결과를 새로 표시
 
     boards.forEach((board) => {
+      console.log(board);
       const count = board.board.count;
       const title = board.board.title;
       const content =
@@ -349,6 +297,28 @@ async function onRemoveTag(e) {
       const month = board.board.month;
       const day = board.board.day;
       const boardLength = boards.length;
+      const study = board.category;
+      let studyString;
+      switch (study) {
+        case 0:
+          studyString = '웹';
+          break;
+        case 1:
+          studyString = '앱';
+          break;
+        case 2:
+          studyString = 'AI';
+          break;
+        case 3:
+          studyString = 'UI/UX';
+          break;
+        case 4:
+          studyString = '게임';
+          break;
+        default:
+          studyString = '기타';
+          break;
+      }
 
       const div = document.createElement('div');
 
@@ -358,6 +328,7 @@ async function onRemoveTag(e) {
         <div class="card mb-3">
           <div class="card-body row">
             <div class="board_info text-start fw-bold col-6">
+              <span class="badge bg-primary">${studyString}</span>
               ${title}
               <span class="badge bg-secondary"
                 >${year + '.' + month + '.' + day}</span
@@ -404,6 +375,28 @@ async function onRemoveTag(e) {
       const year = board.year;
       const month = board.month;
       const day = board.day;
+      const study = board.category || board.board.category;
+      let studyString;
+      switch (study) {
+        case 0:
+          studyString = '웹';
+          break;
+        case 1:
+          studyString = '앱';
+          break;
+        case 2:
+          studyString = 'AI';
+          break;
+        case 3:
+          studyString = 'UI/UX';
+          break;
+        case 4:
+          studyString = '게임';
+          break;
+        default:
+          studyString = '기타';
+          break;
+      }
 
       const div = document.createElement('div');
 
@@ -413,6 +406,7 @@ async function onRemoveTag(e) {
         <div class="card mb-3">
           <div class="card-body row">
             <div class="board_info text-start fw-bold col-6">
+              <span class="badge bg-primary">${studyString}</span>
               ${title}
               <span class="badge bg-secondary"
                 >${year + '.' + month + '.' + day}</span
