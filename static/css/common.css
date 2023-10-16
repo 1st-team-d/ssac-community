@@ -115,12 +115,6 @@ header nav > div.container {
 
 @media (max-width: 480px) {
   html {
-    font-size: 80%;
-  }
-}
-
-@media (max-width: 390px) {
-  html {
     font-size: 62.5%;
   }
 }
