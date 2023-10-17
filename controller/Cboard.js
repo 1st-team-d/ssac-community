@@ -25,7 +25,7 @@ exports.getBoard = async (req, res) => {
     req.session.boardInfo = {
       search: undefined,
       pageNum: pageNum,
-      category: undefined,
+      category: ['0', '1', '2', '3', '4', '5'], // 모든 카테고리 입력
     };
 
     const board = await Board.findAll({
@@ -74,19 +74,23 @@ exports.getBoardList = async (req, res) => {
   try {
     // 특정 게시글의 게시글 시퀀스, 검색어
     const { boardSeq, search, pageNum, category } = req.query;
+    console.log('###########################');
+    console.log(category);
+    console.log('###########################');
 
     // 1) 기존 검색어나 카테고리 정보가 다를 경우, 페이지 번호를 1로 설정
     // 배열 비교 및 값을 가지고 있는지 확인하는 방법
     // - 참고 : https://velog.io/@bepyan/JS-%EB%B0%B0%EC%97%B4%EB%A5%BC-%EB%B9%84%EA%B5%90%ED%95%98%EB%8A%94-%EB%B2%95)
-    function arraysEqual(arr1, arr2){
-      if(!arr1 || !arr2) return false; // 빈 배열이 아닌 undefined, null, '' 이면 false
-      if(arr1.length !== arr2.length) return false; // 길이가 같은지 먼저 비교
-      for(let i=0; i<arr1.length; ++i){ // 요소 값을 하나하나 비교
-        if(arr1[i] !== arr2[i]) return false;
+    function arraysEqual(arr1, arr2) {
+      if (!arr1 || !arr2) return false; // 빈 배열이 아닌 undefined, null, '' 이면 false
+      if (arr1.length !== arr2.length) return false; // 길이가 같은지 먼저 비교
+      for (let i = 0; i < arr1.length; ++i) {
+        // 요소 값을 하나하나 비교
+        if (arr1[i] !== arr2[i]) return false;
       }
 
       return true;
-    };
+    }
 
     if (
       search !== req.session.boardInfo.search ||
@@ -167,9 +171,9 @@ exports.getBoardList = async (req, res) => {
         comments: allComment,
       });
 
-    // ###########################################
-    // 2. 게시글 검색 / 카테고리 / 페이징 처리
-    // ###########################################
+      // ###########################################
+      // 2. 게시글 검색 / 카테고리 / 페이징 처리
+      // ###########################################
     } else {
       // 세션에 검색어가 없는 경우, '%%'로 전체 검색 설정
       const paramSearch = req.session.boardInfo.search
