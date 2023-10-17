@@ -1,8 +1,12 @@
 /* 모든 파일 공통 CSS */
 @import url('/static/css/common.css');
 
+p {
+  margin: 0;
+}
+
 .studyWrap {
-  min-height: 100vh;
+  margin-top: calc(var(--header-height) + 50px);
 }
 
 /* 스터디 구분 한 컨테이너 */
@@ -69,4 +73,62 @@
 /* 스터디 정보 맨 마지막 항목은 마진 0 */
 .studyInfo > div:last-child {
   margin: 0;
+}
+
+/* 반응형 */
+@media (max-width: 767px) {
+  .studyWrap * {
+    position: static !important;
+  }
+
+  .studySection {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .leaderStudy .studyStatus,
+  .crewStudy .studyStatus {
+    height: auto;
+    width: 80% !important;
+    margin-bottom: 10px;
+  }
+
+  .studyInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .studyInfo .card {
+    margin: 0;
+    width: 100%;
+  }
+
+  .studyInfo .card-body a {
+    /* position: static; */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  .studyInfo .card-body .card-title {
+    margin: 0;
+  }
+
+  .studyInfo .ithStudy .study_status {
+    transform: translateX(0);
+    border-radius: 10px;
+    padding: 5px 8px;
+    font-weight: 800;
+  }
+
+  .study_category {
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

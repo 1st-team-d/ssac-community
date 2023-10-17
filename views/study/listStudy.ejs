@@ -16,7 +16,7 @@
     <!-- 모집중, 참여중인 스터디 정보 나타내는 항목 -->
 
     <div
-      class="studyWrap container d-flex flex-column justify-content-center py-3 ps-3"
+      class="studyWrap container d-flex flex-wrap justify-content-center align-items-center py-3 ps-3"
     >
       <!-- 내가 팀장으로 모집중인 스터디 -->
       <div
@@ -25,7 +25,10 @@
         <div
           class="studyStatus w-25 bg-gradient shadow-lg rounded-3 w-25 me-3 d-flex flex-column justify-content-center align-items-center"
         >
-          <span class="fs-4 fw-bold">내가 만든 스터디</span>
+          <span class="fs-4 fw-bold text-center"
+            >내가 만든 <br />
+            스터디</span
+          >
         </div>
 
         <div class="studyInfo w-75 text-center d-flex justify-content-center">
@@ -36,7 +39,7 @@
           <% const boardDate = recruitBoard.dataValues; %>
           <!-- 스터디 관련 -->
           <% const study = recruitBoard.dataValues.study; %>
-          <div class="card ithStudy z-3 shadow-sm">
+          <div class="card ithStudy shadow-sm">
             <div
               class="card-body d-flex justify-content-center align-items-center"
             >
@@ -81,7 +84,10 @@
         <div
           class="studyStatus w-25 bg-gradient shadow-lg rounded-3 w-25 me-3 d-flex flex-column justify-content-center align-items-center"
         >
-          <span class="fs-4 fw-bold">내가 참여하는 스터디</span>
+          <span class="fs-4 fw-bold text-center"
+            >내가 참여하는 <br />
+            스터디</span
+          >
         </div>
 
         <div class="studyInfo w-75 text-center d-flex justify-content-center">
@@ -92,7 +98,7 @@
           <% const study = applyBoard.dataValues.study; %>
           <!-- 게시글 날짜 관련 + sequelize.col()로 컬럼명 변경한 것들 -->
           <% const boardDate = applyBoard.dataValues; %>
-          <div class="card ithStudy z-3 shadow-sm">
+          <div class="card ithStudy shadow-sm">
             <div
               class="card-body d-flex justify-content-center align-items-center"
             >
