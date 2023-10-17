@@ -21,6 +21,13 @@ exports.getBoard = async (req, res) => {
     const selectAllBoard = await Board.findAll();
     const allBoardLen = selectAllBoard.length;
 
+    // 게시글 관련 세션 생성
+    req.session.boardInfo = {
+      search: undefined,
+      pageNum: pageNum,
+      category: undefined,
+    };
+
     const board = await Board.findAll({
       attributes: [
         'boardSeq',
@@ -58,19 +65,47 @@ exports.getBoard = async (req, res) => {
 };
 
 // GET '/board/list'
+// GET '/board/list?boardSeq=###'
 // GET '/board/list?search=###'
 // GET '/board/list?category=###'
-// 게시글 검색 및 페이징 처리
+// GET '/board/list?pageNum=###'
+// 특정 게시글 조회 / 게시글 검색 / 카테고리 검색 / 페이징 처리
 exports.getBoardList = async (req, res) => {
   try {
     // 특정 게시글의 게시글 시퀀스, 검색어
     const { boardSeq, search, pageNum, category } = req.query;
 
+    // 1) 기존 검색어나 카테고리 정보가 다를 경우, 페이지 번호를 1로 설정
+    // 배열 비교 및 값을 가지고 있는지 확인하는 방법
+    // - 참고 : https://velog.io/@bepyan/JS-%EB%B0%B0%EC%97%B4%EB%A5%BC-%EB%B9%84%EA%B5%90%ED%95%98%EB%8A%94-%EB%B2%95)
+    function arraysEqual(arr1, arr2){
+      if(!arr1 || !arr2) return false; // 빈 배열이 아닌 undefined, null, '' 이면 false
+      if(arr1.length !== arr2.length) return false; // 길이가 같은지 먼저 비교
+      for(let i=0; i<arr1.length; ++i){ // 요소 값을 하나하나 비교
+        if(arr1[i] !== arr2[i]) return false;
+      }
+
+      return true;
+    };
+
+    if (
+      search !== req.session.boardInfo.search ||
+      !arraysEqual(category, req.session.boardInfo.category)
+    ) {
+      req.session.boardInfo.pageNum = '1';
+    } else {
+      req.session.boardInfo.pageNum = pageNum;
+    }
+
+    // 2) 검색, 페이지 정보를 세션에 저장
+    if (search) req.session.boardInfo.search = search;
+    if (category) req.session.boardInfo.category = category;
+
     // 페이징 처리
     let boardCountPerPage = 10; // 한 화면에 보여질 게시글 개수
     let offset = 0; // 페이징 처리
-    if (pageNum > 1) {
-      offset = boardCountPerPage * (pageNum - 1);
+    if (req.session.boardInfo.pageNum > 1) {
+      offset = boardCountPerPage * (req.session.boardInfo.pageNum - 1);
     }
 
     // 전체 게시글 개수 필요
@@ -80,41 +115,10 @@ exports.getBoardList = async (req, res) => {
     // 쿠키
     const cookie = req.signedCookies.remain;
 
-    if (category) {
-      const study = await Study.findAll({
-        where: {
-          category: {
-            [Op.in]: category,
-          },
-        },
-        include: {
-          model: Board,
-          attributes: [
-            'boardSeq',
-            'title',
-            'content',
-            'filePath',
-            'count',
-            [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
-            [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
-            [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
-            'createdAt',
-            'updatedAt',
-          ],
-        },
-        order: [[sequelize.col('board.createdAt'), 'DESC']],
-        offset: offset,
-        limit: boardCountPerPage,
-      });
-      res.send({
-        board: study,
-        session: req.session.userInfo,
-        cookieEmail: cookie ? cookie.loginEmail : '',
-        cookiePw: cookie ? cookie.loginPw : '',
-      });
-
-      // 특정 게시글 조회 및 해당 게시글의 댓글 조회
-    } else if (boardSeq) {
+    // ###########################################
+    // 1. 특정 게시글 조회 및 해당 게시글의 댓글 조회
+    // ###########################################
+    if (boardSeq) {
       const board = await Board.findOne({
         attributes: [
           'boardSeq',
@@ -163,47 +167,19 @@ exports.getBoardList = async (req, res) => {
         comments: allComment,
       });
 
-      // 게시글 검색
-    } else if (search) {
-      const board = await Board.findAll({
-        attributes: [
-          'boardSeq',
-          'title',
-          'content',
-          'filePath',
-          'count',
-          [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
-          [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
-          [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
-          'createdAt',
-          'updatedAt',
-        ],
-        where: {
-          [Op.or]: [
-            {
-              title: { [Op.like]: `%${search}%` },
-            },
-            {
-              content: { [Op.like]: `%${search}%` },
-            },
-          ],
-        },
-        include: [{ model: Study }],
-        order: [[sequelize.col('board.createdAt'), 'DESC']],
-        offset: offset,
-        limit: boardCountPerPage,
-      });
-
-      res.send({
-        data: board,
-        allBoardLen: allBoardLen,
-        session: req.session.userInfo,
-        cookieEmail: cookie ? cookie.loginEmail : '',
-        cookiePw: cookie ? cookie.loginPw : '',
-      });
-
-      // 페이지 번호 '2'이상 넘어오는 경우
+    // ###########################################
+    // 2. 게시글 검색 / 카테고리 / 페이징 처리
+    // ###########################################
     } else {
+      // 세션에 검색어가 없는 경우, '%%'로 전체 검색 설정
+      const paramSearch = req.session.boardInfo.search
+        ? req.session.boardInfo.search
+        : '';
+      // 세션에 카테고리 값이 없는 경우, 전체 검색
+      const paramCategory = req.session.boardInfo.category
+        ? req.session.boardInfo.category
+        : ['0', '1', '2', '3', '4', '5'];
+
       const board = await Board.findAll({
         attributes: [
           'boardSeq',
@@ -222,10 +198,30 @@ exports.getBoardList = async (req, res) => {
           'user.name',
           'user.isAdmin',
         ],
+        where: {
+          [Op.or]: [
+            {
+              title: { [Op.like]: `%${paramSearch}%` },
+            },
+            {
+              content: { [Op.like]: `%${paramSearch}%` },
+            },
+          ],
+        },
         order: [[sequelize.col('board.createdAt'), 'DESC']],
         offset: offset,
         limit: boardCountPerPage,
-        include: [{ model: User }, { model: Study }],
+        include: [
+          { model: User },
+          {
+            model: Study,
+            where: {
+              category: {
+                [Op.in]: paramCategory,
+              },
+            },
+          },
+        ],
       });
 
       res.send({

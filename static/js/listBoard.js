@@ -91,10 +91,39 @@ async function changePageNum(pageDiv) {
   // 해당 페이지 번호 클릭 -> 클릭한 this 객체가 pageDiv
   const pageNum = pageDiv.textContent;
 
+  // 선택된 카테고리
+  const categories = tagify.value;
+  // 요청을 위한 빈 배열
+  const getCategories = [];
+  // 태그 추가 이벤트 발생 전까지 있던 카테고리 배열에 추가
+  categories.forEach((category) => {
+    switch (category.value) {
+      case '웹':
+        getCategories.push(0);
+        break;
+      case '앱':
+        getCategories.push(1);
+        break;
+      case 'AI':
+        getCategories.push(2);
+        break;
+      case 'UI / UX':
+        getCategories.push(3);
+        break;
+      case '게임':
+        getCategories.push(4);
+        break;
+      case '기타':
+        getCategories.push(5);
+        break;
+    }
+  });
+
   // 해당 페이지에 해당하는 데이터 보내달라고 요청
   const res = await axios({
-    url: `/board/list?pageNum=${pageNum}`,
+    url: `/board/list`,
     method: 'get',
+    params: { pageNum: pageNum, category: getCategories },
   });
   let boards = res.data.data;
   updateElement(boards);
@@ -228,14 +257,15 @@ async function onAddTag() {
     method: 'get',
     params: { category: getCategories },
   });
-  if (res.data.board) {
-    updateElement(res.data.board);
+  console.log(res);
+  if (res.data.data) {
+    updateElement(res.data.data);
   }
   // 페이징 처리
   const boardPage = document.querySelector('.board_page');
   boardPage.innerHTML = '';
   const newDiv = document.createElement('div');
-  for (i = 0; i < Math.ceil(res.data.board.length / 10); i++) {
+  for (i = 0; i < Math.ceil(res.data.allBoardLen / 10); i++) {
     const pageDiv = document.createElement('div');
     pageDiv.setAttribute('onclick', 'changePageNum(this)');
     pageDiv.textContent = i + 1;
@@ -278,26 +308,27 @@ async function onRemoveTag() {
     method: 'get',
     params: { category: getCategories },
   });
-  if (res.data.board) {
-    const boards = res.data.board;
+  console.log(res);
+  if (res.data.data) {
+    const boards = res.data.data;
     const boardList = document.getElementById('boardList');
 
     boardList.innerHTML = ''; // 기존 목록을 비우고 검색 결과를 새로 표시
 
     boards.forEach((board) => {
-      console.log(board);
-      const count = board.board.count;
-      const title = board.board.title;
+      // console.log(board);
+      const count = board.count;
+      const title = board.title;
       const content =
-        board.board.content.length <= 180
-          ? board.board.content
-          : board.board.content.slice(0, 179) + '...';
-      const boardSeq = board.board.boardSeq;
-      const year = board.board.year;
-      const month = board.board.month;
-      const day = board.board.day;
+        board.content.length <= 180
+          ? board.content
+          : board.content.slice(0, 179) + '...';
+      const boardSeq = board.boardSeq;
+      const year = board.year;
+      const month = board.month;
+      const day = board.day;
       const boardLength = boards.length;
-      const study = board.category;
+      const study = board.study.category;
       let studyString;
       switch (study) {
         case 0:
@@ -375,7 +406,7 @@ async function onRemoveTag() {
       const year = board.year;
       const month = board.month;
       const day = board.day;
-      const study = board.category || board.board.category;
+      const study = board.category || board.study.category;
       let studyString;
       switch (study) {
         case 0:
