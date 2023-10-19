@@ -16,12 +16,13 @@ p {
 
 /* 모집중 / 참여중 스터디 섹션 */
 .leaderStudy .studyStatus {
-  height: 100%;
+  height: 83%;
+  margin-right: 10px;
   background-color: rgb(164, 207, 164);
 }
 
 .crewStudy .studyStatus {
-  height: 100%;
+  height: 83%;
   background-color: rgb(201, 219, 128);
 }
 
@@ -85,6 +86,11 @@ p {
     display: flex;
     flex-direction: column;
     height: auto;
+  }
+
+  .leaderStudy .studyStatus {
+    height: 83%;
+    background-color: rgb(164, 207, 164);
   }
 
   .leaderStudy .studyStatus,
