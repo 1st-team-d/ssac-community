@@ -105,8 +105,9 @@ exports.getBoardList = async (req, res) => {
     if (search) req.session.boardInfo.search = search;
     if (category) {
       req.session.boardInfo.category = category;
-    } else { // 카테고리 값이 없는 경우, 모든 카테고리 값을 저장
-      req.session.boardInfo.category = ['0', '1', '2', '3', '4', '5'];
+    } else {
+      // 카테고리 값이 없는 경우, 모든 카테고리 값을 저장
+      req.session.boardInfo.category = [];
     }
 
     // 페이징 처리
