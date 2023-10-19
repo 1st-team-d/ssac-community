@@ -40,16 +40,18 @@
   --header-height: 70px;
 }
 
-/* 스크롤 바 없애기 */
-/* ( 크롬, 사파리, 오페라, 엣지 ) 동작 */
-body::-webkit-scrollbar {
-  display: none;
+
+/* 가로 스크롤바를 숨김 */
+body {
+  overflow-x: hidden;
 }
 
+/* 세로 스크롤바는 필요한 경우 자동으로 생성 */
 body {
-  -ms-overflow-style: none; /* 인터넷 익스플로러 */
-  scrollbar-width: none; /* 파이어폭스 */
+  overflow-y: scroll;
 }
+
+
 
 /* Common */
 a {
@@ -117,4 +119,15 @@ header nav > div.container {
   html {
     font-size: 62.5%;
   }
+
+  /* 가로 스크롤바를 숨김 */
+body {
+  overflow-x: hidden;
+}
+
+/* 세로 스크롤바는 필요한 경우 자동으로 생성 */
+body {
+  overflow-y: scroll;
+}
+
 }
