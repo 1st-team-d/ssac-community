@@ -15,7 +15,6 @@ async function deleteBoard() {
     method: 'delete',
     data: { boardSeq: boardSeq },
   });
-  console.log(res.data);
   if (res.data.isDelete) {
     alert(res.data.msg);
     document.location.href = '/board';
@@ -40,7 +39,6 @@ async function submitComment() {
       method: 'post',
       data: cmtData,
     }); // 등록되면 true
-    console.log(res.data);
     if (res.data.result) {
       document.location.reload();
     } else {
@@ -121,7 +119,6 @@ async function cancelComment(cmtSeq) {
 async function patchComment(cmtSeq, editBtn) {
   const cmtContent =
     editBtn.parentElement.previousElementSibling.firstElementChild.value;
-  console.log(cmtContent);
   const cmtData = { commentSeq: cmtSeq, cmtContent: cmtContent };
   if (confirm('댓글을 수정하시겠습니까?')) {
     const res = await axios({
@@ -152,7 +149,6 @@ async function deleteComment(cmtSeq) {
 // 스터디 정보 표시
 const studyCategory = document.querySelector('#studyCategory');
 const category = document.querySelector("input[id='categoryID']").value;
-console.log(category);
 switch (category) {
   case '0':
     studyCategory.innerHTML = '# 웹';

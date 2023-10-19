@@ -53,7 +53,6 @@ async function editPost() {
     const form = document.forms['data'];
     const formData = new FormData();
     const file = document.querySelector('#postFile').files[0];
-    console.log(file);
 
     formData.append('boardSeq', form.boardSeq.value);
     formData.append('userSeq', form.userSeq.value);
@@ -75,7 +74,6 @@ async function editPost() {
           },
         });
         if (res.data) {
-          console.log('res.data', res.data);
           alert('수정 완료!');
           document.location.href = '/board';
         }

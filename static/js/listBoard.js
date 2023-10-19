@@ -4,10 +4,8 @@ function updateElement(boards) {
   const boardList = document.getElementById('boardList');
 
   boardList.innerHTML = ''; // 기존 목록을 비우고 검색 결과를 새로 표시
-
-  if (boards) {
+  if (boards.length > 0) {
     // 게시글이 있을 때
-    console.log(boards);
     boards.forEach((board) => {
       const count = board.count || board.board.count;
       const title = board.title || board.board.title;
@@ -82,7 +80,6 @@ function updateElement(boards) {
     const boardList = document.getElementById('boardList');
     const html = `<div class="col-12">게시글이 없습니다.</div>`;
     boardList.innerHTML = html;
-    console.log('하이하이');
   }
 }
 
@@ -127,7 +124,6 @@ async function changePageNum(pageDiv) {
   });
   let boards = res.data.data;
   updateElement(boards);
-  console.log(boards);
 }
 
 // 검색 버튼 요소 가져오기
@@ -158,7 +154,6 @@ const performSearch = async () => {
       if (data.data.length) {
         // 페이징 처리
         let allSearchLen = data.data.length;
-        console.log(allSearchLen, data.data);
         const newDivs = document.createElement('div');
         for (i = 0; i < Math.ceil(allSearchLen / 10); i++) {
           const newDiv = document.createElement('div');
@@ -191,9 +186,7 @@ function renderSearchResults(results) {
   boardList.innerHTML = ''; // 기존 목록을 비우고 검색 결과를 새로 표시
 
   // 검색 결과를 반복하여 목록에 추가
-  if (results.length > 0) {
-    updateElement(results);
-  }
+  updateElement(results);
 }
 
 // 모집글 목록에서 카테고리 별로 게시물 표시 -> tagify 라이브러리 활용
@@ -213,14 +206,7 @@ let input = document.querySelector('input[name="category"]'),
   });
 
 // tagify 어떤 이벤트 추가할건지
-tagify
-  .on('add', onAddTag)
-  .on('remove', onRemoveTag)
-  .on('invalid', onInvalidTag)
-  .on('focus', onTagifyFocusBlur)
-  .on('blur', onTagifyFocusBlur)
-  .on('dropdown:hide dropdown:show')
-  .on('dropdown:select', onDropdownSelect);
+tagify.on('add', onAddTag).on('remove', onRemoveTag);
 
 // 각 이벤트 발생 시 실행할 함수
 async function onAddTag() {
@@ -257,7 +243,6 @@ async function onAddTag() {
     method: 'get',
     params: { category: getCategories },
   });
-  console.log(res);
   if (res.data.data) {
     updateElement(res.data.data);
   }
@@ -265,7 +250,7 @@ async function onAddTag() {
   const boardPage = document.querySelector('.board_page');
   boardPage.innerHTML = '';
   const newDiv = document.createElement('div');
-  for (i = 0; i < Math.ceil(res.data.allBoardLen / 10); i++) {
+  for (i = 0; i < Math.ceil(res.data.data.length / 10); i++) {
     const pageDiv = document.createElement('div');
     pageDiv.setAttribute('onclick', 'changePageNum(this)');
     pageDiv.textContent = i + 1;
@@ -308,15 +293,13 @@ async function onRemoveTag() {
     method: 'get',
     params: { category: getCategories },
   });
-  console.log(res);
-  if (res.data.data) {
+  if (res.data.data.length > 0) {
     const boards = res.data.data;
     const boardList = document.getElementById('boardList');
 
     boardList.innerHTML = ''; // 기존 목록을 비우고 검색 결과를 새로 표시
 
     boards.forEach((board) => {
-      // console.log(board);
       const count = board.count;
       const title = board.title;
       const content =
@@ -390,95 +373,9 @@ async function onRemoveTag() {
       boardPage.innerHTML = newDiv.innerHTML;
     });
   } else {
-    // 카테고리 선택된게 없으면 전체 게시물 조회
-    const boards = res.data.data;
+    // 게시글이 없을 때
     const boardList = document.getElementById('boardList');
-
-    boardList.innerHTML = ''; // 기존 목록을 비우고 검색 결과를 새로 표시
-
-    const boardLength = res.data.allBoardLen;
-
-    boards.forEach((board) => {
-      const count = board.count;
-      const title = board.title;
-      const content = board.content;
-      const boardSeq = board.boardSeq;
-      const year = board.year;
-      const month = board.month;
-      const day = board.day;
-      const study = board.category || board.study.category;
-      let studyString;
-      switch (study) {
-        case 0:
-          studyString = '웹';
-          break;
-        case 1:
-          studyString = '앱';
-          break;
-        case 2:
-          studyString = 'AI';
-          break;
-        case 3:
-          studyString = 'UI/UX';
-          break;
-        case 4:
-          studyString = '게임';
-          break;
-        default:
-          studyString = '기타';
-          break;
-      }
-
-      const div = document.createElement('div');
-
-      // innerHTML로 아예 갈아 엎어서 페이지 누를때마다 새로 집어넣기
-      const html = `
-      <a href="/board/list?boardSeq=${boardSeq}" class="view-link">
-        <div class="card mb-3">
-          <div class="card-body row">
-            <div class="board_info text-start fw-bold col-6">
-              <span class="badge bg-primary">${studyString}</span>
-              ${title}
-              <span class="badge bg-secondary"
-                >${year + '.' + month + '.' + day}</span
-              >
-              <span class="badge bg-secondary">view ${count}</span>
-            </div>
-
-            <div class="content col-12 text-start text-wrap gy-3">
-                ${content <= 180 ? content : content.slice(0, 179) + ' ...'}
-            </div>
-          </div>
-        </div>
-      </a>
-      `;
-      div.innerHTML = html;
-      // 생성된 요소를 목록에 추가
-      boardList.append(div);
-      // 페이징 처리
-      const boardPage = document.querySelector('.board_page');
-      boardPage.innerHTML = '';
-      const newDiv = document.createElement('div');
-      for (i = 0; i < Math.ceil(boardLength / 10); i++) {
-        const pageDiv = document.createElement('div');
-        pageDiv.setAttribute('onclick', 'changePageNum(this)');
-        pageDiv.textContent = i + 1;
-        newDiv.append(pageDiv);
-      }
-      boardPage.innerHTML = newDiv.innerHTML;
-    });
+    const html = `<div class="col-12">게시글이 없습니다.</div>`;
+    boardList.innerHTML = html;
   }
-}
-
-// invalid tag added callback
-function onInvalidTag(e) {
-  console.log('onInvalidTag: ', e.detail);
-}
-
-function onTagifyFocusBlur(e) {
-  console.log(e.type, 'event fired');
-}
-
-function onDropdownSelect(e) {
-  console.log('onDropdownSelect: ', e.detail);
 }
