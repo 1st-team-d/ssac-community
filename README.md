@@ -28,7 +28,7 @@
 <br />
 <div align="center">
   <a href="static/images/ssac-community.gif">
-    <img src="static/images/ssac-community.gif" alt="Logo" width="80" height="80">
+    <img src="static/images/ssac-community.gif" alt="Logo" width="500" height="300">
   </a>
 
   <h3 align="center">새싹 스터디 커뮤니티</h3>
@@ -52,6 +52,16 @@
   <summary>목차</summary>
   <ol>
     <li>
+      <a href="#팀-소개">팀 소개</a>
+      <ul>
+      <li><a href="#팀-이름">팀 이름</a></li>
+      <li><a href="#팀원-정보">팀원 정보</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#개발-기간">개발 기간</a>
+    </li>
+    <li>
       <a href="#기획-의도">기획 의도</a>
     </li>
     <li>
@@ -62,27 +72,48 @@
         <li><a href="#로그인-/-회원가입">로그인 / 회원가입</a></li>
         <li><a href="#스터디-모집글">스터디 모집글</a></li>
         <li><a href="#스터디-관리-페이지">스터디 관리 페이지</a></li>
-      </ul>
-      <ul>
         <li><a href="#사용한-기술">사용한 기술</a></li>
+        <li><a href="#사용한-라이브러리">사용한 라이브러리</a></li>
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#기획">기획</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#회원가입">회원가입</a></li>
+        <li><a href="#로그인-/-내 프로필">로그인 / 내 프로필</a></li>
+        <li><a href="#게시글">게시글</a></li>
+        <li><a href="#스터디">스터디</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
 <!-- ABOUT THE PROJECT -->
+
+## 팀 소개
+
+### 팀 이름
+
+### 🌱 1st-team-d / 새싹 커뮤니티(스터디 모집 사이트) 🌱
+
+### 팀원 정보
+
+| 이름   | [김정윤](https://github.com/pipi-shortstocking)                            | [김효중](https://github.com/rlagywnd4)                                     | [문영민](https://github.com/eoeung)                                         | [김태훈](https://github.com/hoonsdev)                                       | [한지윤](https://github.com/ZZOOONII)                                       |
+| ------ | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| 프로필 | <img src="https://avatars.githubusercontent.com/u/95032287?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/71661011?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/134040422?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/123625444?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/139741003?v=4" width=150> |
+| 역할   | ![Backend Badge](https://img.shields.io/badge/%20%20-Backend-blue)         | ![Backend Badge](https://img.shields.io/badge/%20%20-Backend-blue)         | ![Backend Badge](https://img.shields.io/badge/%20%20-Backend-blue)          | ![Frontend Badge](https://img.shields.io/badge/%20%20-Frontend-green)       | ![Frontend Badge](https://img.shields.io/badge/%20%20-Frontend-green)       |
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## 개발 기간
+
+- **전체 개발 기간** : 2023-09-04 ~ 2023-09-22
+- **기능 및 UI 구현 기간** : 2023-09-04 ~ 2023-09-21
+- **테스트 기간**
+  - 중간테스트 : 2023-09-14 ~ 2023-09-16
+  - 최종 테스트 기간 : 2023-09-20 ~ 2023-09-21
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 기획 의도
 
@@ -142,109 +173,73 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- GETTING STARTED -->
+### 사용한 라이브러리
 
-## Getting Started
+> ### [dotenv](https://www.npmjs.com/package/dotenv) &nbsp;&nbsp; <img src ="https://img.shields.io/badge/version-16.3.1-green.svg"/>
+>
+> .env 파일을 생성하여 DB 정보 저장
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+> ### [multer](https://www.npmjs.com/package/multer) &nbsp; <img src ="https://img.shields.io/badge/version-1.4.4-green.svg"/>
+>
+> 한글 깨짐 이슈로 인해 해당 버전 사용
 
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-
-- npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+> ### [sequelize](https://sequelize.org/) &nbsp; <img src ="https://img.shields.io/badge/version-6.32.1-green.svg"/>
+>
+> JavaScript를 SQL로 변환
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- USAGE EXAMPLES -->
+## 기획
 
-## Usage
+### 회원가입
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ROADMAP -->
-
-## Roadmap
-
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-  - [ ] Chinese
-  - [ ] Spanish
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
+| 중복체크(닉네임)                                                                                           | 중복체크(아이디)                                                                                           |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| ![](https://github.com/pipi-shortstocking/CodingTest/assets/95032287/dc4a9bf0-c9ca-42dd-8d9a-106bf88fd62a) | ![](https://github.com/pipi-shortstocking/CodingTest/assets/95032287/543cfe5e-0b0b-45c7-8e06-933d519dce24) |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- CONTRIBUTING -->
+### 로그인 & 내 프로필
 
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+| 로그인 정보 기억하기                                                                                       | 비밀번호 변경                                                                                              |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| ![](https://github.com/pipi-shortstocking/CodingTest/assets/95032287/c1d2a1bd-a66b-4017-a4a1-c33c0b476b7f) | ![](https://github.com/pipi-shortstocking/login-beta/assets/95032287/d5cfb627-7e92-4531-8cba-91bcdc8427c6) |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- CONTACT -->
+### 게시글
 
-## Contact
+| 카테고리별 조회                                                                                            | 검색                                                                                                       |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| ![](https://github.com/pipi-shortstocking/CodingTest/assets/95032287/e1838e51-b8a1-4d12-9800-5347532a098f) | ![](https://github.com/pipi-shortstocking/CodingTest/assets/95032287/3be653c5-77c4-46f5-9f60-b52c128f3bc3) |
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+| 글 작성                                                                                                    | 댓글 작성                                                                                                  |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| ![](https://github.com/pipi-shortstocking/CodingTest/assets/95032287/7b445c6f-f319-4e4d-996d-236275beb54e) | ![](https://github.com/pipi-shortstocking/CodingTest/assets/95032287/c5a804b4-b710-42c3-887a-112fb5f5e645) |
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+| 글 수정                                                                                                    | 댓글 수정                                                                                                  |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| ![](https://github.com/pipi-shortstocking/CodingTest/assets/95032287/cf0547e2-bb1d-48d6-95a2-c56ca5f372c8) | ![](https://github.com/pipi-shortstocking/CodingTest/assets/95032287/198db01c-8de2-401e-8601-51eb43a9ab82) |
+
+| 글 삭제                                                                                                    | 댓글 삭제                                                                                                  |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| ![](https://github.com/pipi-shortstocking/CodingTest/assets/95032287/76ca5696-8a56-410d-9b91-9163a76fa177) | ![](https://github.com/pipi-shortstocking/CodingTest/assets/95032287/d290c568-72f5-43ed-8f01-f95c93ed5880) |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- ACKNOWLEDGMENTS -->
+### 스터디
 
-## Acknowledgments
+| 모집 마감                                                                                                  | 스터디 참여                                                                                                |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| ![](https://github.com/pipi-shortstocking/CodingTest/assets/95032287/7492b885-16c9-4332-980e-3c7058637620) | ![](https://github.com/pipi-shortstocking/CodingTest/assets/95032287/f94f75b4-31df-4530-a47d-65ec25e93180) |
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
+| 스터디 메뉴                                                                                                | 스터디 현황                                                                                                |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| ![](https://github.com/pipi-shortstocking/login-beta/assets/95032287/9ea42abd-446b-45a8-bc2d-ed924fd82ac0) | ![](https://github.com/pipi-shortstocking/login-beta/assets/95032287/d4f11766-6b5d-4b73-9ae4-98d7d48d1544) |
 
-- [Choose an Open Source License](https://choosealicense.com)
-- [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-- [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-- [Malven's Grid Cheatsheet](https://grid.malven.co/)
-- [Img Shields](https://shields.io)
-- [GitHub Pages](https://pages.github.com)
-- [Font Awesome](https://fontawesome.com)
-- [React Icons](https://react-icons.github.io/react-icons/search)
+| 신청자 목록                                                                                                | 모집글로 이동                                                                                              |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| ![](https://github.com/pipi-shortstocking/login-beta/assets/95032287/a6c8bf84-aa59-4ba7-8980-aa4c5553811d) | ![](https://github.com/pipi-shortstocking/login-beta/assets/95032287/b8ae97b8-ab75-4084-a267-88359928b2f7) |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
