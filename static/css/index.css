@@ -8,7 +8,7 @@ body {
 
 /* 게시글 작성 본문 위치 조정 */
 .indexContainer {
-  margin-top: calc(var(--header-height) + 10px);
+  margin-top: calc(var(--header-height) + 100px);
 }
 
 /*=================================================*/
@@ -59,7 +59,6 @@ body {
   background-position: center;
   background-size: cover;
   overflow-y: hidden;
-
 }
 
 /* 메인 텍스트 반응형 */
@@ -101,8 +100,6 @@ body {
   .btnWrap {
     margin-bottom: 20px;
   }
-
-  
 }
 
 /*=================================================*/
@@ -115,14 +112,10 @@ a {
   text-decoration: none;
 }
 
-
-
 /* 카드 a태그 호버 컬러 설정 */
 a:hover {
   color: var(--link-hover-color);
 }
-
-
 
 /* 카드 css 설정 */
 .custom-block {
@@ -134,11 +127,11 @@ a:hover {
   transition: all 0.3s ease;
 }
 
-  /* 게시판 소개 카드의 높이를 300px로 고정 */
-  .custom-block-info {
-    height: 250px;
-    overflow: hidden; /* 내용이 넘치면 숨김 처리 */
-  }
+/* 게시판 소개 카드의 높이를 300px로 고정 */
+.custom-block-info {
+  height: 250px;
+  overflow: hidden; /* 내용이 넘치면 숨김 처리 */
+}
 
 /* 카드에 마우스 올렸을 때 위로 올라오는 */
 .custom-block:hover {
@@ -147,7 +140,6 @@ a:hover {
   border-color: transparent;
   transform: translateY(-3px);
 }
-
 
 /* 마우스를 올릴 때 배경 색상이 변경 */
 .custom-block .custom-block-info + div .badge:hover {
@@ -192,7 +184,7 @@ a:hover {
   .indexContainer {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     height: 100vh;
   }
 
@@ -206,7 +198,6 @@ a:hover {
     display: none;
   }
 
-
   .carousel-container {
     display: none;
   }
@@ -215,7 +206,6 @@ a:hover {
     height: 180px;
     overflow: hidden; /* 내용이 넘치면 숨김 처리 */
   }
-
 }
 
 /* test */
@@ -231,12 +221,10 @@ a:hover {
   top: 50%;
   left: -120px;
   transform: translateY(-50%);
-  
 }
 
 .carousel-container .carousel-control-next {
   top: 50%;
   right: -120px;
   transform: translateY(-50%);
-
 }
