@@ -103,7 +103,12 @@ exports.getBoardList = async (req, res) => {
 
     // 2) 검색, 페이지 정보를 세션에 저장
     if (search) req.session.boardInfo.search = search;
-    if (category) req.session.boardInfo.category = category;
+    if (category) {
+      req.session.boardInfo.category = category;
+    } else {
+      // 카테고리 값이 없는 경우, 모든 카테고리 값을 저장
+      req.session.boardInfo.category = [];
+    }
 
     // 페이징 처리
     let boardCountPerPage = 10; // 한 화면에 보여질 게시글 개수
@@ -180,9 +185,7 @@ exports.getBoardList = async (req, res) => {
         ? req.session.boardInfo.search
         : '';
       // 세션에 카테고리 값이 없는 경우, 전체 검색
-      const paramCategory = req.session.boardInfo.category
-        ? req.session.boardInfo.category
-        : ['0', '1', '2', '3', '4', '5'];
+      const paramCategory = req.session.boardInfo.category;
 
       const board = await Board.findAll({
         attributes: [
