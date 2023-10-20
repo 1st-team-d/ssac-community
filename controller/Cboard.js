@@ -74,9 +74,6 @@ exports.getBoardList = async (req, res) => {
   try {
     // 특정 게시글의 게시글 시퀀스, 검색어
     const { boardSeq, search, pageNum, category } = req.query;
-    console.log('###########################');
-    console.log(category);
-    console.log('###########################');
 
     // 1) 기존 검색어나 카테고리 정보가 다를 경우, 페이지 번호를 1로 설정
     // 배열 비교 및 값을 가지고 있는지 확인하는 방법
@@ -105,7 +102,10 @@ exports.getBoardList = async (req, res) => {
     if (search) req.session.boardInfo.search = search;
     if (category) {
       req.session.boardInfo.category = category;
-    } else {
+    } else if(req.session.boardInfo.category){
+      // 이미 카테고리가 세션에 설정되어 있으므로 아무것도 실행하지 않음
+    }
+      else {
       // 카테고리 값이 없는 경우, 모든 카테고리 값을 저장
       req.session.boardInfo.category = [];
     }
@@ -186,6 +186,8 @@ exports.getBoardList = async (req, res) => {
         : '';
       // 세션에 카테고리 값이 없는 경우, 전체 검색
       const paramCategory = req.session.boardInfo.category;
+      console.log('### paramCategory ### ');
+      console.log(paramCategory);
 
       const board = await Board.findAll({
         attributes: [
