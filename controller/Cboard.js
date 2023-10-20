@@ -186,8 +186,6 @@ exports.getBoardList = async (req, res) => {
         : '';
       // 세션에 카테고리 값이 없는 경우, 전체 검색
       const paramCategory = req.session.boardInfo.category;
-      console.log('### paramCategory ### ');
-      console.log(paramCategory);
 
       const board = await Board.findAll({
         attributes: [
