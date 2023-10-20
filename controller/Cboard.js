@@ -105,7 +105,10 @@ exports.getBoardList = async (req, res) => {
     if (search) req.session.boardInfo.search = search;
     if (category) {
       req.session.boardInfo.category = category;
-    } else {
+    } else if(req.session.boardInfo.category){
+      // 이미 카테고리가 세션에 설정되어 있으므로 아무것도 실행하지 않음
+    }
+      else {
       // 카테고리 값이 없는 경우, 모든 카테고리 값을 저장
       req.session.boardInfo.category = [];
     }
@@ -186,6 +189,8 @@ exports.getBoardList = async (req, res) => {
         : '';
       // 세션에 카테고리 값이 없는 경우, 전체 검색
       const paramCategory = req.session.boardInfo.category;
+      console.log('### paramCategory ### ');
+      console.log(paramCategory);
 
       const board = await Board.findAll({
         attributes: [
