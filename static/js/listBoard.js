@@ -4,22 +4,23 @@ function updateElement(boards) {
   const boardList = document.getElementById('boardList');
 
   boardList.innerHTML = ''; // 기존 목록을 비우고 검색 결과를 새로 표시
+
   if (boards.length > 0) {
     // 게시글이 있을 때
     boards.forEach((board) => {
       const count = board.count || board.board.count;
       const title = board.title || board.board.title;
-      let content;
-      if (board.board) {
+      let content = board.content || board.board.content;
+      if (content) {
         content =
-          board.board.content.length <= 180
-            ? board.board.content
-            : board.board.content.slice(0, 179) + '...';
+        content.length <= 180
+            ? content
+            : content.slice(0, 179) + '...';
       } else {
         content =
-          board.content.length <= 180
-            ? board.content
-            : board.content.slice(0, 179) + '...';
+          content.length <= 180
+            ? content
+            : content.slice(0, 179) + '...';
       }
       const boardSeq = board.boardSeq || board.board.boardSeq;
       const year = board.year || board.board.year;
@@ -122,7 +123,7 @@ async function changePageNum(pageDiv) {
     method: 'get',
     params: { pageNum: pageNum, category: getCategories },
   });
-  let boards = res.data.data;
+  let boards = res.data.data.rows;
   updateElement(boards);
 }
 
@@ -148,14 +149,13 @@ const performSearch = async () => {
     })
     .then((data) => {
       // 검색한 게시물 표시하는 함수
-      renderSearchResults(data.data);
+      renderSearchResults(data.data.rows);
       // 검색어 있는 경우에 검색기능
       const boardPage = document.querySelector('#pagination');
-      if (data.data.length) {
+      if (data.boardCnt) {
         // 페이징 처리
-        let allSearchLen = data.data.length;
         const newDivs = document.createElement('div');
-        for (i = 0; i < Math.ceil(allSearchLen / 10); i++) {
+        for (i = 0; i < Math.ceil(data.boardCnt / 10); i++) {
           const newDiv = document.createElement('div');
           newDiv.setAttribute('onclick', 'changePageNum(this)');
           newDiv.textContent = `${i + 1}`;
@@ -243,14 +243,19 @@ async function onAddTag() {
     method: 'get',
     params: { category: getCategories },
   });
-  if (res.data.data) {
-    updateElement(res.data.data);
+  if (res.data.data.count > 0) {
+    updateElement(res.data.data.rows);
+  } else {
+    // 게시글이 없을 때
+    const boardList = document.getElementById('boardList');
+    const html = `<div class="col-12">게시글이 없습니다.</div>`;
+    boardList.innerHTML = html;
   }
   // 페이징 처리
   const boardPage = document.querySelector('.board_page');
   boardPage.innerHTML = '';
   const newDiv = document.createElement('div');
-  for (i = 0; i < Math.ceil(res.data.data.length / 10); i++) {
+  for (i = 0; i < Math.ceil(res.data.boardCnt / 10); i++) {
     const pageDiv = document.createElement('div');
     pageDiv.setAttribute('onclick', 'changePageNum(this)');
     pageDiv.textContent = i + 1;
@@ -293,12 +298,13 @@ async function onRemoveTag() {
     method: 'get',
     params: { category: getCategories },
   });
-  if (res.data.data.length > 0) {
-    const boards = res.data.data;
+  if (res.data.boardCnt > 0) {
+    const boards = res.data.data.rows;
     const boardList = document.getElementById('boardList');
 
     boardList.innerHTML = ''; // 기존 목록을 비우고 검색 결과를 새로 표시
 
+    const boardLength = res.data.boardCnt;
     boards.forEach((board) => {
       const count = board.count;
       const title = board.title;
@@ -310,7 +316,6 @@ async function onRemoveTag() {
       const year = board.year;
       const month = board.month;
       const day = board.day;
-      const boardLength = boards.length;
       const study = board.study.category;
       let studyString;
       switch (study) {

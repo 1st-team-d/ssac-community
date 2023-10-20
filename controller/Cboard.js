@@ -1,3 +1,4 @@
+const { off } = require('process');
 const {
   Board,
   User,
@@ -75,42 +76,21 @@ exports.getBoardList = async (req, res) => {
     // 특정 게시글의 게시글 시퀀스, 검색어
     const { boardSeq, search, pageNum, category } = req.query;
 
-    // 1) 기존 검색어나 카테고리 정보가 다를 경우, 페이지 번호를 1로 설정
-    // 배열 비교 및 값을 가지고 있는지 확인하는 방법
-    // - 참고 : https://velog.io/@bepyan/JS-%EB%B0%B0%EC%97%B4%EB%A5%BC-%EB%B9%84%EA%B5%90%ED%95%98%EB%8A%94-%EB%B2%95)
-    function arraysEqual(arr1, arr2) {
-      if (!arr1 || !arr2) return false; // 빈 배열이 아닌 undefined, null, '' 이면 false
-      if (arr1.length !== arr2.length) return false; // 길이가 같은지 먼저 비교
-      for (let i = 0; i < arr1.length; ++i) {
-        // 요소 값을 하나하나 비교
-        if (arr1[i] !== arr2[i]) return false;
-      }
-
-      return true;
-    }
-
-    if (
-      search !== req.session.boardInfo.search ||
-      !arraysEqual(category, req.session.boardInfo.category)
-    ) {
-      req.session.boardInfo.pageNum = '1';
-    } else {
-      req.session.boardInfo.pageNum = pageNum;
-    }
-
-    // 2) 검색, 페이지 정보를 세션에 저장
+    // 1) 검색 값을 세션에 저장
     if (search) req.session.boardInfo.search = search;
+
+    // 2) 카테고리 설정
     if (category) {
       req.session.boardInfo.category = category;
-    } else if(req.session.boardInfo.category){
+    } else if (req.session.boardInfo.category) {
       // 이미 카테고리가 세션에 설정되어 있으므로 아무것도 실행하지 않음
-    }
-      else {
+    } else {
       // 카테고리 값이 없는 경우, 모든 카테고리 값을 저장
       req.session.boardInfo.category = [];
     }
 
-    // 페이징 처리
+    // 3) 페이징 처리
+    if (pageNum) req.session.boardInfo.pageNum = pageNum;
     let boardCountPerPage = 10; // 한 화면에 보여질 게시글 개수
     let offset = 0; // 페이징 처리
     if (req.session.boardInfo.pageNum > 1) {
@@ -186,10 +166,8 @@ exports.getBoardList = async (req, res) => {
         : '';
       // 세션에 카테고리 값이 없는 경우, 전체 검색
       const paramCategory = req.session.boardInfo.category;
-      console.log('### paramCategory ### ');
-      console.log(paramCategory);
 
-      const board = await Board.findAll({
+      const board = await Board.findAndCountAll({
         attributes: [
           'boardSeq',
           'title',
@@ -233,13 +211,75 @@ exports.getBoardList = async (req, res) => {
         ],
       });
 
-      res.send({
-        data: board,
-        allBoardLen: allBoardLen,
-        session: req.session.userInfo,
-        cookieEmail: cookie ? cookie.loginEmail : '',
-        cookiePw: cookie ? cookie.loginPw : '',
-      });
+      // 게시글 조회 결과, (row수 / 10)올림 값이 페이지 번호보다 작은 경우, 강제로 페이지 번호를 1로 설정
+      if (Math.ceil(board.count / 10) < req.session.boardInfo.pageNum) {
+        req.session.boardInfo.pageNum = '1'; // 강제로 페이징 설정을 1로 설정
+
+        // pageNum이 1로 설정된 값으로 강제로 다시 쿼리 조회
+        offset = 0;
+
+        const board = await Board.findAndCountAll({
+          attributes: [
+            'boardSeq',
+            'title',
+            'content',
+            'filePath',
+            'count',
+            [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
+            [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
+            [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
+            'createdAt',
+            'updatedAt',
+            'user.userSeq',
+            'user.id',
+            'user.pw',
+            'user.name',
+            'user.isAdmin',
+          ],
+          where: {
+            [Op.or]: [
+              {
+                title: { [Op.like]: `%${paramSearch}%` },
+              },
+              {
+                content: { [Op.like]: `%${paramSearch}%` },
+              },
+            ],
+          },
+          order: [[sequelize.col('board.createdAt'), 'DESC']],
+          offset: offset,
+          limit: boardCountPerPage,
+          include: [
+            { model: User },
+            {
+              model: Study,
+              where: {
+                category: {
+                  [Op.in]: paramCategory,
+                },
+              },
+            },
+          ],
+        });
+
+        res.send({
+          data: board,
+          allBoardLen: allBoardLen,
+          boardCnt: board.count,
+          session: req.session.userInfo,
+          cookieEmail: cookie ? cookie.loginEmail : '',
+          cookiePw: cookie ? cookie.loginPw : '',
+        });
+      } else {
+        res.send({
+          data: board,
+          allBoardLen: allBoardLen,
+          boardCnt: board.count,
+          session: req.session.userInfo,
+          cookieEmail: cookie ? cookie.loginEmail : '',
+          cookiePw: cookie ? cookie.loginPw : '',
+        });
+      }
     }
   } catch (err) {
     console.error(err);
