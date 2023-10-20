@@ -38,7 +38,10 @@
         </li>
         <li>댓글 내용 : <%= comment.dataValues.comment_content %></li>
       </ul>
-      <button type="button" onclick="removeComment('<%= comment.commentSeq %>');">
+      <button
+        type="button"
+        onclick="removeComment('<%= comment.commentSeq %>');"
+      >
         삭제
       </button>
       <br /><br />
@@ -55,7 +58,6 @@
             url: `/admin/comment/list?search=${search.value}`,
           });
 
-          console.log(response);
           const { commentInfo, allCommentLen, msg } = response.data;
           const tempDiv = document.querySelector('#tempDiv');
           tempDiv.textContent = '';
@@ -75,7 +77,9 @@
 
               li.append(anchor);
               li2.append(`댓글 작성자 : ${comment.user.name}`);
-              li3.append(`댓글 작성일 : ${comment.year}/${comment.month}/${comment.day}`);
+              li3.append(
+                `댓글 작성일 : ${comment.year}/${comment.month}/${comment.day}`
+              );
               li4.append(`댓글 내용 : ${comment.comment_content}`);
 
               ul.append(li);
@@ -84,9 +88,9 @@
               ul.append(li4);
 
               deleteBtn.type = 'button';
-              deleteBtn.onclick = function(){
+              deleteBtn.onclick = function () {
                 removeComment(`${comment.commentSeq}`);
-              }
+              };
               deleteBtn.textContent = '삭제';
 
               tempDiv.append(ul);
@@ -111,7 +115,6 @@
               data: { commentSeq: commentSeq },
             });
 
-            console.log(response.data);
             if (response.data.msg === 'fail') {
               alert('댓글 삭제에 실패했습니다.');
             }

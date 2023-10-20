@@ -55,7 +55,6 @@
             url: `/admin/board/list?search=${search.value}`,
           });
 
-          console.log(response);
           const { boardInfo, allBoardLen, msg } = response.data;
           const tempDiv = document.querySelector('#tempDiv');
           tempDiv.textContent = '';
@@ -87,9 +86,9 @@
               ul.append(li5);
 
               deleteBtn.type = 'button';
-              deleteBtn.onclick = function(){
+              deleteBtn.onclick = function () {
                 removeBoard(`${board.boardSeq}`);
-              }
+              };
               deleteBtn.textContent = '삭제';
 
               tempDiv.append(ul);
@@ -114,7 +113,6 @@
               data: { boardSeq: boardSeq },
             });
 
-            console.log(response.data);
             if (response.data.msg === 'fail') {
               alert('게시글 삭제에 실패했습니다.');
             }
