@@ -56,6 +56,7 @@ exports.getBoard = async (req, res) => {
 
     res.render('board/listBoard', {
       data: board,
+      pageNum: pageNum,
       allBoardLen: allBoardLen,
       session: req.session.userInfo,
       cookieEmail: cookie ? cookie.loginEmail : '',
@@ -102,10 +103,9 @@ exports.getBoardList = async (req, res) => {
     if (search) req.session.boardInfo.search = search;
     if (category) {
       req.session.boardInfo.category = category;
-    } else if(req.session.boardInfo.category){
+    } else if (req.session.boardInfo.category) {
       // 이미 카테고리가 세션에 설정되어 있으므로 아무것도 실행하지 않음
-    }
-      else {
+    } else {
       // 카테고리 값이 없는 경우, 모든 카테고리 값을 저장
       req.session.boardInfo.category = [];
     }
@@ -168,6 +168,7 @@ exports.getBoardList = async (req, res) => {
 
       res.render('board/viewBoard', {
         board: board,
+        pageNum: pageNum,
         allBoardLen: allBoardLen,
         user: board.user,
         session: req.session.userInfo,
@@ -235,6 +236,7 @@ exports.getBoardList = async (req, res) => {
 
       res.send({
         data: board,
+        pageNum: pageNum,
         allBoardLen: allBoardLen,
         session: req.session.userInfo,
         cookieEmail: cookie ? cookie.loginEmail : '',

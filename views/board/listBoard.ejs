@@ -64,19 +64,21 @@
         <div class="pageWrap d-flex">
           <button
             class="beforePage btn text-black fs-6"
-            onclick="changePagination()"
+            onclick="prevPagination(`<%=pageNum%>`)"
           >
             이전
           </button>
+          <% console.log(`pageNum ---------${pageNum}`);%>
           <div class="board_page d-flex align-items-center" id="pagination">
-            <div onclick="changePageNum(this)">1</div>
-            <% for (i = 1; i < Math.ceil(allBoardLen / 10); i++) { %>
-            <div onclick="changePageNum(this)"><%= i+1 %></div>
+            <!-- <div onclick="changePageNum(this)">1</div> -->
+
+            <% for (i = pageNum; i < 3; i++) { %>
+            <div onclick="changePageNum(`<%=i%>`)"><%= i %></div>
             <% } %>
           </div>
           <button
             class="newPage btn text-black fs-6"
-            onclick="changePagination()"
+            onclick="nextPagination(`<%=pageNum%>`, `<%=allBoardLen%>`)"
           >
             다음
           </button>

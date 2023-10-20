@@ -83,10 +83,27 @@ function updateElement(boards) {
   }
 }
 
+function nextPagination(pageNum, allBoardLen) {
+  if (pageNum * 11 < allBoardLen) {
+    let page = Number(pageNum) + 10;
+    changePageNum(page);
+  } else if (pageNum * 11 >= allBoardLen) {
+    changePageNum(allBoardLen);
+  }
+}
+function prevPagination(pageNum) {
+  if (pageNum !== 1 || pageNum - 10 > 0) {
+    pageNum -= 10;
+    changePageNum(pageNum);
+  }
+}
+
 // 페이지 번호 변경 및 화면 표시 게시물 변경 함수
 async function changePageNum(pageDiv) {
+  console.log(pageDiv);
   // 해당 페이지 번호 클릭 -> 클릭한 this 객체가 pageDiv
-  const pageNum = pageDiv.textContent;
+  // const pageNum = pageDiv.textContent;
+  const pageNum = pageDiv;
 
   // 선택된 카테고리
   const categories = tagify.value;
