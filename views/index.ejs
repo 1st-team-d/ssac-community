@@ -21,7 +21,7 @@
           <!-- 왼쪽 열: 메인 소개 글 -->
           <div class="col-md-6">
             <div class="textWrap">
-              <h2><strong>새싹 스터디 커뮤니티</strong></h2>
+              <h2><strong>새싹 스터디<br />커뮤니티</strong></h2>
               <h3>스터디 모집을 위한 공간</h3>
               <p>
                 새싹 캠퍼스 여러분들을 위한<br />
@@ -56,9 +56,9 @@
             id="boardCarousel"
             class="carousel slide trending-podcast-section section-padding"
             data-bs-ride="carousel"
-            data-bs-interval="1000"
+            data-bs-interval="4000"
           >
-            <div class="h4 fw-bold text-end">인기있는 모집글</div>
+            <!-- <div class="h4 fw-bold text-end">인기있는 모집글</div> -->
             <!-- 좁은 화면 슬라이드 기능 활성화 -->
             <div class="carousel-inner d-md-none">
               <% let combinedBoards = boards.concat(boards); %> <% for (let i =
@@ -102,14 +102,14 @@
               <% } %>
             </div>
           </section>
-          <!-- 테스트용 -->
+          <!-- web carousel -->
           <section class="carousel-container">
             <div class="overflow-x-hidden py-5">
               <div
                 id="carouselExampleAutoplaying"
                 class="carousel slide"
                 data-bs-ride="carousel"
-                data-bs-interval="3000"
+                data-bs-interval="4000"
               >
                 <% for (let i = 0; i < combinedBoards.length; i++) { %>
                 <!-- 한 줄에 3개의 카드가 시작하는 경우 -->
