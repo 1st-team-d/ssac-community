@@ -72,7 +72,8 @@
           <div class="board_page d-flex align-items-center" id="pagination">
             <!-- <div onclick="changePageNum(this)">1</div> -->
 
-            <% for (i = pageNum; i < 3; i++) { %>
+            <% for (i = Math.ceil(pageNum/10); i < Math.ceil(pageNum/10)+10;
+            i++) { %>
             <div onclick="changePageNum(`<%=i%>`)"><%= i %></div>
             <% } %>
           </div>

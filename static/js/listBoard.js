@@ -84,15 +84,20 @@ function updateElement(boards) {
 }
 
 function nextPagination(pageNum, allBoardLen) {
-  if (pageNum * 11 < allBoardLen) {
+  console.log('allBoardLen', allBoardLen);
+  if (pageNum + 110 < allBoardLen) {
+    // 다음이 끝이 아닐때
     let page = Number(pageNum) + 10;
+    console.log('page', page);
     changePageNum(page);
-  } else if (pageNum * 11 >= allBoardLen) {
-    changePageNum(allBoardLen);
+  } else if (pageNum * 11 >= Math.ceil(allBoardLen / 10)) {
+    // 다음이 끝을 넘어갈때
+    console.log('Math.ceil(allBoardLen / 10)', Math.ceil(allBoardLen % 10));
+    changePageNum(allBoardLen % 10);
   }
 }
 function prevPagination(pageNum) {
-  if (pageNum !== 1 || pageNum - 10 > 0) {
+  if (pageNum - 10 > 0) {
     pageNum -= 10;
     changePageNum(pageNum);
   }
