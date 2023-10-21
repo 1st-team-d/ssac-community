@@ -175,17 +175,16 @@
 
 ### 사용한 라이브러리
 
-> ### [dotenv](https://www.npmjs.com/package/dotenv) &nbsp;&nbsp; <img src ="https://img.shields.io/badge/version-16.3.1-green.svg"/>
->
-> .env 파일을 생성하여 DB 정보 저장
+- ### [dotenv](https://www.npmjs.com/package/dotenv) &nbsp;&nbsp; <img src ="https://img.shields.io/badge/version-16.3.1-green"/>
 
-> ### [multer](https://www.npmjs.com/package/multer) &nbsp; <img src ="https://img.shields.io/badge/version-1.4.4-green.svg"/>
->
-> 한글 깨짐 이슈로 인해 해당 버전 사용
+  - .env 파일을 생성하여 DB 정보 저장
 
-> ### [sequelize](https://sequelize.org/) &nbsp; <img src ="https://img.shields.io/badge/version-6.32.1-green.svg"/>
->
-> JavaScript를 SQL로 변환
+- ### [multer](https://www.npmjs.com/package/multer) &nbsp;&nbsp; <img src ="https://img.shields.io/badge/version-1.4.4-green"/>
+
+  - 한글 깨짐 이슈로 인해 해당 버전 사용
+
+- ### [sequelize](https://sequelize.org/) &nbsp;&nbsp; <img src ="https://img.shields.io/badge/version-6.32.1-green"/>
+  - JavaScript를 SQL로 변환
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
