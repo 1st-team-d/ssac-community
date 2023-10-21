@@ -83,6 +83,7 @@ function updateElement(boards) {
   }
 }
 
+// 다음 버튼
 function nextPagination(pageNum, allBoardLen) {
   console.log('allBoardLen', allBoardLen);
   if (pageNum + 110 < allBoardLen) {
@@ -96,12 +97,16 @@ function nextPagination(pageNum, allBoardLen) {
     changePageNum(allBoardLen % 10);
   }
 }
+// 이전 버튼
 function prevPagination(pageNum) {
   if (pageNum - 10 > 0) {
     pageNum -= 10;
     changePageNum(pageNum);
   }
 }
+
+//페이지 버튼의 value(숫자)변경하기
+function pagination() {}
 
 // 페이지 번호 변경 및 화면 표시 게시물 변경 함수
 async function changePageNum(pageDiv) {
