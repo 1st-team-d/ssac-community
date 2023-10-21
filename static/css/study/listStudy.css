@@ -76,7 +76,7 @@ p {
   margin: 0;
 }
 
-/* 반응형 */
+/* 반응형 원래꺼 */
 @media (max-width: 767px) {
   .studyWrap * {
     position: static !important;
