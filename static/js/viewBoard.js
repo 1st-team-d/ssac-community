@@ -1,13 +1,10 @@
+// front js
+// 특정 게시물 조회 시
+
 // 게시물 수정
 async function editBoard() {
   const boardSeq = document.querySelector('#boardSeq').value;
-  // console.log(boardSeq);
   document.location.href = `/board/modify?boardSeq=${boardSeq}`;
-}
-
-// 게시물 목록으로 이동
-function listBoard() {
-  document.location.href = '/board';
 }
 
 // 게시물 삭제
@@ -18,7 +15,6 @@ async function deleteBoard() {
     method: 'delete',
     data: { boardSeq: boardSeq },
   });
-  console.log(res.data);
   if (res.data.isDelete) {
     alert(res.data.msg);
     document.location.href = '/board';
@@ -30,11 +26,9 @@ async function submitComment() {
   // boardSeq
   const boardSeq = document.querySelector('#boardSeq').value;
   // 댓글 관련 각 요소 접근
-  // const commentAuthor = document.getElementById('commentWriter');
   const commentContentInput = document.getElementById(
     'comment_content_textarea'
   );
-  // const commentList = document.querySelector('.comment_list');
   let cmtData = {
     postID: boardSeq,
     cmtContent: commentContentInput.value,
@@ -45,15 +39,12 @@ async function submitComment() {
       method: 'post',
       data: cmtData,
     }); // 등록되면 true
-    console.log(res.data);
     if (res.data.result) {
       document.location.reload();
     } else {
-      
     }
-
   } else {
-    alert('댓글 내용을 입력해주세요!')
+    alert('댓글 내용을 입력해주세요!');
   }
 }
 
@@ -90,8 +81,8 @@ function editCmt(commentSeq) {
         <textarea class="p-2 w-100" name="editCmtContent" id="editCmtContent<%= cmt.commentSeq %>" autofocus>${cmtContent.trim()}</textarea>
       </div>
       <div class="editBtnWrap d-flex justify-content-end my-3 me-3">
-        <button class="patchCommentBtn btn me-1" onclick="patchComment(${commentSeq}, this)">수정</button>
-        <button class="cancelEditBtn btn" onclick="cancelComment(${commentSeq})">취소</button>
+        <button class="patchCommentBtn btn me-1 fs-6" onclick="patchComment(${commentSeq}, this)">수정</button>
+        <button class="cancelEditBtn btn fs-6" onclick="cancelComment(${commentSeq})">취소</button>
       </div>
     </div>
   </div>
@@ -120,7 +111,7 @@ async function cancelComment(cmtSeq) {
     </div>
     `;
   } else {
-    alert('그럴일 없지롱~~~');
+    alert('해당 댓글을 조회할 수 없습니다.');
   }
 }
 
@@ -128,7 +119,6 @@ async function cancelComment(cmtSeq) {
 async function patchComment(cmtSeq, editBtn) {
   const cmtContent =
     editBtn.parentElement.previousElementSibling.firstElementChild.value;
-  console.log(cmtContent);
   const cmtData = { commentSeq: cmtSeq, cmtContent: cmtContent };
   if (confirm('댓글을 수정하시겠습니까?')) {
     const res = await axios({
@@ -159,7 +149,6 @@ async function deleteComment(cmtSeq) {
 // 스터디 정보 표시
 const studyCategory = document.querySelector('#studyCategory');
 const category = document.querySelector("input[id='categoryID']").value;
-console.log(category);
 switch (category) {
   case '0':
     studyCategory.innerHTML = '# 웹';
@@ -187,7 +176,6 @@ async function studyCloseApply(btn) {
   const studySeq = document.querySelector('#studySeq').value;
   // 로그인 한 사람 -> 신청자
   const userSeq = document.querySelector('#userSeq').value;
-  console.log(btn.textContent);
   let studyClose = {
     studySeq: studySeq,
   };
@@ -195,7 +183,7 @@ async function studyCloseApply(btn) {
     studySeq: studySeq,
     userSeq: userSeq,
   };
-  if (btn.textContent === '스터디 모집 마감하기') {
+  if (btn.textContent.trim() === '스터디 모집 마감하기') {
     if (confirm('스터디 모집을 마감하시겠습니까?')) {
       try {
         const res = await axios({
@@ -210,7 +198,7 @@ async function studyCloseApply(btn) {
         console.error(err);
       }
     }
-  } else if (btn.textContent === '스터디 참가 신청하기') {
+  } else if (btn.textContent.trim() === '스터디 참가 신청하기') {
     if (userSeq) {
       if (confirm('스터디 참가 신청을 하시겠습니까?')) {
         try {
@@ -220,13 +208,12 @@ async function studyCloseApply(btn) {
             data: studyApply,
           });
           if (res.data.msg === 'success') {
-            // if (res.data.msg) {
             document.location.reload();
           } else if (res.data.msg === 'closedStudy') {
             alert('이미 마감된 스터디입니다.');
             document.location.reload();
           } else if (res.data.msg === 'alreadyStudy') {
-            alert('이미 신청 완료한 스터디입니다.')
+            alert('이미 신청 완료한 스터디입니다.');
           }
         } catch (err) {
           console.error(err);

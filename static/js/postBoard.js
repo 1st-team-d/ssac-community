@@ -1,8 +1,6 @@
 // 파일 input 업로드하면 text input에 파일명 표시
 $('#postFile').on('change', function () {
   let fileName = $('#postFile').val();
-  console.log('########## fileName ######### ', fileName);
-
   const ext = checkExt(fileName); // 확장자 체크
 
   if (ext) {
@@ -14,7 +12,7 @@ $('#postFile').on('change', function () {
   }
 });
 
-// submit 전에 유효성 검사
+// 게시글 submit 전에 유효성 검사
 const postBtn = document.querySelector('.postBtn');
 if (postBtn) {
   postBtn.addEventListener('click', function (e) {
@@ -46,9 +44,6 @@ function checkExt(fileName) {
   ext = ext[ext.length - 1];
   const extArr = ['png', 'jpg', 'pdf', 'ppt', 'doc', 'docx', 'xlsx', 'txt'];
 
-  // console.log(ext);
-  // console.log(extArr.includes(ext));
-
   return extArr.includes(ext) > 0 ? true : false;
 }
 
@@ -58,11 +53,7 @@ async function editPost() {
     const form = document.forms['data'];
     const formData = new FormData();
     const file = document.querySelector('#postFile').files[0];
-    console.log(file);
 
-    // boardSeq 체크
-    // console.log(form.boardSeq.value);
-    // console.log(maxPeople);
     formData.append('boardSeq', form.boardSeq.value);
     formData.append('userSeq', form.userSeq.value);
     formData.append('studySeq', form.studySeq.value);
@@ -83,13 +74,11 @@ async function editPost() {
           },
         });
         if (res.data) {
-          console.log('res.data', res.data);
           alert('수정 완료!');
           document.location.href = '/board';
         }
       } catch (error) {
         console.error(error);
-        // 에러 처리 로직 추가
       }
     }
   }
@@ -114,51 +103,31 @@ radioInputs.forEach((radioInput, index) => {
   });
 });
 
-// 최대 인원 tagify
-document
-  .querySelector('.maxPeople')
-  .addEventListener('click', function (event) {
-    // 이벤트 핸들러 내에서 포커스 이동을 막음
-    event.stopPropagation();
-  });
+// 최대 인원 -> tagify 라이브러리 사용
 let input = document.querySelector('input[name=maxPeople]');
 let tagify = new Tagify(input, {
+  // whiteList 외에 다른 값 선택 못하게
   enforceWhitelist: true,
   mode: 'select',
   value: '5',
   whitelist: ['5', '6', '7', '8', '9', '10'],
 });
 
-// bind events
-tagify.on('add', onAddTag);
-tagify.DOM.input.addEventListener('focus', onSelectFocus);
-
-function onAddTag(e) {
-  console.log(e.detail);
-}
-
-function onSelectFocus(e) {
-  console.log(e);
-}
-
 // 유효성 검사
 function validationForm() {
   const maxPeople = document.querySelector('input[name=maxPeople]'); // 최대 인원
   const checkedLabelId = document.querySelector('.checked').getAttribute('for'); // 카테고리(선택됨) // 라벨 태그에 checked가 있음
   const category = document.querySelector(`#${checkedLabelId}`);
-  
+
   // 최대 인원
   if (!maxPeople.value) {
     alert('최대 인원을 선택해주세요.');
-    // maxPeople.focus();
     return false;
   }
   // 카테고리
   if (!category) {
     alert('카테고리를 선택해주세요.');
-    // category.focus();
     return false;
   }
-
   return true;
 }

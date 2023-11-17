@@ -1,9 +1,7 @@
 /* Common Styles (공통 스타일) */
 @import url('/static/css/common.css');
 
-
 /* 게시판 목록 메인 컨텐츠 시작 위치 설정 */
-
 
 /* 입력 요소 포커스 스타일 설정 */
 input:focus {
@@ -30,9 +28,14 @@ textarea {
   padding: 15px; /* 내부 여백 설정 */
 }
 
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
 /* 게시글 작성 본문 위치 조정 */
 .postWrap {
-  margin-top: calc(var(--header-height) + 10px);
+  margin-top: calc(var(--header-height) + 50px);
 }
 
 /* 카테고리 스타일 설정 */
@@ -56,14 +59,6 @@ textarea {
 }
 
 /* 게시글 작성 메인 스타일 설정 */
-.postWrap {
-  height: 100vh;
-}
-
-.postWrap span {
-  display: inline-block; /* 인라인 블록 요소로 설정 */
-  width: 60px; /* 너비 설정 */
-}
 
 /* 파일 업로드 스타일 설정 */
 .file .fileName {
@@ -87,5 +82,16 @@ textarea {
 
 .file .inputFileBtn {
   cursor: pointer; /* 커서 모양 변경 (손가락) */
-  width: 26%;
+}
+
+@media (max-width: 390px) {
+  .postWrap {
+    margin-top: calc(var(--header-height) + 100px);
+  }
+  textarea {
+    resize: none; /* 크기 조절 비활성화 */
+    border-radius: 15px; /* 둥근 테두리 설정 */
+    padding: 15px; /* 내부 여백 설정 */
+    height: 300px;
+  }
 }

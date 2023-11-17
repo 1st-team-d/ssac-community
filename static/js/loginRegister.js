@@ -33,16 +33,12 @@ async function postLogin() {
     // 이메일, 비밀번호 빈칸으로 로그인 시도시 에러 메세지
     errorMsg[0].innerHTML = '이메일, 비밀번호는 필수 값입니다!';
   } else {
-    // *back*
-    // 입력 데이터로 로그인 시도 -> response로 true, false 반환 부탁드립니다.
+    // 입력 데이터로 로그인 시도
     let res = await axios({
       url: '/user/signin',
       method: 'post',
       data: loginData,
     });
-
-    // 쿠키 정보 확인
-    // console.log('>>>', res.data);
 
     if (res.data.isSignin) {
       // 로그인 성공하면 현재 페이지 리로드
@@ -51,7 +47,6 @@ async function postLogin() {
       // false -> 로그인 실패 -> 에러 메세지
       errorMsg[0].innerHTML =
         '이메일 혹은 비밀번호가 일치하지 않습니다. 다시 입력해 주세요.';
-      // 로그인 모달창에서 오류 메세지 표시
     }
   }
 }
@@ -106,7 +101,7 @@ async function postRegister() {
           errorMsg[1].innerHTML = '닉네임 중복체크를 해주세요.';
         } else {
           // *back*
-          // 회원가입 성공시 true, 실패시 false 응답 해주세요. 아마 다 true 뜰듯?
+          // 회원가입 성공시 true, 실패시 false 응답 결과
           if (confirm('회원가입 하시겠습니까?')) {
             try {
               let res = await axios({
@@ -136,18 +131,8 @@ async function checkNameDuplicate(btn) {
   errorMsg[1].innerHTML = '';
   const form = document.forms['register'];
   const registerName = form.registerName.value;
-  // *back*
-  // 입력한 닉네임로 중복 체크 -> 중복 아니면 true, 중복이면 false 응답 부탁드려요
-  // 닉네임 유효성 검사
   const nameTest_1 = /\s/g; // 공백, 탭
   const nameTest_2 = ''; // null
-
-  // console.log(
-  //   'name(test) >>>>>>>> ',
-  //   !nameTest_1.test(registerName) && registerName !== nameTest_2
-  // );
-  // console.log('nickname(공백, 탭) >>>>>>>> ', !nameTest_1.test(registerName));
-  // console.log('nickname(공백만) >>>>>>>> ', registerName !== nameTest_2);
 
   if (!nameTest_1.test(registerName) && registerName !== nameTest_2) {
     let res = await axios({
@@ -177,8 +162,7 @@ async function checkEmailDuplicate(btn) {
   errorMsg[1].innerHTML = '';
   const form = document.forms['register'];
   const registerEmail = form.registerEmail.value;
-  // *back*
-  // 입력한 이메일로 중복 체크 -> 중복 아니면 true, 중복이면 false 응답 부탁드려요
+  // 입력한 이메일로 중복 체크 -> 중복 아니면 true, 중복이면 false 응답 결과
   // 이메일 형식 유효성 검사
   const emailTest = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailTest.test(registerEmail)) {

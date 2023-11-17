@@ -14,7 +14,6 @@ newPassword.addEventListener('keyup', () => {
 confirmPassword.addEventListener('keyup', () => {
   samePw();
   resetPw();
-  console.log(newPassword.value, confirmPassword.value);
 });
 
 async function editPw() {
@@ -32,7 +31,6 @@ async function editPw() {
         method: 'PATCH',
         data: Pw,
       });
-      console.log(res.data);
 
       if (res.data.isConfirm && res.data.isMatch) {
         await axios({
@@ -40,7 +38,6 @@ async function editPw() {
           method: 'get',
         });
         document.location.href = '/';
-        // 첫 화면으로 돌아감과 동시에 로그아웃 가능할까요?
       } else if (res.data.isConfirm) {
         // 입력된 두 비밀번호가 일치하지 않음
         alert('비밀번호 확인란이 일치하지 않습니다.');

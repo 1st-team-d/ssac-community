@@ -1,13 +1,34 @@
 {
   "name": "ssac-community",
   "version": "1.0.0",
-  "description": "",
+  "description": "Node.js로 개발한 새싹 스터디 커뮤니티 프로젝트입니다.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["node.js", "express", "mysql", "ssac community"],
+  "contributors": [
+    {
+      "name": "김정윤",
+      "github": "https://github.com/pipi-shortstocking"
+    },
+    {
+      "name": "김태훈",
+      "github": "https://github.com/hoonsdev"
+    },
+    {
+      "name": "김효중",
+      "github": "https://github.com/rlagywnd4"
+    },
+    {
+      "name": "문영민",
+      "github": "https://github.com/eoeung"
+    },
+    {
+      "name": "한지윤",
+      "github": "https://github.com/ZZOOONII"
+    }
+  ],
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",

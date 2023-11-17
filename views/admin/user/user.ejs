@@ -93,12 +93,6 @@
           url: `/admin/user?search=${searchInput.value}`,
         });
 
-        // if (searchInput.value === '') {
-        //   console.log('null');
-        // }
-        // console.log(typeof searchInput.value.toString());
-        // console.log(response.data.users);
-
         if (response.data.users) {
           // document.getElementById('userTable').innerHTML = response.data.users;
           const users = response.data.users;

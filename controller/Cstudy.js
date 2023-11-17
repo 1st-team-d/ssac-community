@@ -25,8 +25,7 @@ exports.getStudy = async (req, res) => {
       include: [
         {
           model: Study,
-          required: true, // true / false : inner join / outer join
-          // right: true, // has no effect // right outer join
+          required: true,
         },
       ],
       where: {
@@ -34,13 +33,6 @@ exports.getStudy = async (req, res) => {
       },
       order: [['study', 'status', 'DESC']],
     });
-
-    // console.log('######## recruitBoardInfo #########');
-    // console.log(recruitBoardInfo);
-    // console.log(recruitBoardInfo.title);
-    // console.log(recruitBoardInfo.dataValues);
-    // console.log(recruitBoardInfo[0].dataValues.year);
-    // console.log(recruitBoardInfo[0].dataValues.study);
 
     // 2) 참여하는 스터디 글 + 스터디 정보
     const applyBoardInfo = await Board.findAll({
@@ -64,13 +56,11 @@ exports.getStudy = async (req, res) => {
       include: [
         {
           model: Study,
-          required: true, // true / false : inner join / outer join
-          // right: true, // has no effect // right outer join
+          required: true,
           include: [
             {
               model: StudyApply,
-              required: true, // true / false : inner join / outer join
-              // right: true, // has no effect // right outer join
+              required: true,
               where: {
                 userSeq: req.session.userInfo.userSeq,
               },
@@ -84,19 +74,6 @@ exports.getStudy = async (req, res) => {
       order: [['study', 'status', 'DESC']],
     });
     const cookie = req.signedCookies.remain;
-
-    // console.log('######## applyBoardInfo #########');
-    // console.log(applyBoardInfo);
-    // console.log(applyBoardInfo[0]);
-    // console.log(applyBoardInfo[0].dataValues.title);
-    // console.log(applyBoardInfo[0].dataValues.year);
-    // console.log(applyBoardInfo[0].dataValues.study);
-    // console.log(applyBoardInfo[0].dataValues.study.studySeq);
-
-    // res.render('study/listStudy', {
-    //   recruitBoardInfo: recruitBoardInfo,
-    //   applyBoardInfo: applyBoardInfo,
-    // });
 
     res.render('study/listStudy', {
       recruitBoardInfo: recruitBoardInfo,
@@ -122,13 +99,11 @@ exports.getStudyProfile = async (req, res) => {
       include: [
         {
           model: StudyApply,
-          required: true, // true / false : inner join / outer join
-          // right: true, // has no effect // right outer join
+          required: true,
           include: [
             {
               model: Study,
-              required: true, // true / false : inner join / outer join
-              // right: true, // has no effect // right outer join
+              required: true,
             },
           ],
           where: {
@@ -156,13 +131,6 @@ exports.getStudyProfile = async (req, res) => {
       // https://stackoverflow.com/questions/50571647/why-does-sequelize-pluralize-singularize-names-of-anything-all-and-how-to-sto
     });
 
-    // console.log('######## userInfo #########');
-    // console.log(userInfo);
-    // console.log(userInfo[0]);
-    // console.log(userInfo[0].id);
-    // console.log(userInfo[0].name);
-    // console.log(userInfo[0].dataValues.year);
-
     // 2) 스터디에 대한 게시글 정보 + 스터디 정보
     const studyInfo = await Board.findOne({
       attributes: [
@@ -182,17 +150,13 @@ exports.getStudyProfile = async (req, res) => {
       include: [
         {
           model: Study,
-          required: true, // true / false : inner join / outer join
-          // right: true, // has no effect // right outer join
+          required: true,
           where: {
             studySeq: studySeq,
           },
         },
       ],
     });
-
-    // console.log('######## studyInfo #########');
-    // console.log(studyInfo);
 
     const cookie = req.signedCookies.remain;
 
@@ -219,7 +183,6 @@ exports.getStudyProfile = async (req, res) => {
 exports.patchStudyApply = async (req, res) => {
   try {
     const { studySeq, userSeq } = req.body;
-    // console.log('req.body-----------------------------', req.body);
     const checkUser = await StudyApply.findOne({
       where: {
         userSeq: userSeq,
@@ -273,7 +236,6 @@ exports.patchStudyApply = async (req, res) => {
               cookiePw: cookie ? cookie.loginPw : '',
               msg: 'success',
             });
-            // res.redirect('/board?boardSeq=54')
           } else {
             res.send({ msg: 'fail' });
           }

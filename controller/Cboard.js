@@ -1,3 +1,4 @@
+const { off } = require('process');
 const {
   Board,
   User,
@@ -17,10 +18,16 @@ exports.getBoard = async (req, res) => {
     const boardCountPerPage = 10; // 한 화면에 보여질 게시글 개수
     const offset = boardCountPerPage * (pageNum - 1); // 페이징 처리
 
-    // console.log('query >> ', req.query);
     // 전체 게시글 개수 필요
     const selectAllBoard = await Board.findAll();
     const allBoardLen = selectAllBoard.length;
+
+    // 게시글 관련 세션 생성
+    req.session.boardInfo = {
+      search: undefined,
+      pageNum: pageNum,
+      category: ['0', '1', '2', '3', '4', '5'], // 모든 카테고리 입력
+    };
 
     const board = await Board.findAll({
       attributes: [
@@ -46,10 +53,6 @@ exports.getBoard = async (req, res) => {
       include: [{ model: User }, { model: Study }],
     });
 
-    // console.log(board.length);
-    // console.log('session>>>>>>', req.session.userInfo);
-    // console.log('전체 게시글 보드 정보', board);
-
     const cookie = req.signedCookies.remain;
 
     res.render('board/listBoard', {
@@ -59,31 +62,41 @@ exports.getBoard = async (req, res) => {
       cookieEmail: cookie ? cookie.loginEmail : '',
       cookiePw: cookie ? cookie.loginPw : '',
     });
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 };
 
 // GET '/board/list'
+// GET '/board/list?boardSeq=###'
 // GET '/board/list?search=###'
 // GET '/board/list?category=###'
-// 게시글 검색 및 페이징 처리
+// GET '/board/list?pageNum=###'
+// 특정 게시글 조회 / 게시글 검색 / 카테고리 검색 / 페이징 처리
 exports.getBoardList = async (req, res) => {
   try {
     // 특정 게시글의 게시글 시퀀스, 검색어
     const { boardSeq, search, pageNum, category } = req.query;
-    // const categories = category.split(',').map(Number);
 
-    // console.log('category >>>>>', category);
+    // 1) 검색 값을 세션에 저장
+    if (search) req.session.boardInfo.search = search;
 
-    // 페이징 처리
-    let boardCountPerPage = 10; // 한 화면에 보여질 게시글 개수
-    let offset = 0; // 페이징 처리
-    if (pageNum > 1) {
-      offset = boardCountPerPage * (pageNum - 1);
+    // 2) 카테고리 설정
+    if (category) {
+      req.session.boardInfo.category = category;
+    } else if (req.session.boardInfo.category) {
+      // 이미 카테고리가 세션에 설정되어 있으므로 아무것도 실행하지 않음
+    } else {
+      // 카테고리 값이 없는 경우, 모든 카테고리 값을 저장
+      req.session.boardInfo.category = [];
     }
 
-    // console.log('query >> ', req.query);
+    // 3) 페이징 처리
+    if (pageNum) req.session.boardInfo.pageNum = pageNum;
+    let boardCountPerPage = 10; // 한 화면에 보여질 게시글 개수
+    let offset = 0; // 페이징 처리
+    if (req.session.boardInfo.pageNum > 1) {
+      offset = boardCountPerPage * (req.session.boardInfo.pageNum - 1);
+    }
+
     // 전체 게시글 개수 필요
     const selectAllBoard = await Board.findAll();
     const allBoardLen = selectAllBoard.length;
@@ -91,40 +104,10 @@ exports.getBoardList = async (req, res) => {
     // 쿠키
     const cookie = req.signedCookies.remain;
 
-    if (category) {
-      const study = await Study.findAll({
-        where: {
-          category: {
-            [Op.in]: category,
-          },
-        },
-        include: {
-          model: Board,
-          attributes: [
-            'boardSeq',
-            'title',
-            'content',
-            'filePath',
-            'count',
-            [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
-            [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
-            [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
-            'createdAt',
-            'updatedAt',
-          ],
-        },
-        order: [[sequelize.col('board.createdAt'), 'DESC']],
-      });
-
-      res.send({
-        board: study,
-        session: req.session.userInfo,
-        cookieEmail: cookie ? cookie.loginEmail : '',
-        cookiePw: cookie ? cookie.loginPw : '',
-      });
-
-      // 특정 게시글 조회 및 해당 게시글의 댓글 조회
-    } else if (boardSeq) {
+    // ###########################################
+    // 1. 특정 게시글 조회 및 해당 게시글의 댓글 조회
+    // ###########################################
+    if (boardSeq) {
       const board = await Board.findOne({
         attributes: [
           'boardSeq',
@@ -162,10 +145,6 @@ exports.getBoardList = async (req, res) => {
         },
         include: [{ model: User }],
       });
-      // console.log('comments >>>>>>>>>>>>>>>>>', allComment);
-
-      // console.log('session>>>>>>', req.session.userInfo);
-      // console.log('특정 게시글 board>>>>>>>', board);
 
       res.render('board/viewBoard', {
         board: board,
@@ -177,50 +156,18 @@ exports.getBoardList = async (req, res) => {
         comments: allComment,
       });
 
-      // 게시글 검색
-    } else if (search) {
-      const board = await Board.findAll({
-        attributes: [
-          'boardSeq',
-          'title',
-          'content',
-          'filePath',
-          'count',
-          [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
-          [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
-          [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
-          'createdAt',
-          'updatedAt',
-        ],
-        where: {
-          [Op.or]: [
-            {
-              title: { [Op.like]: `%${search}%` },
-            },
-            {
-              content: { [Op.like]: `%${search}%` },
-            },
-          ],
-        },
-        include: [{ model: Study }],
-        order: [[sequelize.col('board.createdAt'), 'DESC']],
-        offset: offset,
-        limit: boardCountPerPage,
-      });
-
-      // console.log('session>>>>>>', req.session.userInfo);
-
-      res.send({
-        data: board,
-        allBoardLen: allBoardLen,
-        session: req.session.userInfo,
-        cookieEmail: cookie ? cookie.loginEmail : '',
-        cookiePw: cookie ? cookie.loginPw : '',
-      });
-
-      // 페이지 번호 '2'이상 넘어오는 경우
+      // ###########################################
+      // 2. 게시글 검색 / 카테고리 / 페이징 처리
+      // ###########################################
     } else {
-      const board = await Board.findAll({
+      // 세션에 검색어가 없는 경우, '%%'로 전체 검색 설정
+      const paramSearch = req.session.boardInfo.search
+        ? req.session.boardInfo.search
+        : '';
+      // 세션에 카테고리 값이 없는 경우, 전체 검색
+      const paramCategory = req.session.boardInfo.category;
+
+      const board = await Board.findAndCountAll({
         attributes: [
           'boardSeq',
           'title',
@@ -238,22 +185,101 @@ exports.getBoardList = async (req, res) => {
           'user.name',
           'user.isAdmin',
         ],
+        where: {
+          [Op.or]: [
+            {
+              title: { [Op.like]: `%${paramSearch}%` },
+            },
+            {
+              content: { [Op.like]: `%${paramSearch}%` },
+            },
+          ],
+        },
         order: [[sequelize.col('board.createdAt'), 'DESC']],
         offset: offset,
         limit: boardCountPerPage,
-        include: [{ model: User }, { model: Study }],
+        include: [
+          { model: User },
+          {
+            model: Study,
+            where: {
+              category: {
+                [Op.in]: paramCategory,
+              },
+            },
+          },
+        ],
       });
 
-      // console.log(board.length);
-      // console.log('보드는>>>>>>>', board);
-      // console.log('session>>>>>>', req.session.userInfo);
-      res.send({
-        data: board,
-        allBoardLen: allBoardLen,
-        session: req.session.userInfo,
-        cookieEmail: cookie ? cookie.loginEmail : '',
-        cookiePw: cookie ? cookie.loginPw : '',
-      });
+      // 게시글 조회 결과, (row수 / 10)올림 값이 페이지 번호보다 작은 경우, 강제로 페이지 번호를 1로 설정
+      if (Math.ceil(board.count / 10) < req.session.boardInfo.pageNum) {
+        req.session.boardInfo.pageNum = '1'; // 강제로 페이징 설정을 1로 설정
+
+        // pageNum이 1로 설정된 값으로 강제로 다시 쿼리 조회
+        offset = 0;
+
+        const board = await Board.findAndCountAll({
+          attributes: [
+            'boardSeq',
+            'title',
+            'content',
+            'filePath',
+            'count',
+            [sequelize.fn('YEAR', sequelize.col('board.createdAt')), 'year'],
+            [sequelize.fn('MONTH', sequelize.col('board.createdAt')), 'month'],
+            [sequelize.fn('DAY', sequelize.col('board.createdAt')), 'day'],
+            'createdAt',
+            'updatedAt',
+            'user.userSeq',
+            'user.id',
+            'user.pw',
+            'user.name',
+            'user.isAdmin',
+          ],
+          where: {
+            [Op.or]: [
+              {
+                title: { [Op.like]: `%${paramSearch}%` },
+              },
+              {
+                content: { [Op.like]: `%${paramSearch}%` },
+              },
+            ],
+          },
+          order: [[sequelize.col('board.createdAt'), 'DESC']],
+          offset: offset,
+          limit: boardCountPerPage,
+          include: [
+            { model: User },
+            {
+              model: Study,
+              where: {
+                category: {
+                  [Op.in]: paramCategory,
+                },
+              },
+            },
+          ],
+        });
+
+        res.send({
+          data: board,
+          allBoardLen: allBoardLen,
+          boardCnt: board.count,
+          session: req.session.userInfo,
+          cookieEmail: cookie ? cookie.loginEmail : '',
+          cookiePw: cookie ? cookie.loginPw : '',
+        });
+      } else {
+        res.send({
+          data: board,
+          allBoardLen: allBoardLen,
+          boardCnt: board.count,
+          session: req.session.userInfo,
+          cookieEmail: cookie ? cookie.loginEmail : '',
+          cookiePw: cookie ? cookie.loginPw : '',
+        });
+      }
     }
   } catch (err) {
     console.error(err);
@@ -284,7 +310,7 @@ exports.deleteBoard = async (req, res) => {
 };
 
 // GET '/board/register'
-// 게시글 등록 화면으로 이동 // 수정 화면도 동일
+// 게시글 등록 화면으로 이동 (수정 화면도 동일)
 exports.getRegister = (req, res) => {
   const cookie = req.signedCookies.remain;
 
@@ -306,10 +332,6 @@ exports.getRegister = (req, res) => {
 // 게시글 등록
 exports.postRegister = async (req, res) => {
   try {
-    // ############### 파일 업로드 문제 없는지 확인 ###############
-
-    console.log('######### req.file ::::: ', req.file); // single
-    console.log('######### req.body ::::: ', req.body); // single
     let filePath = null;
     // 파일 정보가 있는지 확인
     if (req.file) {
@@ -317,15 +339,9 @@ exports.postRegister = async (req, res) => {
       filePath = destination.split(path.sep)[1] + path.sep + filename; // 파일명
     }
 
-    // // ###### rest client 실행시 ######
-    // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
-
-    // // ###### 실제 사용 코드 ######
     const { title, content, category, maxPeople } = req.body;
-    console.log('최대인원 서버에 바로 넘어온 값 >>>> ', maxPeople);
     // json 형태로 넘어와서 객체 형태로 전환
     const maxPeopleObject = JSON.parse(maxPeople);
-    console.log('맥스 피플 제이슨 데이터 >>> ', maxPeopleObject[0]);
 
     // ############### DB 작업 ###############
     const insertOneBoard = await Board.create({
@@ -334,8 +350,6 @@ exports.postRegister = async (req, res) => {
       filePath: filePath,
       userSeq: req.session.userInfo.userSeq,
     });
-
-    // console.log(insertOneBoard);
 
     // 게시글 등록이 완료되면 작업
     // 스터디 정보에 해당 정보 등록
@@ -354,12 +368,6 @@ exports.postRegister = async (req, res) => {
         userSeq: req.session.userInfo.userSeq,
       });
 
-      console.log(
-        '스터디 게시물 등록 후 데이터 >>>> ',
-        insertOneStudy,
-        insertOneStudyApply
-      );
-
       const cookie = req.signedCookies.remain;
 
       if (insertOneBoard) {
@@ -371,9 +379,7 @@ exports.postRegister = async (req, res) => {
         });
       }
     }
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 };
 
 // GET '/board/modify'
@@ -405,19 +411,10 @@ exports.getModify = async (req, res) => {
       },
     });
 
-    // console.log('############# selectOneBoard ##################');
-    // console.log(selectOneBoard);
-    // console.log(selectOneBoard.boardSeq);
-    // console.log(selectOneBoard.dataValues);
-    // console.log(selectOneBoard.dataValues.title);
-    // console.log(selectOneBoard.dataValues.study);
-    // console.log(selectOneBoard.dataValues.study.studySeq);
-
     const cookie = req.signedCookies.remain;
 
     if (req.session.userInfo) {
       res.render('board/postBoard', {
-        // result: selectOneBoard,
         boardInfo: selectOneBoard,
         studyInfo: selectOneBoard.dataValues.study,
         session: req.session.userInfo,
@@ -428,9 +425,7 @@ exports.getModify = async (req, res) => {
       // 세션있을 때만 등록 화면 나오게
       res.redirect('/');
     }
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 };
 
 // PATCH '/board/modify'
@@ -439,25 +434,17 @@ exports.patchModify = async (req, res) => {
   try {
     // 파일 있는지 확인
     let filePath = null;
-    console.log('수정 응답 >>>>>>', req.body);
-    console.log('파일은 >>>>>>>> ', req.file);
+
     if (req.file) {
       // 이미지 업로드
       const { destination, filename } = req.file;
       filePath = destination.split(path.sep)[1] + path.sep + filename; // 파일명
     }
 
-    // ###### rest client 실행시 ######
-    // const jsonData = JSON.parse(req.body['data']); // 넘어온 JSON 데이터를 JS Object로 변환
-
-    // ###### 실제 사용 코드 ######
     const { title, content, boardSeq, studySeq, category, maxPeople } =
       req.body;
-    // console.log('최대인원 서버에 바로 넘어온 값 >>>> ', maxPeople);
     // json 형태로 넘어와서 객체 형태로 전환
     const maxPeopleObject = JSON.parse(maxPeople);
-    // console.log('맥스 피플 제이슨 데이터 >>> ', maxPeopleObject[0]);
-    // console.log('맥스 피플 제이슨 데이터 >>> ', maxPeopleObject[0].value);
 
     // ###### 수정 시, 파일 미업로드 시 null로 저장되는 버그 수정 ######
     // 파일 경로가 없는 경우,
@@ -527,7 +514,5 @@ exports.patchModify = async (req, res) => {
         msg: 'update board fail',
       });
     }
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 };

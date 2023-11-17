@@ -2,7 +2,6 @@
 
 const Sequelize = require('sequelize');
 const config = require(__dirname + '/../config/config.js')['dev']; // 로컬 환경
-// const config = require(__dirname + '/../config/config.js')['prod']; // 배포 환경
 const db = {};
 
 const { database, username, password } = config;
@@ -14,7 +13,6 @@ const sequelize = new Sequelize(database, username, password, config); // db, us
 const User = require('./User')(sequelize, Sequelize);
 const Board = require('./Board')(sequelize, Sequelize);
 const Comment = require('./Comment')(sequelize, Sequelize);
-// const Menu = require('./Menu')(sequelize, Sequelize);
 const Study = require('./Study')(sequelize, Sequelize);
 const StudyApply = require('./StudyApply')(sequelize, Sequelize);
 
@@ -27,12 +25,13 @@ User.hasMany(Board, {
   // → 새싹을 졸업하거나 탈퇴해도 게시글이 남도록 설정
   // → 작성자가 없는 경우, '탈퇴한 사용자' 등으로 대체 해야함
   // onDelete: 'CASCADE',
+
   // 연쇄 수정 옵션 O
-  // userSeq가 수정되면 게시글도 수정되어야 하지만.. userSeq를 수정할 방법은 없어서 효력이 좋을지는 모르겠음
+  // userSeq가 수정되면 게시글도 수정되어야 하지만.. userSeq가 수정될 일이 없는 것 같아 의미가 있는지는 모르겠음
   onUpdate: 'CASCADE',
 });
 Board.belongsTo(User, {
-  foreignKey: { name: 'userSeq', allowNull: false }, // allowNull이 먹히지 않음
+  foreignKey: { name: 'userSeq', allowNull: false },
   targetKey: 'userSeq',
 });
 
@@ -45,7 +44,7 @@ Board.hasMany(Comment, {
   onUpdate: 'CASCADE',
 });
 Comment.belongsTo(Board, {
-  foreignKey: { name: 'boardSeq', allowNull: false },
+  foreignKey: { name: 'boardSeq' },
   targetKey: 'boardSeq',
 }); // foreignKey: 실제 테이블에 작성할 컬럼명
 
@@ -58,7 +57,7 @@ Board.hasOne(Study, {
   onUpdate: 'CASCADE',
 });
 Study.belongsTo(Board, {
-  foreignKey: { name: 'boardSeq', allowNull: false },
+  foreignKey: { name: 'boardSeq' },
   targetKey: 'boardSeq',
 });
 
@@ -71,7 +70,7 @@ Study.hasMany(StudyApply, {
   onUpdate: 'CASCADE',
 });
 StudyApply.belongsTo(Study, {
-  foreignKey: { name: 'studySeq', allowNull: false },
+  foreignKey: { name: 'studySeq' },
   targetKey: 'studySeq',
 });
 
@@ -84,7 +83,7 @@ User.hasMany(StudyApply, {
   onUpdate: 'CASCADE',
 });
 StudyApply.belongsTo(User, {
-  foreignKey: { name: 'userSeq', allowNull: false },
+  foreignKey: { name: 'userSeq' },
   targetKey: 'userSeq',
 });
 
@@ -97,24 +96,13 @@ User.hasMany(Comment, {
   onUpdate: 'CASCADE',
 });
 Comment.belongsTo(User, {
-  foreignKey: { name: 'userSeq', allowNull: false },
+  foreignKey: { name: 'userSeq' },
   targetKey: 'userSeq',
 });
-
-// 7) 게시글 : 메뉴 = 1 : 1
-// Menu.hasOne(Board, {
-//   foreignKey: 'menuSeq',
-//   sourceKey: 'menuSeq',
-// });
-// Board.belongsTo(Menu, {
-//   foreignKey: { name: 'menuSeq', allowNull: false },
-//   targetKey: 'menuSeq',
-// });
 
 db.User = User;
 db.Board = Board;
 db.Comment = Comment;
-// db.Menu = Menu;
 db.Study = Study;
 db.StudyApply = StudyApply;
 db.sequelize = sequelize;
